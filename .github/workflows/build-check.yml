@@ -1,0 +1,40 @@
+name: Check Building Static Library
+
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+    branches:
+      - development
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure (Debug preset)
+        run: cmake --preset "[Debug]Stepper Motor Control" -B "build/[Debug]Stepper Motor Control"
+
+      - name: Build
+        run: cmake --build "build/[Debug]Stepper Motor Control"
+
+      - name: Configure (Release preset)
+        run: cmake --preset "[Release]Stepper Motor Control" -B "build/[Release]Stepper Motor Control"
+
+      - name: Build
+        run: cmake --build "build/[Release]Stepper Motor Control"
+
+      - name: Configure (Examples preset)
+        run: cmake --preset "[Examples]Stepper Motor Control" -B "build/[Examples]Stepper Motor Control"
+
+      - name: Build examples
+        run: cmake --build "build/[Examples]Stepper Motor Control"
+
+      - name: Run bare-metal example on the simulated board
+        run: ctest --test-dir "build/[Examples]Stepper Motor Control" -L example --output-on-failure

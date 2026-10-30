@@ -1,0 +1,114 @@
+#******************************************************************************
+# Stepper-C: Stepper Motor Control Implementation
+#
+# Project:     Stepper-C - Hardware-Agnostic Stepper Motor Control Library
+# Description: Release on a vX.Y.Z tag: check the version, run every quality
+#              gate, publish the static library, headers, MISRA report and PDF
+#              user manual as a GitHub Release.
+#
+# Author:      Anton Vynohradov
+# Email:       avynohradov@systemfromscratch.com
+#
+# License:     Apache License 2.0
+# Copyright (c) 2026 Anton Vynohradov
+#
+# SPDX-License-Identifier: Apache-2.0
+#*****************************************************************************
+
+name: Release
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check version consistency
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          grep -q "set(SSTEP_DEFAULT_VERSION \"$VERSION\")" cmake/version.cmake \
+            || { echo "cmake/version.cmake: SSTEP_DEFAULT_VERSION is not $VERSION"; exit 1; }
+          grep -q "#define SSTEP_VERSION \"$VERSION\"" sstep.h \
+            || { echo "sstep.h: SSTEP_VERSION is not $VERSION"; exit 1; }
+          grep -q "^## \[$VERSION\]" CHANGELOG.md \
+            || { echo "CHANGELOG.md has no [$VERSION] section"; exit 1; }
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtest-dev gcovr cppcheck libpango-1.0-0 libpangoft2-1.0-0
+          python -m pip install pytest mkdocs-material weasyprint
+
+      - name: Unit tests and coverage gate
+        run: |
+          cmake --preset "[UnitTests]Stepper Motor Control" -B "build/[UnitTests]Stepper Motor Control"
+          cmake --build "build/[UnitTests]Stepper Motor Control" --target coverage
+
+      - name: Integration tests
+        run: |
+          cmake --preset "[IntegrationTests]Stepper Motor Control" -B "build/[IntegrationTests]Stepper Motor Control" -DPython3_EXECUTABLE="$(which python)"
+          cmake --build "build/[IntegrationTests]Stepper Motor Control" --target integration_tests
+
+      - name: MISRA C:2012 gate
+        run: |
+          cmake --preset "[Debug]Stepper Motor Control" -B "build/[Debug]Stepper Motor Control"
+          cmake --build "build/[Debug]Stepper Motor Control" --target misra-analyze
+
+      - name: Examples
+        run: |
+          cmake --preset "[Examples]Stepper Motor Control" -B "build/[Examples]Stepper Motor Control"
+          cmake --build "build/[Examples]Stepper Motor Control"
+          ctest --test-dir "build/[Examples]Stepper Motor Control" -L example --output-on-failure
+
+      - name: Build release library
+        run: |
+          cmake --preset "[Release]Stepper Motor Control" -B "build/[Release]Stepper Motor Control"
+          cmake --build "build/[Release]Stepper Motor Control"
+
+      - name: Package
+        run: |
+          PKG="stepper-c-$VERSION-linux-x86_64"
+          mkdir -p "$PKG/lib" "$PKG/include"
+          cp "build/[Release]Stepper Motor Control/libsstep.a" "$PKG/lib/"
+          cp sstep.h inc/*.h "$PKG/include/"
+          cp LICENSE README.md CHANGELOG.md "$PKG/"
+          tar -czf "$PKG.tar.gz" "$PKG"
+          cp "build/[Debug]Stepper Motor Control/misra.txt" "stepper-c-$VERSION-misra.txt"
+          echo "PKG=$PKG" >> "$GITHUB_ENV"
+
+      - name: PDF manual
+        run: python tools/docs/build_manual.py --output "stepper-c-$VERSION-user-manual.pdf"
+
+      - name: Release notes from CHANGELOG
+        run: |
+          awk -v h="## [$VERSION]" '
+            index($0, h) == 1 { found = 1; next }
+            found && (index($0, "## [") == 1 || index($0, "[Unreleased]:") == 1) { exit }
+            found { print }
+          ' CHANGELOG.md > release-notes.md
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "Stepper-C $VERSION" \
+            --notes-file release-notes.md \
+            "$PKG.tar.gz" "stepper-c-$VERSION-misra.txt" "stepper-c-$VERSION-user-manual.pdf"

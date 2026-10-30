@@ -1,0 +1,41 @@
+name: Google Unit Tests
+
+on:
+  push:
+    branches:
+      - main
+      - development
+  pull_request:
+    branches:
+      - main
+      - development
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Google Test and gcovr
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtest-dev gcovr
+
+      - name: Configure (UnitTests preset)
+        run: cmake --preset "[UnitTests]Stepper Motor Control" -B "build/[UnitTests]Stepper Motor Control"
+
+      - name: Build (coverage)
+        run: cmake --build "build/[UnitTests]Stepper Motor Control" --target coverage
+
+      - name: Test
+        run: ctest --test-dir "build/[UnitTests]Stepper Motor Control" --output-on-failure
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: build/\[UnitTests\]Stepper Motor Control/Coverage

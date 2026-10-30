@@ -1,0 +1,35 @@
+#******************************************************************************
+# Stepper-C: Stepper Motor Control Implementation
+#
+# Project:     Stepper-C - Hardware-Agnostic Stepper Motor Control Library
+# Description: Files and directories ignored by Git.
+#
+# Author:      Anton Vynohradov
+# Email:       avynohradov@systemfromscratch.com
+#
+# License:     Apache License 2.0
+# Copyright (c) 2026 Anton Vynohradov
+#
+# SPDX-License-Identifier: Apache-2.0
+#*****************************************************************************
+
+# The build directory is ignored to prevent committing build artifacts
+build/
+out/
+
+# Cppcheck dump files (left behind if misra-analyze is interrupted)
+*.dump
+*.ctu-info
+
+# The PyTest cache, Python bytecode cache and virtual environments
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# MkDocs output and the PDF manual copied into the site by CI
+site/
+docs/downloads/
+
+# Backup repository of the personal Claude skills (moved to its own GitHub repository)
+sfs-claude-skills/

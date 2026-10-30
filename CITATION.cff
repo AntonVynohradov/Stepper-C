@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use Stepper-C in your work, please cite it as below."
+type: software
+title: "Stepper-C"
+abstract: >-
+  TODO: one or two sentences: what the library implements (Stepper Motor Control) and for which
+  systems.
+authors:
+  - family-names: Vynohradov
+    given-names: Anton
+    orcid: "https://orcid.org/0009-0005-6965-0911"
+    affiliation: SystemFromScratch
+    website: "https://systemfromscratch.com"
+repository-code: "https://github.com/AntonVynohradov/Stepper-C"
+url: "https://antonvynohradov.github.io/Stepper-C/"
+license: Apache-2.0
+version: "0.1.0"
+date-released: "2026-01-01"
+keywords:
+  - embedded systems
+  - C11
+  - MISRA C
+  - Stepper Motor Control

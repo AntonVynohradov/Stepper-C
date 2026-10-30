@@ -1,0 +1,27 @@
+name: Build Static Library
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure (Release preset)
+        run: cmake --preset "[Release]Stepper Motor Control" -B "build/[Release]Stepper Motor Control"
+
+      - name: Build
+        run: cmake --build "build/[Release]Stepper Motor Control"
+
+      - name: Upload static library
+        uses: actions/upload-artifact@v4
+        with:
+          name: sstep-static-lib
+          path: build/\[Release\]Stepper Motor Control/libsstep.a
