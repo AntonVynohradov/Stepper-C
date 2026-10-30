@@ -1,0 +1,393 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="sstep__internal_8h" kind="file" language="C++">
+    <compoundname>sstep_internal.h</compoundname>
+    <includes local="no">stdbool.h</includes>
+    <includes local="no">stdint.h</includes>
+    <includes refid="sstep__ctrl_8h" local="yes">sstep_ctrl.h</includes>
+    <includes refid="sstep__math_8h" local="yes">sstep_math.h</includes>
+    <includedby refid="sstep__bridge_8c" local="yes">src/sstep_bridge.c</includedby>
+    <includedby refid="sstep__ctrl_8c" local="yes">src/sstep_ctrl.c</includedby>
+    <includedby refid="sstep__motion_8c" local="yes">src/sstep_motion.c</includedby>
+    <incdepgraph>
+      <node id="6">
+        <label>sstep_config.h</label>
+        <link refid="sstep__config_8h_source"/>
+      </node>
+      <node id="4">
+        <label>sstep_ctrl.h</label>
+        <link refid="sstep__ctrl_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sstep_defs.h</label>
+        <link refid="sstep__defs_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sstep_math.h</label>
+        <link refid="sstep__math_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>src/sstep_internal.h</label>
+        <link refid="sstep__internal_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>stdbool.h</label>
+      </node>
+      <node id="5">
+        <label>stddef.h</label>
+      </node>
+      <node id="3">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structsstep__bridge__out" prot="public">sstep_bridge_out</innerclass>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="sstep__internal_8h_1a2e51989a1e049a9de727cfe086579022" prot="public" static="no">
+        <name>SSTEP_MODE_HOLD</name>
+        <initializer>0U</initializer>
+        <briefdescription>
+<para>Motion generator modes. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="52" column="9" bodyfile="src/sstep_internal.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sstep__internal_8h_1ab4c1d62a11dc197e667adfe9bf9c5518" prot="public" static="no">
+        <name>SSTEP_MODE_MOVE</name>
+        <initializer>1U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="53" column="9" bodyfile="src/sstep_internal.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sstep__internal_8h_1a0a237eb1318ccd127da69a7e7ad1ce8b" prot="public" static="no">
+        <name>SSTEP_MODE_RUN</name>
+        <initializer>2U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="54" column="9" bodyfile="src/sstep_internal.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sstep__internal_8h_1ac3a3403e1053f6f8970b375a56652fba" prot="public" static="no">
+        <name>SSTEP_MOTION_DONE</name>
+        <initializer>0x01U</initializer>
+        <briefdescription>
+<para>Result flags of sstep_motion_step(). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="57" column="9" bodyfile="src/sstep_internal.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sstep__internal_8h_1a7abcc94f6af80c76c498c708a18e5e2b" prot="public" static="no">
+        <name>SSTEP_POS_ONE</name>
+        <initializer>((int64_t)65536)</initializer>
+        <briefdescription>
+<para>Fixed point position: 1 microstep = 2^16. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="60" column="9" bodyfile="src/sstep_internal.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sstep__internal_8h_1ae76a8a3215f734efc5d88f524a24e8bd" prot="public" static="no">
+        <name>SSTEP_POS_SNAP</name>
+        <initializer>((int64_t)64)</initializer>
+        <briefdescription>
+<para>A move ends when it is closer than this to the target and slow enough (1/1024 microstep). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="64" column="9" bodyfile="src/sstep_internal.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="sstep__internal_8h_1a0461923af61066b8d47e2ccbd491eec2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sstep_bridge_map</definition>
+        <argsstring>(enum sstep_topology topology, sstep_acc_t va, sstep_acc_t vb, const struct sstep_gain *inv_vbus, sstep_acc_t vbus, uint16_t period, struct sstep_bridge_out *out)</argsstring>
+        <name>sstep_bridge_map</name>
+        <param>
+          <type>enum <ref refid="group__sstep__defs_1gabd2c373f4d8a7502c78952555c8cb23c" kindref="member">sstep_topology</ref></type>
+          <declname>topology</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>va</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>vb</declname>
+        </param>
+        <param>
+          <type>const struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref> *</type>
+          <declname>inv_vbus</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>vbus</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>period</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsstep__bridge__out" kindref="compound">sstep_bridge_out</ref> *</type>
+          <declname>out</declname>
+        </param>
+        <briefdescription>
+<para>Map requested phase voltages to leg compare values (averaged power stage). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>The voltage vector is scaled down with its direction kept when the stage cannot produce it: full bridge |a|, |b| &lt;= 1, shared leg max(a,b,0) - min(a,b,0) &lt;= 1, a and b relative to the measured bus voltage. Shared leg: common leg centred. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>topology</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Power stage topology (compiled in). </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>va</parametername>
+<parametername>vb</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Requested phase voltages [pu of V_base]. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>inv_vbus</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>V_base / bus voltage. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>vbus</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bus voltage [pu of V_base], 0 .. 2. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>period</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Compare value for 100 % duty cycle. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>out</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Result. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="94" column="6" bodyfile="src/sstep_bridge.c" bodystart="136" bodyend="201" declfile="src/sstep_internal.h" declline="94" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="sstep__internal_8h_1a6972dea5b1b230e9affdf5678071d270" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>uint8_t</type>
+        <definition>uint8_t sstep_motion_step</definition>
+        <argsstring>(struct sstep_motion *mo)</argsstring>
+        <name>sstep_motion_step</name>
+        <param>
+          <type>struct <ref refid="structsstep__motion" kindref="compound">sstep_motion</ref> *</type>
+          <declname>mo</declname>
+        </param>
+        <briefdescription>
+<para>One slow loop period of the motion generator: trapezoidal velocity profile with one-period look-ahead braking for moves, exact stop on the target. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mo</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Motion state; pos and vel are updated. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>SSTEP_MOTION_DONE when a move reached its target in this period, else 0. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="104" column="9" bodyfile="src/sstep_motion.c" bodystart="175" bodyend="204" declfile="src/sstep_internal.h" declline="104" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="sstep__internal_8h_1ab255367c0431d4183dc752ba1c4f1779" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_isqrt64</definition>
+        <argsstring>(uint64_t x)</argsstring>
+        <name>sstep_isqrt64</name>
+        <param>
+          <type>uint64_t</type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+<para>Integer square root: floor(sqrt(x)). </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Value. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>floor(sqrt(x)). </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="111" column="10" bodyfile="src/sstep_motion.c" bodystart="149" bodyend="173" declfile="src/sstep_internal.h" declline="111" declcolumn="10"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*******************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Stepper-C:<sp/>Stepper<sp/>Motor<sp/>Control<sp/>Implementation</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Project:<sp/><sp/><sp/><sp/><sp/>Stepper-C<sp/>-<sp/>Hardware-Agnostic<sp/>Stepper<sp/>Motor<sp/>Control<sp/>Library</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Description:<sp/>Private<sp/>interface<sp/>between<sp/>the<sp/>library<sp/>modules<sp/>(power<sp/>stage,<sp/>motion,<sp/>control).</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Author:<sp/><sp/><sp/><sp/><sp/><sp/>Anton<sp/>Vynohradov</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>Email:<sp/><sp/><sp/><sp/><sp/><sp/><sp/>avynohradov@systemfromscratch.com</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>License:<sp/><sp/><sp/><sp/><sp/>Apache<sp/>License<sp/>2.0</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2026<sp/>Anton<sp/>Vynohradov</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/>Licensed<sp/>under<sp/>the<sp/>Apache<sp/>License,<sp/>Version<sp/>2.0<sp/>(the<sp/>&quot;License&quot;);</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>you<sp/>may<sp/>not<sp/>use<sp/>this<sp/>file<sp/>except<sp/>in<sp/>compliance<sp/>with<sp/>the<sp/>License.</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>You<sp/>may<sp/>obtain<sp/>a<sp/>copy<sp/>of<sp/>the<sp/>License<sp/>at</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/>http://www.apache.org/licenses/LICENSE-2.0</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>Unless<sp/>required<sp/>by<sp/>applicable<sp/>law<sp/>or<sp/>agreed<sp/>to<sp/>in<sp/>writing,<sp/>software</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>distributed<sp/>under<sp/>the<sp/>License<sp/>is<sp/>distributed<sp/>on<sp/>an<sp/>&quot;AS<sp/>IS&quot;<sp/>BASIS,</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WITHOUT<sp/>WARRANTIES<sp/>OR<sp/>CONDITIONS<sp/>OF<sp/>ANY<sp/>KIND,<sp/>either<sp/>express<sp/>or<sp/>implied.</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>See<sp/>the<sp/>License<sp/>for<sp/>the<sp/>specific<sp/>language<sp/>governing<sp/>permissions<sp/>and</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>limitations<sp/>under<sp/>the<sp/>License.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>SPDX-License-Identifier:<sp/>Apache-2.0</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>******************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_INTERNAL_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_INTERNAL_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>INCLUDES</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;sstep_ctrl.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;sstep_math.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/>*<sp/>DEFINES<sp/>&amp;<sp/>MACROS</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_MODE_HOLD<sp/>0U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_MODE_MOVE<sp/>1U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_MODE_RUN<sp/>2U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_MOTION_DONE<sp/>0x01U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_POS_ONE<sp/>((int64_t)65536)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_POS_SNAP<sp/>((int64_t)64)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="67"><highlight class="comment"><sp/>*<sp/>TYPE<sp/>DEFINITIONS</highlight></codeline>
+<codeline lineno="68"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="structsstep__bridge__out" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__bridge__out" kindref="compound">sstep_bridge_out</ref></highlight></codeline>
+<codeline lineno="72"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="73" refid="structsstep__bridge__out_1a49e42fd980a0fcccd4b1cdce35113ce4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structsstep__bridge__out_1a49e42fd980a0fcccd4b1cdce35113ce4" kindref="member">compare</ref>[<ref refid="group__sstep__defs_1ga1322a183e22d7a74f48144c279a90fe7" kindref="member">SSTEP_LEGS_MAX</ref>];<sp/></highlight></codeline>
+<codeline lineno="74" refid="structsstep__bridge__out_1a57c99915540a09760649dfdcac1e5df7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/><ref refid="structsstep__bridge__out_1a57c99915540a09760649dfdcac1e5df7" kindref="member">v</ref>[2];<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="75" refid="structsstep__bridge__out_1a758e1a5c6ff779d77cbdc3af2ea39729" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="structsstep__bridge__out_1a758e1a5c6ff779d77cbdc3af2ea39729" kindref="member">limited</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="76"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="79"><highlight class="comment"><sp/>*<sp/>PUBLIC<sp/>FUNCTION<sp/>DECLARATIONS<sp/>(library<sp/>internal)</highlight></codeline>
+<codeline lineno="80"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>sstep_bridge_map(</highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__sstep__defs_1gabd2c373f4d8a7502c78952555c8cb23c" kindref="member">sstep_topology</ref><sp/>topology,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>va,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>vb,</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__gain" kindref="compound">sstep_gain</ref>*<sp/>inv_vbus,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>vbus,<sp/>uint16_t<sp/>period,</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__bridge__out" kindref="compound">sstep_bridge_out</ref>*<sp/>out);</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal">uint8_t<sp/>sstep_motion_step(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__motion" kindref="compound">sstep_motion</ref>*<sp/>mo);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal">uint32_t<sp/>sstep_isqrt64(uint64_t<sp/>x);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_INTERNAL_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="src/sstep_internal.h"/>
+  </compounddef>
+</doxygen>

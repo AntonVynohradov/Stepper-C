@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structsstep__sincos" kind="struct" language="C++" prot="public">
+    <compoundname>sstep_sincos</compoundname>
+    <includes refid="sstep__math_8h" local="no">sstep_math.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsstep__sincos_1afbc70f01c9e7ae007c74a16e1e51b9a8" prot="public" static="no" mutable="no">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>sstep_real_t sstep_sincos::sin</definition>
+        <argsstring></argsstring>
+        <name>sin</name>
+        <qualifiedname>sstep_sincos::sin</qualifiedname>
+        <briefdescription>
+<para>Sine. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="206" column="18" bodyfile="inc/sstep_math.h" bodystart="206" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__sincos_1aa54bee54d2d4c6440510af0303c85ab4" prot="public" static="no" mutable="no">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>sstep_real_t sstep_sincos::cos</definition>
+        <argsstring></argsstring>
+        <name>cos</name>
+        <qualifiedname>sstep_sincos::cos</qualifiedname>
+        <briefdescription>
+<para>Cosine. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="207" column="18" bodyfile="inc/sstep_math.h" bodystart="207" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Sine and cosine of one angle, see <ref refid="group__sstep__math_1ga7836410f8c904ba6e53b55a137fc4222" kindref="member">sstep_sin_cos()</ref>. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="inc/sstep_math.h" line="204" column="1" bodyfile="inc/sstep_math.h" bodystart="205" bodyend="208"/>
+    <listofallmembers>
+      <member refid="structsstep__sincos_1aa54bee54d2d4c6440510af0303c85ab4" prot="public" virt="non-virtual"><scope>sstep_sincos</scope><name>cos</name></member>
+      <member refid="structsstep__sincos_1afbc70f01c9e7ae007c74a16e1e51b9a8" prot="public" virt="non-virtual"><scope>sstep_sincos</scope><name>sin</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

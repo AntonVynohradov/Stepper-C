@@ -1,0 +1,2819 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+      
+      
+        <meta name="author" content="Anton Vynohradov">
+      
+      
+        <link rel="canonical" href="https://antonvynohradov.github.io/Stepper-C/reference/group__sstep__math/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/brand/systemfromscratch-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Group sstep_math - Stepper-C</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#group-sstep_math" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Stepper-C" class="md-header__button md-logo" aria-label="Stepper-C" data-md-component="logo">
+      
+  <img src="../../assets/images/brand/systemfromscratch-logo-on-dark.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Stepper-C
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Group sstep_math
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <a href="../../downloads/Stepper-C_User_Manual.pdf" class="md-header__button md-icon" title="Download PDF user manual" aria-label="Download PDF user manual" download>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-9.5 8.5c0 .8-.7 1.5-1.5 1.5H7v2H5.5V9H8c.8 0 1.5.7 1.5 1.5zm5 2c0 .8-.7 1.5-1.5 1.5h-2.5V9H13c.8 0 1.5.7 1.5 1.5zm4-3H17v1h1.5V13H17v2h-1.5V9h3zm-6.5 0h1v3h-1zm-5 0h1v1H7z"/></svg>
+      </a>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/AntonVynohradov/Stepper-C" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    AntonVynohradov/Stepper-C
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/" class="md-tabs__link">
+          
+  
+  
+  Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../protocol/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Protocol
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../integration/" class="md-tabs__link">
+          
+  
+  
+  Integration
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../about/" class="md-tabs__link">
+          
+  
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Stepper-C" class="md-nav__button md-logo" aria-label="Stepper-C" data-md-component="logo">
+      
+  <img src="../../assets/images/brand/systemfromscratch-logo-on-dark.png" alt="logo">
+
+    </a>
+    Stepper-C
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/AntonVynohradov/Stepper-C" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    AntonVynohradov/Stepper-C
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How It Works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using the Library
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../extending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending the Library
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../protocol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Integration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Doxygen
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Doxygen
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../annotated/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../functions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../macros/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../misra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MISRA C:2012
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Author & Company
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LICENSE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#public-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#public-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public Functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#public-static-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public Static Functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#macros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Macros
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detailed-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detailed Description
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#public-types-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public Types Documentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Public Types Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#typedef-sstep_acc_t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        typedef sstep_acc_t
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typedef-sstep_angle_t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        typedef sstep_angle_t
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typedef-sstep_integ_t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        typedef sstep_integ_t
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typedef-sstep_real_t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        typedef sstep_real_t
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#public-functions-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public Functions Documentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Public Functions Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_gain_from_ratio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_gain_from_ratio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_gain_from_ratio64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_gain_from_ratio64
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_real_from_ratio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_real_from_ratio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_real_to_units" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_real_to_units
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_sin_cos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_sin_cos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#public-static-functions-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public Static Functions Documentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Public Static Functions Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_abs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_abs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_acc_abs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_acc_abs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_acc_add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_acc_add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_acc_clamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_acc_clamp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_acc_from_real" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_acc_from_real
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_acc_halve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_acc_halve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_acc_in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_acc_in
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_acc_scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_acc_scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_acc_to_real" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_acc_to_real
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_acc_to_ticks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_acc_to_ticks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_asr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_asr
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_clamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_clamp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_div_unit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_div_unit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_gain_mul" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_gain_mul
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_gain_mul_acc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_gain_mul_acc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_gain_mul_int" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_gain_mul_int
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_integ_add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_integ_add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_integ_add_acc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_integ_add_acc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_integ_to_acc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_integ_to_acc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_mul" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_mul
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_neg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_neg
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_sat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_sat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_shift_round" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_shift_round
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_sub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_sub
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#macro-definition-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Macro Definition Documentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Macro Definition Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#define-sstep_acc_c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_ACC_C
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-sstep_acc_in_max" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_ACC_IN_MAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-sstep_acc_max" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_ACC_MAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-sstep_acc_min" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_ACC_MIN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-sstep_acc_one" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_ACC_ONE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-sstep_acc_scale_max" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_ACC_SCALE_MAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-sstep_gain_exp_max" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_GAIN_EXP_MAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-sstep_gain_exp_min" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_GAIN_EXP_MIN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-sstep_integ_frac_bits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_INTEG_FRAC_BITS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-sstep_real_c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_REAL_C
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-sstep_real_frac_bits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_REAL_FRAC_BITS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-sstep_real_max" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_REAL_MAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-sstep_real_min" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_REAL_MIN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-sstep_real_zero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_REAL_ZERO
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="group-sstep_math">Group sstep_math<a class="headerlink" href="#group-sstep_math" title="Permanent link">&para;</a></h1>
+<p><a href="../modules/"><strong>Modules</strong></a> <strong>&gt;</strong> <a href="./"><strong>sstep_math</strong></a></p>
+<p><em>Types and operations that hide whether the library computes in fixed point or in float.</em> <a href="#detailed-description">More...</a></p>
+<h2 id="classes">Classes<a class="headerlink" href="#classes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Type</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">struct</td>
+<td style="text-align: left;"><a href="../structsstep__gain/"><strong>sstep_gain</strong></a> <br><em>Gain of any magnitude: value = mant / 2^15 * 2^exp.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">struct</td>
+<td style="text-align: left;"><a href="../structsstep__sincos/"><strong>sstep_sincos</strong></a> <br><em>Sine and cosine of one angle, see</em> <a href="./#function-sstep_sin_cos"><em><strong>sstep_sin_cos()</strong></em></a> <em>.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="public-types">Public Types<a class="headerlink" href="#public-types" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Type</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">typedef int32_t</td>
+<td style="text-align: left;"><a href="#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a>  <br><em>Per-unit accumulator (Q15 in 32 bits), used by integrators and filters.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">typedef uint32_t</td>
+<td style="text-align: left;"><a href="#typedef-sstep_angle_t"><strong>sstep_angle_t</strong></a>  <br><em>Electrical angle: one full electrical turn (4 full steps) = 2^32.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">typedef int32_t</td>
+<td style="text-align: left;"><a href="#typedef-sstep_integ_t"><strong>sstep_integ_t</strong></a>  <br><em>Integrator: Q27 in 32 bits (range +/-16 pu, resolution 7.5e-9 pu).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">typedef int16_t</td>
+<td style="text-align: left;"><a href="#typedef-sstep_real_t"><strong>sstep_real_t</strong></a>  <br><em>Per-unit signal (Q15).</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="public-functions">Public Functions<a class="headerlink" href="#public-functions" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Type</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">int</td>
+<td style="text-align: left;"><a href="#function-sstep_gain_from_ratio"><strong>sstep_gain_from_ratio</strong></a> (int32_t num, int32_t den, struct <a href="../structsstep__gain/"><strong>sstep_gain</strong></a> * gain) <br><em>Create a gain equal to num / den.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">int</td>
+<td style="text-align: left;"><a href="#function-sstep_gain_from_ratio64"><strong>sstep_gain_from_ratio64</strong></a> (int64_t num, int64_t den, struct <a href="../structsstep__gain/"><strong>sstep_gain</strong></a> * gain) <br><em>Create a gain equal to num / den with 64-bit operands, for gains computed from several engineering values (for example L * wc * I_base / V_base).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">int</td>
+<td style="text-align: left;"><a href="#function-sstep_real_from_ratio"><strong>sstep_real_from_ratio</strong></a> (int32_t num, int32_t den, <a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> * out) <br><em>Convert num / den to a per-unit signal, rounded and saturated.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">int32_t</td>
+<td style="text-align: left;"><a href="#function-sstep_real_to_units"><strong>sstep_real_to_units</strong></a> (<a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> x, int32_t base) <br><em>Convert a per-unit value back to engineering units: round(x * base).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">struct <a href="../structsstep__sincos/"><strong>sstep_sincos</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_sin_cos"><strong>sstep_sin_cos</strong></a> (<a href="./#typedef-sstep_angle_t"><strong>sstep_angle_t</strong></a> angle) <br><em>Sine and cosine of an electrical angle from a quarter-wave table (</em> <a href="../group__sstep__config/#define-sstep_cfg_sine_table_bits"><em><strong>SSTEP_CFG_SINE_TABLE_BITS</strong></em></a> <em>) with linear interpolation.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="public-static-functions">Public Static Functions<a class="headerlink" href="#public-static-functions" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Type</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_abs"><strong>sstep_abs</strong></a> (<a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> a) <br><em>Saturating |a|.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_acc_abs"><strong>sstep_acc_abs</strong></a> (<a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> a) <br><em>Saturating |a| of an accumulator.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_acc_add"><strong>sstep_acc_add</strong></a> (<a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> a, <a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> b) <br><em>Saturating accumulator a + b.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_acc_clamp"><strong>sstep_acc_clamp</strong></a> (<a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> x, <a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> lo, <a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> hi) <br><em>Accumulator limited to lo .</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_acc_from_real"><strong>sstep_acc_from_real</strong></a> (<a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> a) <br><em>Convert a signal to an accumulator (exact).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_acc_halve"><strong>sstep_acc_halve</strong></a> (<a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> a) <br><em>a / 2 (rounds toward minus infinity).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_acc_in"><strong>sstep_acc_in</strong></a> (<a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> x) <br><em>Limit an accumulator to +/-</em> <a href="./#define-sstep_acc_in_max"><em><strong>SSTEP_ACC_IN_MAX</strong></em></a> <em>.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_acc_scale"><strong>sstep_acc_scale</strong></a> (<a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> x, <a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> k) <br><em>x * k for |x| &lt; 2 pu (saturated first), rounded.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_acc_to_real"><strong>sstep_acc_to_real</strong></a> (<a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> a) <br><em>Convert an accumulator to a signal, saturating.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint16_t</td>
+<td style="text-align: left;"><a href="#function-sstep_acc_to_ticks"><strong>sstep_acc_to_ticks</strong></a> (<a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> duty, uint16_t period) <br><em>Duty cycle (0 .</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_add"><strong>sstep_add</strong></a> (<a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> a, <a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> b) <br><em>Saturating a + b.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">int32_t</td>
+<td style="text-align: left;"><a href="#function-sstep_asr"><strong>sstep_asr</strong></a> (int32_t x, uint32_t n) <br><em>Arithmetic shift right (rounds toward minus infinity), written with unsigned shifts only (MISRA C:2012 Rule 10.1); compilers emit one ASR instruction.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_clamp"><strong>sstep_clamp</strong></a> (<a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> x, <a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> lo, <a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> hi) <br><em>x limited to lo .</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_div_unit"><strong>sstep_div_unit</strong></a> (<a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> num, <a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> den) <br><em>num / den for 0 &lt;= num &lt;= den, den &gt; 0, as a signal in 0 .</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_gain_mul"><strong>sstep_gain_mul</strong></a> (const struct <a href="../structsstep__gain/"><strong>sstep_gain</strong></a> * g, <a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> x) <br><em>Gain times signal: g * x, rounded to nearest.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_gain_mul_acc"><strong>sstep_gain_mul_acc</strong></a> (const struct <a href="../structsstep__gain/"><strong>sstep_gain</strong></a> * g, <a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> x) <br><em>Gain times accumulator: g * x for |x| &lt; 4 pu (saturated first).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_gain_mul_int"><strong>sstep_gain_mul_int</strong></a> (const struct <a href="../structsstep__gain/"><strong>sstep_gain</strong></a> * g, int32_t n) <br><em>Gain times integer: g * n as a per-unit accumulator, saturating.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_integ_t"><strong>sstep_integ_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_integ_add"><strong>sstep_integ_add</strong></a> (<a href="./#typedef-sstep_integ_t"><strong>sstep_integ_t</strong></a> integ, const struct <a href="../structsstep__gain/"><strong>sstep_gain</strong></a> * g, <a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> x) <br><em>Integrator + g * x (x a signal), saturating.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_integ_t"><strong>sstep_integ_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_integ_add_acc"><strong>sstep_integ_add_acc</strong></a> (<a href="./#typedef-sstep_integ_t"><strong>sstep_integ_t</strong></a> integ, const struct <a href="../structsstep__gain/"><strong>sstep_gain</strong></a> * g, <a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> x) <br><em>Integrator + g * x (x an accumulator, |x| &lt; 4 pu), saturating.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_integ_to_acc"><strong>sstep_integ_to_acc</strong></a> (<a href="./#typedef-sstep_integ_t"><strong>sstep_integ_t</strong></a> integ) <br><em>Integrator value as an accumulator (rounded).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_mul"><strong>sstep_mul</strong></a> (<a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> a, <a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> b) <br><em>a * b, rounded to nearest; (-1.0) * (-1.0) saturates to +0.99997.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_neg"><strong>sstep_neg</strong></a> (<a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> a) <br><em>Saturating -a (-(-1.0) gives +0.99997).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_sat"><strong>sstep_sat</strong></a> (int32_t x) <br><em>Saturate a 32-bit value to</em> <a href="./#typedef-sstep_real_t"><em><strong>sstep_real_t</strong></em></a> <em>.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">int32_t</td>
+<td style="text-align: left;"><a href="#function-sstep_shift_round"><strong>sstep_shift_round</strong></a> (int32_t p, int32_t sh) <br><em>Shift with rounding: sh &gt; 0 divides by 2^sh (round half up), sh &lt; 0 multiplies by 2^-sh with saturation.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a></td>
+<td style="text-align: left;"><a href="#function-sstep_sub"><strong>sstep_sub</strong></a> (<a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> a, <a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a> b) <br><em>Saturating a - b.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="macros">Macros<a class="headerlink" href="#macros" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Type</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_acc_c"><strong>SSTEP_ACC_C</strong></a> (x) <code>(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))((x) \* 32768.0))</code><br><em>Accumulator constant from a floating literal (initializers only).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_acc_in_max"><strong>SSTEP_ACC_IN_MAX</strong></a>  <code>[**SSTEP\_ACC\_C**](group__sstep__math.md#define-sstep_acc_c)(3.999969482421875)</code><br><em>Largest magnitude accepted by</em> <a href="./#function-sstep_gain_mul_acc"><em><strong>sstep_gain_mul_acc()</strong></em></a> <em>and the integrator updates from accumulators (4 pu - 2^-15); larger inputs are saturated.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_acc_max"><strong>SSTEP_ACC_MAX</strong></a>  <code>(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))INT32\_MAX)</code><br><em>Largest</em> <a href="./#typedef-sstep_acc_t"><em><strong>sstep_acc_t</strong></em></a> <em>(+65536 - 2^-15).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_acc_min"><strong>SSTEP_ACC_MIN</strong></a>  <code>(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))INT32\_MIN)</code><br><em>Smallest</em> <a href="./#typedef-sstep_acc_t"><em><strong>sstep_acc_t</strong></em></a> <em>(-65536).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_acc_one"><strong>SSTEP_ACC_ONE</strong></a>  <code>[**SSTEP\_ACC\_C**](group__sstep__math.md#define-sstep_acc_c)(1.0)</code><br><em>1.0 as an accumulator (exactly representable in both backends).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_acc_scale_max"><strong>SSTEP_ACC_SCALE_MAX</strong></a>  <code>[**SSTEP\_ACC\_C**](group__sstep__math.md#define-sstep_acc_c)(1.999969482421875)</code><br><em>Largest magnitude accepted by</em> <a href="./#function-sstep_acc_scale"><em><strong>sstep_acc_scale()</strong></em></a> <em>(2 pu - 2^-15).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_gain_exp_max"><strong>SSTEP_GAIN_EXP_MAX</strong></a>  <code>15</code><br><em>Largest gain exponent (gains up to 32767).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_gain_exp_min"><strong>SSTEP_GAIN_EXP_MIN</strong></a>  <code>(-16)</code><br><em>Smallest gain exponent.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_integ_frac_bits"><strong>SSTEP_INTEG_FRAC_BITS</strong></a>  <code>27</code><br><em>Fractional bits of</em> <a href="./#typedef-sstep_integ_t"><em><strong>sstep_integ_t</strong></em></a> <em>.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_real_c"><strong>SSTEP_REAL_C</strong></a> (x) <code>/* multi line expression */</code><br><em>Constant from a floating literal, saturated to -1.0 .</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_real_frac_bits"><strong>SSTEP_REAL_FRAC_BITS</strong></a>  <code>15</code><br><em>Number of fractional bits of</em> <a href="./#typedef-sstep_real_t"><em><strong>sstep_real_t</strong></em></a> <em>and</em><a href="./#typedef-sstep_acc_t"><em><strong>sstep_acc_t</strong></em></a> <em>.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_real_max"><strong>SSTEP_REAL_MAX</strong></a>  <code>(([**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t))INT16\_MAX)</code><br><em>Largest</em> <a href="./#typedef-sstep_real_t"><em><strong>sstep_real_t</strong></em></a> <em>(+0.99997).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_real_min"><strong>SSTEP_REAL_MIN</strong></a>  <code>(([**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t))INT16\_MIN)</code><br><em>Smallest</em> <a href="./#typedef-sstep_real_t"><em><strong>sstep_real_t</strong></em></a> <em>(-1.0).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_real_zero"><strong>SSTEP_REAL_ZERO</strong></a>  <code>[**SSTEP\_REAL\_C**](group__sstep__math.md#define-sstep_real_c)(0.0)</code><br><em>Zero.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="detailed-description">Detailed Description<a class="headerlink" href="#detailed-description" title="Permanent link">&para;</a></h2>
+<p>The control code is written once against these types and operations; the backend is selected at build time with <a href="../group__sstep__config/#define-sstep_cfg_math_backend"><strong>SSTEP_CFG_MATH_BACKEND</strong></a>.</p>
+<p><strong>Per-unit signals.</strong> Inside the control loops every electrical signal is normalised to a base value computed by <a href="../group__sstep__ctrl/#function-sstep_init"><strong>sstep_init()</strong></a>:
+* current: 1.0 = power stage current full scale (<code>i_full_scale_ma</code>),
+* voltage: 1.0 = nominal bus voltage (<code>vbus_nominal_mv</code>),
+* duty cycle: 1.0 = 100 %.</p>
+<p>Both backends therefore see values in about -1..+1, which makes Q15 exact enough and lets the two backends be compared sample by sample in the tests.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Fixed point backend</th>
+<th>Float backend</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="./#typedef-sstep_real_t"><strong>sstep_real_t</strong></a></td>
+<td><code>int16_t</code>, Q15 (1.0 = 32768, range -1 .. +0.99997)</td>
+<td><code>float</code>, same range</td>
+</tr>
+<tr>
+<td><a href="./#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a></td>
+<td><code>int32_t</code>, Q15 with 16 integer bits (range +/-65536)</td>
+<td><code>float</code>, same range</td>
+</tr>
+<tr>
+<td><a href="./#typedef-sstep_angle_t"><strong>sstep_angle_t</strong></a></td>
+<td><code>uint32_t</code>, one electrical turn = 2^32</td>
+<td>same</td>
+</tr>
+<tr>
+<td><code>struct  sstep_gain</code></td>
+<td>Q15 mantissa and binary exponent</td>
+<td><code>float</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Same behaviour in both backends.</strong> Every operation saturates to the ranges in the table instead of overflowing, in both backends, so that a test can compare them. Angles wrap by design.</p>
+<p><strong>Speed.</strong> The per-sample operations are <code>static inline</code> and branch-light; the fixed point backend uses only 32-bit multiplications (no 64-bit arithmetic), so it suits Cortex-M0. Functions that convert engineering units (<code>*_from_ratio</code>, <a href="./#function-sstep_real_to_units"><strong>sstep_real_to_units()</strong></a>) use 64-bit integers and division: call them at initialisation or from the slow loop, not from the fast loop. </p>
+<h2 id="public-types-documentation">Public Types Documentation<a class="headerlink" href="#public-types-documentation" title="Permanent link">&para;</a></h2>
+<h3 id="typedef-sstep_acc_t">typedef sstep_acc_t<a class="headerlink" href="#typedef-sstep_acc_t" title="Permanent link">&para;</a></h3>
+<p><em>Per-unit accumulator (Q15 in 32 bits), used by integrators and filters.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>typedef int32_t sstep_acc_t;
+</code></pre></div></p>
+<hr>
+
+<h3 id="typedef-sstep_angle_t">typedef sstep_angle_t<a class="headerlink" href="#typedef-sstep_angle_t" title="Permanent link">&para;</a></h3>
+<p><em>Electrical angle: one full electrical turn (4 full steps) = 2^32.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>typedef uint32_t sstep_angle_t;
+</code></pre></div></p>
+<hr>
+
+<h3 id="typedef-sstep_integ_t">typedef sstep_integ_t<a class="headerlink" href="#typedef-sstep_integ_t" title="Permanent link">&para;</a></h3>
+<p><em>Integrator: Q27 in 32 bits (range +/-16 pu, resolution 7.5e-9 pu).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>typedef int32_t sstep_integ_t;
+</code></pre></div></p>
+<p>The extra 12 fractional bits keep small increments (Ki * Ts * e is often below one Q15 LSB) instead of rounding them away. </p>
+<hr>
+
+<h3 id="typedef-sstep_real_t">typedef sstep_real_t<a class="headerlink" href="#typedef-sstep_real_t" title="Permanent link">&para;</a></h3>
+<p><em>Per-unit signal (Q15).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>typedef int16_t sstep_real_t;
+</code></pre></div></p>
+<hr>
+<h2 id="public-functions-documentation">Public Functions Documentation<a class="headerlink" href="#public-functions-documentation" title="Permanent link">&para;</a></h2>
+<h3 id="function-sstep_gain_from_ratio">function sstep_gain_from_ratio<a class="headerlink" href="#function-sstep_gain_from_ratio" title="Permanent link">&para;</a></h3>
+<p><em>Create a gain equal to num / den.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>int sstep_gain_from_ratio (
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    int32_t num,
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    int32_t den,
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    struct sstep_gain * gain
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>) 
+</code></pre></div></p>
+<p>Initialisation only (64-bit division). </p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>num</code> Numerator. </li>
+<li><code>den</code> Denominator, not 0. </li>
+<li><code>gain</code> Result. </li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li><a href="../group__sstep__defs/#define-sstep_ok"><strong>SSTEP_OK</strong></a> Success. </li>
+<li><a href="../group__sstep__defs/#define-sstep_err_param"><strong>SSTEP_ERR_PARAM</strong></a> gain is NULL, den is 0, or |num / den| rounds above 32767. </li>
+</ul>
+<p><strong>Note:</strong></p>
+<p>Every non-zero int32 ratio is at least 2^-31 and is representable; ratios below 2^-16 lose resolution (the mantissa is no longer normalised). </p>
+<hr>
+
+<h3 id="function-sstep_gain_from_ratio64">function sstep_gain_from_ratio64<a class="headerlink" href="#function-sstep_gain_from_ratio64" title="Permanent link">&para;</a></h3>
+<p><em>Create a gain equal to num / den with 64-bit operands, for gains computed from several engineering values (for example L * wc * I_base / V_base).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>int sstep_gain_from_ratio64 (
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    int64_t num,
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    int64_t den,
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    struct sstep_gain * gain
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>) 
+</code></pre></div></p>
+<p>Initialisation and slow loop only: at most three 64-bit divisions. </p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>num</code> Numerator, |num| &lt; 2^62. </li>
+<li><code>den</code> Denominator, 0 &lt; |den| &lt; 2^62. </li>
+<li><code>gain</code> Result. </li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li><a href="../group__sstep__defs/#define-sstep_ok"><strong>SSTEP_OK</strong></a> (gain NULL, den 0, an operand out of range, or |num / den| rounds above 32767). Ratios below 2^-31 give 0 (fixed point). </li>
+</ul>
+<hr>
+
+<h3 id="function-sstep_real_from_ratio">function sstep_real_from_ratio<a class="headerlink" href="#function-sstep_real_from_ratio" title="Permanent link">&para;</a></h3>
+<p><em>Convert num / den to a per-unit signal, rounded and saturated.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>int sstep_real_from_ratio (
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    int32_t num,
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    int32_t den,
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    sstep_real_t * out
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>) 
+</code></pre></div></p>
+<p>Initialisation and slow loop only (64-bit division). </p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>num</code> Numerator, for example 1500 mA. </li>
+<li><code>den</code> Denominator, the base, for example 4000 mA; not 0. </li>
+<li><code>out</code> Result. </li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li><a href="../group__sstep__defs/#define-sstep_ok"><strong>SSTEP_OK</strong></a> (out NULL or den 0). </li>
+</ul>
+<hr>
+
+<h3 id="function-sstep_real_to_units">function sstep_real_to_units<a class="headerlink" href="#function-sstep_real_to_units" title="Permanent link">&para;</a></h3>
+<p><em>Convert a per-unit value back to engineering units: round(x * base).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>int32_t sstep_real_to_units (
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    sstep_acc_t x,
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    int32_t base
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>) 
+</code></pre></div></p>
+<p>Slow loop and status only. </p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>x</code> Per-unit accumulator. </li>
+<li><code>base</code> Base in engineering units, for example 4000 mA. </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>x * base, rounded to nearest and saturated to int32_t. </p>
+<hr>
+
+<h3 id="function-sstep_sin_cos">function sstep_sin_cos<a class="headerlink" href="#function-sstep_sin_cos" title="Permanent link">&para;</a></h3>
+<p><em>Sine and cosine of an electrical angle from a quarter-wave table (</em> <a href="../group__sstep__config/#define-sstep_cfg_sine_table_bits"><em><strong>SSTEP_CFG_SINE_TABLE_BITS</strong></em></a> <em>) with linear interpolation.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>struct sstep_sincos sstep_sin_cos (
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    sstep_angle_t angle
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>) 
+</code></pre></div></p>
+<p>Fast loop safe. Quadrant symmetric: sin(a + 90 deg) is bit-exactly cos(a). </p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>angle</code> Angle, 2^32 = one turn. </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Sine and cosine. </p>
+<hr>
+<h2 id="public-static-functions-documentation">Public Static Functions Documentation<a class="headerlink" href="#public-static-functions-documentation" title="Permanent link">&para;</a></h2>
+<h3 id="function-sstep_abs">function sstep_abs<a class="headerlink" href="#function-sstep_abs" title="Permanent link">&para;</a></h3>
+<p><em>Saturating |a|.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>static inline sstep_real_t sstep_abs (
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    sstep_real_t a
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>) 
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-sstep_acc_abs">function sstep_acc_abs<a class="headerlink" href="#function-sstep_acc_abs" title="Permanent link">&para;</a></h3>
+<p><em>Saturating |a| of an accumulator.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>static inline sstep_acc_t sstep_acc_abs (
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    sstep_acc_t a
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>) 
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-sstep_acc_add">function sstep_acc_add<a class="headerlink" href="#function-sstep_acc_add" title="Permanent link">&para;</a></h3>
+<p><em>Saturating accumulator a + b.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>static inline sstep_acc_t sstep_acc_add (
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    sstep_acc_t a,
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    sstep_acc_t b
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>) 
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-sstep_acc_clamp">function sstep_acc_clamp<a class="headerlink" href="#function-sstep_acc_clamp" title="Permanent link">&para;</a></h3>
+<p><em>Accumulator limited to lo .</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>static inline sstep_acc_t sstep_acc_clamp (
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    sstep_acc_t x,
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    sstep_acc_t lo,
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    sstep_acc_t hi
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>) 
+</code></pre></div></p>
+<p>. hi (requires lo &lt;= hi). </p>
+<hr>
+
+<h3 id="function-sstep_acc_from_real">function sstep_acc_from_real<a class="headerlink" href="#function-sstep_acc_from_real" title="Permanent link">&para;</a></h3>
+<p><em>Convert a signal to an accumulator (exact).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>static inline sstep_acc_t sstep_acc_from_real (
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    sstep_real_t a
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>) 
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-sstep_acc_halve">function sstep_acc_halve<a class="headerlink" href="#function-sstep_acc_halve" title="Permanent link">&para;</a></h3>
+<p><em>a / 2 (rounds toward minus infinity).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>static inline sstep_acc_t sstep_acc_halve (
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    sstep_acc_t a
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>) 
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-sstep_acc_in">function sstep_acc_in<a class="headerlink" href="#function-sstep_acc_in" title="Permanent link">&para;</a></h3>
+<p><em>Limit an accumulator to +/-</em> <a href="./#define-sstep_acc_in_max"><em><strong>SSTEP_ACC_IN_MAX</strong></em></a> <em>.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>static inline sstep_acc_t sstep_acc_in (
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    sstep_acc_t x
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>) 
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-sstep_acc_scale">function sstep_acc_scale<a class="headerlink" href="#function-sstep_acc_scale" title="Permanent link">&para;</a></h3>
+<p><em>x * k for |x| &lt; 2 pu (saturated first), rounded.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>static inline sstep_acc_t sstep_acc_scale (
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    sstep_acc_t x,
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    sstep_real_t k
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>) 
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-sstep_acc_to_real">function sstep_acc_to_real<a class="headerlink" href="#function-sstep_acc_to_real" title="Permanent link">&para;</a></h3>
+<p><em>Convert an accumulator to a signal, saturating.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>static inline sstep_real_t sstep_acc_to_real (
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    sstep_acc_t a
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>) 
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-sstep_acc_to_ticks">function sstep_acc_to_ticks<a class="headerlink" href="#function-sstep_acc_to_ticks" title="Permanent link">&para;</a></h3>
+<p><em>Duty cycle (0 .</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>static inline uint16_t sstep_acc_to_ticks (
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>    sstep_acc_t duty,
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>    uint16_t period
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>) 
+</code></pre></div></p>
+<p>. 1, clamped) to PWM compare ticks, rounded. </p>
+<hr>
+
+<h3 id="function-sstep_add">function sstep_add<a class="headerlink" href="#function-sstep_add" title="Permanent link">&para;</a></h3>
+<p><em>Saturating a + b.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>static inline sstep_real_t sstep_add (
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>    sstep_real_t a,
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>    sstep_real_t b
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>) 
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-sstep_asr">function sstep_asr<a class="headerlink" href="#function-sstep_asr" title="Permanent link">&para;</a></h3>
+<p><em>Arithmetic shift right (rounds toward minus infinity), written with unsigned shifts only (MISRA C:2012 Rule 10.1); compilers emit one ASR instruction.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>static inline int32_t sstep_asr (
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>    int32_t x,
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>    uint32_t n
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>) 
+</code></pre></div></p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>x</code> Value. </li>
+<li><code>n</code> Shift, 0..31. </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>floor(x / 2^n). </p>
+<hr>
+
+<h3 id="function-sstep_clamp">function sstep_clamp<a class="headerlink" href="#function-sstep_clamp" title="Permanent link">&para;</a></h3>
+<p><em>x limited to lo .</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>static inline sstep_real_t sstep_clamp (
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>    sstep_real_t x,
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>    sstep_real_t lo,
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>    sstep_real_t hi
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>) 
+</code></pre></div></p>
+<p>. hi (requires lo &lt;= hi). </p>
+<hr>
+
+<h3 id="function-sstep_div_unit">function sstep_div_unit<a class="headerlink" href="#function-sstep_div_unit" title="Permanent link">&para;</a></h3>
+<p><em>num / den for 0 &lt;= num &lt;= den, den &gt; 0, as a signal in 0 .</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>static inline sstep_real_t sstep_div_unit (
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>    sstep_acc_t num,
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>    sstep_acc_t den
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>) 
+</code></pre></div></p>
+<p>. +0.99997 (rounded, 1.0 saturates). One 32-bit division. </p>
+<hr>
+
+<h3 id="function-sstep_gain_mul">function sstep_gain_mul<a class="headerlink" href="#function-sstep_gain_mul" title="Permanent link">&para;</a></h3>
+<p><em>Gain times signal: g * x, rounded to nearest.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>static inline sstep_acc_t sstep_gain_mul (
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>    const struct sstep_gain * g,
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>    sstep_real_t x
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>) 
+</code></pre></div></p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>g</code> Gain from <a href="./#function-sstep_gain_from_ratio"><strong>sstep_gain_from_ratio()</strong></a>. </li>
+<li><code>x</code> Signal. </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Product as an accumulator (cannot overflow: |g * x| &lt; 32768). </p>
+<hr>
+
+<h3 id="function-sstep_gain_mul_acc">function sstep_gain_mul_acc<a class="headerlink" href="#function-sstep_gain_mul_acc" title="Permanent link">&para;</a></h3>
+<p><em>Gain times accumulator: g * x for |x| &lt; 4 pu (saturated first).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>static inline sstep_acc_t sstep_gain_mul_acc (
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>    const struct sstep_gain * g,
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>    sstep_acc_t x
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>) 
+</code></pre></div></p>
+<p>The two least significant bits of x are dropped (resolution 1.2e-4 pu). </p>
+<hr>
+
+<h3 id="function-sstep_gain_mul_int">function sstep_gain_mul_int<a class="headerlink" href="#function-sstep_gain_mul_int" title="Permanent link">&para;</a></h3>
+<p><em>Gain times integer: g * n as a per-unit accumulator, saturating.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>static inline sstep_acc_t sstep_gain_mul_int (
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>    const struct sstep_gain * g,
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>    int32_t n
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>) 
+</code></pre></div></p>
+<p>Used for ADC counts: with g = 1 / (counts per unit), the result is the signal in pu. </p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>g</code> Gain from <a href="./#function-sstep_gain_from_ratio"><strong>sstep_gain_from_ratio()</strong></a>. </li>
+<li><code>n</code> Integer, -32768 .. 32767 (larger values are saturated first). </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>g * n in Q15, saturated to the accumulator range. </p>
+<hr>
+
+<h3 id="function-sstep_integ_add">function sstep_integ_add<a class="headerlink" href="#function-sstep_integ_add" title="Permanent link">&para;</a></h3>
+<p><em>Integrator + g * x (x a signal), saturating.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>static inline sstep_integ_t sstep_integ_add (
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>    sstep_integ_t integ,
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>    const struct sstep_gain * g,
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>    sstep_real_t x
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>) 
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-sstep_integ_add_acc">function sstep_integ_add_acc<a class="headerlink" href="#function-sstep_integ_add_acc" title="Permanent link">&para;</a></h3>
+<p><em>Integrator + g * x (x an accumulator, |x| &lt; 4 pu), saturating.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>static inline sstep_integ_t sstep_integ_add_acc (
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>    sstep_integ_t integ,
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>    const struct sstep_gain * g,
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>    sstep_acc_t x
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>) 
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-sstep_integ_to_acc">function sstep_integ_to_acc<a class="headerlink" href="#function-sstep_integ_to_acc" title="Permanent link">&para;</a></h3>
+<p><em>Integrator value as an accumulator (rounded).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>static inline sstep_acc_t sstep_integ_to_acc (
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>    sstep_integ_t integ
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>) 
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-sstep_mul">function sstep_mul<a class="headerlink" href="#function-sstep_mul" title="Permanent link">&para;</a></h3>
+<p><em>a * b, rounded to nearest; (-1.0) * (-1.0) saturates to +0.99997.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>static inline sstep_real_t sstep_mul (
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>    sstep_real_t a,
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>    sstep_real_t b
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>) 
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-sstep_neg">function sstep_neg<a class="headerlink" href="#function-sstep_neg" title="Permanent link">&para;</a></h3>
+<p><em>Saturating -a (-(-1.0) gives +0.99997).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>static inline sstep_real_t sstep_neg (
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>    sstep_real_t a
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>) 
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-sstep_sat">function sstep_sat<a class="headerlink" href="#function-sstep_sat" title="Permanent link">&para;</a></h3>
+<p><em>Saturate a 32-bit value to</em> <a href="./#typedef-sstep_real_t"><em><strong>sstep_real_t</strong></em></a> <em>.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>static inline sstep_real_t sstep_sat (
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>    int32_t x
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>) 
+</code></pre></div></p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>x</code> Value in Q15. </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>x limited to <a href="./#define-sstep_real_min"><strong>SSTEP_REAL_MIN</strong></a> .. <a href="./#define-sstep_real_max"><strong>SSTEP_REAL_MAX</strong></a>. </p>
+<hr>
+
+<h3 id="function-sstep_shift_round">function sstep_shift_round<a class="headerlink" href="#function-sstep_shift_round" title="Permanent link">&para;</a></h3>
+<p><em>Shift with rounding: sh &gt; 0 divides by 2^sh (round half up), sh &lt; 0 multiplies by 2^-sh with saturation.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>static inline int32_t sstep_shift_round (
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>    int32_t p,
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>    int32_t sh
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>) 
+</code></pre></div></p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>p</code> Value. </li>
+<li><code>sh</code> Shift, -31 .. 31. </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Shifted value. </p>
+<hr>
+
+<h3 id="function-sstep_sub">function sstep_sub<a class="headerlink" href="#function-sstep_sub" title="Permanent link">&para;</a></h3>
+<p><em>Saturating a - b.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>static inline sstep_real_t sstep_sub (
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>    sstep_real_t a,
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>    sstep_real_t b
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>) 
+</code></pre></div></p>
+<hr>
+<h2 id="macro-definition-documentation">Macro Definition Documentation<a class="headerlink" href="#macro-definition-documentation" title="Permanent link">&para;</a></h2>
+<h3 id="define-sstep_acc_c">define SSTEP_ACC_C<a class="headerlink" href="#define-sstep_acc_c" title="Permanent link">&para;</a></h3>
+<p><em>Accumulator constant from a floating literal (initializers only).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>#define SSTEP_ACC_C (
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>    x
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>) `(( sstep_acc_t )((x) * 32768.0))`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-sstep_acc_in_max">define SSTEP_ACC_IN_MAX<a class="headerlink" href="#define-sstep_acc_in_max" title="Permanent link">&para;</a></h3>
+<p><em>Largest magnitude accepted by</em> <a href="./#function-sstep_gain_mul_acc"><em><strong>sstep_gain_mul_acc()</strong></em></a> <em>and the integrator updates from accumulators (4 pu - 2^-15); larger inputs are saturated.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>#define SSTEP_ACC_IN_MAX `SSTEP_ACC_C (3.999969482421875)`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-sstep_acc_max">define SSTEP_ACC_MAX<a class="headerlink" href="#define-sstep_acc_max" title="Permanent link">&para;</a></h3>
+<p><em>Largest</em> <a href="./#typedef-sstep_acc_t"><em><strong>sstep_acc_t</strong></em></a> <em>(+65536 - 2^-15).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>#define SSTEP_ACC_MAX `(( sstep_acc_t )INT32_MAX)`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-sstep_acc_min">define SSTEP_ACC_MIN<a class="headerlink" href="#define-sstep_acc_min" title="Permanent link">&para;</a></h3>
+<p><em>Smallest</em> <a href="./#typedef-sstep_acc_t"><em><strong>sstep_acc_t</strong></em></a> <em>(-65536).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>#define SSTEP_ACC_MIN `(( sstep_acc_t )INT32_MIN)`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-sstep_acc_one">define SSTEP_ACC_ONE<a class="headerlink" href="#define-sstep_acc_one" title="Permanent link">&para;</a></h3>
+<p><em>1.0 as an accumulator (exactly representable in both backends).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>#define SSTEP_ACC_ONE `SSTEP_ACC_C (1.0)`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-sstep_acc_scale_max">define SSTEP_ACC_SCALE_MAX<a class="headerlink" href="#define-sstep_acc_scale_max" title="Permanent link">&para;</a></h3>
+<p><em>Largest magnitude accepted by</em> <a href="./#function-sstep_acc_scale"><em><strong>sstep_acc_scale()</strong></em></a> <em>(2 pu - 2^-15).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>#define SSTEP_ACC_SCALE_MAX `SSTEP_ACC_C (1.999969482421875)`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-sstep_gain_exp_max">define SSTEP_GAIN_EXP_MAX<a class="headerlink" href="#define-sstep_gain_exp_max" title="Permanent link">&para;</a></h3>
+<p><em>Largest gain exponent (gains up to 32767).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>#define SSTEP_GAIN_EXP_MAX `15`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-sstep_gain_exp_min">define SSTEP_GAIN_EXP_MIN<a class="headerlink" href="#define-sstep_gain_exp_min" title="Permanent link">&para;</a></h3>
+<p><em>Smallest gain exponent.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>#define SSTEP_GAIN_EXP_MIN `(-16)`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-sstep_integ_frac_bits">define SSTEP_INTEG_FRAC_BITS<a class="headerlink" href="#define-sstep_integ_frac_bits" title="Permanent link">&para;</a></h3>
+<p><em>Fractional bits of</em> <a href="./#typedef-sstep_integ_t"><em><strong>sstep_integ_t</strong></em></a> <em>.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>#define SSTEP_INTEG_FRAC_BITS `27`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-sstep_real_c">define SSTEP_REAL_C<a class="headerlink" href="#define-sstep_real_c" title="Permanent link">&para;</a></h3>
+<p><em>Constant from a floating literal, saturated to -1.0 .</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>#define SSTEP_REAL_C (
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>    x
+<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>) `/* multi line expression */`
+</code></pre></div></p>
+<p>. +0.99997. An arithmetic constant expression: use it in initializers of static or <code>const</code> objects, where the compiler evaluates it and no floating point code is generated. It is not an integer constant expression (C11 6.6), so it cannot be used in <code>#if</code>, <code>case</code> or <code>static_assert</code>. </p>
+<hr>
+
+<h3 id="define-sstep_real_frac_bits">define SSTEP_REAL_FRAC_BITS<a class="headerlink" href="#define-sstep_real_frac_bits" title="Permanent link">&para;</a></h3>
+<p><em>Number of fractional bits of</em> <a href="./#typedef-sstep_real_t"><em><strong>sstep_real_t</strong></em></a> <em>and</em><a href="./#typedef-sstep_acc_t"><em><strong>sstep_acc_t</strong></em></a> <em>.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>#define SSTEP_REAL_FRAC_BITS `15`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-sstep_real_max">define SSTEP_REAL_MAX<a class="headerlink" href="#define-sstep_real_max" title="Permanent link">&para;</a></h3>
+<p><em>Largest</em> <a href="./#typedef-sstep_real_t"><em><strong>sstep_real_t</strong></em></a> <em>(+0.99997).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>#define SSTEP_REAL_MAX `(( sstep_real_t )INT16_MAX)`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-sstep_real_min">define SSTEP_REAL_MIN<a class="headerlink" href="#define-sstep_real_min" title="Permanent link">&para;</a></h3>
+<p><em>Smallest</em> <a href="./#typedef-sstep_real_t"><em><strong>sstep_real_t</strong></em></a> <em>(-1.0).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>#define SSTEP_REAL_MIN `(( sstep_real_t )INT16_MIN)`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-sstep_real_zero">define SSTEP_REAL_ZERO<a class="headerlink" href="#define-sstep_real_zero" title="Permanent link">&para;</a></h3>
+<p><em>Zero.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>#define SSTEP_REAL_ZERO `SSTEP_REAL_C (0.0)`
+</code></pre></div></p>
+<hr>
+
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Anton Vynohradov · <a href="https://systemfromscratch.com">SystemFromScratch®</a> · Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/AntonVynohradov" target="_blank" rel="noopener" title="Anton Vynohradov on GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://www.linkedin.com/in/vynohradov" target="_blank" rel="noopener" title="Anton Vynohradov on LinkedIn" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://orcid.org/0009-0005-6965-0911" target="_blank" rel="noopener" title="Anton Vynohradov on ORCID" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M294.7 188.2h-45.9V342h47.5c67.6 0 83.1-51.3 83.1-76.9 0-41.6-26.5-76.9-84.7-76.9M256 8a248 248 0 1 0 0 496 248 248 0 1 0 0-496m-80.8 360.8h-29.8V161.3h29.8zM160.3 98.5a19.6 19.6 0 1 1 0 39.2 19.6 19.6 0 1 1 0-39.2M300 369h-81V161.3h80.6c76.7 0 110.4 54.8 110.4 103.9 0 53.3-41.7 103.9-110 103.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://systemfromscratch.com" target="_blank" rel="noopener" title="SystemFromScratch®" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2s.06-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.92 7.92 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8 8 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.7 15.7 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "navigation.instant", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

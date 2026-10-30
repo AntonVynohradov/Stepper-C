@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structsstep__setpoint" kind="struct" language="C++" prot="public">
+    <compoundname>sstep_setpoint</compoundname>
+    <includes refid="sstep__ctrl_8h" local="no">sstep_ctrl.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsstep__setpoint_1a2d98ab41b79ba24fc3ef36d72e50ae5e" prot="public" static="no" mutable="no">
+        <type><ref refid="group__sstep__math_1ga2d9b6ce2135a467c6d227cde4dd9c12b" kindref="member">sstep_angle_t</ref></type>
+        <definition>sstep_angle_t sstep_setpoint::angle</definition>
+        <argsstring></argsstring>
+        <name>angle</name>
+        <qualifiedname>sstep_setpoint::angle</qualifiedname>
+        <briefdescription>
+<para>Electrical angle at the start of the slow period. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="236" column="19" bodyfile="inc/sstep_ctrl.h" bodystart="236" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__setpoint_1a033b976b3514e30ae66c6cb827008353" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t sstep_setpoint::dangle</definition>
+        <argsstring></argsstring>
+        <name>dangle</name>
+        <qualifiedname>sstep_setpoint::dangle</qualifiedname>
+        <briefdescription>
+<para>Angle increment per fast loop period. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="237" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="237" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__setpoint_1acb0b9757faf6ab920c8a201016d27f3d" prot="public" static="no" mutable="no">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>sstep_real_t sstep_setpoint::i_amp</definition>
+        <argsstring></argsstring>
+        <name>i_amp</name>
+        <qualifiedname>sstep_setpoint::i_amp</qualifiedname>
+        <briefdescription>
+<para>Current amplitude [pu]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="238" column="18" bodyfile="inc/sstep_ctrl.h" bodystart="238" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__setpoint_1ac3354caca384888d3cc300b62fb56765" prot="public" static="no" mutable="no">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>sstep_real_t sstep_setpoint::ff</definition>
+        <argsstring></argsstring>
+        <name>ff</name>
+        <qualifiedname>sstep_setpoint::ff</qualifiedname>
+        <briefdescription>
+<para>Back-EMF feed-forward amplitude [pu of V_base]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="239" column="18" bodyfile="inc/sstep_ctrl.h" bodystart="239" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__setpoint_1a85330e98c092c46275560e02049227d0" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
+        <definition>struct sstep_gain sstep_setpoint::inv_vbus</definition>
+        <argsstring></argsstring>
+        <name>inv_vbus</name>
+        <qualifiedname>sstep_setpoint::inv_vbus</qualifiedname>
+        <briefdescription>
+<para>V_base / measured bus voltage. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="240" column="21" bodyfile="inc/sstep_ctrl.h" bodystart="240" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Setpoint handed from the slow loop to the fast loop. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Private. </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="2">
+        <label>sstep_gain</label>
+        <link refid="structsstep__gain"/>
+      </node>
+      <node id="1">
+        <label>sstep_setpoint</label>
+        <link refid="structsstep__setpoint"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>inv_vbus</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="inc/sstep_ctrl.h" line="234" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="235" bodyend="241"/>
+    <listofallmembers>
+      <member refid="structsstep__setpoint_1a2d98ab41b79ba24fc3ef36d72e50ae5e" prot="public" virt="non-virtual"><scope>sstep_setpoint</scope><name>angle</name></member>
+      <member refid="structsstep__setpoint_1a033b976b3514e30ae66c6cb827008353" prot="public" virt="non-virtual"><scope>sstep_setpoint</scope><name>dangle</name></member>
+      <member refid="structsstep__setpoint_1ac3354caca384888d3cc300b62fb56765" prot="public" virt="non-virtual"><scope>sstep_setpoint</scope><name>ff</name></member>
+      <member refid="structsstep__setpoint_1acb0b9757faf6ab920c8a201016d27f3d" prot="public" virt="non-virtual"><scope>sstep_setpoint</scope><name>i_amp</name></member>
+      <member refid="structsstep__setpoint_1a85330e98c092c46275560e02049227d0" prot="public" virt="non-virtual"><scope>sstep_setpoint</scope><name>inv_vbus</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

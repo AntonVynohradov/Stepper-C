@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="sstep__defs_8h" kind="file" language="C++">
+    <compoundname>sstep_defs.h</compoundname>
+    <includes local="no">stdint.h</includes>
+    <includedby refid="sstep__ctrl_8h" local="yes">inc/sstep_ctrl.h</includedby>
+    <includedby refid="sstep__math_8c" local="yes">src/sstep_math.c</includedby>
+    <includedby refid="sstep_8h" local="yes">sstep.h</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>inc/sstep_defs.h</label>
+        <link refid="sstep__defs_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>inc/sstep_ctrl.h</label>
+        <link refid="sstep__ctrl_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>inc/sstep_defs.h</label>
+        <link refid="sstep__defs_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>src/sstep_internal.h</label>
+        <link refid="sstep__internal_8h_source"/>
+      </node>
+      <node id="4">
+        <label>sstep.h</label>
+        <link refid="sstep_8h_source"/>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="define">
+      <member refid="group__sstep__defs_1gad80c1718aa6b968cfd521404803da291" kind="define"><name>SSTEP_OK</name></member>
+      <member refid="group__sstep__defs_1gaff8dbc7cce3d2e6d453df3c6d9ab1d14" kind="define"><name>SSTEP_ERR_PARAM</name></member>
+      <member refid="group__sstep__defs_1ga5038754fef123e5d599064d9c9680b88" kind="define"><name>SSTEP_ERR_CONFIG</name></member>
+      <member refid="group__sstep__defs_1ga145c9925476a6618b7d317935623ef33" kind="define"><name>SSTEP_ERR_STATE</name></member>
+      <member refid="group__sstep__defs_1ga80beeffdc48a72869fd2e6aa6bb84d32" kind="define"><name>SSTEP_ERR_UNSUPPORTED</name></member>
+      <member refid="group__sstep__defs_1ga1322a183e22d7a74f48144c279a90fe7" kind="define"><name>SSTEP_LEGS_MAX</name></member>
+      <member refid="group__sstep__defs_1ga2d6e88422a533af881e0e02728673d55" kind="define"><name>SSTEP_FAULT_NONE</name></member>
+      <member refid="group__sstep__defs_1gaa353d481953ff35813c91602f7767914" kind="define"><name>SSTEP_FAULT_OVERCURRENT</name></member>
+      <member refid="group__sstep__defs_1gaac654b622282f0a713bf3d7d066bcc8e" kind="define"><name>SSTEP_FAULT_OVERVOLTAGE</name></member>
+      <member refid="group__sstep__defs_1gadf817747c1ca590152b756f4d5cf88ed" kind="define"><name>SSTEP_FAULT_UNDERVOLTAGE</name></member>
+      <member refid="group__sstep__defs_1gab51def6949f6a27cf6c6651c246c8cc7" kind="define"><name>SSTEP_FAULT_HAL</name></member>
+      <member refid="group__sstep__defs_1ga6160f6093576feb828e106ab46dc7269" kind="define"><name>SSTEP_FAULT_EXTERNAL</name></member>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <member refid="group__sstep__defs_1gabd2c373f4d8a7502c78952555c8cb23c" kind="enum"><name>sstep_topology</name></member>
+      <member refid="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" kind="enum"><name>sstep_state</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*******************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Stepper-C:<sp/>Stepper<sp/>Motor<sp/>Control<sp/>Implementation</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Project:<sp/><sp/><sp/><sp/><sp/>Stepper-C<sp/>-<sp/>Hardware-Agnostic<sp/>Stepper<sp/>Motor<sp/>Control<sp/>Library</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Description:<sp/>Public<sp/>constants:<sp/>status<sp/>codes,<sp/>topologies,<sp/>power<sp/>stage<sp/>legs,<sp/>faults,<sp/>states.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Author:<sp/><sp/><sp/><sp/><sp/><sp/>Anton<sp/>Vynohradov</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>Email:<sp/><sp/><sp/><sp/><sp/><sp/><sp/>avynohradov@systemfromscratch.com</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>License:<sp/><sp/><sp/><sp/><sp/>Apache<sp/>License<sp/>2.0</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2026<sp/>Anton<sp/>Vynohradov</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/>Licensed<sp/>under<sp/>the<sp/>Apache<sp/>License,<sp/>Version<sp/>2.0<sp/>(the<sp/>&quot;License&quot;);</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>you<sp/>may<sp/>not<sp/>use<sp/>this<sp/>file<sp/>except<sp/>in<sp/>compliance<sp/>with<sp/>the<sp/>License.</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>You<sp/>may<sp/>obtain<sp/>a<sp/>copy<sp/>of<sp/>the<sp/>License<sp/>at</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/>http://www.apache.org/licenses/LICENSE-2.0</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>Unless<sp/>required<sp/>by<sp/>applicable<sp/>law<sp/>or<sp/>agreed<sp/>to<sp/>in<sp/>writing,<sp/>software</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>distributed<sp/>under<sp/>the<sp/>License<sp/>is<sp/>distributed<sp/>on<sp/>an<sp/>&quot;AS<sp/>IS&quot;<sp/>BASIS,</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WITHOUT<sp/>WARRANTIES<sp/>OR<sp/>CONDITIONS<sp/>OF<sp/>ANY<sp/>KIND,<sp/>either<sp/>express<sp/>or<sp/>implied.</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>See<sp/>the<sp/>License<sp/>for<sp/>the<sp/>specific<sp/>language<sp/>governing<sp/>permissions<sp/>and</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>limitations<sp/>under<sp/>the<sp/>License.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>SPDX-License-Identifier:<sp/>Apache-2.0</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>******************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_DEFS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_DEFS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/>*<sp/>INCLUDES</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="55"><highlight class="comment"><sp/>*<sp/>STATUS<sp/>CODES</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="group__sstep__defs_1gad80c1718aa6b968cfd521404803da291" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_OK<sp/>0</highlight></codeline>
+<codeline lineno="61" refid="group__sstep__defs_1gaff8dbc7cce3d2e6d453df3c6d9ab1d14" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_ERR_PARAM<sp/>(-1)</highlight></codeline>
+<codeline lineno="64" refid="group__sstep__defs_1ga5038754fef123e5d599064d9c9680b88" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_ERR_CONFIG<sp/>(-2)</highlight></codeline>
+<codeline lineno="66" refid="group__sstep__defs_1ga145c9925476a6618b7d317935623ef33" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_ERR_STATE<sp/>(-3)</highlight></codeline>
+<codeline lineno="68" refid="group__sstep__defs_1ga80beeffdc48a72869fd2e6aa6bb84d32" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_ERR_UNSUPPORTED<sp/>(-4)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="71"><highlight class="comment"><sp/>*<sp/>POWER<sp/>STAGE</highlight></codeline>
+<codeline lineno="72"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="group__sstep__defs_1ga1322a183e22d7a74f48144c279a90fe7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_LEGS_MAX<sp/>4U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78" refid="group__sstep__defs_1gabd2c373f4d8a7502c78952555c8cb23c" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__sstep__defs_1gabd2c373f4d8a7502c78952555c8cb23c" kindref="member">sstep_topology</ref></highlight></codeline>
+<codeline lineno="79"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="82" refid="group__sstep__defs_1ggabd2c373f4d8a7502c78952555c8cb23caa58189b3725d33b3e2e45e5de1edea0b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__defs_1ggabd2c373f4d8a7502c78952555c8cb23caa58189b3725d33b3e2e45e5de1edea0b" kindref="member">SSTEP_TOPOLOGY_FULL_BRIDGE</ref><sp/>=<sp/>0,</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__defs_1ggabd2c373f4d8a7502c78952555c8cb23cad79082b32238cad97b34ad994c7a156b" kindref="member">SSTEP_TOPOLOGY_SHARED_LEG</ref><sp/>=<sp/>1</highlight></codeline>
+<codeline lineno="87" refid="group__sstep__defs_1ggabd2c373f4d8a7502c78952555c8cb23cad79082b32238cad97b34ad994c7a156b" refkind="member"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="90"><highlight class="comment"><sp/>*<sp/>FAULTS</highlight></codeline>
+<codeline lineno="91"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95" refid="group__sstep__defs_1ga2d6e88422a533af881e0e02728673d55" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_FAULT_NONE<sp/>0x0000U</highlight></codeline>
+<codeline lineno="97" refid="group__sstep__defs_1gaa353d481953ff35813c91602f7767914" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_FAULT_OVERCURRENT<sp/>0x0001U</highlight></codeline>
+<codeline lineno="99" refid="group__sstep__defs_1gaac654b622282f0a713bf3d7d066bcc8e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_FAULT_OVERVOLTAGE<sp/>0x0002U</highlight></codeline>
+<codeline lineno="101" refid="group__sstep__defs_1gadf817747c1ca590152b756f4d5cf88ed" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_FAULT_UNDERVOLTAGE<sp/>0x0004U</highlight></codeline>
+<codeline lineno="103" refid="group__sstep__defs_1gab51def6949f6a27cf6c6651c246c8cc7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_FAULT_HAL<sp/>0x0008U</highlight></codeline>
+<codeline lineno="106" refid="group__sstep__defs_1ga6160f6093576feb828e106ab46dc7269" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_FAULT_EXTERNAL<sp/>0x0010U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="109"><highlight class="comment"><sp/>*<sp/>STATES</highlight></codeline>
+<codeline lineno="110"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113" refid="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" kindref="member">sstep_state</ref></highlight></codeline>
+<codeline lineno="114"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="115" refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0eaba01894d51e56a80832a7e110412cb96" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0eaba01894d51e56a80832a7e110412cb96" kindref="member">SSTEP_STATE_DISABLED</ref><sp/>=<sp/>0,<sp/></highlight></codeline>
+<codeline lineno="116" refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0eaa14ce43a1268feb093f8c2c24258646a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0eaa14ce43a1268feb093f8c2c24258646a" kindref="member">SSTEP_STATE_HOLDING</ref><sp/>=<sp/>1,<sp/><sp/></highlight></codeline>
+<codeline lineno="117" refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0ea123279ad3851c4bbf9f1478965363d01" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0ea123279ad3851c4bbf9f1478965363d01" kindref="member">SSTEP_STATE_MOVING</ref><sp/>=<sp/>2,<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0ea3974b935bf744d601c1b92ce99b36900" kindref="member">SSTEP_STATE_FAULT</ref><sp/>=<sp/>3<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="119" refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0ea3974b935bf744d601c1b92ce99b36900" refkind="member"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_DEFS_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="inc/sstep_defs.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structsstep__status" kind="struct" language="C++" prot="public">
+    <compoundname>sstep_status</compoundname>
+    <includes refid="sstep__ctrl_8h" local="no">sstep_ctrl.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsstep__status_1a85458678f815241c72025e8f66e88c2d" prot="public" static="no" mutable="no">
+        <type>enum <ref refid="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" kindref="member">sstep_state</ref></type>
+        <definition>enum sstep_state sstep_status::state</definition>
+        <argsstring></argsstring>
+        <name>state</name>
+        <qualifiedname>sstep_status::state</qualifiedname>
+        <briefdescription>
+<para>Driver state. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="219" column="21" bodyfile="inc/sstep_ctrl.h" bodystart="219" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__status_1ab27f89ef5d99d1ee0b20285d9766ec3d" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_status::faults</definition>
+        <argsstring></argsstring>
+        <name>faults</name>
+        <qualifiedname>sstep_status::faults</qualifiedname>
+        <briefdescription>
+<para>Active <ref refid="group__sstep__defs_1gaa353d481953ff35813c91602f7767914" kindref="member">SSTEP_FAULT_OVERCURRENT</ref> ... flags. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="220" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="220" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__status_1ae6aa515ae7cf74afc1ef786d82e64cad" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t sstep_status::position</definition>
+        <argsstring></argsstring>
+        <name>position</name>
+        <qualifiedname>sstep_status::position</qualifiedname>
+        <briefdescription>
+<para>Commanded position [microsteps]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="221" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="221" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__status_1a6fcbf7a3d68225b0d3416d527feae046" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t sstep_status::target</definition>
+        <argsstring></argsstring>
+        <name>target</name>
+        <qualifiedname>sstep_status::target</qualifiedname>
+        <briefdescription>
+<para>Target of the current move [microsteps]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="222" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="222" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__status_1a21a6c20ef4fa9108811b9a981d2cd644" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t sstep_status::velocity</definition>
+        <argsstring></argsstring>
+        <name>velocity</name>
+        <qualifiedname>sstep_status::velocity</qualifiedname>
+        <briefdescription>
+<para>Commanded velocity [microsteps/s]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="223" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="223" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__status_1aa5d3e619afa9c158f9d12fab523542e3" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t sstep_status::i_a_ma</definition>
+        <argsstring></argsstring>
+        <name>i_a_ma</name>
+        <qualifiedname>sstep_status::i_a_ma</qualifiedname>
+        <briefdescription>
+<para>Last measured phase A current [mA]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="224" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="224" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__status_1a3558ee758854d46ef02a0198167d5655" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t sstep_status::i_b_ma</definition>
+        <argsstring></argsstring>
+        <name>i_b_ma</name>
+        <qualifiedname>sstep_status::i_b_ma</qualifiedname>
+        <briefdescription>
+<para>Last measured phase B current [mA]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="225" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="225" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__status_1a7f918e03de222e8cc0d7cf58ae050b06" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_status::vbus_mv</definition>
+        <argsstring></argsstring>
+        <name>vbus_mv</name>
+        <qualifiedname>sstep_status::vbus_mv</qualifiedname>
+        <briefdescription>
+<para>Last measured bus voltage [mV]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="226" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="226" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Snapshot returned by <ref refid="group__sstep__ctrl_1gafda7fec931ffa0ac11e671c75cd39300" kindref="member">sstep_get_status()</ref>, in engineering units. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="inc/sstep_ctrl.h" line="217" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="218" bodyend="227"/>
+    <listofallmembers>
+      <member refid="structsstep__status_1ab27f89ef5d99d1ee0b20285d9766ec3d" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>faults</name></member>
+      <member refid="structsstep__status_1aa5d3e619afa9c158f9d12fab523542e3" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>i_a_ma</name></member>
+      <member refid="structsstep__status_1a3558ee758854d46ef02a0198167d5655" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>i_b_ma</name></member>
+      <member refid="structsstep__status_1ae6aa515ae7cf74afc1ef786d82e64cad" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>position</name></member>
+      <member refid="structsstep__status_1a85458678f815241c72025e8f66e88c2d" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>state</name></member>
+      <member refid="structsstep__status_1a6fcbf7a3d68225b0d3416d527feae046" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>target</name></member>
+      <member refid="structsstep__status_1a7f918e03de222e8cc0d7cf58ae050b06" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>vbus_mv</name></member>
+      <member refid="structsstep__status_1a21a6c20ef4fa9108811b9a981d2cd644" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>velocity</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

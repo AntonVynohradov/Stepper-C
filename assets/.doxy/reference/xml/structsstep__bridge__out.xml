@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structsstep__bridge__out" kind="struct" language="C++" prot="public">
+    <compoundname>sstep_bridge_out</compoundname>
+    <includes refid="sstep__internal_8h" local="no">sstep_internal.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsstep__bridge__out_1a49e42fd980a0fcccd4b1cdce35113ce4" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_bridge_out::compare[SSTEP_LEGS_MAX]</definition>
+        <argsstring>[SSTEP_LEGS_MAX]</argsstring>
+        <name>compare</name>
+        <qualifiedname>sstep_bridge_out::compare</qualifiedname>
+        <briefdescription>
+<para>Compare values per leg. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="73" column="14" bodyfile="src/sstep_internal.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__bridge__out_1a57c99915540a09760649dfdcac1e5df7" prot="public" static="no" mutable="no">
+        <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+        <definition>sstep_acc_t sstep_bridge_out::v[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>v</name>
+        <qualifiedname>sstep_bridge_out::v</qualifiedname>
+        <briefdescription>
+<para>Applied phase voltages [pu of V_base]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="74" column="17" bodyfile="src/sstep_internal.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__bridge__out_1a758e1a5c6ff779d77cbdc3af2ea39729" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool sstep_bridge_out::limited</definition>
+        <argsstring></argsstring>
+        <name>limited</name>
+        <qualifiedname>sstep_bridge_out::limited</qualifiedname>
+        <briefdescription>
+<para>The request was scaled down. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="75" column="10" bodyfile="src/sstep_internal.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Result of the power stage mapping. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/sstep_internal.h" line="71" column="1" bodyfile="src/sstep_internal.h" bodystart="72" bodyend="76"/>
+    <listofallmembers>
+      <member refid="structsstep__bridge__out_1a49e42fd980a0fcccd4b1cdce35113ce4" prot="public" virt="non-virtual"><scope>sstep_bridge_out</scope><name>compare</name></member>
+      <member refid="structsstep__bridge__out_1a758e1a5c6ff779d77cbdc3af2ea39729" prot="public" virt="non-virtual"><scope>sstep_bridge_out</scope><name>limited</name></member>
+      <member refid="structsstep__bridge__out_1a57c99915540a09760649dfdcac1e5df7" prot="public" virt="non-virtual"><scope>sstep_bridge_out</scope><name>v</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

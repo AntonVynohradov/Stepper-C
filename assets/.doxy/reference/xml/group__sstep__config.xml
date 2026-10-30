@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="group__sstep__config" kind="group">
+    <compoundname>sstep_config</compoundname>
+    <title>Build-time configuration</title>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="group__sstep__config_1gaabdd28b396cb602508fecd7d015ecbf9" prot="public" static="no">
+        <name>SSTEP_MATH_BACKEND_FIXED</name>
+        <initializer>0</initializer>
+        <briefdescription>
+<para>Fixed point backend: Q15 signals, Q31 accumulators, integer-only arithmetic. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>For MCUs without an FPU (Cortex-M0/M0+/M3, RISC-V RV32IMC, 8/16-bit cores). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_config.h" line="61" column="9" bodyfile="inc/sstep_config.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__config_1ga28dd604469108cb795b2b2e33d02ae06" prot="public" static="no">
+        <name>SSTEP_MATH_BACKEND_FLOAT</name>
+        <initializer>1</initializer>
+        <briefdescription>
+<para>Single-precision float backend. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>For MCUs with a hardware FPU (Cortex-M4F/M7/M33 with FPU, STM32G4, ESP32-S3...). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_config.h" line="65" column="9" bodyfile="inc/sstep_config.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__config_1gac0ee05e0335a33c6e3ecc3c9c59587d5" prot="public" static="no">
+        <name>SSTEP_CFG_MATH_BACKEND</name>
+        <initializer><ref refid="group__sstep__config_1gaabdd28b396cb602508fecd7d015ecbf9" kindref="member">SSTEP_MATH_BACKEND_FIXED</ref></initializer>
+        <briefdescription>
+<para>Selected numeric backend: <ref refid="group__sstep__config_1gaabdd28b396cb602508fecd7d015ecbf9" kindref="member">SSTEP_MATH_BACKEND_FIXED</ref> or <ref refid="group__sstep__config_1ga28dd604469108cb795b2b2e33d02ae06" kindref="member">SSTEP_MATH_BACKEND_FLOAT</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_config.h" line="69" column="9" bodyfile="inc/sstep_config.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__config_1ga31fbdc1c85873c64564a26b02b8f9f70" prot="public" static="no">
+        <name>SSTEP_CFG_TOPOLOGY_FULL_BRIDGE</name>
+        <initializer>1</initializer>
+        <briefdescription>
+<para>1: compile support for two full H-bridges (4 half-bridge legs). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_config.h" line="83" column="9" bodyfile="inc/sstep_config.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__config_1gaeb2e0432614d6dca86d83418ffcfbea7" prot="public" static="no">
+        <name>SSTEP_CFG_TOPOLOGY_SHARED_LEG</name>
+        <initializer>1</initializer>
+        <briefdescription>
+<para>1: compile support for three half-bridges with a common leg (3 legs), for example STMicroelectronics B-G431B-ESC1. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_config.h" line="89" column="9" bodyfile="inc/sstep_config.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__config_1gacb1659c8029aeb92ff4062d4a265535b" prot="public" static="no">
+        <name>SSTEP_CFG_MICROSTEPS_MAX</name>
+        <initializer>256U</initializer>
+        <briefdescription>
+<para>Largest microstep division accepted by <ref refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kindref="member">sstep_init()</ref> (power of two, 1..256). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_config.h" line="110" column="9" bodyfile="inc/sstep_config.h" bodystart="110" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__config_1ga50ab8d5098e6740dbcd9dbc6f4200d70" prot="public" static="no">
+        <name>SSTEP_CFG_SINE_TABLE_BITS</name>
+        <initializer>8U</initializer>
+        <briefdescription>
+<para>log2 of the number of entries of the quarter-wave sine table (6..10). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>The table is <computeroutput>static const</computeroutput> (flash): 2^bits + 1 entries of 2 bytes (fixed) or 4 bytes (float). Values between entries are linearly interpolated. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_config.h" line="122" column="9" bodyfile="inc/sstep_config.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__config_1ga61a368eeac97ae6ab0f43c70a2acc423" prot="public" static="no">
+        <name>SSTEP_CFG_ARG_CHECKS</name>
+        <initializer>1</initializer>
+        <briefdescription>
+<para>1: every public function validates its pointer arguments (MISRA Dir 4.11). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>0 removes the checks from <ref refid="group__sstep__ctrl_1ga9d39aedf45b1e59f71fe94a1dc0df79b" kindref="member">sstep_fast_loop()</ref> only, the function called from the PWM interrupt; all other functions always check. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_config.h" line="137" column="9" bodyfile="inc/sstep_config.h" bodystart="137" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Macros that select the code compiled into the library. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Every macro has a default and may be overridden in one of two ways:<itemizedlist>
+<listitem><para>on the compiler command line (<computeroutput>-DSSTEP_CFG_MATH_BACKEND=SSTEP_MATH_BACKEND_FLOAT</computeroutput>), or</para>
+</listitem><listitem><para>in a user header <computeroutput>sstep_user_config.h</computeroutput>, included when the macro <computeroutput>SSTEP_USER_CONFIG</computeroutput> is defined (CMake: set <computeroutput>SSTEP_CONFIG_DIR</computeroutput> to its folder).</para>
+</listitem></itemizedlist>
+</para>
+<para>Values that cannot change at run time (code size, table sizes, which code paths exist) live here. Motor and board parameters are run-time values passed to <ref refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kindref="member">sstep_init()</ref>. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

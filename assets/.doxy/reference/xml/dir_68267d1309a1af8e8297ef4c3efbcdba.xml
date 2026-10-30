@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="dir_68267d1309a1af8e8297ef4c3efbcdba" kind="dir">
+    <compoundname>src</compoundname>
+    <innerfile refid="sstep__bridge_8c">sstep_bridge.c</innerfile>
+    <innerfile refid="sstep__ctrl_8c">sstep_ctrl.c</innerfile>
+    <innerfile refid="sstep__internal_8h">sstep_internal.h</innerfile>
+    <innerfile refid="sstep__math_8c">sstep_math.c</innerfile>
+    <innerfile refid="sstep__motion_8c">sstep_motion.c</innerfile>
+    <innerfile refid="sstep__sin__table_8c">sstep_sin_table.c</innerfile>
+    <innerfile refid="sstep__sin__table_8h">sstep_sin_table.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/"/>
+  </compounddef>
+</doxygen>

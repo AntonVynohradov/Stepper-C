@@ -1,0 +1,1180 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="group__sstep__math" kind="group">
+    <compoundname>sstep_math</compoundname>
+    <title>Numeric backend</title>
+    <innerclass refid="structsstep__gain" prot="public">sstep_gain</innerclass>
+    <innerclass refid="structsstep__sincos" prot="public">sstep_sincos</innerclass>
+    <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="group__sstep__math_1ga2d9b6ce2135a467c6d227cde4dd9c12b" prot="public" static="no">
+        <type>uint32_t</type>
+        <definition>typedef uint32_t sstep_angle_t</definition>
+        <argsstring></argsstring>
+        <name>sstep_angle_t</name>
+        <briefdescription>
+<para>Electrical angle: one full electrical turn (4 full steps) = 2^32. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="86" column="18" bodyfile="inc/sstep_math.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" prot="public" static="no">
+        <type>int16_t</type>
+        <definition>typedef int16_t sstep_real_t</definition>
+        <argsstring></argsstring>
+        <name>sstep_real_t</name>
+        <briefdescription>
+<para>Per-unit signal (Q15). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="91" column="17" bodyfile="inc/sstep_math.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" prot="public" static="no">
+        <type>int32_t</type>
+        <definition>typedef int32_t sstep_acc_t</definition>
+        <argsstring></argsstring>
+        <name>sstep_acc_t</name>
+        <briefdescription>
+<para>Per-unit accumulator (Q15 in 32 bits), used by integrators and filters. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="94" column="17" bodyfile="inc/sstep_math.h" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__sstep__math_1ga9e868b8abdb662b36b33ac870301e70e" prot="public" static="no">
+        <type>int32_t</type>
+        <definition>typedef int32_t sstep_integ_t</definition>
+        <argsstring></argsstring>
+        <name>sstep_integ_t</name>
+        <briefdescription>
+<para>Integrator: Q27 in 32 bits (range +/-16 pu, resolution 7.5e-9 pu). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>The extra 12 fractional bits keep small increments (Ki * Ts * e is often below one Q15 LSB) instead of rounding them away. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="130" column="17" bodyfile="inc/sstep_math.h" bodystart="130" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="group__sstep__math_1gae4bd9aede914467635d1d1d56916ee45" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int32_t</type>
+        <definition>static int32_t sstep_asr</definition>
+        <argsstring>(int32_t x, uint32_t n)</argsstring>
+        <name>sstep_asr</name>
+        <param>
+          <type>int32_t</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>uint32_t</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+<para>Arithmetic shift right (rounds toward minus infinity), written with unsigned shifts only (MISRA C:2012 Rule 10.1); compilers emit one ASR instruction. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Value. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>n</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Shift, 0..31. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>floor(x / 2^n). </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="223" column="23" bodyfile="inc/sstep_math.h" bodystart="223" bodyend="235"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga7ec9beaf906b9acf3dc087e7b604c3f9" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>static sstep_real_t sstep_sat</definition>
+        <argsstring>(int32_t x)</argsstring>
+        <name>sstep_sat</name>
+        <param>
+          <type>int32_t</type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+<para>Saturate a 32-bit value to <ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Value in Q15. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>x limited to <ref refid="group__sstep__math_1ga1cd53fc2bce98f290420c03ef74bfe5a" kindref="member">SSTEP_REAL_MIN</ref> .. <ref refid="group__sstep__math_1ga43cd75513da21713b316fd7d6df854e1" kindref="member">SSTEP_REAL_MAX</ref>. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="242" column="28" bodyfile="inc/sstep_math.h" bodystart="242" bodyend="258"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1gaa61e33801d34c76e41958120eb247295" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>static sstep_real_t sstep_add</definition>
+        <argsstring>(sstep_real_t a, sstep_real_t b)</argsstring>
+        <name>sstep_add</name>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+<para>Saturating a + b. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="261" column="28" bodyfile="inc/sstep_math.h" bodystart="261" bodyend="264"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga350fb7f187b94aacd36c096cc600d749" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>static sstep_real_t sstep_sub</definition>
+        <argsstring>(sstep_real_t a, sstep_real_t b)</argsstring>
+        <name>sstep_sub</name>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+<para>Saturating a - b. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="267" column="28" bodyfile="inc/sstep_math.h" bodystart="267" bodyend="270"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1gae0623586947a6ec69960fa92334f2086" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>static sstep_real_t sstep_neg</definition>
+        <argsstring>(sstep_real_t a)</argsstring>
+        <name>sstep_neg</name>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+<para>Saturating -a (-(-1.0) gives +0.99997). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="273" column="28" bodyfile="inc/sstep_math.h" bodystart="273" bodyend="276"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga81334d38a08431afaf48758f215d9895" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>static sstep_real_t sstep_abs</definition>
+        <argsstring>(sstep_real_t a)</argsstring>
+        <name>sstep_abs</name>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+<para>Saturating |a|. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="279" column="28" bodyfile="inc/sstep_math.h" bodystart="279" bodyend="282"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1gaafcba01db966fc81640ddf2ff317fc57" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>static sstep_real_t sstep_mul</definition>
+        <argsstring>(sstep_real_t a, sstep_real_t b)</argsstring>
+        <name>sstep_mul</name>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+<para>a * b, rounded to nearest; (-1.0) * (-1.0) saturates to +0.99997. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="285" column="28" bodyfile="inc/sstep_math.h" bodystart="285" bodyend="289"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1gab171a77888376acddfe2094fbc06ae81" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+        <definition>static sstep_acc_t sstep_acc_from_real</definition>
+        <argsstring>(sstep_real_t a)</argsstring>
+        <name>sstep_acc_from_real</name>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+<para>Convert a signal to an accumulator (exact). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="292" column="27" bodyfile="inc/sstep_math.h" bodystart="292" bodyend="295"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga6b64c92a9ceccd3180cba57a7e39f626" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>static sstep_real_t sstep_acc_to_real</definition>
+        <argsstring>(sstep_acc_t a)</argsstring>
+        <name>sstep_acc_to_real</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+<para>Convert an accumulator to a signal, saturating. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="298" column="28" bodyfile="inc/sstep_math.h" bodystart="298" bodyend="301"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga04e550038c8eb6713b66f17bd7bc7213" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+        <definition>static sstep_acc_t sstep_acc_add</definition>
+        <argsstring>(sstep_acc_t a, sstep_acc_t b)</argsstring>
+        <name>sstep_acc_add</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+<para>Saturating accumulator a + b. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="304" column="27" bodyfile="inc/sstep_math.h" bodystart="304" bodyend="320"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga4a6254d0a1a96206ef68d438e01f4c36" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+        <definition>static sstep_acc_t sstep_acc_clamp</definition>
+        <argsstring>(sstep_acc_t x, sstep_acc_t lo, sstep_acc_t hi)</argsstring>
+        <name>sstep_acc_clamp</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>lo</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>hi</declname>
+        </param>
+        <briefdescription>
+<para>Accumulator limited to lo . </para>
+        </briefdescription>
+        <detaileddescription>
+<para>. hi (requires lo &lt;= hi). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="323" column="27" bodyfile="inc/sstep_math.h" bodystart="323" bodyend="339"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1gad8e0d02e7c89ea12e39be5e14e3afc72" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+        <definition>static sstep_acc_t sstep_gain_mul</definition>
+        <argsstring>(const struct sstep_gain *g, sstep_real_t x)</argsstring>
+        <name>sstep_gain_mul</name>
+        <param>
+          <type>const struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref> *</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+<para>Gain times signal: g * x, rounded to nearest. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Gain from <ref refid="group__sstep__math_1gafe58f850f3ec0ea7b1d369e4a8d692fe" kindref="member">sstep_gain_from_ratio()</ref>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Signal. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Product as an accumulator (cannot overflow: |g * x| &lt; 32768). </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="347" column="27" bodyfile="inc/sstep_math.h" bodystart="347" bodyend="361"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga71ccd4b896e9eef2f6cb6442c7c767ae" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+        <definition>static sstep_acc_t sstep_gain_mul_int</definition>
+        <argsstring>(const struct sstep_gain *g, int32_t n)</argsstring>
+        <name>sstep_gain_mul_int</name>
+        <param>
+          <type>const struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref> *</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type>int32_t</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+<para>Gain times integer: g * n as a per-unit accumulator, saturating. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Used for ADC counts: with g = 1 / (counts per unit), the result is the signal in pu. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>g</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Gain from <ref refid="group__sstep__math_1gafe58f850f3ec0ea7b1d369e4a8d692fe" kindref="member">sstep_gain_from_ratio()</ref>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>n</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Integer, -32768 .. 32767 (larger values are saturated first). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>g * n in Q15, saturated to the accumulator range. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="370" column="27" bodyfile="inc/sstep_math.h" bodystart="370" bodyend="397"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga7f8cdce8173ce75ac943dc8a52d0235d" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int32_t</type>
+        <definition>static int32_t sstep_shift_round</definition>
+        <argsstring>(int32_t p, int32_t sh)</argsstring>
+        <name>sstep_shift_round</name>
+        <param>
+          <type>int32_t</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>int32_t</type>
+          <declname>sh</declname>
+        </param>
+        <briefdescription>
+<para>Shift with rounding: sh &gt; 0 divides by 2^sh (round half up), sh &lt; 0 multiplies by 2^-sh with saturation. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>p</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Value. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>sh</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Shift, -31 .. 31. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Shifted value. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="407" column="23" bodyfile="inc/sstep_math.h" bodystart="407" bodyend="436"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga21616f2931dd283656a5ef643c11d112" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+        <definition>static sstep_acc_t sstep_acc_abs</definition>
+        <argsstring>(sstep_acc_t a)</argsstring>
+        <name>sstep_acc_abs</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+<para>Saturating |a| of an accumulator. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="439" column="27" bodyfile="inc/sstep_math.h" bodystart="439" bodyend="442"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1gaf21c64b6aa57fc0554fa14a27bad0626" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+        <definition>static sstep_acc_t sstep_acc_halve</definition>
+        <argsstring>(sstep_acc_t a)</argsstring>
+        <name>sstep_acc_halve</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+<para>a / 2 (rounds toward minus infinity). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="445" column="27" bodyfile="inc/sstep_math.h" bodystart="445" bodyend="448"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1gafef1880081473f33cb1d59737e55e670" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+        <definition>static sstep_acc_t sstep_acc_in</definition>
+        <argsstring>(sstep_acc_t x)</argsstring>
+        <name>sstep_acc_in</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+<para>Limit an accumulator to +/-<ref refid="group__sstep__math_1gaedc6f7b47e26254fefb82c8c45608834" kindref="member">SSTEP_ACC_IN_MAX</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="451" column="27" bodyfile="inc/sstep_math.h" bodystart="451" bodyend="454"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga54945b74505388f94cb21ea9eb33e5ce" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+        <definition>static sstep_acc_t sstep_gain_mul_acc</definition>
+        <argsstring>(const struct sstep_gain *g, sstep_acc_t x)</argsstring>
+        <name>sstep_gain_mul_acc</name>
+        <param>
+          <type>const struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref> *</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+<para>Gain times accumulator: g * x for |x| &lt; 4 pu (saturated first). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>The two least significant bits of x are dropped (resolution 1.2e-4 pu). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="460" column="27" bodyfile="inc/sstep_math.h" bodystart="460" bodyend="464"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga7a281326bb584cfbe5b72b10adf05c52" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1ga9e868b8abdb662b36b33ac870301e70e" kindref="member">sstep_integ_t</ref></type>
+        <definition>static sstep_integ_t sstep_integ_add</definition>
+        <argsstring>(sstep_integ_t integ, const struct sstep_gain *g, sstep_real_t x)</argsstring>
+        <name>sstep_integ_add</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga9e868b8abdb662b36b33ac870301e70e" kindref="member">sstep_integ_t</ref></type>
+          <declname>integ</declname>
+        </param>
+        <param>
+          <type>const struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref> *</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+<para>Integrator + g * x (x a signal), saturating. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="467" column="29" bodyfile="inc/sstep_math.h" bodystart="467" bodyend="472"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga4f3836c8c1a80877ae14030dd46bea5e" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1ga9e868b8abdb662b36b33ac870301e70e" kindref="member">sstep_integ_t</ref></type>
+        <definition>static sstep_integ_t sstep_integ_add_acc</definition>
+        <argsstring>(sstep_integ_t integ, const struct sstep_gain *g, sstep_acc_t x)</argsstring>
+        <name>sstep_integ_add_acc</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga9e868b8abdb662b36b33ac870301e70e" kindref="member">sstep_integ_t</ref></type>
+          <declname>integ</declname>
+        </param>
+        <param>
+          <type>const struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref> *</type>
+          <declname>g</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+<para>Integrator + g * x (x an accumulator, |x| &lt; 4 pu), saturating. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="475" column="29" bodyfile="inc/sstep_math.h" bodystart="475" bodyend="480"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1gac80da88f0659dabd7c65480692644430" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+        <definition>static sstep_acc_t sstep_integ_to_acc</definition>
+        <argsstring>(sstep_integ_t integ)</argsstring>
+        <name>sstep_integ_to_acc</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga9e868b8abdb662b36b33ac870301e70e" kindref="member">sstep_integ_t</ref></type>
+          <declname>integ</declname>
+        </param>
+        <briefdescription>
+<para>Integrator value as an accumulator (rounded). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="483" column="27" bodyfile="inc/sstep_math.h" bodystart="483" bodyend="486"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga8091cd9bc55515a7288e43411d995eb8" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>static sstep_real_t sstep_div_unit</definition>
+        <argsstring>(sstep_acc_t num, sstep_acc_t den)</argsstring>
+        <name>sstep_div_unit</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>num</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>den</declname>
+        </param>
+        <briefdescription>
+<para>num / den for 0 &lt;= num &lt;= den, den &gt; 0, as a signal in 0 . </para>
+        </briefdescription>
+        <detaileddescription>
+<para>. +0.99997 (rounded, 1.0 saturates). One 32-bit division. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="492" column="28" bodyfile="inc/sstep_math.h" bodystart="492" bodyend="508"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga5b9bf61d837b5d694567e13b0bb2a8ad" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+        <definition>static sstep_acc_t sstep_acc_scale</definition>
+        <argsstring>(sstep_acc_t x, sstep_real_t k)</argsstring>
+        <name>sstep_acc_scale</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+          <declname>k</declname>
+        </param>
+        <briefdescription>
+<para>x * k for |x| &lt; 2 pu (saturated first), rounded. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="511" column="27" bodyfile="inc/sstep_math.h" bodystart="511" bodyend="515"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga95a5390d6c38da589ee213c1cf62a231" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>uint16_t</type>
+        <definition>static uint16_t sstep_acc_to_ticks</definition>
+        <argsstring>(sstep_acc_t duty, uint16_t period)</argsstring>
+        <name>sstep_acc_to_ticks</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>duty</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>period</declname>
+        </param>
+        <briefdescription>
+<para>Duty cycle (0 . </para>
+        </briefdescription>
+        <detaileddescription>
+<para>. 1, clamped) to PWM compare ticks, rounded. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="518" column="24" bodyfile="inc/sstep_math.h" bodystart="518" bodyend="522"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga444816f4be653b1ef3eb2282e4398b07" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>static sstep_real_t sstep_clamp</definition>
+        <argsstring>(sstep_real_t x, sstep_real_t lo, sstep_real_t hi)</argsstring>
+        <name>sstep_clamp</name>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+          <declname>lo</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+          <declname>hi</declname>
+        </param>
+        <briefdescription>
+<para>x limited to lo . </para>
+        </briefdescription>
+        <detaileddescription>
+<para>. hi (requires lo &lt;= hi). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="712" column="28" bodyfile="inc/sstep_math.h" bodystart="712" bodyend="728"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1ga7836410f8c904ba6e53b55a137fc4222" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>struct <ref refid="structsstep__sincos" kindref="compound">sstep_sincos</ref></type>
+        <definition>struct sstep_sincos sstep_sin_cos</definition>
+        <argsstring>(sstep_angle_t angle)</argsstring>
+        <name>sstep_sin_cos</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga2d9b6ce2135a467c6d227cde4dd9c12b" kindref="member">sstep_angle_t</ref></type>
+          <declname>angle</declname>
+        </param>
+        <briefdescription>
+<para>Sine and cosine of an electrical angle from a quarter-wave table (<ref refid="group__sstep__config_1ga50ab8d5098e6740dbcd9dbc6f4200d70" kindref="member">SSTEP_CFG_SINE_TABLE_BITS</ref>) with linear interpolation. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Fast loop safe. Quadrant symmetric: sin(a + 90 deg) is bit-exactly cos(a). <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>angle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Angle, 2^32 = one turn. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Sine and cosine. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="741" column="19" bodyfile="src/sstep_math.c" bodystart="133" bodyend="163" declfile="inc/sstep_math.h" declline="741" declcolumn="19"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1gafe58f850f3ec0ea7b1d369e4a8d692fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sstep_gain_from_ratio</definition>
+        <argsstring>(int32_t num, int32_t den, struct sstep_gain *gain)</argsstring>
+        <name>sstep_gain_from_ratio</name>
+        <param>
+          <type>int32_t</type>
+          <declname>num</declname>
+        </param>
+        <param>
+          <type>int32_t</type>
+          <declname>den</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref> *</type>
+          <declname>gain</declname>
+        </param>
+        <briefdescription>
+<para>Create a gain equal to num / den. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Initialisation only (64-bit division). <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>num</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Numerator. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>den</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Denominator, not 0. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>gain</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Result. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__sstep__defs_1gad80c1718aa6b968cfd521404803da291" kindref="member">SSTEP_OK</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Success. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__sstep__defs_1gaff8dbc7cce3d2e6d453df3c6d9ab1d14" kindref="member">SSTEP_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>gain is NULL, den is 0, or |num / den| rounds above 32767. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="note"><para>Every non-zero int32 ratio is at least 2^-31 and is representable; ratios below 2^-16 lose resolution (the mantissa is no longer normalised). </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="753" column="5" bodyfile="src/sstep_math.c" bodystart="253" bodyend="256" declfile="inc/sstep_math.h" declline="753" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1gadc561c4232ca81e9f509d23da7b48fa4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sstep_gain_from_ratio64</definition>
+        <argsstring>(int64_t num, int64_t den, struct sstep_gain *gain)</argsstring>
+        <name>sstep_gain_from_ratio64</name>
+        <param>
+          <type>int64_t</type>
+          <declname>num</declname>
+        </param>
+        <param>
+          <type>int64_t</type>
+          <declname>den</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref> *</type>
+          <declname>gain</declname>
+        </param>
+        <briefdescription>
+<para>Create a gain equal to num / den with 64-bit operands, for gains computed from several engineering values (for example L * wc * I_base / V_base). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Initialisation and slow loop only: at most three 64-bit divisions. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>num</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Numerator, |num| &lt; 2^62. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>den</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Denominator, 0 &lt; |den| &lt; 2^62. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>gain</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Result. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__sstep__defs_1gad80c1718aa6b968cfd521404803da291" kindref="member">SSTEP_OK</ref></parametername>
+<parametername><ref refid="group__sstep__defs_1gaff8dbc7cce3d2e6d453df3c6d9ab1d14" kindref="member">SSTEP_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(gain NULL, den 0, an operand out of range, or |num / den| rounds above 32767). Ratios below 2^-31 give 0 (fixed point). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="765" column="5" bodyfile="src/sstep_math.c" bodystart="167" bodyend="251" declfile="inc/sstep_math.h" declline="765" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1gac4d9af6078161c3a89d38aae434af758" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sstep_real_from_ratio</definition>
+        <argsstring>(int32_t num, int32_t den, sstep_real_t *out)</argsstring>
+        <name>sstep_real_from_ratio</name>
+        <param>
+          <type>int32_t</type>
+          <declname>num</declname>
+        </param>
+        <param>
+          <type>int32_t</type>
+          <declname>den</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref> *</type>
+          <declname>out</declname>
+        </param>
+        <briefdescription>
+<para>Convert num / den to a per-unit signal, rounded and saturated. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Initialisation and slow loop only (64-bit division). <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>num</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Numerator, for example 1500 mA. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>den</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Denominator, the base, for example 4000 mA; not 0. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>out</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Result. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__sstep__defs_1gad80c1718aa6b968cfd521404803da291" kindref="member">SSTEP_OK</ref></parametername>
+<parametername><ref refid="group__sstep__defs_1gaff8dbc7cce3d2e6d453df3c6d9ab1d14" kindref="member">SSTEP_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(out NULL or den 0). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="775" column="5" bodyfile="src/sstep_math.c" bodystart="258" bodyend="281" declfile="inc/sstep_math.h" declline="775" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sstep__math_1gafb1fd7f556a7ff09ab6bccb8fe887c26" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int32_t</type>
+        <definition>int32_t sstep_real_to_units</definition>
+        <argsstring>(sstep_acc_t x, int32_t base)</argsstring>
+        <name>sstep_real_to_units</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int32_t</type>
+          <declname>base</declname>
+        </param>
+        <briefdescription>
+<para>Convert a per-unit value back to engineering units: round(x * base). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Slow loop and status only. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Per-unit accumulator. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>base</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Base in engineering units, for example 4000 mA. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>x * base, rounded to nearest and saturated to int32_t. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="784" column="9" bodyfile="src/sstep_math.c" bodystart="283" bodyend="304" declfile="inc/sstep_math.h" declline="784" declcolumn="9"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="group__sstep__math_1ga2d5482dea51a4ab7080e8f4eb44d3aa0" prot="public" static="no">
+        <name>SSTEP_REAL_FRAC_BITS</name>
+        <initializer>15</initializer>
+        <briefdescription>
+<para>Number of fractional bits of <ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref> and <ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="108" column="9" bodyfile="inc/sstep_math.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1ga43cd75513da21713b316fd7d6df854e1" prot="public" static="no">
+        <name>SSTEP_REAL_MAX</name>
+        <initializer>((<ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref>)INT16_MAX)</initializer>
+        <briefdescription>
+<para>Largest <ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref> (+0.99997). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="111" column="9" bodyfile="inc/sstep_math.h" bodystart="111" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1ga1cd53fc2bce98f290420c03ef74bfe5a" prot="public" static="no">
+        <name>SSTEP_REAL_MIN</name>
+        <initializer>((<ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref>)INT16_MIN)</initializer>
+        <briefdescription>
+<para>Smallest <ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref> (-1.0). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="114" column="9" bodyfile="inc/sstep_math.h" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1ga6439406841b4ed53c1ce2ee0fe81aa53" prot="public" static="no">
+        <name>SSTEP_ACC_MAX</name>
+        <initializer>((<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref>)INT32_MAX)</initializer>
+        <briefdescription>
+<para>Largest <ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref> (+65536 - 2^-15). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="117" column="9" bodyfile="inc/sstep_math.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1ga4402962590ac756f8fb162a9e403af6d" prot="public" static="no">
+        <name>SSTEP_ACC_MIN</name>
+        <initializer>((<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref>)INT32_MIN)</initializer>
+        <briefdescription>
+<para>Smallest <ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref> (-65536). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="120" column="9" bodyfile="inc/sstep_math.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" prot="public" static="no">
+        <name>SSTEP_ACC_C</name>
+        <param><defname>x</defname></param>
+        <initializer>((<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref>)((x) * 32768.0))</initializer>
+        <briefdescription>
+<para>Accumulator constant from a floating literal (initializers only). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="123" column="9" bodyfile="inc/sstep_math.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1ga04216138ad07146cf6400fdf1645ac66" prot="public" static="no">
+        <name>SSTEP_INTEG_FRAC_BITS</name>
+        <initializer>27</initializer>
+        <briefdescription>
+<para>Fractional bits of <ref refid="group__sstep__math_1ga9e868b8abdb662b36b33ac870301e70e" kindref="member">sstep_integ_t</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="133" column="9" bodyfile="inc/sstep_math.h" bodystart="133" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1gae0c7646e62896d744b49d47b83483d61" prot="public" static="no">
+        <name>SSTEP_REAL_C</name>
+        <param><defname>x</defname></param>
+        <initializer>    (((x) &gt;= 1.0) ? <ref refid="group__sstep__math_1ga43cd75513da21713b316fd7d6df854e1" kindref="member">SSTEP_REAL_MAX</ref> : (((x) &lt;= -1.0) ? <ref refid="group__sstep__math_1ga1cd53fc2bce98f290420c03ef74bfe5a" kindref="member">SSTEP_REAL_MIN</ref>                     \
+                                                    : (<ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref>)((x) * 32768.0)))</initializer>
+        <briefdescription>
+<para>Constant from a floating literal, saturated to -1.0 . </para>
+        </briefdescription>
+        <detaileddescription>
+<para>. +0.99997. An arithmetic constant expression: use it in initializers of static or <computeroutput>const</computeroutput> objects, where the compiler evaluates it and no floating point code is generated. It is not an integer constant expression (C11 6.6), so it cannot be used in <computeroutput>#if</computeroutput>, <computeroutput>case</computeroutput> or <computeroutput>static_assert</computeroutput>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="140" column="9" bodyfile="inc/sstep_math.h" bodystart="140" bodyend="142"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1ga49210b7ca8593d5d0eb7b9f360fd17ba" prot="public" static="no">
+        <name>SSTEP_REAL_ZERO</name>
+        <initializer><ref refid="group__sstep__math_1gae0c7646e62896d744b49d47b83483d61" kindref="member">SSTEP_REAL_C</ref>(0.0)</initializer>
+        <briefdescription>
+<para>Zero. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="185" column="9" bodyfile="inc/sstep_math.h" bodystart="185" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1ga75e8b014aa4abda04e37cd97addabfdb" prot="public" static="no">
+        <name>SSTEP_ACC_ONE</name>
+        <initializer><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(1.0)</initializer>
+        <briefdescription>
+<para>1.0 as an accumulator (exactly representable in both backends). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="188" column="9" bodyfile="inc/sstep_math.h" bodystart="188" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1gaedc6f7b47e26254fefb82c8c45608834" prot="public" static="no">
+        <name>SSTEP_ACC_IN_MAX</name>
+        <initializer><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(3.999969482421875)</initializer>
+        <briefdescription>
+<para>Largest magnitude accepted by <ref refid="group__sstep__math_1ga54945b74505388f94cb21ea9eb33e5ce" kindref="member">sstep_gain_mul_acc()</ref> and the integrator updates from accumulators (4 pu - 2^-15); larger inputs are saturated. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="192" column="9" bodyfile="inc/sstep_math.h" bodystart="192" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1gafe4b9cb66063a93b889ffb432a2b1fa6" prot="public" static="no">
+        <name>SSTEP_ACC_SCALE_MAX</name>
+        <initializer><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(1.999969482421875)</initializer>
+        <briefdescription>
+<para>Largest magnitude accepted by <ref refid="group__sstep__math_1ga5b9bf61d837b5d694567e13b0bb2a8ad" kindref="member">sstep_acc_scale()</ref> (2 pu - 2^-15). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="195" column="9" bodyfile="inc/sstep_math.h" bodystart="195" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1gae0d7a92d278d7b421a62aeefe11adb13" prot="public" static="no">
+        <name>SSTEP_GAIN_EXP_MIN</name>
+        <initializer>(-16)</initializer>
+        <briefdescription>
+<para>Smallest gain exponent. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="198" column="9" bodyfile="inc/sstep_math.h" bodystart="198" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1ga969c943dfb6f5d0fe6aa409e8e95ce3a" prot="public" static="no">
+        <name>SSTEP_GAIN_EXP_MAX</name>
+        <initializer>15</initializer>
+        <briefdescription>
+<para>Largest gain exponent (gains up to 32767). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="201" column="9" bodyfile="inc/sstep_math.h" bodystart="201" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Types and operations that hide whether the library computes in fixed point or in float. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>The control code is written once against these types and operations; the backend is selected at build time with <ref refid="group__sstep__config_1gac0ee05e0335a33c6e3ecc3c9c59587d5" kindref="member">SSTEP_CFG_MATH_BACKEND</ref>.</para>
+<para><bold>Per-unit signals.</bold> Inside the control loops every electrical signal is normalised to a base value computed by <ref refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kindref="member">sstep_init()</ref>:<itemizedlist>
+<listitem><para>current: 1.0 = power stage current full scale (<computeroutput>i_full_scale_ma</computeroutput>),</para>
+</listitem><listitem><para>voltage: 1.0 = nominal bus voltage (<computeroutput>vbus_nominal_mv</computeroutput>),</para>
+</listitem><listitem><para>duty cycle: 1.0 = 100 %.</para>
+</listitem></itemizedlist>
+</para>
+<para>Both backends therefore see values in about -1..+1, which makes Q15 exact enough and lets the two backends be compared sample by sample in the tests.</para>
+<para><table rows="5" cols="3"><row>
+<entry thead="yes"><para>Type   </para>
+</entry><entry thead="yes"><para>Fixed point backend   </para>
+</entry><entry thead="yes"><para>Float backend    </para>
+</entry></row>
+<row>
+<entry thead="no"><para><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref>   </para>
+</entry><entry thead="no"><para><computeroutput>int16_t</computeroutput>, Q15 (1.0 = 32768, range -1 .. +0.99997)   </para>
+</entry><entry thead="no"><para><computeroutput>float</computeroutput>, same range    </para>
+</entry></row>
+<row>
+<entry thead="no"><para><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref>   </para>
+</entry><entry thead="no"><para><computeroutput>int32_t</computeroutput>, Q15 with 16 integer bits (range +/-65536)   </para>
+</entry><entry thead="no"><para><computeroutput>float</computeroutput>, same range    </para>
+</entry></row>
+<row>
+<entry thead="no"><para><ref refid="group__sstep__math_1ga2d9b6ce2135a467c6d227cde4dd9c12b" kindref="member">sstep_angle_t</ref>   </para>
+</entry><entry thead="no"><para><computeroutput>uint32_t</computeroutput>, one electrical turn = 2^32   </para>
+</entry><entry thead="no"><para>same    </para>
+</entry></row>
+<row>
+<entry thead="no"><para><computeroutput>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></computeroutput>   </para>
+</entry><entry thead="no"><para>Q15 mantissa and binary exponent   </para>
+</entry><entry thead="no"><para><computeroutput>float</computeroutput>   </para>
+</entry></row>
+</table>
+</para>
+<para><bold>Same behaviour in both backends.</bold> Every operation saturates to the ranges in the table instead of overflowing, in both backends, so that a test can compare them. Angles wrap by design.</para>
+<para><bold>Speed.</bold> The per-sample operations are <computeroutput>static inline</computeroutput> and branch-light; the fixed point backend uses only 32-bit multiplications (no 64-bit arithmetic), so it suits Cortex-M0. Functions that convert engineering units (<computeroutput>*_from_ratio</computeroutput>, <ref refid="group__sstep__math_1gafb1fd7f556a7ff09ab6bccb8fe887c26" kindref="member">sstep_real_to_units()</ref>) use 64-bit integers and division: call them at initialisation or from the slow loop, not from the fast loop. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

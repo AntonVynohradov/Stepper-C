@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structsstep__sample" kind="struct" language="C++" prot="public">
+    <compoundname>sstep_sample</compoundname>
+    <includes refid="sstep__ctrl_8h" local="no">sstep_ctrl.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsstep__sample_1a7e050a4725ec6b73627ffb6246ddfa6c" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_sample::i_a</definition>
+        <argsstring></argsstring>
+        <name>i_a</name>
+        <qualifiedname>sstep_sample::i_a</qualifiedname>
+        <briefdescription>
+<para>Phase A current [ADC counts]. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Ignored in <ref refid="group__sstep__ctrl_1gga4bf2c449cd0d7182351a1e7f2654bc3fac9139624ce10c97984c9fead23ce3485" kindref="member">SSTEP_DRIVE_VOLTAGE</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="211" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="211" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__sample_1a2a5852ca2dc92a9de72414c7f3d9c493" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_sample::i_b</definition>
+        <argsstring></argsstring>
+        <name>i_b</name>
+        <qualifiedname>sstep_sample::i_b</qualifiedname>
+        <briefdescription>
+<para>Phase B current [ADC counts]. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Ignored in <ref refid="group__sstep__ctrl_1gga4bf2c449cd0d7182351a1e7f2654bc3fac9139624ce10c97984c9fead23ce3485" kindref="member">SSTEP_DRIVE_VOLTAGE</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="212" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="212" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__sample_1a622ee6849365e05230e297c7c3c03561" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_sample::vbus</definition>
+        <argsstring></argsstring>
+        <name>vbus</name>
+        <qualifiedname>sstep_sample::vbus</qualifiedname>
+        <briefdescription>
+<para>Bus voltage [ADC counts]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="213" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="213" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Raw measurements of one fast loop period, as read from the ADC. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="inc/sstep_ctrl.h" line="209" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="210" bodyend="214"/>
+    <listofallmembers>
+      <member refid="structsstep__sample_1a7e050a4725ec6b73627ffb6246ddfa6c" prot="public" virt="non-virtual"><scope>sstep_sample</scope><name>i_a</name></member>
+      <member refid="structsstep__sample_1a2a5852ca2dc92a9de72414c7f3d9c493" prot="public" virt="non-virtual"><scope>sstep_sample</scope><name>i_b</name></member>
+      <member refid="structsstep__sample_1a622ee6849365e05230e297c7c3c03561" prot="public" virt="non-virtual"><scope>sstep_sample</scope><name>vbus</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

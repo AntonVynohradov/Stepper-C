@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structsstep__ctrl__cfg" kind="struct" language="C++" prot="public">
+    <compoundname>sstep_ctrl_cfg</compoundname>
+    <includes refid="sstep__ctrl_8h" local="no">sstep_ctrl.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsstep__ctrl__cfg_1a96277031b2d0d05aa359d47ec34879d8" prot="public" static="no" mutable="no">
+        <type>enum <ref refid="group__sstep__ctrl_1ga4bf2c449cd0d7182351a1e7f2654bc3f" kindref="member">sstep_drive_mode</ref></type>
+        <definition>enum sstep_drive_mode sstep_ctrl_cfg::drive_mode</definition>
+        <argsstring></argsstring>
+        <name>drive_mode</name>
+        <qualifiedname>sstep_ctrl_cfg::drive_mode</qualifiedname>
+        <briefdescription>
+<para>Current or voltage drive. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="179" column="26" bodyfile="inc/sstep_ctrl.h" bodystart="179" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctrl__cfg_1aa3d82e93e47868b48e189d2c7360c3c6" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_ctrl_cfg::fast_loop_hz</definition>
+        <argsstring></argsstring>
+        <name>fast_loop_hz</name>
+        <qualifiedname>sstep_ctrl_cfg::fast_loop_hz</qualifiedname>
+        <briefdescription>
+<para>Rate of <ref refid="group__sstep__ctrl_1ga9d39aedf45b1e59f71fe94a1dc0df79b" kindref="member">sstep_fast_loop()</ref> [Hz]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="180" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="180" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctrl__cfg_1aee988d9b126ce5a47a6b084a5c5159e8" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_ctrl_cfg::slow_loop_hz</definition>
+        <argsstring></argsstring>
+        <name>slow_loop_hz</name>
+        <qualifiedname>sstep_ctrl_cfg::slow_loop_hz</qualifiedname>
+        <briefdescription>
+<para>Rate of <ref refid="group__sstep__ctrl_1ga4ab2695d05ff19f5e9ed61018af7d83a" kindref="member">sstep_slow_loop()</ref> [Hz]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="181" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="181" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctrl__cfg_1a8475aa549a088982a589e6f1e9a18d62" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_ctrl_cfg::microsteps</definition>
+        <argsstring></argsstring>
+        <name>microsteps</name>
+        <qualifiedname>sstep_ctrl_cfg::microsteps</qualifiedname>
+        <briefdescription>
+<para>Microsteps per full step (power of two, 1 . </para>
+        </briefdescription>
+        <detaileddescription>
+<para>. <ref refid="group__sstep__config_1gacb1659c8029aeb92ff4062d4a265535b" kindref="member">SSTEP_CFG_MICROSTEPS_MAX</ref>). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="182" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="182" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctrl__cfg_1a075acf829cbe48c45a0b48273de2c444" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_ctrl_cfg::current_bw_hz</definition>
+        <argsstring></argsstring>
+        <name>current_bw_hz</name>
+        <qualifiedname>sstep_ctrl_cfg::current_bw_hz</qualifiedname>
+        <briefdescription>
+<para>Current loop bandwidth [Hz]; the PI gains are computed from R, L and this value. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="184" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="184" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctrl__cfg_1a3b5362bdade4f6c5fa8e0b5c1b84ed20" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_ctrl_cfg::i_run_ma</definition>
+        <argsstring></argsstring>
+        <name>i_run_ma</name>
+        <qualifiedname>sstep_ctrl_cfg::i_run_ma</qualifiedname>
+        <briefdescription>
+<para>Peak phase current while moving [mA]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="186" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="186" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctrl__cfg_1ab7d0c66ff1e1659a0cee50db8d0e581d" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_ctrl_cfg::i_hold_ma</definition>
+        <argsstring></argsstring>
+        <name>i_hold_ma</name>
+        <qualifiedname>sstep_ctrl_cfg::i_hold_ma</qualifiedname>
+        <briefdescription>
+<para>Peak phase current at standstill [mA]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="187" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="187" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctrl__cfg_1ae5b9892b86829d48037277524ce646ae" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_ctrl_cfg::hold_delay_ms</definition>
+        <argsstring></argsstring>
+        <name>hold_delay_ms</name>
+        <qualifiedname>sstep_ctrl_cfg::hold_delay_ms</qualifiedname>
+        <briefdescription>
+<para>Standstill time before switching to i_hold_ma [ms]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="188" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="188" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctrl__cfg_1afb1d36d1a16777c4de7424713c978145" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_ctrl_cfg::v_max</definition>
+        <argsstring></argsstring>
+        <name>v_max</name>
+        <qualifiedname>sstep_ctrl_cfg::v_max</qualifiedname>
+        <briefdescription>
+<para>Maximum velocity [microsteps/s]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="189" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="189" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctrl__cfg_1aba43930ef8fb8e0f915a1afad82b38be" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_ctrl_cfg::accel</definition>
+        <argsstring></argsstring>
+        <name>accel</name>
+        <qualifiedname>sstep_ctrl_cfg::accel</qualifiedname>
+        <briefdescription>
+<para>Acceleration [microsteps/s^2]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="190" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="190" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctrl__cfg_1afcad15a338d34337026c2b2960f4fa7a" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_ctrl_cfg::decel</definition>
+        <argsstring></argsstring>
+        <name>decel</name>
+        <qualifiedname>sstep_ctrl_cfg::decel</qualifiedname>
+        <briefdescription>
+<para>Deceleration [microsteps/s^2]; 0 = same as accel. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="191" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="191" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Control and motion parameters. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>All of them except the loop rates can be changed at run time with the sstep_set_*() functions. </para>
+    </detaileddescription>
+    <location file="inc/sstep_ctrl.h" line="177" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="178" bodyend="192"/>
+    <listofallmembers>
+      <member refid="structsstep__ctrl__cfg_1aba43930ef8fb8e0f915a1afad82b38be" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>accel</name></member>
+      <member refid="structsstep__ctrl__cfg_1a075acf829cbe48c45a0b48273de2c444" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>current_bw_hz</name></member>
+      <member refid="structsstep__ctrl__cfg_1afcad15a338d34337026c2b2960f4fa7a" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>decel</name></member>
+      <member refid="structsstep__ctrl__cfg_1a96277031b2d0d05aa359d47ec34879d8" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>drive_mode</name></member>
+      <member refid="structsstep__ctrl__cfg_1aa3d82e93e47868b48e189d2c7360c3c6" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>fast_loop_hz</name></member>
+      <member refid="structsstep__ctrl__cfg_1ae5b9892b86829d48037277524ce646ae" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>hold_delay_ms</name></member>
+      <member refid="structsstep__ctrl__cfg_1ab7d0c66ff1e1659a0cee50db8d0e581d" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>i_hold_ma</name></member>
+      <member refid="structsstep__ctrl__cfg_1a3b5362bdade4f6c5fa8e0b5c1b84ed20" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>i_run_ma</name></member>
+      <member refid="structsstep__ctrl__cfg_1a8475aa549a088982a589e6f1e9a18d62" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>microsteps</name></member>
+      <member refid="structsstep__ctrl__cfg_1aee988d9b126ce5a47a6b084a5c5159e8" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>slow_loop_hz</name></member>
+      <member refid="structsstep__ctrl__cfg_1afb1d36d1a16777c4de7424713c978145" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>v_max</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

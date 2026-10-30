@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="sstep__config_8h" kind="file" language="C++">
+    <compoundname>sstep_config.h</compoundname>
+    <includedby refid="sstep__ctrl_8h" local="yes">inc/sstep_ctrl.h</includedby>
+    <includedby refid="sstep__math_8h" local="yes">inc/sstep_math.h</includedby>
+    <includedby refid="sstep_8h" local="yes">sstep.h</includedby>
+    <invincdepgraph>
+      <node id="1">
+        <label>inc/sstep_config.h</label>
+        <link refid="sstep__config_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>inc/sstep_ctrl.h</label>
+        <link refid="sstep__ctrl_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>inc/sstep_math.h</label>
+        <link refid="sstep__math_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>src/sstep_internal.h</label>
+        <link refid="sstep__internal_8h_source"/>
+      </node>
+      <node id="6">
+        <label>src/sstep_sin_table.h</label>
+        <link refid="sstep__sin__table_8h_source"/>
+      </node>
+      <node id="4">
+        <label>sstep.h</label>
+        <link refid="sstep_8h_source"/>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="define">
+      <member refid="group__sstep__config_1gaabdd28b396cb602508fecd7d015ecbf9" kind="define"><name>SSTEP_MATH_BACKEND_FIXED</name></member>
+      <member refid="group__sstep__config_1ga28dd604469108cb795b2b2e33d02ae06" kind="define"><name>SSTEP_MATH_BACKEND_FLOAT</name></member>
+      <member refid="group__sstep__config_1gac0ee05e0335a33c6e3ecc3c9c59587d5" kind="define"><name>SSTEP_CFG_MATH_BACKEND</name></member>
+      <member refid="group__sstep__config_1ga31fbdc1c85873c64564a26b02b8f9f70" kind="define"><name>SSTEP_CFG_TOPOLOGY_FULL_BRIDGE</name></member>
+      <member refid="group__sstep__config_1gaeb2e0432614d6dca86d83418ffcfbea7" kind="define"><name>SSTEP_CFG_TOPOLOGY_SHARED_LEG</name></member>
+      <member refid="group__sstep__config_1gacb1659c8029aeb92ff4062d4a265535b" kind="define"><name>SSTEP_CFG_MICROSTEPS_MAX</name></member>
+      <member refid="group__sstep__config_1ga50ab8d5098e6740dbcd9dbc6f4200d70" kind="define"><name>SSTEP_CFG_SINE_TABLE_BITS</name></member>
+      <member refid="group__sstep__config_1ga61a368eeac97ae6ab0f43c70a2acc423" kind="define"><name>SSTEP_CFG_ARG_CHECKS</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*******************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Stepper-C:<sp/>Stepper<sp/>Motor<sp/>Control<sp/>Implementation</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Project:<sp/><sp/><sp/><sp/><sp/>Stepper-C<sp/>-<sp/>Hardware-Agnostic<sp/>Stepper<sp/>Motor<sp/>Control<sp/>Library</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Description:<sp/>Build-time<sp/>configuration:<sp/>numeric<sp/>backend,<sp/>power<sp/>stage<sp/>topologies,<sp/>limits.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Author:<sp/><sp/><sp/><sp/><sp/><sp/>Anton<sp/>Vynohradov</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>Email:<sp/><sp/><sp/><sp/><sp/><sp/><sp/>avynohradov@systemfromscratch.com</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>License:<sp/><sp/><sp/><sp/><sp/>Apache<sp/>License<sp/>2.0</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2026<sp/>Anton<sp/>Vynohradov</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/>Licensed<sp/>under<sp/>the<sp/>Apache<sp/>License,<sp/>Version<sp/>2.0<sp/>(the<sp/>&quot;License&quot;);</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>you<sp/>may<sp/>not<sp/>use<sp/>this<sp/>file<sp/>except<sp/>in<sp/>compliance<sp/>with<sp/>the<sp/>License.</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>You<sp/>may<sp/>obtain<sp/>a<sp/>copy<sp/>of<sp/>the<sp/>License<sp/>at</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/>http://www.apache.org/licenses/LICENSE-2.0</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>Unless<sp/>required<sp/>by<sp/>applicable<sp/>law<sp/>or<sp/>agreed<sp/>to<sp/>in<sp/>writing,<sp/>software</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>distributed<sp/>under<sp/>the<sp/>License<sp/>is<sp/>distributed<sp/>on<sp/>an<sp/>&quot;AS<sp/>IS&quot;<sp/>BASIS,</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WITHOUT<sp/>WARRANTIES<sp/>OR<sp/>CONDITIONS<sp/>OF<sp/>ANY<sp/>KIND,<sp/>either<sp/>express<sp/>or<sp/>implied.</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>See<sp/>the<sp/>License<sp/>for<sp/>the<sp/>specific<sp/>language<sp/>governing<sp/>permissions<sp/>and</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>limitations<sp/>under<sp/>the<sp/>License.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>SPDX-License-Identifier:<sp/>Apache-2.0</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>******************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_CONFIG_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CONFIG_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/>*<sp/>INCLUDES</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>SSTEP_USER_CONFIG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;sstep_user_config.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/>*<sp/>NUMERIC<sp/>BACKEND</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="group__sstep__config_1gaabdd28b396cb602508fecd7d015ecbf9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_MATH_BACKEND_FIXED<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="group__sstep__config_1ga28dd604469108cb795b2b2e33d02ae06" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_MATH_BACKEND_FLOAT<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_CFG_MATH_BACKEND</highlight></codeline>
+<codeline lineno="69" refid="group__sstep__config_1gac0ee05e0335a33c6e3ecc3c9c59587d5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CFG_MATH_BACKEND<sp/>SSTEP_MATH_BACKEND_FIXED</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_MATH_BACKEND<sp/>!=<sp/>SSTEP_MATH_BACKEND_FIXED)<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="73"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>(SSTEP_CFG_MATH_BACKEND<sp/>!=<sp/>SSTEP_MATH_BACKEND_FLOAT)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;SSTEP_CFG_MATH_BACKEND<sp/>must<sp/>be<sp/>SSTEP_MATH_BACKEND_FIXED<sp/>or<sp/>SSTEP_MATH_BACKEND_FLOAT&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="78"><highlight class="comment"><sp/>*<sp/>POWER<sp/>STAGE<sp/>TOPOLOGIES</highlight></codeline>
+<codeline lineno="79"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_CFG_TOPOLOGY_FULL_BRIDGE</highlight></codeline>
+<codeline lineno="83" refid="group__sstep__config_1ga31fbdc1c85873c64564a26b02b8f9f70" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CFG_TOPOLOGY_FULL_BRIDGE<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_CFG_TOPOLOGY_SHARED_LEG</highlight></codeline>
+<codeline lineno="89" refid="group__sstep__config_1gaeb2e0432614d6dca86d83418ffcfbea7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CFG_TOPOLOGY_SHARED_LEG<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_TOPOLOGY_FULL_BRIDGE<sp/>!=<sp/>0)<sp/>&amp;&amp;<sp/>(SSTEP_CFG_TOPOLOGY_FULL_BRIDGE<sp/>!=<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;SSTEP_CFG_TOPOLOGY_FULL_BRIDGE<sp/>must<sp/>be<sp/>0<sp/>or<sp/>1&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_TOPOLOGY_SHARED_LEG<sp/>!=<sp/>0)<sp/>&amp;&amp;<sp/>(SSTEP_CFG_TOPOLOGY_SHARED_LEG<sp/>!=<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;SSTEP_CFG_TOPOLOGY_SHARED_LEG<sp/>must<sp/>be<sp/>0<sp/>or<sp/>1&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_TOPOLOGY_FULL_BRIDGE<sp/>==<sp/>0)<sp/>&amp;&amp;<sp/>(SSTEP_CFG_TOPOLOGY_SHARED_LEG<sp/>==<sp/>0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;At<sp/>least<sp/>one<sp/>power<sp/>stage<sp/>topology<sp/>must<sp/>be<sp/>enabled&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="105"><highlight class="comment"><sp/>*<sp/>MICROSTEPPING</highlight></codeline>
+<codeline lineno="106"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_CFG_MICROSTEPS_MAX</highlight></codeline>
+<codeline lineno="110" refid="group__sstep__config_1gacb1659c8029aeb92ff4062d4a265535b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CFG_MICROSTEPS_MAX<sp/>256U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_MICROSTEPS_MAX<sp/>&lt;<sp/>1U)<sp/>||<sp/>(SSTEP_CFG_MICROSTEPS_MAX<sp/>&gt;<sp/>256U)<sp/>||<sp/>\</highlight></codeline>
+<codeline lineno="114"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>((SSTEP_CFG_MICROSTEPS_MAX<sp/>&amp;<sp/>(SSTEP_CFG_MICROSTEPS_MAX<sp/>-<sp/>1U))<sp/>!=<sp/>0U)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;SSTEP_CFG_MICROSTEPS_MAX<sp/>must<sp/>be<sp/>a<sp/>power<sp/>of<sp/>two<sp/>in<sp/>1..256&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_CFG_SINE_TABLE_BITS</highlight></codeline>
+<codeline lineno="122" refid="group__sstep__config_1ga50ab8d5098e6740dbcd9dbc6f4200d70" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CFG_SINE_TABLE_BITS<sp/>8U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_SINE_TABLE_BITS<sp/>&lt;<sp/>6U)<sp/>||<sp/>(SSTEP_CFG_SINE_TABLE_BITS<sp/>&gt;<sp/>10U)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;SSTEP_CFG_SINE_TABLE_BITS<sp/>must<sp/>be<sp/>in<sp/>6..10&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="130"><highlight class="comment"><sp/>*<sp/>RUN-TIME<sp/>CHECKS</highlight></codeline>
+<codeline lineno="131"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_CFG_ARG_CHECKS</highlight></codeline>
+<codeline lineno="137" refid="group__sstep__config_1ga61a368eeac97ae6ab0f43c70a2acc423" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CFG_ARG_CHECKS<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_ARG_CHECKS<sp/>!=<sp/>0)<sp/>&amp;&amp;<sp/>(SSTEP_CFG_ARG_CHECKS<sp/>!=<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;SSTEP_CFG_ARG_CHECKS<sp/>must<sp/>be<sp/>0<sp/>or<sp/>1&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_CONFIG_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="inc/sstep_config.h"/>
+  </compounddef>
+</doxygen>

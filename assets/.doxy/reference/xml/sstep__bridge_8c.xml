@@ -1,0 +1,422 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="sstep__bridge_8c" kind="file" language="C++">
+    <compoundname>sstep_bridge.c</compoundname>
+    <includes refid="sstep__internal_8h" local="yes">sstep_internal.h</includes>
+    <incdepgraph>
+      <node id="7">
+        <label>sstep_config.h</label>
+        <link refid="sstep__config_8h_source"/>
+      </node>
+      <node id="5">
+        <label>sstep_ctrl.h</label>
+        <link refid="sstep__ctrl_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sstep_defs.h</label>
+        <link refid="sstep__defs_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sstep_math.h</label>
+        <link refid="sstep__math_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>src/sstep_bridge.c</label>
+        <link refid="sstep__bridge_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sstep_internal.h</label>
+        <link refid="sstep__internal_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>stdbool.h</label>
+      </node>
+      <node id="6">
+        <label>stddef.h</label>
+      </node>
+      <node id="4">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="sstep__bridge_8c_1a5aab94c290a6275ed87184f3c89a4615" prot="public" static="no">
+        <name>ACC_HALF</name>
+        <initializer><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(0.5)</initializer>
+        <briefdescription>
+<para>0.5 (50 % duty cycle). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_bridge.c" line="41" column="9" bodyfile="src/sstep_bridge.c" bodystart="41" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="sstep__bridge_8c_1a01178ec7d293eefd6c70f75cd04c41f9" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+        <definition>static sstep_acc_t acc_max</definition>
+        <argsstring>(sstep_acc_t a, sstep_acc_t b)</argsstring>
+        <name>acc_max</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+<para>Larger of a and b. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_bridge.c" line="67" column="20" bodyfile="src/sstep_bridge.c" bodystart="67" bodyend="70" declfile="src/sstep_bridge.c" declline="47" declcolumn="20"/>
+      </memberdef>
+      <memberdef kind="function" id="sstep__bridge_8c_1a57372824a0f9a1ca8e3f0062807d34fd" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+        <definition>static sstep_acc_t scale_to_unit</definition>
+        <argsstring>(sstep_acc_t x, sstep_acc_t m)</argsstring>
+        <name>scale_to_unit</name>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>m</declname>
+        </param>
+        <briefdescription>
+<para>x / m for |x| &lt;= m, keeping the sign of x (one division). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_bridge.c" line="81" column="20" bodyfile="src/sstep_bridge.c" bodystart="81" bodyend="85" declfile="src/sstep_bridge.c" declline="51" declcolumn="20"/>
+      </memberdef>
+      <memberdef kind="function" id="sstep__bridge_8c_1a0461923af61066b8d47e2ccbd491eec2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sstep_bridge_map</definition>
+        <argsstring>(enum sstep_topology topology, sstep_acc_t va, sstep_acc_t vb, const struct sstep_gain *inv_vbus, sstep_acc_t vbus, uint16_t period, struct sstep_bridge_out *out)</argsstring>
+        <name>sstep_bridge_map</name>
+        <param>
+          <type>enum <ref refid="group__sstep__defs_1gabd2c373f4d8a7502c78952555c8cb23c" kindref="member">sstep_topology</ref></type>
+          <declname>topology</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>va</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>vb</declname>
+        </param>
+        <param>
+          <type>const struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref> *</type>
+          <declname>inv_vbus</declname>
+        </param>
+        <param>
+          <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
+          <declname>vbus</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>period</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsstep__bridge__out" kindref="compound">sstep_bridge_out</ref> *</type>
+          <declname>out</declname>
+        </param>
+        <briefdescription>
+<para>Map requested phase voltages to leg compare values (averaged power stage). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>The voltage vector is scaled down with its direction kept when the stage cannot produce it: full bridge |a|, |b| &lt;= 1, shared leg max(a,b,0) - min(a,b,0) &lt;= 1, a and b relative to the measured bus voltage. Shared leg: common leg centred. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>topology</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Power stage topology (compiled in). </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>va</parametername>
+<parametername>vb</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Requested phase voltages [pu of V_base]. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>inv_vbus</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>V_base / bus voltage. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>vbus</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bus voltage [pu of V_base], 0 .. 2. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>period</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Compare value for 100 % duty cycle. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>out</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Result. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_bridge.c" line="136" column="6" bodyfile="src/sstep_bridge.c" bodystart="136" bodyend="201"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*******************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Stepper-C:<sp/>Stepper<sp/>Motor<sp/>Control<sp/>Implementation</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Project:<sp/><sp/><sp/><sp/><sp/>Stepper-C<sp/>-<sp/>Hardware-Agnostic<sp/>Stepper<sp/>Motor<sp/>Control<sp/>Library</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Description:<sp/>Averaged<sp/>power<sp/>stage:<sp/>phase<sp/>voltage<sp/>request<sp/>to<sp/>leg<sp/>compare<sp/>values,<sp/>both<sp/>topologies.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Author:<sp/><sp/><sp/><sp/><sp/><sp/>Anton<sp/>Vynohradov</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>Email:<sp/><sp/><sp/><sp/><sp/><sp/><sp/>avynohradov@systemfromscratch.com</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>License:<sp/><sp/><sp/><sp/><sp/>Apache<sp/>License<sp/>2.0</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2026<sp/>Anton<sp/>Vynohradov</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/>Licensed<sp/>under<sp/>the<sp/>Apache<sp/>License,<sp/>Version<sp/>2.0<sp/>(the<sp/>&quot;License&quot;);</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>you<sp/>may<sp/>not<sp/>use<sp/>this<sp/>file<sp/>except<sp/>in<sp/>compliance<sp/>with<sp/>the<sp/>License.</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>You<sp/>may<sp/>obtain<sp/>a<sp/>copy<sp/>of<sp/>the<sp/>License<sp/>at</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/>http://www.apache.org/licenses/LICENSE-2.0</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>Unless<sp/>required<sp/>by<sp/>applicable<sp/>law<sp/>or<sp/>agreed<sp/>to<sp/>in<sp/>writing,<sp/>software</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>distributed<sp/>under<sp/>the<sp/>License<sp/>is<sp/>distributed<sp/>on<sp/>an<sp/>&quot;AS<sp/>IS&quot;<sp/>BASIS,</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WITHOUT<sp/>WARRANTIES<sp/>OR<sp/>CONDITIONS<sp/>OF<sp/>ANY<sp/>KIND,<sp/>either<sp/>express<sp/>or<sp/>implied.</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>See<sp/>the<sp/>License<sp/>for<sp/>the<sp/>specific<sp/>language<sp/>governing<sp/>permissions<sp/>and</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>limitations<sp/>under<sp/>the<sp/>License.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>SPDX-License-Identifier:<sp/>Apache-2.0</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>******************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>INCLUDES</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;sstep_internal.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*<sp/>DEFINES<sp/>&amp;<sp/>MACROS</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ACC_HALF<sp/>SSTEP_ACC_C(0.5)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/>*<sp/>PRIVATE<sp/>FUNCTION<sp/>DECLARATIONS</highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>acc_max(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>a,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>b);</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_TOPOLOGY_SHARED_LEG<sp/>==<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>acc_min(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>a,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>b);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>scale_to_unit(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>x,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>m);</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_TOPOLOGY_FULL_BRIDGE<sp/>==<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>span_full(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>a,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>b);</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>duties_full(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>a,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>b,<sp/>uint16_t<sp/>period,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__bridge__out" kindref="compound">sstep_bridge_out</ref>*<sp/>out);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_TOPOLOGY_SHARED_LEG<sp/>==<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>span_shared(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>a,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>b);</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>duties_shared(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>a,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>b,<sp/>uint16_t<sp/>period,</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__bridge__out" kindref="compound">sstep_bridge_out</ref>*<sp/>out);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/>*<sp/>PRIVATE<sp/>FUNCTION<sp/>IMPLEMENTATIONS</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>acc_max(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>a,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>b)</highlight></codeline>
+<codeline lineno="68"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(a<sp/>&gt;<sp/>b)<sp/>?<sp/>a<sp/>:<sp/>b;</highlight></codeline>
+<codeline lineno="70"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_TOPOLOGY_SHARED_LEG<sp/>==<sp/>1)</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>acc_min(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>a,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>b)</highlight></codeline>
+<codeline lineno="75"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(a<sp/>&lt;<sp/>b)<sp/>?<sp/>a<sp/>:<sp/>b;</highlight></codeline>
+<codeline lineno="77"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>scale_to_unit(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>x,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>m)</highlight></codeline>
+<codeline lineno="82"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>q<sp/>=<sp/><ref refid="group__sstep__math_1gab171a77888376acddfe2094fbc06ae81" kindref="member">sstep_acc_from_real</ref>(<ref refid="group__sstep__math_1ga8091cd9bc55515a7288e43411d995eb8" kindref="member">sstep_div_unit</ref>(<ref refid="group__sstep__math_1ga21616f2931dd283656a5ef643c11d112" kindref="member">sstep_acc_abs</ref>(x),<sp/>m));</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(x<sp/>&lt;<sp/><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(0.0))<sp/>?<sp/>-q<sp/>:<sp/>q;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_TOPOLOGY_FULL_BRIDGE<sp/>==<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>span_full(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>a,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>b)</highlight></codeline>
+<codeline lineno="91"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>acc_max(<ref refid="group__sstep__math_1ga21616f2931dd283656a5ef643c11d112" kindref="member">sstep_acc_abs</ref>(a),<sp/><ref refid="group__sstep__math_1ga21616f2931dd283656a5ef643c11d112" kindref="member">sstep_acc_abs</ref>(b));</highlight></codeline>
+<codeline lineno="93"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>duties_full(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>a,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>b,<sp/>uint16_t<sp/>period,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__bridge__out" kindref="compound">sstep_bridge_out</ref>*<sp/>out)</highlight></codeline>
+<codeline lineno="97"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>ha<sp/>=<sp/><ref refid="group__sstep__math_1gaf21c64b6aa57fc0554fa14a27bad0626" kindref="member">sstep_acc_halve</ref>(a);</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>hb<sp/>=<sp/><ref refid="group__sstep__math_1gaf21c64b6aa57fc0554fa14a27bad0626" kindref="member">sstep_acc_halve</ref>(b);</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/>out-&gt;<ref refid="structsstep__bridge__out_1a49e42fd980a0fcccd4b1cdce35113ce4" kindref="member">compare</ref>[0]<sp/>=<sp/><ref refid="group__sstep__math_1ga95a5390d6c38da589ee213c1cf62a231" kindref="member">sstep_acc_to_ticks</ref>(ACC_HALF<sp/>+<sp/>ha,<sp/>period);</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/>out-&gt;<ref refid="structsstep__bridge__out_1a49e42fd980a0fcccd4b1cdce35113ce4" kindref="member">compare</ref>[1]<sp/>=<sp/><ref refid="group__sstep__math_1ga95a5390d6c38da589ee213c1cf62a231" kindref="member">sstep_acc_to_ticks</ref>(ACC_HALF<sp/>-<sp/>ha,<sp/>period);</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/>out-&gt;<ref refid="structsstep__bridge__out_1a49e42fd980a0fcccd4b1cdce35113ce4" kindref="member">compare</ref>[2]<sp/>=<sp/><ref refid="group__sstep__math_1ga95a5390d6c38da589ee213c1cf62a231" kindref="member">sstep_acc_to_ticks</ref>(ACC_HALF<sp/>+<sp/>hb,<sp/>period);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/>out-&gt;<ref refid="structsstep__bridge__out_1a49e42fd980a0fcccd4b1cdce35113ce4" kindref="member">compare</ref>[3]<sp/>=<sp/><ref refid="group__sstep__math_1ga95a5390d6c38da589ee213c1cf62a231" kindref="member">sstep_acc_to_ticks</ref>(ACC_HALF<sp/>-<sp/>hb,<sp/>period);</highlight></codeline>
+<codeline lineno="104"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_TOPOLOGY_SHARED_LEG<sp/>==<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>span_shared(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>a,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>b)</highlight></codeline>
+<codeline lineno="112"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>acc_max(acc_max(a,<sp/>b),<sp/><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(0.0))<sp/>-<sp/>acc_min(acc_min(a,<sp/>b),<sp/><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(0.0));</highlight></codeline>
+<codeline lineno="114"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>duties_shared(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>a,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>b,<sp/>uint16_t<sp/>period,</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__bridge__out" kindref="compound">sstep_bridge_out</ref>*<sp/>out)</highlight></codeline>
+<codeline lineno="120"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>hi<sp/>=<sp/>acc_max(acc_max(a,<sp/>b),<sp/><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(0.0));</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>lo<sp/>=<sp/>acc_min(acc_min(a,<sp/>b),<sp/><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(0.0));</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>w<sp/>=<sp/>ACC_HALF<sp/>-<sp/><ref refid="group__sstep__math_1gaf21c64b6aa57fc0554fa14a27bad0626" kindref="member">sstep_acc_halve</ref>(hi<sp/>+<sp/>lo);</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/>out-&gt;<ref refid="structsstep__bridge__out_1a49e42fd980a0fcccd4b1cdce35113ce4" kindref="member">compare</ref>[0]<sp/>=<sp/><ref refid="group__sstep__math_1ga95a5390d6c38da589ee213c1cf62a231" kindref="member">sstep_acc_to_ticks</ref>(a<sp/>+<sp/>w,<sp/>period);</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/>out-&gt;<ref refid="structsstep__bridge__out_1a49e42fd980a0fcccd4b1cdce35113ce4" kindref="member">compare</ref>[1]<sp/>=<sp/><ref refid="group__sstep__math_1ga95a5390d6c38da589ee213c1cf62a231" kindref="member">sstep_acc_to_ticks</ref>(b<sp/>+<sp/>w,<sp/>period);</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/>out-&gt;<ref refid="structsstep__bridge__out_1a49e42fd980a0fcccd4b1cdce35113ce4" kindref="member">compare</ref>[2]<sp/>=<sp/><ref refid="group__sstep__math_1ga95a5390d6c38da589ee213c1cf62a231" kindref="member">sstep_acc_to_ticks</ref>(w,<sp/>period);</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/>out-&gt;<ref refid="structsstep__bridge__out_1a49e42fd980a0fcccd4b1cdce35113ce4" kindref="member">compare</ref>[3]<sp/>=<sp/>0U;</highlight></codeline>
+<codeline lineno="128"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="133"><highlight class="comment"><sp/>*<sp/>PUBLIC<sp/>FUNCTION<sp/>IMPLEMENTATIONS<sp/>(library<sp/>internal)</highlight></codeline>
+<codeline lineno="134"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>sstep_bridge_map(</highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__sstep__defs_1gabd2c373f4d8a7502c78952555c8cb23c" kindref="member">sstep_topology</ref><sp/>topology,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>va,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>vb,</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__gain" kindref="compound">sstep_gain</ref>*<sp/>inv_vbus,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>vbus,<sp/>uint16_t<sp/>period,</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__bridge__out" kindref="compound">sstep_bridge_out</ref>*<sp/>out)</highlight></codeline>
+<codeline lineno="139"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>x<sp/>=<sp/>va;</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>y<sp/>=<sp/>vb;</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>m0<sp/>=<sp/>acc_max(<ref refid="group__sstep__math_1ga21616f2931dd283656a5ef643c11d112" kindref="member">sstep_acc_abs</ref>(va),<sp/><ref refid="group__sstep__math_1ga21616f2931dd283656a5ef643c11d112" kindref="member">sstep_acc_abs</ref>(vb));</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>a;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>b;</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>m;</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Power-of-two<sp/>pre-scale<sp/>keeps<sp/>the<sp/>direction<sp/>exactly<sp/>and<sp/>the<sp/>request<sp/>below<sp/>4<sp/>pu,</highlight></codeline>
+<codeline lineno="148"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>the<sp/>input<sp/>range<sp/>of<sp/>the<sp/>multiplication<sp/>by<sp/>V_base<sp/>/<sp/>Vbus<sp/>(Vbus<sp/>&lt;=<sp/>2<sp/>pu,<sp/>so<sp/>a</highlight></codeline>
+<codeline lineno="149"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>pre-scaled<sp/>request<sp/>is<sp/>always<sp/>limited<sp/>below).<sp/>Bounded:<sp/>fixed<sp/>point<sp/>at<sp/>most<sp/>14</highlight></codeline>
+<codeline lineno="150"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>halvings<sp/>(2^31<sp/>/<sp/>2^17);<sp/>float<sp/>at<sp/>most<sp/>18<sp/>(the<sp/>PI<sp/>output<sp/>is<sp/>below<sp/>2^20<sp/>pu).<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(m0<sp/>&gt;<sp/><ref refid="group__sstep__math_1gaedc6f7b47e26254fefb82c8c45608834" kindref="member">SSTEP_ACC_IN_MAX</ref>)</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>x<sp/>=<sp/><ref refid="group__sstep__math_1gaf21c64b6aa57fc0554fa14a27bad0626" kindref="member">sstep_acc_halve</ref>(x);</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>y<sp/>=<sp/><ref refid="group__sstep__math_1gaf21c64b6aa57fc0554fa14a27bad0626" kindref="member">sstep_acc_halve</ref>(y);</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>m0<sp/>=<sp/><ref refid="group__sstep__math_1gaf21c64b6aa57fc0554fa14a27bad0626" kindref="member">sstep_acc_halve</ref>(m0);</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>relative<sp/>to<sp/>the<sp/>bus<sp/>voltage:<sp/>1.0<sp/>=<sp/>Vbus<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/>a<sp/>=<sp/><ref refid="group__sstep__math_1ga54945b74505388f94cb21ea9eb33e5ce" kindref="member">sstep_gain_mul_acc</ref>(inv_vbus,<sp/>x);</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/>b<sp/>=<sp/><ref refid="group__sstep__math_1ga54945b74505388f94cb21ea9eb33e5ce" kindref="member">sstep_gain_mul_acc</ref>(inv_vbus,<sp/>y);</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_TOPOLOGY_FULL_BRIDGE<sp/>==<sp/>1)<sp/>&amp;&amp;<sp/>(SSTEP_CFG_TOPOLOGY_SHARED_LEG<sp/>==<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/>m<sp/>=<sp/>(topology<sp/>==<sp/><ref refid="group__sstep__defs_1ggabd2c373f4d8a7502c78952555c8cb23caa58189b3725d33b3e2e45e5de1edea0b" kindref="member">SSTEP_TOPOLOGY_FULL_BRIDGE</ref>)<sp/>?<sp/>span_full(a,<sp/>b)<sp/>:<sp/>span_shared(a,<sp/>b);</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight><highlight class="preprocessor">#elif<sp/>(SSTEP_CFG_TOPOLOGY_FULL_BRIDGE<sp/>==<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/>(void)topology;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/>m<sp/>=<sp/>span_full(a,<sp/>b);</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/>(void)topology;</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/>m<sp/>=<sp/>span_shared(a,<sp/>b);</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/>out-&gt;<ref refid="structsstep__bridge__out_1a758e1a5c6ff779d77cbdc3af2ea39729" kindref="member">limited</ref><sp/>=<sp/>(m<sp/>&gt;<sp/><ref refid="group__sstep__math_1ga75e8b014aa4abda04e37cd97addabfdb" kindref="member">SSTEP_ACC_ONE</ref>);</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(out-&gt;<ref refid="structsstep__bridge__out_1a758e1a5c6ff779d77cbdc3af2ea39729" kindref="member">limited</ref>)</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>a<sp/>=<sp/>scale_to_unit(a,<sp/>m);</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>b<sp/>=<sp/>scale_to_unit(b,<sp/>m);</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>applied<sp/>voltage<sp/>in<sp/>pu<sp/>of<sp/>V_base:<sp/>a<sp/>*<sp/>Vbus<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>out-&gt;<ref refid="structsstep__bridge__out_1a57c99915540a09760649dfdcac1e5df7" kindref="member">v</ref>[0]<sp/>=<sp/><ref refid="group__sstep__math_1ga5b9bf61d837b5d694567e13b0bb2a8ad" kindref="member">sstep_acc_scale</ref>(vbus,<sp/><ref refid="group__sstep__math_1ga6b64c92a9ceccd3180cba57a7e39f626" kindref="member">sstep_acc_to_real</ref>(a));</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>out-&gt;<ref refid="structsstep__bridge__out_1a57c99915540a09760649dfdcac1e5df7" kindref="member">v</ref>[1]<sp/>=<sp/><ref refid="group__sstep__math_1ga5b9bf61d837b5d694567e13b0bb2a8ad" kindref="member">sstep_acc_scale</ref>(vbus,<sp/><ref refid="group__sstep__math_1ga6b64c92a9ceccd3180cba57a7e39f626" kindref="member">sstep_acc_to_real</ref>(b));</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>out-&gt;<ref refid="structsstep__bridge__out_1a57c99915540a09760649dfdcac1e5df7" kindref="member">v</ref>[0]<sp/>=<sp/>va;</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>out-&gt;<ref refid="structsstep__bridge__out_1a57c99915540a09760649dfdcac1e5df7" kindref="member">v</ref>[1]<sp/>=<sp/>vb;</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_TOPOLOGY_FULL_BRIDGE<sp/>==<sp/>1)<sp/>&amp;&amp;<sp/>(SSTEP_CFG_TOPOLOGY_SHARED_LEG<sp/>==<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(topology<sp/>==<sp/><ref refid="group__sstep__defs_1ggabd2c373f4d8a7502c78952555c8cb23caa58189b3725d33b3e2e45e5de1edea0b" kindref="member">SSTEP_TOPOLOGY_FULL_BRIDGE</ref>)</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>duties_full(a,<sp/>b,<sp/>period,<sp/>out);</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>duties_shared(a,<sp/>b,<sp/>period,<sp/>out);</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight><highlight class="preprocessor">#elif<sp/>(SSTEP_CFG_TOPOLOGY_FULL_BRIDGE<sp/>==<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/>duties_full(a,<sp/>b,<sp/>period,<sp/>out);</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/>duties_shared(a,<sp/>b,<sp/>period,<sp/>out);</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="201"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="src/sstep_bridge.c"/>
+  </compounddef>
+</doxygen>

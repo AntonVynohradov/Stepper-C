@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structsstep__motor__cfg" kind="struct" language="C++" prot="public">
+    <compoundname>sstep_motor_cfg</compoundname>
+    <includes refid="sstep__ctrl_8h" local="no">sstep_ctrl.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsstep__motor__cfg_1a78c08dda567df7dda75cf11f9268abfd" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_motor_cfg::r_mohm</definition>
+        <argsstring></argsstring>
+        <name>r_mohm</name>
+        <qualifiedname>sstep_motor_cfg::r_mohm</qualifiedname>
+        <briefdescription>
+<para>Phase resistance at 25 degC [mOhm]. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>17HS19: 1600. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="135" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="135" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__motor__cfg_1a47e7a1d154b7344326223ebcf452033b" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_motor_cfg::l_uh</definition>
+        <argsstring></argsstring>
+        <name>l_uh</name>
+        <qualifiedname>sstep_motor_cfg::l_uh</qualifiedname>
+        <briefdescription>
+<para>Phase inductance [uH]. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>17HS19: 3000. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="136" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="136" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__motor__cfg_1a0f89ebb7450c77fe433b6c461722aabc" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_motor_cfg::i_rated_ma</definition>
+        <argsstring></argsstring>
+        <name>i_rated_ma</name>
+        <qualifiedname>sstep_motor_cfg::i_rated_ma</qualifiedname>
+        <briefdescription>
+<para>Rated phase current [mA]. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>17HS19: 2000. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="137" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="137" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__motor__cfg_1a184580641a91fd80650e46db387b3d88" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_motor_cfg::ke_uv_s_per_rad</definition>
+        <argsstring></argsstring>
+        <name>ke_uv_s_per_rad</name>
+        <qualifiedname>sstep_motor_cfg::ke_uv_s_per_rad</qualifiedname>
+        <briefdescription>
+<para>Back-EMF constant, peak phase voltage per mechanical speed [uV*s/rad] (equals Kt in uN*m/A). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>0 = unknown: no back-EMF feed-forward. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="138" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="138" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__motor__cfg_1a4af5fb3c2b5ef8aef36ca6995f29f218" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_motor_cfg::full_steps_per_rev</definition>
+        <argsstring></argsstring>
+        <name>full_steps_per_rev</name>
+        <qualifiedname>sstep_motor_cfg::full_steps_per_rev</qualifiedname>
+        <briefdescription>
+<para>Full steps per revolution. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>1.8 deg: 200. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="141" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="141" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Motor parameters, from the datasheet or measured. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Example: 17HS19-2004S1. </para>
+    </detaileddescription>
+    <location file="inc/sstep_ctrl.h" line="133" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="134" bodyend="142"/>
+    <listofallmembers>
+      <member refid="structsstep__motor__cfg_1a4af5fb3c2b5ef8aef36ca6995f29f218" prot="public" virt="non-virtual"><scope>sstep_motor_cfg</scope><name>full_steps_per_rev</name></member>
+      <member refid="structsstep__motor__cfg_1a0f89ebb7450c77fe433b6c461722aabc" prot="public" virt="non-virtual"><scope>sstep_motor_cfg</scope><name>i_rated_ma</name></member>
+      <member refid="structsstep__motor__cfg_1a184580641a91fd80650e46db387b3d88" prot="public" virt="non-virtual"><scope>sstep_motor_cfg</scope><name>ke_uv_s_per_rad</name></member>
+      <member refid="structsstep__motor__cfg_1a47e7a1d154b7344326223ebcf452033b" prot="public" virt="non-virtual"><scope>sstep_motor_cfg</scope><name>l_uh</name></member>
+      <member refid="structsstep__motor__cfg_1a78c08dda567df7dda75cf11f9268abfd" prot="public" virt="non-virtual"><scope>sstep_motor_cfg</scope><name>r_mohm</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

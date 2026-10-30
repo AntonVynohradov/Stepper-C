@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="group__sstep__defs" kind="group">
+    <compoundname>sstep_defs</compoundname>
+    <title>Definitions</title>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="group__sstep__defs_1gabd2c373f4d8a7502c78952555c8cb23c" prot="public" static="no" strong="no">
+        <type></type>
+        <name>sstep_topology</name>
+        <enumvalue id="group__sstep__defs_1ggabd2c373f4d8a7502c78952555c8cb23caa58189b3725d33b3e2e45e5de1edea0b" prot="public">
+          <name>SSTEP_TOPOLOGY_FULL_BRIDGE</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+<para>Two full H-bridges, 4 legs. </para>
+          </briefdescription>
+          <detaileddescription>
+<para>Phase A between legs 0 and 1, phase B between legs 2 and 3. Phase voltage range: -Vbus..+Vbus for each phase independently. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__sstep__defs_1ggabd2c373f4d8a7502c78952555c8cb23cad79082b32238cad97b34ad994c7a156b" prot="public">
+          <name>SSTEP_TOPOLOGY_SHARED_LEG</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+<para>Three half-bridges, 3 legs. </para>
+          </briefdescription>
+          <detaileddescription>
+<para>Phase A between legs 0 and 2, phase B between legs 1 and 2; leg 2 is shared and carries iA + iB. Phase voltages are limited by |vA|, |vB|, |vA - vB| &lt;= Vbus (sinusoidal amplitude about Vbus / sqrt(2)). </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>Power stage topology. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="78" column="1" bodyfile="inc/sstep_defs.h" bodystart="79" bodyend="87"/>
+      </memberdef>
+      <memberdef kind="enum" id="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" prot="public" static="no" strong="no">
+        <type></type>
+        <name>sstep_state</name>
+        <enumvalue id="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0eaba01894d51e56a80832a7e110412cb96" prot="public">
+          <name>SSTEP_STATE_DISABLED</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+<para>Outputs off (all legs high impedance). </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0eaa14ce43a1268feb093f8c2c24258646a" prot="public">
+          <name>SSTEP_STATE_HOLDING</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+<para>Outputs on, position held with the hold current. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0ea123279ad3851c4bbf9f1478965363d01" prot="public">
+          <name>SSTEP_STATE_MOVING</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+<para>A move or a velocity command is executing. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0ea3974b935bf744d601c1b92ce99b36900" prot="public">
+          <name>SSTEP_STATE_FAULT</name>
+          <initializer>= 3</initializer>
+          <briefdescription>
+<para>Outputs off after a fault, see <ref refid="group__sstep__ctrl_1ga7f4318600b1b000315230db98dd426cb" kindref="member">sstep_clear_faults()</ref>. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>Driver state. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="113" column="1" bodyfile="inc/sstep_defs.h" bodystart="114" bodyend="119"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="group__sstep__defs_1gad80c1718aa6b968cfd521404803da291" prot="public" static="no">
+        <name>SSTEP_OK</name>
+        <initializer>0</initializer>
+        <briefdescription>
+<para>Success. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="59" column="9" bodyfile="inc/sstep_defs.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__defs_1gaff8dbc7cce3d2e6d453df3c6d9ab1d14" prot="public" static="no">
+        <name>SSTEP_ERR_PARAM</name>
+        <initializer>(-1)</initializer>
+        <briefdescription>
+<para>NULL pointer or a value outside its documented range. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="61" column="9" bodyfile="inc/sstep_defs.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__defs_1ga5038754fef123e5d599064d9c9680b88" prot="public" static="no">
+        <name>SSTEP_ERR_CONFIG</name>
+        <initializer>(-2)</initializer>
+        <briefdescription>
+<para>Configuration is consistent field by field but not as a whole (for example rated current above the power stage limit). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="64" column="9" bodyfile="inc/sstep_defs.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__defs_1ga145c9925476a6618b7d317935623ef33" prot="public" static="no">
+        <name>SSTEP_ERR_STATE</name>
+        <initializer>(-3)</initializer>
+        <briefdescription>
+<para>Call not allowed in the current state (for example a move while faulted). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="66" column="9" bodyfile="inc/sstep_defs.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__defs_1ga80beeffdc48a72869fd2e6aa6bb84d32" prot="public" static="no">
+        <name>SSTEP_ERR_UNSUPPORTED</name>
+        <initializer>(-4)</initializer>
+        <briefdescription>
+<para>Topology not compiled in (see <ref refid="group__sstep__config_1ga31fbdc1c85873c64564a26b02b8f9f70" kindref="member">SSTEP_CFG_TOPOLOGY_FULL_BRIDGE</ref>). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="68" column="9" bodyfile="inc/sstep_defs.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__defs_1ga1322a183e22d7a74f48144c279a90fe7" prot="public" static="no">
+        <name>SSTEP_LEGS_MAX</name>
+        <initializer>4U</initializer>
+        <briefdescription>
+<para>Number of half-bridge legs of the largest supported topology. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="75" column="9" bodyfile="inc/sstep_defs.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__defs_1ga2d6e88422a533af881e0e02728673d55" prot="public" static="no">
+        <name>SSTEP_FAULT_NONE</name>
+        <initializer>0x0000U</initializer>
+        <briefdescription>
+<para>Fault flags reported by <ref refid="group__sstep__ctrl_1gafda7fec931ffa0ac11e671c75cd39300" kindref="member">sstep_get_status()</ref> and the fault callback. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>A fault switches the outputs off; <ref refid="group__sstep__ctrl_1ga7f4318600b1b000315230db98dd426cb" kindref="member">sstep_clear_faults()</ref> re-arms the driver. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="95" column="9" bodyfile="inc/sstep_defs.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__defs_1gaa353d481953ff35813c91602f7767914" prot="public" static="no">
+        <name>SSTEP_FAULT_OVERCURRENT</name>
+        <initializer>0x0001U</initializer>
+        <briefdescription>
+<para>Measured phase current above the configured trip level. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="97" column="9" bodyfile="inc/sstep_defs.h" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__defs_1gaac654b622282f0a713bf3d7d066bcc8e" prot="public" static="no">
+        <name>SSTEP_FAULT_OVERVOLTAGE</name>
+        <initializer>0x0002U</initializer>
+        <briefdescription>
+<para>Bus voltage above the configured maximum. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="99" column="9" bodyfile="inc/sstep_defs.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__defs_1gadf817747c1ca590152b756f4d5cf88ed" prot="public" static="no">
+        <name>SSTEP_FAULT_UNDERVOLTAGE</name>
+        <initializer>0x0004U</initializer>
+        <briefdescription>
+<para>Bus voltage below the configured minimum. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="101" column="9" bodyfile="inc/sstep_defs.h" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__defs_1gab51def6949f6a27cf6c6651c246c8cc7" prot="public" static="no">
+        <name>SSTEP_FAULT_HAL</name>
+        <initializer>0x0008U</initializer>
+        <briefdescription>
+<para>A hardware callback returned an error. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="103" column="9" bodyfile="inc/sstep_defs.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__defs_1ga6160f6093576feb828e106ab46dc7269" prot="public" static="no">
+        <name>SSTEP_FAULT_EXTERNAL</name>
+        <initializer>0x0010U</initializer>
+        <briefdescription>
+<para>Reported by the application through <ref refid="group__sstep__ctrl_1gadb944552719e659be1da950534631023" kindref="member">sstep_report_fault()</ref> (driver fault pin, over-temperature...). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="106" column="9" bodyfile="inc/sstep_defs.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Constants shared by the public API. </para>
+    </briefdescription>
+    <detaileddescription>
+<para><bold>Units.</bold> Configuration values are integers in engineering units (milliohm, microhenry, milliampere, millivolt, hertz, nanosecond) so that <ref refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kindref="member">sstep_init()</ref> needs no floating point with the fixed point backend. The unit is part of every field name (<computeroutput>r_mohm</computeroutput>, <computeroutput>l_uh</computeroutput>...). Positions are in microsteps, velocities in microsteps per second.</para>
+<para><bold>Sign convention.</bold> A positive phase voltage drives a positive phase current; positive velocity increases the position. Phase A leads phase B by 90 electrical degrees for positive motion. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

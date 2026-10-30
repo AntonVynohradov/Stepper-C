@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structsstep__motion" kind="struct" language="C++" prot="public">
+    <compoundname>sstep_motion</compoundname>
+    <includes refid="sstep__ctrl_8h" local="no">sstep_ctrl.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsstep__motion_1a5f3b8423d663b53c658827a1eeee452c" prot="public" static="no" mutable="no">
+        <type>int64_t</type>
+        <definition>int64_t sstep_motion::pos</definition>
+        <argsstring></argsstring>
+        <name>pos</name>
+        <qualifiedname>sstep_motion::pos</qualifiedname>
+        <briefdescription>
+<para>Position [Q16 microsteps]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="250" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="250" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__motion_1a9e35faa4a313421abbf760d2b389972e" prot="public" static="no" mutable="no">
+        <type>int64_t</type>
+        <definition>int64_t sstep_motion::target</definition>
+        <argsstring></argsstring>
+        <name>target</name>
+        <qualifiedname>sstep_motion::target</qualifiedname>
+        <briefdescription>
+<para>Move target [Q16 microsteps]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="251" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="251" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__motion_1a7e15ecf405b0ef185fe2fc08d4f01ef7" prot="public" static="no" mutable="no">
+        <type>int64_t</type>
+        <definition>int64_t sstep_motion::brake_vmax</definition>
+        <argsstring></argsstring>
+        <name>brake_vmax</name>
+        <qualifiedname>sstep_motion::brake_vmax</qualifiedname>
+        <briefdescription>
+<para>Braking distance from v_max [Q16 microsteps]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="252" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="252" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__motion_1afd2d45ef1ee12f9d8b312d21d840c9c8" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t sstep_motion::vel</definition>
+        <argsstring></argsstring>
+        <name>vel</name>
+        <qualifiedname>sstep_motion::vel</qualifiedname>
+        <briefdescription>
+<para>Velocity [Q16 microsteps / period]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="253" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="253" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__motion_1a24bb69ad2f83448850a0b45c95276652" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t sstep_motion::v_run</definition>
+        <argsstring></argsstring>
+        <name>v_run</name>
+        <qualifiedname>sstep_motion::v_run</qualifiedname>
+        <briefdescription>
+<para>Requested velocity of a RUN command. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="254" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="254" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__motion_1a163d612c0b64339a6f348f95f2706b94" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t sstep_motion::v_max</definition>
+        <argsstring></argsstring>
+        <name>v_max</name>
+        <qualifiedname>sstep_motion::v_max</qualifiedname>
+        <briefdescription>
+<para>Velocity limit. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="255" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="255" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__motion_1a8d5d720546d6e3d0e219793332f400da" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t sstep_motion::acc</definition>
+        <argsstring></argsstring>
+        <name>acc</name>
+        <qualifiedname>sstep_motion::acc</qualifiedname>
+        <briefdescription>
+<para>Acceleration limit [Q16 microsteps / period^2]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="256" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="256" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__motion_1aff922b2e1792271b223eb86c635868a7" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t sstep_motion::dec</definition>
+        <argsstring></argsstring>
+        <name>dec</name>
+        <qualifiedname>sstep_motion::dec</qualifiedname>
+        <briefdescription>
+<para>Deceleration limit. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="257" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="257" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__motion_1aca067a6e3bc90e3f291d16aa80c3f5c7" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t sstep_motion::mode</definition>
+        <argsstring></argsstring>
+        <name>mode</name>
+        <qualifiedname>sstep_motion::mode</qualifiedname>
+        <briefdescription>
+<para>0 hold, 1 move, 2 run. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="258" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="258" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Motion generator state. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Private. Integer arithmetic in both numeric backends: positions in 1/65536 microstep, velocities in 1/65536 microstep per slow loop period, accelerations in 1/65536 microstep per period squared. </para>
+    </detaileddescription>
+    <location file="inc/sstep_ctrl.h" line="248" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="249" bodyend="259"/>
+    <listofallmembers>
+      <member refid="structsstep__motion_1a8d5d720546d6e3d0e219793332f400da" prot="public" virt="non-virtual"><scope>sstep_motion</scope><name>acc</name></member>
+      <member refid="structsstep__motion_1a7e15ecf405b0ef185fe2fc08d4f01ef7" prot="public" virt="non-virtual"><scope>sstep_motion</scope><name>brake_vmax</name></member>
+      <member refid="structsstep__motion_1aff922b2e1792271b223eb86c635868a7" prot="public" virt="non-virtual"><scope>sstep_motion</scope><name>dec</name></member>
+      <member refid="structsstep__motion_1aca067a6e3bc90e3f291d16aa80c3f5c7" prot="public" virt="non-virtual"><scope>sstep_motion</scope><name>mode</name></member>
+      <member refid="structsstep__motion_1a5f3b8423d663b53c658827a1eeee452c" prot="public" virt="non-virtual"><scope>sstep_motion</scope><name>pos</name></member>
+      <member refid="structsstep__motion_1a9e35faa4a313421abbf760d2b389972e" prot="public" virt="non-virtual"><scope>sstep_motion</scope><name>target</name></member>
+      <member refid="structsstep__motion_1a163d612c0b64339a6f348f95f2706b94" prot="public" virt="non-virtual"><scope>sstep_motion</scope><name>v_max</name></member>
+      <member refid="structsstep__motion_1a24bb69ad2f83448850a0b45c95276652" prot="public" virt="non-virtual"><scope>sstep_motion</scope><name>v_run</name></member>
+      <member refid="structsstep__motion_1afd2d45ef1ee12f9d8b312d21d840c9c8" prot="public" virt="non-virtual"><scope>sstep_motion</scope><name>vel</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

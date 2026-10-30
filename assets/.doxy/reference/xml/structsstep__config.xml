@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structsstep__config" kind="struct" language="C++" prot="public">
+    <compoundname>sstep_config</compoundname>
+    <includes refid="sstep__ctrl_8h" local="no">sstep_ctrl.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsstep__config_1a6825b54dd8047cf98812253b4d376144" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__motor__cfg" kindref="compound">sstep_motor_cfg</ref></type>
+        <definition>struct sstep_motor_cfg sstep_config::motor</definition>
+        <argsstring></argsstring>
+        <name>motor</name>
+        <qualifiedname>sstep_config::motor</qualifiedname>
+        <briefdescription>
+<para>Motor. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="198" column="26" bodyfile="inc/sstep_ctrl.h" bodystart="198" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__config_1a2b8a71c5384cc46b3b2f14b26c85e3ee" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__stage__cfg" kindref="compound">sstep_stage_cfg</ref></type>
+        <definition>struct sstep_stage_cfg sstep_config::stage</definition>
+        <argsstring></argsstring>
+        <name>stage</name>
+        <qualifiedname>sstep_config::stage</qualifiedname>
+        <briefdescription>
+<para>Power stage and measurement. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="199" column="26" bodyfile="inc/sstep_ctrl.h" bodystart="199" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__config_1aa3d8f72548a27c3853bd503d2bc86467" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__ctrl__cfg" kindref="compound">sstep_ctrl_cfg</ref></type>
+        <definition>struct sstep_ctrl_cfg sstep_config::ctrl</definition>
+        <argsstring></argsstring>
+        <name>ctrl</name>
+        <qualifiedname>sstep_config::ctrl</qualifiedname>
+        <briefdescription>
+<para>Control and motion. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="200" column="25" bodyfile="inc/sstep_ctrl.h" bodystart="200" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__config_1a9861b9347f5bbb71123b041927f42edb" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__callbacks" kindref="compound">sstep_callbacks</ref></type>
+        <definition>struct sstep_callbacks sstep_config::hal</definition>
+        <argsstring></argsstring>
+        <name>hal</name>
+        <qualifiedname>sstep_config::hal</qualifiedname>
+        <briefdescription>
+<para>Hardware callbacks. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="201" column="26" bodyfile="inc/sstep_ctrl.h" bodystart="201" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Complete configuration given to <ref refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kindref="member">sstep_init()</ref>. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Copied by <ref refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kindref="member">sstep_init()</ref>; the structure may be discarded afterwards. </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="5">
+        <label>sstep_callbacks</label>
+        <link refid="structsstep__callbacks"/>
+      </node>
+      <node id="1">
+        <label>sstep_config</label>
+        <link refid="structsstep__config"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>motor</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>stage</edgelabel>
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>ctrl</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>hal</edgelabel>
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sstep_ctrl_cfg</label>
+        <link refid="structsstep__ctrl__cfg"/>
+      </node>
+      <node id="2">
+        <label>sstep_motor_cfg</label>
+        <link refid="structsstep__motor__cfg"/>
+      </node>
+      <node id="3">
+        <label>sstep_stage_cfg</label>
+        <link refid="structsstep__stage__cfg"/>
+      </node>
+    </collaborationgraph>
+    <location file="inc/sstep_ctrl.h" line="196" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="197" bodyend="202"/>
+    <listofallmembers>
+      <member refid="structsstep__config_1aa3d8f72548a27c3853bd503d2bc86467" prot="public" virt="non-virtual"><scope>sstep_config</scope><name>ctrl</name></member>
+      <member refid="structsstep__config_1a9861b9347f5bbb71123b041927f42edb" prot="public" virt="non-virtual"><scope>sstep_config</scope><name>hal</name></member>
+      <member refid="structsstep__config_1a6825b54dd8047cf98812253b4d376144" prot="public" virt="non-virtual"><scope>sstep_config</scope><name>motor</name></member>
+      <member refid="structsstep__config_1a2b8a71c5384cc46b3b2f14b26c85e3ee" prot="public" virt="non-virtual"><scope>sstep_config</scope><name>stage</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

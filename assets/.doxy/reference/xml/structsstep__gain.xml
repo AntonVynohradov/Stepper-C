@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structsstep__gain" kind="struct" language="C++" prot="public">
+    <compoundname>sstep_gain</compoundname>
+    <includes refid="sstep__math_8h" local="no">sstep_math.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsstep__gain_1a24f22986696b88f390cd5a47fed49ac0" prot="public" static="no" mutable="no">
+        <type>int16_t</type>
+        <definition>int16_t sstep_gain::mant</definition>
+        <argsstring></argsstring>
+        <name>mant</name>
+        <qualifiedname>sstep_gain::mant</qualifiedname>
+        <briefdescription>
+<para>Q15 mantissa. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="103" column="13" bodyfile="inc/sstep_math.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__gain_1a214293e41496a623473f3e09329bf33d" prot="public" static="no" mutable="no">
+        <type>int8_t</type>
+        <definition>int8_t sstep_gain::exp</definition>
+        <argsstring></argsstring>
+        <name>exp</name>
+        <qualifiedname>sstep_gain::exp</qualifiedname>
+        <briefdescription>
+<para>Binary exponent, <ref refid="group__sstep__math_1gae0d7a92d278d7b421a62aeefe11adb13" kindref="member">SSTEP_GAIN_EXP_MIN</ref> . </para>
+        </briefdescription>
+        <detaileddescription>
+<para>. <ref refid="group__sstep__math_1ga969c943dfb6f5d0fe6aa409e8e95ce3a" kindref="member">SSTEP_GAIN_EXP_MAX</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_math.h" line="104" column="12" bodyfile="inc/sstep_math.h" bodystart="104" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Gain of any magnitude: value = mant / 2^15 * 2^exp. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Created by <ref refid="group__sstep__math_1gafe58f850f3ec0ea7b1d369e4a8d692fe" kindref="member">sstep_gain_from_ratio()</ref>; the mantissa is normalised (16384 &lt;= |mant| &lt;= 32767) for the best resolution, or 0. </para>
+    </detaileddescription>
+    <location file="inc/sstep_math.h" line="101" column="1" bodyfile="inc/sstep_math.h" bodystart="102" bodyend="105"/>
+    <listofallmembers>
+      <member refid="structsstep__gain_1a214293e41496a623473f3e09329bf33d" prot="public" virt="non-virtual"><scope>sstep_gain</scope><name>exp</name></member>
+      <member refid="structsstep__gain_1a24f22986696b88f390cd5a47fed49ac0" prot="public" virt="non-virtual"><scope>sstep_gain</scope><name>mant</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
