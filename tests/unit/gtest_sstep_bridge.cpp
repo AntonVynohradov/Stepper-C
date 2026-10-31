@@ -48,11 +48,23 @@ namespace
 constexpr uint16_t kPeriod = 4250U;
 
 #if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
-sstep_acc_t acc(double x) { return static_cast<sstep_acc_t>(std::lround(x * 32768.0)); }
-double accd(sstep_acc_t x) { return x / 32768.0; }
+sstep_acc_t acc(double x)
+{
+    return static_cast<sstep_acc_t>(std::lround(x * 32768.0));
+}
+double accd(sstep_acc_t x)
+{
+    return x / 32768.0;
+}
 #else
-sstep_acc_t acc(double x) { return static_cast<sstep_acc_t>(x); }
-double accd(sstep_acc_t x) { return x; }
+sstep_acc_t acc(double x)
+{
+    return static_cast<sstep_acc_t>(x);
+}
+double accd(sstep_acc_t x)
+{
+    return x;
+}
 #endif
 
 /* phase voltages [pu of Vbus] reconstructed from the compare values */
@@ -81,7 +93,7 @@ struct Topo
 const Topo kTopos[] = {{SSTEP_TOPOLOGY_FULL_BRIDGE, "full", 1.0},
                        {SSTEP_TOPOLOGY_SHARED_LEG, "shared", 1.0 / std::sqrt(2.0)}};
 
-} // namespace
+}  // namespace
 
 /* ==============================================================================
  * TESTS
@@ -119,18 +131,20 @@ TEST(SstepBridge, RandomRequests)
             worst_dir = std::fmax(worst_dir, cr);
             if (!o.limited)
             {
-                worst_exact = std::fmax(worst_exact, std::fmax(std::fabs(a - va), std::fabs(b - vb)));
+                worst_exact =
+                    std::fmax(worst_exact, std::fmax(std::fabs(a - va), std::fabs(b - vb)));
             }
             /* reported applied voltage equals the compare values */
             EXPECT_NEAR(accd(o.v[0]), a, 3.0 / kPeriod);
             EXPECT_NEAR(accd(o.v[1]), b, 3.0 / kPeriod);
         }
-        std::printf("[ measured ] %s: direction error %.2e pu (vector tip), error when feasible %.2e pu "
-                    "(1 tick = %.2e)\n",
-                    tp.name, worst_dir, worst_exact, 1.0 / kPeriod);
+        std::printf(
+            "[ measured ] %s: direction error %.2e pu (vector tip), error when feasible %.2e pu "
+            "(1 tick = %.2e)\n",
+            tp.name, worst_dir, worst_exact, 1.0 / kPeriod);
         EXPECT_TRUE(duty_ok);
-        EXPECT_LT(worst_dir, 2.0 / kPeriod);       /* compare quantisation */
-        EXPECT_LT(worst_exact, 2.5 / kPeriod);     /* one tick + rounding */
+        EXPECT_LT(worst_dir, 2.0 / kPeriod);   /* compare quantisation */
+        EXPECT_LT(worst_exact, 2.5 / kPeriod); /* one tick + rounding */
     }
 }
 

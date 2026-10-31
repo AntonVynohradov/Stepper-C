@@ -90,6 +90,7 @@ analysis can evaluate them) and checked against the private state by `_Static_as
 | A configuration field outside its range or a missing required callback | `sstep_init()` returns `SSTEP_ERR_PARAM` |
 | Fields that are valid alone but not together (trip above full scale, bandwidth above `fast_loop_hz / 4`, a gain that does not fit) | `sstep_init()` returns `SSTEP_ERR_CONFIG` |
 | A topology that is not compiled in | `sstep_init()` returns `SSTEP_ERR_UNSUPPORTED` |
+| Any call before a successful `sstep_init()` (zeroed instance, or the last `sstep_init()` failed in the derivation) | `SSTEP_ERR_STATE`; no callback is called |
 | A motion command while disabled or faulted | `SSTEP_ERR_STATE` |
 | A phase current above `i_trip_ma` (current drive) | `SSTEP_FAULT_OVERCURRENT`, outputs off in the same fast period |
 | Bus voltage above `vbus_max_mv` or below `vbus_min_mv` | `SSTEP_FAULT_OVERVOLTAGE` / `SSTEP_FAULT_UNDERVOLTAGE`, outputs off |

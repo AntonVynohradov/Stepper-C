@@ -46,11 +46,12 @@ Describe the specific changes:
 - [ ] Documentation updated if needed
 
 ## Embedded Systems Considerations
-- [ ] Library code includes only `<stddef.h>`, `<stdint.h>`, `<stdbool.h>`, `<string.h>` and SSTEP headers
+- [ ] Library code includes only `<stddef.h>`, `<stdint.h>`, `<stdbool.h>` and SSTEP headers
 - [ ] No OS, driver or hardware dependency added
 - [ ] No global mutable state; all state in caller-owned structures
 - [ ] Stack and RAM footprint impact documented (`docs/configuration.md`)
-- [ ] Behavior matches the Stepper Motor Control specification; wire-format changes are a new major version
+- [ ] Both numeric backends pass (`[UnitTests]` and `[UnitTestsFloat]` presets)
+- [ ] `SSTEP_STATE_BYTES` / `SSTEP_CONFIG_BYTES` updated if the instance layout changed
 
 ## Breaking Changes
 - [ ] This PR introduces breaking changes

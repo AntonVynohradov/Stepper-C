@@ -20,8 +20,8 @@ Everything else (`src/`) is private and not installed with the library.
 
 | Macro | Value | Meaning |
 | --- | --- | --- |
-| `SSTEP_VERSION_MAJOR`, `…_MINOR`, `…_PATCH` | `0`, `1`, `0` | Version numbers; set by CMake from the latest `vX.Y.Z` tag, these are the fallbacks |
-| `SSTEP_VERSION` | `"0.1.0"` | Version string |
+| `SSTEP_VERSION_MAJOR`, `…_MINOR`, `…_PATCH` | `1`, `0`, `0` | Version numbers; set by CMake from the latest `vX.Y.Z` tag, these are the fallbacks |
+| `SSTEP_VERSION` | `"1.0.0"` | Version string |
 
 ## Configuration — `sstep_config.h`
 
@@ -122,7 +122,7 @@ Units, ranges and examples of every member: [Run-time configuration](configurati
 ### Driver instance
 
 `struct sstep` is an opaque array of `SSTEP_INSTANCE_WORDS` 64-bit words (on Cortex-M4
-336 B fixed point, 360 B float; on 64-bit hosts 360 B and 384 B). Allocate it, pass its
+336 B fixed point, 360 B float; on 64-bit hosts 360 B and 392 B). Allocate it, pass its
 address, never read or write its content. `SSTEP_CONFIG_BYTES` is the size of the
 configuration copy (136 B with 32-bit pointers, 160 B with 64-bit pointers) and
 `SSTEP_STATE_BYTES` the size of the private state behind it.
@@ -130,7 +130,10 @@ configuration copy (136 B with 32-bit pointers, 160 B with 64-bit pointers) and
 ## Functions — `sstep.h`
 
 All functions return a status code. Positions are in microsteps, velocities in
-microsteps/s, currents in mA.
+microsteps/s, currents in mA. Every function except `sstep_init()` returns
+`SSTEP_ERR_STATE` for an instance without a successful `sstep_init()` and then calls
+no callback (`sstep_fast_loop()` only with `SSTEP_CFG_ARG_CHECKS = 1`); the tables
+below list the other cases.
 
 ### sstep_init
 
@@ -373,12 +376,14 @@ engineering units.
 | --- | :---: | :---: | :---: | :---: | :---: |
 | `sstep_init()` | ✓ | ✓ | ✓ | | ✓ |
 | `sstep_enable()` | ✓ | ✓ | | ✓ | |
-| `sstep_disable()` | ✓ | ✓ | | | |
-| `sstep_fast_loop()` | ✓ | ✓ | | | |
-| `sstep_slow_loop()` | ✓ | ✓ | | | |
+| `sstep_disable()` | ✓ | ✓ | | ✓¹ | |
+| `sstep_fast_loop()` | ✓ | ✓ | | ✓¹ | |
+| `sstep_slow_loop()` | ✓ | ✓ | | ✓¹ | |
 | `sstep_move_to()`, `sstep_move_by()`, `sstep_run()` | ✓ | ✓ | | ✓ | |
-| `sstep_stop()` | ✓ | ✓ | | | |
+| `sstep_stop()` | ✓ | ✓ | | ✓¹ | |
 | `sstep_set_position()` | ✓ | ✓ | | ✓ | |
-| `sstep_set_current()` | ✓ | ✓ | ✓ | | |
-| `sstep_set_motion_limits()` | ✓ | ✓ | | | |
-| `sstep_report_fault()`, `sstep_clear_faults()`, `sstep_get_status()` | ✓ | ✓ | | | |
+| `sstep_set_current()` | ✓ | ✓ | ✓ | ✓¹ | |
+| `sstep_set_motion_limits()` | ✓ | ✓ | | ✓¹ | |
+| `sstep_report_fault()`, `sstep_clear_faults()`, `sstep_get_status()` | ✓ | ✓ | | ✓¹ | |
+
+¹ Only for an instance without a successful `sstep_init()`.

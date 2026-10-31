@@ -63,6 +63,11 @@ extern "C" {
  *         (1/1024 microstep). */
 #define SSTEP_POS_SNAP ((int64_t)64)
 
+/** @brief Value of sstep_ctx::ready after a successful sstep_init() ("STPC"). A zeroed or
+ *         never initialized instance holds another value: every function but sstep_init()
+ *         then returns ::SSTEP_ERR_STATE instead of using an empty configuration. */
+#define SSTEP_READY 0x53545043U
+
 /* ==============================================================================
  * TYPE DEFINITIONS
  * =============================================================================*/
@@ -96,43 +101,43 @@ struct sstep_setpoint
  */
 struct sstep_motion
 {
-    int64_t pos;          /**< Position [Q16 microsteps]. */
-    int64_t target;       /**< Move target [Q16 microsteps]. */
-    int64_t brake_vmax;   /**< Braking distance from v_max [Q16 microsteps]. */
-    int32_t vel;          /**< Velocity [Q16 microsteps / period]. */
-    int32_t v_run;        /**< Requested velocity of a RUN command. */
-    int32_t v_max;        /**< Velocity limit. */
-    int32_t acc;          /**< Acceleration limit [Q16 microsteps / period^2]. */
-    int32_t dec;          /**< Deceleration limit. */
-    uint8_t mode;         /**< 0 hold, 1 move, 2 run. */
+    int64_t pos;        /**< Position [Q16 microsteps]. */
+    int64_t target;     /**< Move target [Q16 microsteps]. */
+    int64_t brake_vmax; /**< Braking distance from v_max [Q16 microsteps]. */
+    int32_t vel;        /**< Velocity [Q16 microsteps / period]. */
+    int32_t v_run;      /**< Requested velocity of a RUN command. */
+    int32_t v_max;      /**< Velocity limit. */
+    int32_t acc;        /**< Acceleration limit [Q16 microsteps / period^2]. */
+    int32_t dec;        /**< Deceleration limit. */
+    uint8_t mode;       /**< 0 hold, 1 move, 2 run. */
 };
 
 /** @brief Driver state behind the opaque ::sstep. Its layout may change in any release. */
 struct sstep_ctx
 {
-    struct sstep_config cfg;          /**< Copy of the configuration. */
+    struct sstep_config cfg; /**< Copy of the configuration. */
 
     /* Constants derived by sstep_init() */
-    struct sstep_gain kp;             /**< Proportional gain [pu V / pu A]. */
-    struct sstep_gain ki;             /**< Integral gain per fast loop period. */
-    struct sstep_gain kb;             /**< Anti-windup gain Ts / Tt. */
-    struct sstep_gain r_pu;           /**< Phase resistance [pu] (voltage drive). */
-    struct sstep_gain adc_i;          /**< Current per ADC count [pu]. */
-    struct sstep_gain adc_v;          /**< Bus voltage per ADC count [pu]. */
-    struct sstep_gain ff_gain;        /**< Feed-forward per microstep/s [pu]. */
-    sstep_real_t i_run;               /**< Run current [pu]. */
-    sstep_real_t i_hold;              /**< Hold current [pu]. */
-    uint16_t i_trip_counts;           /**< Overcurrent trip [ADC counts from zero]. */
-    uint16_t vbus_min_raw;            /**< Undervoltage trip [ADC counts], 0 = off. */
-    uint16_t vbus_max_raw;            /**< Overvoltage trip [ADC counts], 0 = off. */
-    uint16_t ratio;                   /**< Fast loop periods per slow loop period. */
-    uint32_t hold_ticks;              /**< Slow periods at standstill before hold. */
-    uint8_t angle_shift;              /**< 14 - log2(microsteps). */
+    struct sstep_gain kp;      /**< Proportional gain [pu V / pu A]. */
+    struct sstep_gain ki;      /**< Integral gain per fast loop period. */
+    struct sstep_gain kb;      /**< Anti-windup gain Ts / Tt. */
+    struct sstep_gain r_pu;    /**< Phase resistance [pu] (voltage drive). */
+    struct sstep_gain adc_i;   /**< Current per ADC count [pu]. */
+    struct sstep_gain adc_v;   /**< Bus voltage per ADC count [pu]. */
+    struct sstep_gain ff_gain; /**< Feed-forward per microstep/s [pu]. */
+    sstep_real_t i_run;        /**< Run current [pu]. */
+    sstep_real_t i_hold;       /**< Hold current [pu]. */
+    uint16_t i_trip_counts;    /**< Overcurrent trip [ADC counts from zero]. */
+    uint16_t vbus_min_raw;     /**< Undervoltage trip [ADC counts], 0 = off. */
+    uint16_t vbus_max_raw;     /**< Overvoltage trip [ADC counts], 0 = off. */
+    uint16_t ratio;            /**< Fast loop periods per slow loop period. */
+    uint32_t hold_ticks;       /**< Slow periods at standstill before hold. */
+    uint8_t angle_shift;       /**< 14 - log2(microsteps). */
 
     /* Slow loop -> fast loop hand-off (double buffer) */
-    struct sstep_setpoint sp[2];      /**< Setpoints; the fast loop owns sp[sp_active]. */
-    volatile uint8_t sp_active;       /**< Buffer in use by the fast loop. */
-    volatile uint8_t sp_pending;      /**< 1: sp[1 - sp_active] is complete and new. */
+    struct sstep_setpoint sp[2]; /**< Setpoints; the fast loop owns sp[sp_active]. */
+    volatile uint8_t sp_active;  /**< Buffer in use by the fast loop. */
+    volatile uint8_t sp_pending; /**< 1: sp[1 - sp_active] is complete and new. */
 
     /* Fast loop state */
     struct sstep_setpoint cur;        /**< Setpoint in use. */
@@ -143,14 +148,15 @@ struct sstep_ctx
     uint16_t compare[SSTEP_LEGS_MAX]; /**< Last compare values. */
 
     /* Slow loop state */
-    struct sstep_motion mo;           /**< Motion generator. */
-    sstep_angle_t angle_offset;       /**< Electrical angle of position 0. */
-    uint32_t still;                   /**< Slow periods at standstill. */
-    bool hold_active;                 /**< Hold current applied. */
-    struct sstep_gain inv_vbus;       /**< Last V_base / bus voltage. */
+    struct sstep_motion mo;     /**< Motion generator. */
+    sstep_angle_t angle_offset; /**< Electrical angle of position 0. */
+    uint32_t still;             /**< Slow periods at standstill. */
+    bool hold_active;           /**< Hold current applied. */
+    struct sstep_gain inv_vbus; /**< Last V_base / bus voltage. */
 
-    volatile uint16_t faults;         /**< Active faults. */
-    volatile enum sstep_state state;  /**< Driver state. */
+    volatile uint16_t faults;        /**< Active faults. */
+    volatile enum sstep_state state; /**< Driver state. */
+    uint32_t ready;                  /**< ::SSTEP_READY after a successful sstep_init(). */
 };
 
 /**

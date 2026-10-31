@@ -30,7 +30,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y doxygen graphviz libpango-1.0-0 libpangoft2-1.0-0
-          pip install mkdocs mkdocs-material mkdoxy mkdocs-autorefs weasyprint
+          pip install -r requirements-dev.txt
 
       - name: Build PDF manual
         run: |

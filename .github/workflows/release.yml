@@ -53,13 +53,15 @@ jobs:
       - name: Install tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtest-dev gcovr cppcheck libpango-1.0-0 libpangoft2-1.0-0
-          python -m pip install mkdocs-material weasyprint
+          sudo apt-get install -y libgtest-dev gcovr cppcheck doxygen libpango-1.0-0 libpangoft2-1.0-0
+          python -m pip install -r requirements-dev.txt
 
       - name: Unit tests and coverage gate
         run: |
           cmake --preset "[UnitTests]Stepper Motor Control" -B "build/[UnitTests]Stepper Motor Control"
           cmake --build "build/[UnitTests]Stepper Motor Control" --target coverage
+          cmake --preset "[UnitTestsFloat]Stepper Motor Control" -B "build/[UnitTestsFloat]Stepper Motor Control"
+          cmake --build "build/[UnitTestsFloat]Stepper Motor Control" --target coverage
 
       - name: MISRA C:2012 gate
         run: |

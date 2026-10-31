@@ -143,22 +143,22 @@ struct sstep_sincos sstep_sin_cos(sstep_angle_t angle)
 
     switch (quadrant)
     {
-    case 0U:
-        r.sin = s;
-        r.cos = c;
-        break;
-    case 1U:
-        r.sin = c;
-        r.cos = sstep_neg(s);
-        break;
-    case 2U:
-        r.sin = sstep_neg(s);
-        r.cos = sstep_neg(c);
-        break;
-    default: /* quadrant 3 */
-        r.sin = sstep_neg(c);
-        r.cos = s;
-        break;
+        case 0U:
+            r.sin = s;
+            r.cos = c;
+            break;
+        case 1U:
+            r.sin = c;
+            r.cos = sstep_neg(s);
+            break;
+        case 2U:
+            r.sin = sstep_neg(s);
+            r.cos = sstep_neg(c);
+            break;
+        default: /* quadrant 3 */
+            r.sin = sstep_neg(c);
+            r.cos = s;
+            break;
     }
     return r;
 }

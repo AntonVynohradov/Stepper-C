@@ -10,10 +10,12 @@ description: "Use when working on Stepper-C (sstep), the C11 closed-loop microst
 A portable C11 static library that drives a two-phase hybrid stepper motor: PI
 current control per phase with back-EMF feed-forward and anti-windup, microstep
 angle generation, a trapezoidal motion planner, the voltage limit and duty cycles of
-two power stage topologies, and protection trips. Version 0.1.0, under development:
-the public API may still change before 1.0.0. Verified on a motor model in both
-numeric backends; the next steps are software-in-the-loop with the Scilab model and
-the B-G431B-ESC1 port.
+two power stage topologies, and protection trips. Version 1.0.0 is released: the
+public API (`sstep.h`, `inc/`) is stable within major version 1, so a removed or
+changed public symbol, struct member, enum value or return code needs 2.0.0.
+Verified on a motor model in both numeric backends; the next steps are
+software-in-the-loop with the Scilab model, the B-G431B-ESC1 port and dead-time
+compensation.
 
 Not in the library: timer/PWM/ADC drivers, interrupt setup, encoders, homing,
 communication, application logic. They belong to the firmware that uses it.
@@ -56,7 +58,10 @@ communication, application logic. They belong to the firmware that uses it.
   (`uint64_t opaque[SSTEP_INSTANCE_WORDS]`); the state is `struct sstep_ctx`,
   reached only through `sstep_ctx_of()` / `sstep_ctx_of_const()` (MISRA deviation
   DEV-01). Public functions take `struct sstep* drv` and start with
-  `struct sstep_ctx* m = sstep_ctx_of(drv);`.
+  `struct sstep_ctx* m = sstep_ctx_of(drv);`, then check `m == NULL`
+  (`SSTEP_ERR_PARAM`) and `m->ready != SSTEP_READY` (`SSTEP_ERR_STATE`) before any
+  other access: a zeroed instance has an empty configuration and NULL callbacks.
+  Only `sstep_init()` sets `ready`, and only when the derivation succeeds.
 - **Instance size.** When `struct sstep_ctx` changes, update `SSTEP_STATE_BYTES`
   in `inc/sstep_ctrl.h` for both backends; when `struct sstep_config` changes,
   update `SSTEP_CONFIG_BYTES` (32-bit and 64-bit pointers). The `_Static_assert`s
@@ -84,10 +89,14 @@ communication, application logic. They belong to the firmware that uses it.
   `SSTEP_CFG_ARG_CHECKS = 0` removes only the checks of `sstep_fast_loop()`.
 - No warnings with `-std=c11 -Wall -Wextra -Wpedantic -Wconversion`, for the host
   compiler and `arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb`.
-- Style: `.clang-format` (4 spaces, Allman braces, 100 columns); file banners and
-  section comments as in the existing files (`.vscode/cpp.json.code-snippets`).
-- Keep the public API stable within a major version from 1.0.0 on; record every
-  user-visible change under `[Unreleased]` in `CHANGELOG.md`.
+- Style: `.clang-format` (4 spaces, Allman braces, `extern "C" {` on one line, no
+  space after casts, 100 columns); file banners and section comments as in the
+  existing files (`.vscode/cpp.json.code-snippets`). Every tracked C/C++ file must be
+  unchanged by `clang-format` 18 (the CI version): `format-check` fails otherwise.
+  Generated code (`src/sstep_sin_table.c`) is wrapped in `/* clang-format off */`
+  by its generator; one-line test tables use `// clang-format off`.
+- Keep the public API stable within major version 1; record every user-visible
+  change under `[Unreleased]` in `CHANGELOG.md`.
 
 ## Tests (definition of done)
 
@@ -97,6 +106,7 @@ cmake --preset "[UnitTests]Stepper Motor Control" && cmake --build "build/[UnitT
 cmake --preset "[UnitTestsFloat]Stepper Motor Control" && cmake --build "build/[UnitTestsFloat]Stepper Motor Control" --target coverage
 cmake --build "build/[Debug]Stepper Motor Control" --target misra-analyze
 python tools/docs/check_snippets.py
+python tools/sstep_gen_sin_table.py --check
 ```
 
 - `coverage` fails below 100 % line or branch coverage of `src/`, in each backend.
@@ -120,7 +130,7 @@ a change that can affect it.
 
 | Figure | How |
 | --- | --- |
-| RAM per instance | `sizeof(struct sstep)` on Cortex-M4: 336 B fixed, 360 B float (64-bit host: 360 B, 384 B) |
+| RAM per instance | `sizeof(struct sstep)` on Cortex-M4: 336 B fixed, 360 B float (64-bit host: 360 B, 392 B) |
 | Flash | `arm-none-eabi-size` of `src/*.c` at `-Os`, Cortex-M4 (float with `-mfpu=fpv4-sp-d16 -mfloat-abi=hard`) |
 | Stack | `-fstack-usage -fcallgraph-info=su`, then `python tools/docs/stack_usage.py <dir> --markdown`; table in `docs/configuration.md` (Cortex-M4, `-Os`/`-O0`, both backends) |
 | Sine accuracy | Sweep `sstep_sin_cos()` over a full turn against `sin`/`cos` for table bits 6, 8, 10 |

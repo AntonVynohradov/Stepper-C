@@ -11,7 +11,6 @@
 # Copyright:   (c) 2026 Anton Vynohradov
 #
 # References:
-#   - Stepper Motor Control specification: TODO-specification-url
 #   - MISRA C:2012 Guidelines for the use of the C language in critical systems
 #   - CMake Documentation: https://cmake.org/documentation/
 #
@@ -26,7 +25,7 @@
 
 # Used when the source tree has no Git metadata or no vX.Y.Z tag yet; keep it in
 # sync with the fallback values in sstep.h.
-set(SSTEP_DEFAULT_VERSION "0.1.0")
+set(SSTEP_DEFAULT_VERSION "1.0.0")
 
 # ==============================================================================
 # VERSION EXTRACTION

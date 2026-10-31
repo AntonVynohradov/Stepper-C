@@ -12,7 +12,13 @@ on:
 
 jobs:
   unit-tests:
+    name: Unit tests (${{ matrix.preset }})
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        preset: [UnitTests, UnitTestsFloat]   # fixed point and float backend
 
     steps:
       - name: Checkout
@@ -25,17 +31,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtest-dev gcovr
 
-      - name: Configure (UnitTests preset)
-        run: cmake --preset "[UnitTests]Stepper Motor Control" -B "build/[UnitTests]Stepper Motor Control"
+      - name: Configure
+        run: cmake --preset "[${{ matrix.preset }}]Stepper Motor Control" -B "build/[${{ matrix.preset }}]Stepper Motor Control"
 
-      - name: Build (coverage)
-        run: cmake --build "build/[UnitTests]Stepper Motor Control" --target coverage
-
-      - name: Test
-        run: ctest --test-dir "build/[UnitTests]Stepper Motor Control" --output-on-failure
+      - name: Build, test and coverage gate
+        run: cmake --build "build/[${{ matrix.preset }}]Stepper Motor Control" --target coverage
 
       - name: Upload coverage report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-report
-          path: build/\[UnitTests\]Stepper Motor Control/Coverage
+          name: coverage-report-${{ matrix.preset }}
+          path: build/\[${{ matrix.preset }}\]Stepper Motor Control/Coverage

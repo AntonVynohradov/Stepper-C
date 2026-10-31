@@ -47,7 +47,7 @@ Measured on Cortex-M4 (GCC 15.2, `-Os`):
 | | Fixed point | Float |
 | --- | --- | --- |
 | RAM per motor | 336 B | 360 B |
-| Flash | 6756 B | 7214 B |
+| Flash | 6980 B | 7446 B |
 | Worst-case stack, fast loop / slow loop | 184 B / 140 B | 128 B / 132 B |
 
 Closed loop on the motor model (17HS19-2004S1, 24 V, 20 kHz, 1 kHz current bandwidth):
@@ -56,17 +56,16 @@ the target with the rotor within 0.01 microstep.
 
 ## Project status
 
-Version 0.1.0, under development. The control loops are implemented and verified against
-a motor model in both numeric backends and both topologies. Next steps:
+**Version 1.0.0**, the first release. The public API (`sstep.h` and `inc/`) is stable
+within major version 1. The control loops are verified against a motor model in both
+numeric backends and both topologies.
 
 - [x] Current control, microstepping, motion planner, protection, both backends
 - [x] Unit and closed-loop tests with 100 % coverage; MISRA C:2012 with 0 violations
+- [x] Documentation website and PDF manual
 - [ ] Software-in-the-loop against the Scilab/Xcos motor model
-- [ ] Port and measurements on STMicroelectronics B-G431B-ESC1
-- [ ] Dead-time compensation
-- [ ] First release
-
-The public API may still change before 1.0.0.
+- [ ] Port and measurements on STMicroelectronics B-G431B-ESC1 (fast-loop execution time)
+- [ ] Dead-time compensation (`dead_time_ns` is reserved in the configuration)
 
 ## Quick start
 
@@ -184,8 +183,11 @@ avynohradov@systemfromscratch.com
 ## Releases and versioning
 
 [Semantic Versioning](https://semver.org); the version comes from the `vX.Y.Z` Git tag.
-Every change is recorded in [CHANGELOG.md](CHANGELOG.md). A release provides the source,
-a prebuilt static library with its headers, the MISRA report and the PDF manual.
+Every change is recorded in [CHANGELOG.md](CHANGELOG.md). Each
+[release](https://github.com/AntonVynohradov/Stepper-C/releases) provides the source, a
+prebuilt static library for Linux x86-64 (fixed-point backend, default options) with its
+headers, the MISRA report and the PDF manual. For an MCU, build the library from source
+with your toolchain and options.
 
 ## Contributing
 

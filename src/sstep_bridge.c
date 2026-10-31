@@ -51,7 +51,8 @@ static sstep_acc_t acc_min(sstep_acc_t a, sstep_acc_t b);
 static sstep_acc_t scale_to_unit(sstep_acc_t x, sstep_acc_t m);
 #if (SSTEP_CFG_TOPOLOGY_FULL_BRIDGE == 1)
 static sstep_acc_t span_full(sstep_acc_t a, sstep_acc_t b);
-static void duties_full(sstep_acc_t a, sstep_acc_t b, uint16_t period, struct sstep_bridge_out* out);
+static void duties_full(sstep_acc_t a, sstep_acc_t b, uint16_t period,
+                        struct sstep_bridge_out* out);
 #endif
 #if (SSTEP_CFG_TOPOLOGY_SHARED_LEG == 1)
 static sstep_acc_t span_shared(sstep_acc_t a, sstep_acc_t b);

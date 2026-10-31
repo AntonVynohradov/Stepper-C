@@ -31,5 +31,3 @@ __pycache__/
 site/
 docs/downloads/
 
-# Backup repository of the personal Claude skills (moved to its own GitHub repository)
-sfs-claude-skills/

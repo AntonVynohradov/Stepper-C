@@ -11,7 +11,6 @@
 # Copyright:   (c) 2026 Anton Vynohradov
 #
 # References:
-#   - Stepper Motor Control specification: TODO-specification-url
 #   - MISRA C:2012 Guidelines for the use of the C language in critical systems
 #   - CMake Documentation: https://cmake.org/documentation/
 #
@@ -174,8 +173,8 @@ endif()
 find_program(CODEQL_EXECUTABLE codeql)
 if(CODEQL_EXECUTABLE)
 
-    # Note: This target intentionally builds only the core library; examples and
-    # tests are excluded to keep the analysis focused. Extend if needed.
+    # Note: This target intentionally builds only the core library; the tests are
+    # excluded to keep the analysis focused. Extend if needed.
 
     if(WIN32)
         set(CODEQL_BUILD_SCRIPT "${CMAKE_BINARY_DIR}/codeql_build.cmd")

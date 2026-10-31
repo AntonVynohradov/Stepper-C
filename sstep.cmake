@@ -11,7 +11,6 @@
 # Copyright:   (c) 2026 Anton Vynohradov
 #
 # References:
-#   - Stepper Motor Control specification: TODO-specification-url
 #   - MISRA C:2012 Guidelines for the use of the C language in critical systems
 #   - CMake Documentation: https://cmake.org/documentation/
 #
@@ -108,6 +107,8 @@ if(SSTEP_UNIT_TESTS)
         ${CMAKE_CURRENT_LIST_DIR}/tests/unit/gtest_sstep_motion.cpp
         ${CMAKE_CURRENT_LIST_DIR}/tests/unit/gtest_sstep_api.cpp
         ${CMAKE_CURRENT_LIST_DIR}/tests/unit/gtest_sstep_loop.cpp
+        # C compile check: sstep.h alone, no private header (#error otherwise)
+        ${CMAKE_CURRENT_LIST_DIR}/tests/compile/sstep_api_check.c
     )
 
     list(APPEND SSTEP_UNIT_TEST_HEADERS
@@ -127,7 +128,7 @@ endif()
 # LIBRARY TARGET
 # ==============================================================================
 
-# No sources yet (skeleton): the target is header-only until step 2
+# Without sources the target would be header-only
 if(NOT SSTEP_SOURCES)
     set(SSTEP_LIBRARY_TYPE "INTERFACE")
     set(SSTEP_LIBRARY_INTERFACE "INTERFACE")

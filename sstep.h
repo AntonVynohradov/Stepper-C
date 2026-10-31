@@ -38,11 +38,11 @@
  * with SSTEP_DEFAULT_VERSION and CHANGELOG.md. */
 
 #ifndef SSTEP_VERSION_MAJOR
-#define SSTEP_VERSION_MAJOR 0
+#define SSTEP_VERSION_MAJOR 1
 #endif
 
 #ifndef SSTEP_VERSION_MINOR
-#define SSTEP_VERSION_MINOR 1
+#define SSTEP_VERSION_MINOR 0
 #endif
 
 #ifndef SSTEP_VERSION_PATCH
@@ -50,7 +50,7 @@
 #endif
 
 #ifndef SSTEP_VERSION
-#define SSTEP_VERSION "0.1.0"
+#define SSTEP_VERSION "1.0.0"
 #endif
 
 /* ==============================================================================
@@ -83,6 +83,11 @@ extern "C" {
  *
  * **Hardware access** is done only through the callbacks in ::sstep_callbacks, given once
  * to sstep_init(). Measurements are passed to sstep_fast_loop() as raw ADC counts.
+ *
+ * **Initialization.** Every function except sstep_init() returns ::SSTEP_ERR_STATE for
+ * an instance without a successful sstep_init() (a zeroed instance, or one whose last
+ * sstep_init() failed in the derivation of the constants), and touches no hardware.
+ * sstep_fast_loop() checks this only when ::SSTEP_CFG_ARG_CHECKS is 1.
  * @{
  */
 

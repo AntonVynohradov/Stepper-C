@@ -54,18 +54,48 @@ constexpr double kLsb = 1.0 / 32768.0; /* Q15 resolution */
 
 #if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
 constexpr bool kFixed = true;
-double to_d(sstep_real_t x) { return static_cast<double>(x) / 32768.0; }
-double acc_d(sstep_acc_t x) { return static_cast<double>(x) / 32768.0; }
-sstep_real_t from_d(double x) { return sstep_sat(static_cast<int32_t>(std::lround(x * 32768.0))); }
-sstep_acc_t acc_from_d(double x) { return static_cast<sstep_acc_t>(std::llround(x * 32768.0)); }
-double gain_d(const sstep_gain& g) { return std::ldexp(g.mant / 32768.0, g.exp); }
+double to_d(sstep_real_t x)
+{
+    return static_cast<double>(x) / 32768.0;
+}
+double acc_d(sstep_acc_t x)
+{
+    return static_cast<double>(x) / 32768.0;
+}
+sstep_real_t from_d(double x)
+{
+    return sstep_sat(static_cast<int32_t>(std::lround(x * 32768.0)));
+}
+sstep_acc_t acc_from_d(double x)
+{
+    return static_cast<sstep_acc_t>(std::llround(x * 32768.0));
+}
+double gain_d(const sstep_gain& g)
+{
+    return std::ldexp(g.mant / 32768.0, g.exp);
+}
 #else
 constexpr bool kFixed = false;
-double to_d(sstep_real_t x) { return static_cast<double>(x); }
-double acc_d(sstep_acc_t x) { return static_cast<double>(x); }
-sstep_real_t from_d(double x) { return static_cast<sstep_real_t>(x); }
-sstep_acc_t acc_from_d(double x) { return static_cast<sstep_acc_t>(x); }
-double gain_d(const sstep_gain& g) { return static_cast<double>(g.value); }
+double to_d(sstep_real_t x)
+{
+    return static_cast<double>(x);
+}
+double acc_d(sstep_acc_t x)
+{
+    return static_cast<double>(x);
+}
+sstep_real_t from_d(double x)
+{
+    return static_cast<sstep_real_t>(x);
+}
+sstep_acc_t acc_from_d(double x)
+{
+    return static_cast<sstep_acc_t>(x);
+}
+double gain_d(const sstep_gain& g)
+{
+    return static_cast<double>(g.value);
+}
 #endif
 
 /* Allowed error of one rounded operation: 1 LSB (fixed), float rounding (float) */
@@ -79,7 +109,7 @@ sstep_angle_t angle_from_rad(double rad)
                                       0xFFFFFFFFULL);
 }
 
-} // namespace
+}  // namespace
 
 /* ==============================================================================
  * CONSTANTS AND RANGES
@@ -88,7 +118,7 @@ sstep_angle_t angle_from_rad(double rad)
 TEST(SstepMath, ConstantsSaturate)
 {
     const sstep_real_t c[] = {SSTEP_REAL_C(0.5), SSTEP_REAL_C(-0.25), SSTEP_REAL_C(1.0),
-                              SSTEP_REAL_C(2.0), SSTEP_REAL_C(-1.0), SSTEP_REAL_C(-3.0)};
+                              SSTEP_REAL_C(2.0), SSTEP_REAL_C(-1.0),  SSTEP_REAL_C(-3.0)};
     EXPECT_DOUBLE_EQ(to_d(c[0]), 0.5);
     EXPECT_DOUBLE_EQ(to_d(c[1]), -0.25);
     EXPECT_DOUBLE_EQ(to_d(c[2]), to_d(SSTEP_REAL_MAX));
@@ -152,7 +182,8 @@ TEST(SstepMath, Clamp)
     EXPECT_EQ(sstep_clamp(from_d(-0.7), lo, hi), lo);
     EXPECT_EQ(sstep_clamp(from_d(0.1), lo, hi), from_d(0.1));
     EXPECT_EQ(sstep_acc_clamp(acc_from_d(3.0), acc_from_d(-2.0), acc_from_d(2.0)), acc_from_d(2.0));
-    EXPECT_EQ(sstep_acc_clamp(acc_from_d(-3.0), acc_from_d(-2.0), acc_from_d(2.0)), acc_from_d(-2.0));
+    EXPECT_EQ(sstep_acc_clamp(acc_from_d(-3.0), acc_from_d(-2.0), acc_from_d(2.0)),
+              acc_from_d(-2.0));
     EXPECT_EQ(sstep_acc_clamp(acc_from_d(1.0), acc_from_d(-2.0), acc_from_d(2.0)), acc_from_d(1.0));
 }
 
@@ -188,9 +219,9 @@ TEST(SstepMath, GainFromRatioAccuracy)
     {
         int32_t num;
         int32_t den;
-    } cases[] = {{1, 1},       {-1, 1},      {1, -1},     {-3, -7},     {32767, 1},
-                 {1, 2047},    {-1, 2047},   {3000, 7},   {1400, 4000}, {INT32_MIN, 131072},
-                 {7, 1000000}, {1, 30000000}, {0, 5},      {12345, 678}, {INT32_MAX, INT32_MIN}};
+    } cases[] = {{1, 1},       {-1, 1},       {1, -1},   {-3, -7},     {32767, 1},
+                 {1, 2047},    {-1, 2047},    {3000, 7}, {1400, 4000}, {INT32_MIN, 131072},
+                 {7, 1000000}, {1, 30000000}, {0, 5},    {12345, 678}, {INT32_MAX, INT32_MIN}};
     for (const auto& c : cases)
     {
         sstep_gain g{};
@@ -392,7 +423,7 @@ double ratio_reference(int64_t num, int64_t den, bool* ok)
     return static_cast<double>((neg ? -best_m : best_m) * std::ldexp(1.0L, -best));
 }
 
-} // namespace
+}  // namespace
 
 TEST(SstepMath, GainFromRatio64Arguments)
 {
@@ -562,8 +593,8 @@ TEST(SstepMath, DutyToTicks)
 TEST(SstepMath, ShiftRound)
 {
     EXPECT_EQ(sstep_shift_round(12345, 0), 12345);
-    EXPECT_EQ(sstep_shift_round(5, 1), 3);    /* 2.5 rounds up */
-    EXPECT_EQ(sstep_shift_round(-5, 1), -2);  /* -2.5 rounds up */
+    EXPECT_EQ(sstep_shift_round(5, 1), 3);   /* 2.5 rounds up */
+    EXPECT_EQ(sstep_shift_round(-5, 1), -2); /* -2.5 rounds up */
     EXPECT_EQ(sstep_shift_round(3, -2), 12);
     EXPECT_EQ(sstep_shift_round(INT32_MAX / 2, -2), INT32_MAX);
     EXPECT_EQ(sstep_shift_round(INT32_MIN / 2, -2), INT32_MIN);

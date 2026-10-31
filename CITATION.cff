@@ -16,10 +16,12 @@ authors:
 repository-code: "https://github.com/AntonVynohradov/Stepper-C"
 url: "https://antonvynohradov.github.io/Stepper-C/"
 license: Apache-2.0
-version: "0.1.0"
-date-released: "2026-01-01"
+version: "1.0.0"
+date-released: "2026-10-31"
 keywords:
   - embedded systems
   - C11
   - MISRA C
-  - Stepper Motor Control
+  - stepper motor
+  - microstepping
+  - motor control

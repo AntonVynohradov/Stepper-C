@@ -65,6 +65,9 @@ def generate() -> str:
 /* ==============================================================================
  * PRIVATE VARIABLES
  * =============================================================================*/
+
+/* Generated layout: regenerate the tables instead of formatting them */
+/* clang-format off */
 """]
     for backend, fmt in (("FIXED", lambda v: f"{q15(v):6d}"),
                          ("FLOAT", lambda v: f"{v:.9e}f")):
@@ -78,6 +81,7 @@ def generate() -> str:
                          f"{rows(values, fmt)}\n}};\n")
         parts.append("\n#endif /* SSTEP_CFG_SINE_TABLE_BITS */\n")
         parts.append(f"\n#endif /* SSTEP_MATH_BACKEND_{backend} */\n")
+    parts.append("\n/* clang-format on */\n")
     return "".join(parts)
 
 

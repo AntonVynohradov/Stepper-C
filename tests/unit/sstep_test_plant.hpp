@@ -52,12 +52,12 @@ namespace sstep_test
 
 struct Motor
 {
-    double R = 1.60;      /* Ohm */
-    double L = 3.0e-3;    /* H */
-    double Kt = 0.2086;   /* N*m/A */
-    double Ns = 200.0;    /* full steps per revolution */
-    double J = 82e-7;     /* kg*m^2 */
-    double B = 1e-5;      /* N*m*s/rad */
+    double R = 1.60;    /* Ohm */
+    double L = 3.0e-3;  /* H */
+    double Kt = 0.2086; /* N*m/A */
+    double Ns = 200.0;  /* full steps per revolution */
+    double J = 82e-7;   /* kg*m^2 */
+    double B = 1e-5;    /* N*m*s/rad */
 };
 
 struct State
@@ -152,10 +152,10 @@ inline void hal_event(void* ctx, sstep_event e)
  * CONFIGURATION: 17HS19-2004S1, B-G431B-ESC1 style stage, 24 V, 20 kHz / 1 kHz
  * =============================================================================*/
 
-constexpr double kIFull = 4.0;       /* A at ADC full scale */
-constexpr int kSpan = 2047;          /* counts from 0 A to +4 A */
-constexpr int kZero = 2048;          /* counts at 0 A */
-constexpr double kVFull = 34.320;    /* V at ADC 4095 */
+constexpr double kIFull = 4.0;    /* A at ADC full scale */
+constexpr int kSpan = 2047;       /* counts from 0 A to +4 A */
+constexpr int kZero = 2048;       /* counts at 0 A */
+constexpr double kVFull = 34.320; /* V at ADC 4095 */
 
 inline sstep_config make_config(Hal* hal, sstep_topology topo = SSTEP_TOPOLOGY_SHARED_LEG)
 {
@@ -221,7 +221,7 @@ struct Sim
     uint64_t tick = 0;
     std::vector<Record> rec;
     bool record = true;
-    int64_t phi_turns = 0;      /* unwrapped electrical angle applied [2^-32 turn] */
+    int64_t phi_turns = 0; /* unwrapped electrical angle applied [2^-32 turn] */
     uint32_t phi_last = 0U;
 
     explicit Sim(sstep_topology topo = SSTEP_TOPOLOGY_SHARED_LEG) { cfg = make_config(&hal, topo); }
@@ -326,6 +326,6 @@ struct Sim
     }
 };
 
-} // namespace sstep_test
+}  // namespace sstep_test
 
 #endif /* SSTEP_TEST_PLANT_HPP */

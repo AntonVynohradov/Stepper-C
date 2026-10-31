@@ -85,8 +85,8 @@ or by e-mail.
 
 - **Bugs and feature requests:** open an issue on
   [GitHub](https://github.com/AntonVynohradov/Stepper-C/issues). Please include the library
-  version, your compiler and target, and — for communication problems — a capture of
-  the bytes on the bus.
+  version, the numeric backend, your compiler and target, the `struct sstep_config`
+  values, and — for control problems — the status or a phase-current capture.
 - **Contributions:** see [Contributing to the library](extending.md#contributing-to-the-library).
 - **Commercial support, integration and custom development:** contact SystemFromScratch®
   through [systemfromscratch.com](https://systemfromscratch.com).

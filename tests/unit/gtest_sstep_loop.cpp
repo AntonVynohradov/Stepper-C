@@ -52,7 +52,7 @@ double amplitude(const Record& r)
     return std::hypot(r.iA, r.iB);
 }
 
-} // namespace
+}  // namespace
 
 /* T04: current step 0 -> 2 A at enable, locked rotor, both topologies */
 TEST(SstepLoop, CurrentStep)
@@ -158,7 +158,8 @@ TEST(SstepLoop, LoadStep)
         }
         if (TL < 0.4)
         {
-            const double want = std::asin((TL + sim.mot.B * 2 * kPi) / (sim.mot.Kt * 2.0)) * 180 / kPi;
+            const double want =
+                std::asin((TL + sim.mot.B * 2 * kPi) / (sim.mot.Kt * 2.0)) * 180 / kPi;
             std::printf("[ measured ] load %.2f N*m: current-rotor angle %.2f deg (asin %.2f), "
                         "max load angle %.1f deg\n",
                         TL, sum_angle / n, want, worst);

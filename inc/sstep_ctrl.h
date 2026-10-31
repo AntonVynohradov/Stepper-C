@@ -173,10 +173,10 @@ struct sstep_ctrl_cfg
  *         structure may be discarded afterwards. */
 struct sstep_config
 {
-    struct sstep_motor_cfg motor;   /**< Motor. */
-    struct sstep_stage_cfg stage;   /**< Power stage and measurement. */
-    struct sstep_ctrl_cfg ctrl;     /**< Control and motion. */
-    struct sstep_callbacks hal;     /**< Hardware callbacks. */
+    struct sstep_motor_cfg motor; /**< Motor. */
+    struct sstep_stage_cfg stage; /**< Power stage and measurement. */
+    struct sstep_ctrl_cfg ctrl;   /**< Control and motion. */
+    struct sstep_callbacks hal;   /**< Hardware callbacks. */
 };
 
 /* ==============================================================================
@@ -186,8 +186,8 @@ struct sstep_config
 /** @brief Raw measurements of one fast loop period, as read from the ADC. */
 struct sstep_sample
 {
-    uint16_t i_a; /**< Phase A current [ADC counts]. Ignored in ::SSTEP_DRIVE_VOLTAGE. */
-    uint16_t i_b; /**< Phase B current [ADC counts]. Ignored in ::SSTEP_DRIVE_VOLTAGE. */
+    uint16_t i_a;  /**< Phase A current [ADC counts]. Ignored in ::SSTEP_DRIVE_VOLTAGE. */
+    uint16_t i_b;  /**< Phase B current [ADC counts]. Ignored in ::SSTEP_DRIVE_VOLTAGE. */
     uint16_t vbus; /**< Bus voltage [ADC counts]. */
 };
 
@@ -209,25 +209,25 @@ struct sstep_status
  * =============================================================================*/
 
 /**
- * @brief Bytes of the private driver state that follow the configuration copy. Covers
- *        both numeric backends on 32-bit (Cortex-M) and 64-bit hosts; sstep_ctrl.c
- *        checks it at compile time.
+ * @brief Bytes of the configuration copy at the start of the instance and of the private
+ *        driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers. Plain
+ *        constants, so that the instance size needs no sizeof (static analysis);
+ *        sstep_ctrl.c checks both at compile time.
  */
+#if defined(UINTPTR_MAX) && (UINTPTR_MAX > 0xFFFFFFFFU)
+#define SSTEP_CONFIG_BYTES 160U
+#if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
+#define SSTEP_STATE_BYTES 200U
+#else
+#define SSTEP_STATE_BYTES 232U
+#endif
+#else
+#define SSTEP_CONFIG_BYTES 136U
 #if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
 #define SSTEP_STATE_BYTES 200U
 #else
 #define SSTEP_STATE_BYTES 224U
 #endif
-
-/**
- * @brief Bytes of the configuration copy at the start of the instance: 136 with 32-bit
- *        pointers (Cortex-M), 160 with 64-bit pointers. A plain constant, so that the
- *        instance size needs no sizeof (static analysis); sstep_ctrl.c checks it.
- */
-#if defined(UINTPTR_MAX) && (UINTPTR_MAX > 0xFFFFFFFFU)
-#define SSTEP_CONFIG_BYTES 160U
-#else
-#define SSTEP_CONFIG_BYTES 136U
 #endif
 
 /** @brief Size of ::sstep in 64-bit words. */

@@ -98,7 +98,7 @@ Profile run_move(sstep_motion& mo, int64_t target, int limit)
     return pr;
 }
 
-} // namespace
+}  // namespace
 
 /* ==============================================================================
  * TESTS

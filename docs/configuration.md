@@ -100,13 +100,14 @@ Measured with `arm-none-eabi-gcc` 15.2.1 for Cortex-M4 (`-mthumb`, float backend
 | Object | Fixed point | Float |
 | --- | --- | --- |
 | `struct sstep` (RAM per motor) | 336 B | 360 B |
-| Code and constants, `-Os` (flash) | 6756 B | 7214 B |
+| Code and constants, `-Os` (flash) | 6980 B | 7446 B |
 | of which the sine table | 514 B | 1028 B |
 | `.data` + `.bss` | 0 B | 0 B |
 
 `struct sstep` is the configuration copy (`SSTEP_CONFIG_BYTES`: 136 B on Cortex-M4,
 160 B on 64-bit hosts) plus the private state (`SSTEP_STATE_BYTES`: 200 B fixed point,
-224 B float); on a 64-bit host it is 360 B and 384 B.
+224 B float on Cortex-M4, 232 B float on 64-bit hosts); on a 64-bit host the instance
+is 360 B and 392 B.
 
 ## Stack usage
 
@@ -128,8 +129,8 @@ functions that call them.
 | `sstep_run()` | 16 | 104 | 16 | 104 |
 | `sstep_stop()` | 0 | 40 | 0 | 40 |
 | `sstep_set_position()` | 16 | 72 | 16 | 72 |
-| `sstep_set_current()` | 48 | 216 | 32 | 128 |
-| `sstep_set_motion_limits()` | 64 | 224 | 64 | 224 |
+| `sstep_set_current()` | 52 | 216 | 36 | 128 |
+| `sstep_set_motion_limits()` | 72 | 224 | 72 | 224 |
 | `sstep_report_fault()` | 24 | 40 | 24 | 40 |
 | `sstep_clear_faults()` | 0 | 40 | 0 | 40 |
 | `sstep_get_status()` | 24 | 184 | 16 | 152 |

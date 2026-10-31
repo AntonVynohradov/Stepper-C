@@ -141,7 +141,7 @@ extra:
         - icon: memory
           title: Tight embedded budgets
           text: >-
-            336 B of RAM per motor, 184 B worst-case stack in the PWM interrupt, 6.6 KiB
+            336 B of RAM per motor, 184 B worst-case stack in the PWM interrupt, 6.8 KiB
             of flash on Cortex-M4. A fixed-point backend for cores without FPU; no
             allocation, no globals, no OS.
           tags: [Q15 or float, Static memory, Bare metal & RTOS]

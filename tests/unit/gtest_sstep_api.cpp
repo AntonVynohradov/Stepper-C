@@ -79,6 +79,7 @@ TEST(SstepApi, InitRejectsInvalidFields)
         Mod mod;
         int expect;
     };
+    // clang-format off: one case per line
     const Case cases[] = {
         {"pwm_write NULL", [](sstep_config& c) { c.hal.pwm_write = nullptr; }, SSTEP_ERR_PARAM},
         {"output_enable NULL", [](sstep_config& c) { c.hal.output_enable = nullptr; }, SSTEP_ERR_PARAM},
@@ -138,6 +139,7 @@ TEST(SstepApi, InitRejectsInvalidFields)
         {"FF above 32767", [](sstep_config& c) { c.motor.ke_uv_s_per_rad = 9000000; c.motor.full_steps_per_rev = 1; c.ctrl.microsteps = 1; c.stage.vbus_nominal_mv = 1; c.stage.vbus_min_mv = 0; c.stage.vbus_max_mv = 0; }, SSTEP_ERR_CONFIG},
         {"ADC I gain", [](sstep_config& c) { c.stage.adc_i_span = 1; c.stage.i_trip_ma = 4000; }, SSTEP_OK},
     };
+    // clang-format on
     for (const Case& k : cases)
     {
         Hal hal;
@@ -192,6 +194,45 @@ TEST(SstepApi, NullArguments)
     EXPECT_EQ(sstep_get_status(&sim.drv, nullptr), SSTEP_ERR_PARAM);
 }
 
+/* every function but sstep_init() refuses a zeroed instance (empty configuration, NULL
+   callbacks) instead of dividing by zero or calling through a NULL pointer */
+TEST(SstepApi, CallsBeforeInit)
+{
+    sstep drv{};
+    sstep_sample s{2048, 2048, 2863};
+    sstep_status st{};
+    EXPECT_EQ(sstep_enable(&drv), SSTEP_ERR_STATE);
+    EXPECT_EQ(sstep_disable(&drv), SSTEP_ERR_STATE);
+    EXPECT_EQ(sstep_fast_loop(&drv, &s), SSTEP_ERR_STATE);
+    EXPECT_EQ(sstep_slow_loop(&drv), SSTEP_ERR_STATE);
+    EXPECT_EQ(sstep_move_to(&drv, 0), SSTEP_ERR_STATE);
+    EXPECT_EQ(sstep_move_by(&drv, 0), SSTEP_ERR_STATE);
+    EXPECT_EQ(sstep_run(&drv, 0), SSTEP_ERR_STATE);
+    EXPECT_EQ(sstep_stop(&drv), SSTEP_ERR_STATE);
+    EXPECT_EQ(sstep_set_position(&drv, 0), SSTEP_ERR_STATE);
+    EXPECT_EQ(sstep_set_current(&drv, 1000, 500), SSTEP_ERR_STATE);
+    EXPECT_EQ(sstep_set_motion_limits(&drv, 1000, 1000, 0), SSTEP_ERR_STATE);
+    EXPECT_EQ(sstep_report_fault(&drv, SSTEP_FAULT_EXTERNAL), SSTEP_ERR_STATE);
+    EXPECT_EQ(sstep_clear_faults(&drv), SSTEP_ERR_STATE);
+    EXPECT_EQ(sstep_get_status(&drv, &st), SSTEP_ERR_STATE);
+}
+
+/* a failed sstep_init() after a valid one leaves the instance unusable, not half-derived */
+TEST(SstepApi, FailedInitInvalidatesTheInstance)
+{
+    Hal hal;
+    sstep drv{};
+    sstep_config cfg = make_config(&hal);
+    ASSERT_EQ(sstep_init(&drv, &cfg), SSTEP_OK);
+    cfg.motor.l_uh = 9000000; /* Kp does not fit: fails in the derivation */
+    cfg.stage.vbus_nominal_mv = 1000;
+    cfg.stage.vbus_min_mv = 0;
+    cfg.stage.vbus_max_mv = 0;
+    ASSERT_EQ(sstep_init(&drv, &cfg), SSTEP_ERR_CONFIG);
+    EXPECT_EQ(sstep_enable(&drv), SSTEP_ERR_STATE);
+    EXPECT_FALSE(hal.enabled);
+}
+
 TEST(SstepApi, CommandsNeedEnabledOutputs)
 {
     Sim sim;
@@ -237,7 +278,8 @@ TEST(SstepApi, ArgumentRanges)
     EXPECT_EQ(sstep_set_current(&sim.drv, 1500, 500), SSTEP_OK);
     EXPECT_EQ(sstep_set_motion_limits(&sim.drv, 0, 1000, 0), SSTEP_ERR_PARAM);
     EXPECT_EQ(sstep_set_motion_limits(&sim.drv, 1000, 0, 0), SSTEP_ERR_PARAM);
-    EXPECT_EQ(sstep_set_motion_limits(&sim.drv, 1000, 1000, 1), SSTEP_ERR_PARAM); /* dec too small */
+    EXPECT_EQ(sstep_set_motion_limits(&sim.drv, 1000, 1000, 1),
+              SSTEP_ERR_PARAM); /* dec too small */
     EXPECT_EQ(sstep_set_motion_limits(&sim.drv, 2000000000, 1000, 0), SSTEP_ERR_PARAM);
     EXPECT_EQ(sstep_set_motion_limits(&sim.drv, 8000, 80000, 40000), SSTEP_OK);
     ASSERT_EQ(sstep_move_to(&sim.drv, INT32_MAX), SSTEP_OK);
@@ -319,9 +361,18 @@ TEST(SstepApi, OvercurrentPositiveAndPhaseA)
         ASSERT_EQ(sim.init(), SSTEP_OK);
         ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
         sstep_sample s = sim.sample();
-        if (k == 0) { s.i_a = 2048 + 1900; }
-        if (k == 1) { s.i_a = 2048 - 1900; }
-        if (k == 2) { s.i_b = 2048 + 1900; }
+        if (k == 0)
+        {
+            s.i_a = 2048 + 1900;
+        }
+        if (k == 1)
+        {
+            s.i_a = 2048 - 1900;
+        }
+        if (k == 2)
+        {
+            s.i_b = 2048 + 1900;
+        }
         ASSERT_EQ(sstep_fast_loop(&sim.drv, &s), SSTEP_OK);
         EXPECT_EQ(sim.hal.faults, SSTEP_FAULT_OVERCURRENT) << k;
     }
