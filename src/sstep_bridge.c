@@ -38,7 +38,7 @@
  * =============================================================================*/
 
 /** 0.5 (50 % duty cycle). */
-#define ACC_HALF SSTEP_ACC_C(0.5)
+#define ACC_HALF SSTEP_ACC_HALF
 
 /* ==============================================================================
  * PRIVATE FUNCTION DECLARATIONS
@@ -81,7 +81,7 @@ static sstep_acc_t acc_min(sstep_acc_t a, sstep_acc_t b)
 static sstep_acc_t scale_to_unit(sstep_acc_t x, sstep_acc_t m)
 {
     sstep_acc_t q = sstep_acc_from_real(sstep_div_unit(sstep_acc_abs(x), m));
-    return (x < SSTEP_ACC_C(0.0)) ? -q : q;
+    return (x < SSTEP_ACC_ZERO) ? -q : q;
 }
 
 #if (SSTEP_CFG_TOPOLOGY_FULL_BRIDGE == 1)
@@ -110,7 +110,7 @@ static void duties_full(sstep_acc_t a, sstep_acc_t b, uint16_t period, struct ss
 /** @brief Shared leg: max(a, b, 0) - min(a, b, 0) relative to Vbus (limit 1). */
 static sstep_acc_t span_shared(sstep_acc_t a, sstep_acc_t b)
 {
-    return acc_max(acc_max(a, b), SSTEP_ACC_C(0.0)) - acc_min(acc_min(a, b), SSTEP_ACC_C(0.0));
+    return acc_max(acc_max(a, b), SSTEP_ACC_ZERO) - acc_min(acc_min(a, b), SSTEP_ACC_ZERO);
 }
 
 /** @brief Shared leg: legs [U V W], A = U - W, B = V - W, common leg W centred between
@@ -118,8 +118,8 @@ static sstep_acc_t span_shared(sstep_acc_t a, sstep_acc_t b)
 static void duties_shared(sstep_acc_t a, sstep_acc_t b, uint16_t period,
                           struct sstep_bridge_out* out)
 {
-    sstep_acc_t hi = acc_max(acc_max(a, b), SSTEP_ACC_C(0.0));
-    sstep_acc_t lo = acc_min(acc_min(a, b), SSTEP_ACC_C(0.0));
+    sstep_acc_t hi = acc_max(acc_max(a, b), SSTEP_ACC_ZERO);
+    sstep_acc_t lo = acc_min(acc_min(a, b), SSTEP_ACC_ZERO);
     sstep_acc_t w = ACC_HALF - sstep_acc_halve(hi + lo);
     out->compare[0] = sstep_acc_to_ticks(a + w, period);
     out->compare[1] = sstep_acc_to_ticks(b + w, period);

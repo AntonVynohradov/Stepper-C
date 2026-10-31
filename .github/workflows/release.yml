@@ -54,28 +54,17 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtest-dev gcovr cppcheck libpango-1.0-0 libpangoft2-1.0-0
-          python -m pip install pytest mkdocs-material weasyprint
+          python -m pip install mkdocs-material weasyprint
 
       - name: Unit tests and coverage gate
         run: |
           cmake --preset "[UnitTests]Stepper Motor Control" -B "build/[UnitTests]Stepper Motor Control"
           cmake --build "build/[UnitTests]Stepper Motor Control" --target coverage
 
-      - name: Integration tests
-        run: |
-          cmake --preset "[IntegrationTests]Stepper Motor Control" -B "build/[IntegrationTests]Stepper Motor Control" -DPython3_EXECUTABLE="$(which python)"
-          cmake --build "build/[IntegrationTests]Stepper Motor Control" --target integration_tests
-
       - name: MISRA C:2012 gate
         run: |
           cmake --preset "[Debug]Stepper Motor Control" -B "build/[Debug]Stepper Motor Control"
           cmake --build "build/[Debug]Stepper Motor Control" --target misra-analyze
-
-      - name: Examples
-        run: |
-          cmake --preset "[Examples]Stepper Motor Control" -B "build/[Examples]Stepper Motor Control"
-          cmake --build "build/[Examples]Stepper Motor Control"
-          ctest --test-dir "build/[Examples]Stepper Motor Control" -L example --output-on-failure
 
       - name: Build release library
         run: |

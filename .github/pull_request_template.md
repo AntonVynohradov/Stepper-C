@@ -24,8 +24,7 @@ Describe the specific changes:
 
 ## Testing Performed
 - [ ] Unit tests added/updated (GoogleTest, `tests/unit/`)
-- [ ] Integration tests pass (pytest, `tests/integration/`, including the C/Python cross-check)
-- [ ] Reference packets of the specification still pass (`docs/protocol.md`)
+- [ ] Closed-loop tests on the motor model still pass (`tests/unit/gtest_sstep_loop.cpp`)
 - [ ] No regression detected
 
 ## MISRA C:2012 Compliance Checklist

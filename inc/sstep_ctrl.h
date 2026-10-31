@@ -2,7 +2,7 @@
  * Stepper-C: Stepper Motor Control Implementation
  *
  * Project:     Stepper-C - Hardware-Agnostic Stepper Motor Control Library
- * Description: Public API: configuration, hardware callbacks, control loops, motion commands.
+ * Description: Public types: configuration, hardware callbacks, measurements, driver instance.
  *
  * Author:      Anton Vynohradov
  * Email:       avynohradov@systemfromscratch.com
@@ -30,27 +30,6 @@
 #ifndef SSTEP_CTRL_H
 #define SSTEP_CTRL_H
 
-/**
- * @defgroup sstep_ctrl Control API
- * @brief    Initialise a driver, run its loops and command motion.
- *
- * **Execution model.** One driver instance (`struct sstep`) controls one motor. The
- * application calls two functions periodically:
- *
- * | Function | Rate | Context | Work |
- * | --- | --- | --- | --- |
- * | sstep_fast_loop() | `fast_loop_hz` (PWM rate or an integer fraction of it) | PWM / ADC interrupt | current control, voltage limit, topology mapping, PWM write |
- * | sstep_slow_loop() | `slow_loop_hz` (typically 1 kHz) | main loop or a timer task | trajectory, microstep angle, hold current, fault handling |
- *
- * All other functions are called from the same context as sstep_slow_loop(). The library
- * never reads a clock, never blocks, allocates no memory and has no global state: time
- * is given by the configured loop rates.
- *
- * **Hardware access** is done only through the callbacks in ::sstep_callbacks, given once
- * to sstep_init(). Measurements are passed to sstep_fast_loop() as raw ADC counts.
- * @{
- */
-
 /* ==============================================================================
  * INCLUDES
  * =============================================================================*/
@@ -61,7 +40,6 @@
 
 #include "sstep_config.h"
 #include "sstep_defs.h"
-#include "sstep_math.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -227,225 +205,35 @@ struct sstep_status
 };
 
 /* ==============================================================================
- * DRIVER INSTANCE (PRIVATE)
+ * DRIVER INSTANCE
  * =============================================================================*/
 
-/** @brief Setpoint handed from the slow loop to the fast loop. Private. */
-struct sstep_setpoint
-{
-    sstep_angle_t angle;        /**< Electrical angle at the start of the slow period. */
-    int32_t dangle;             /**< Angle increment per fast loop period. */
-    sstep_real_t i_amp;         /**< Current amplitude [pu]. */
-    sstep_real_t ff;            /**< Back-EMF feed-forward amplitude [pu of V_base]. */
-    struct sstep_gain inv_vbus; /**< V_base / measured bus voltage. */
-};
-
 /**
- * @brief Motion generator state. Private. Integer arithmetic in both numeric backends:
- *        positions in 1/65536 microstep, velocities in 1/65536 microstep per slow loop
- *        period, accelerations in 1/65536 microstep per period squared.
+ * @brief Bytes of the private driver state that follow the configuration copy. Covers
+ *        both numeric backends on 32-bit (Cortex-M) and 64-bit hosts; sstep_ctrl.c
+ *        checks it at compile time.
  */
-struct sstep_motion
-{
-    int64_t pos;          /**< Position [Q16 microsteps]. */
-    int64_t target;       /**< Move target [Q16 microsteps]. */
-    int64_t brake_vmax;   /**< Braking distance from v_max [Q16 microsteps]. */
-    int32_t vel;          /**< Velocity [Q16 microsteps / period]. */
-    int32_t v_run;        /**< Requested velocity of a RUN command. */
-    int32_t v_max;        /**< Velocity limit. */
-    int32_t acc;          /**< Acceleration limit [Q16 microsteps / period^2]. */
-    int32_t dec;          /**< Deceleration limit. */
-    uint8_t mode;         /**< 0 hold, 1 move, 2 run. */
-};
+#if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
+#define SSTEP_STATE_BYTES 200U
+#else
+#define SSTEP_STATE_BYTES 224U
+#endif
+
+/** @brief Size of ::sstep in 64-bit words. */
+#define SSTEP_INSTANCE_WORDS ((sizeof(struct sstep_config) + SSTEP_STATE_BYTES + 7U) / 8U)
 
 /**
  * @brief Driver instance. Allocated by the application (static, stack or pool) and
- *        initialised by sstep_init(). The members are private: their layout may change
- *        in any release; use the functions of this header only.
+ *        initialised by sstep_init(). The content is private to the library: use the
+ *        functions of sstep.h only.
  */
 struct sstep
 {
-    struct sstep_config cfg;          /**< Copy of the configuration. */
-
-    /* Constants derived by sstep_init() */
-    struct sstep_gain kp;             /**< Proportional gain [pu V / pu A]. */
-    struct sstep_gain ki;             /**< Integral gain per fast loop period. */
-    struct sstep_gain kb;             /**< Anti-windup gain Ts / Tt. */
-    struct sstep_gain r_pu;           /**< Phase resistance [pu] (voltage drive). */
-    struct sstep_gain adc_i;          /**< Current per ADC count [pu]. */
-    struct sstep_gain adc_v;          /**< Bus voltage per ADC count [pu]. */
-    struct sstep_gain ff_gain;        /**< Feed-forward per microstep/s [pu]. */
-    sstep_real_t i_run;               /**< Run current [pu]. */
-    sstep_real_t i_hold;              /**< Hold current [pu]. */
-    uint16_t i_trip_counts;           /**< Overcurrent trip [ADC counts from zero]. */
-    uint16_t vbus_min_raw;            /**< Undervoltage trip [ADC counts], 0 = off. */
-    uint16_t vbus_max_raw;            /**< Overvoltage trip [ADC counts], 0 = off. */
-    uint16_t ratio;                   /**< Fast loop periods per slow loop period. */
-    uint32_t hold_ticks;              /**< Slow periods at standstill before hold. */
-    uint8_t angle_shift;              /**< 14 - log2(microsteps). */
-
-    /* Slow loop -> fast loop hand-off (double buffer) */
-    struct sstep_setpoint sp[2];      /**< Setpoints; the fast loop owns sp[sp_active]. */
-    volatile uint8_t sp_active;       /**< Buffer in use by the fast loop. */
-    volatile uint8_t sp_pending;      /**< 1: sp[1 - sp_active] is complete and new. */
-
-    /* Fast loop state */
-    struct sstep_setpoint cur;        /**< Setpoint in use. */
-    uint16_t adv;                     /**< Angle increments applied since the hand-off. */
-    sstep_integ_t integ[2];           /**< PI integrators [pu V]. */
-    sstep_real_t i_meas[2];           /**< Last measured phase currents [pu]. */
-    volatile uint16_t vbus_raw;       /**< Last bus voltage [ADC counts]. */
-    uint16_t compare[SSTEP_LEGS_MAX]; /**< Last compare values. */
-
-    /* Slow loop state */
-    struct sstep_motion mo;           /**< Motion generator. */
-    sstep_angle_t angle_offset;       /**< Electrical angle of position 0. */
-    uint32_t still;                   /**< Slow periods at standstill. */
-    bool hold_active;                 /**< Hold current applied. */
-    struct sstep_gain inv_vbus;       /**< Last V_base / bus voltage. */
-
-    volatile uint16_t faults;         /**< Active faults. */
-    volatile enum sstep_state state;  /**< Driver state. */
+    uint64_t opaque[SSTEP_INSTANCE_WORDS]; /**< Private driver state. */
 };
-
-/* ==============================================================================
- * PUBLIC FUNCTION DECLARATIONS
- * =============================================================================*/
-
-/**
- * @brief  Validate a configuration and initialise a driver. Outputs stay disabled.
- *         Derives the per-unit bases, the PI gains (Kp = L * wc, Ki = R * wc) and the
- *         trajectory constants; no floating point is used with the fixed point backend.
- * @param  m    Driver instance.
- * @param  cfg  Configuration; copied.
- * @retval ::SSTEP_OK              Success, state ::SSTEP_STATE_DISABLED.
- * @retval ::SSTEP_ERR_PARAM       NULL pointer, missing required callback or a field out of range.
- * @retval ::SSTEP_ERR_CONFIG      Inconsistent fields (for example i_run_ma > i_trip_ma).
- * @retval ::SSTEP_ERR_UNSUPPORTED Topology not compiled in.
- */
-int sstep_init(struct sstep* m, const struct sstep_config* cfg);
-
-/**
- * @brief  Enable the outputs and hold the current position with the hold current.
- * @param  m  Driver instance.
- * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM, ::SSTEP_ERR_STATE (faulted).
- */
-int sstep_enable(struct sstep* m);
-
-/**
- * @brief  Stop immediately and switch the outputs off (motor coasts, no holding torque).
- * @param  m  Driver instance.
- * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM.
- */
-int sstep_disable(struct sstep* m);
-
-/**
- * @brief  Fast loop: convert the measurements, run the current controllers, limit the
- *         voltage, map it to the legs of the topology and write the PWM.
- *         Call from the PWM/ADC interrupt at `fast_loop_hz`. Bounded execution time,
- *         no loops over data.
- * @param  m       Driver instance.
- * @param  sample  Measurements of this period.
- * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM (only when ::SSTEP_CFG_ARG_CHECKS is 1).
- */
-int sstep_fast_loop(struct sstep* m, const struct sstep_sample* sample);
-
-/**
- * @brief  Slow loop: advance the trajectory, update the angle and current references,
- *         handle the hold current and report events. Call at `slow_loop_hz`.
- * @param  m  Driver instance.
- * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM.
- */
-int sstep_slow_loop(struct sstep* m);
-
-/**
- * @brief  Start a move to an absolute position with the trapezoidal profile.
- *         Replaces the current move; the change is smooth (no velocity step).
- * @param  m         Driver instance.
- * @param  position  Target [microsteps].
- * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM, ::SSTEP_ERR_STATE (disabled or faulted).
- */
-int sstep_move_to(struct sstep* m, int32_t position);
-
-/**
- * @brief  Start a move relative to the current target.
- * @param  m      Driver instance.
- * @param  delta  Distance [microsteps].
- * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM (also when the target overflows), ::SSTEP_ERR_STATE.
- */
-int sstep_move_by(struct sstep* m, int32_t delta);
-
-/**
- * @brief  Run at a constant velocity (accelerating with the configured limits) until
- *         another command.
- * @param  m         Driver instance.
- * @param  velocity  Signed velocity [microsteps/s], |velocity| <= v_max.
- * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM, ::SSTEP_ERR_STATE.
- */
-int sstep_run(struct sstep* m, int32_t velocity);
-
-/**
- * @brief  Decelerate to standstill with the configured deceleration and hold.
- * @param  m  Driver instance.
- * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM.
- */
-int sstep_stop(struct sstep* m);
-
-/**
- * @brief  Redefine the current position (homing). Only at standstill.
- * @param  m         Driver instance.
- * @param  position  New value of the current position [microsteps].
- * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM, ::SSTEP_ERR_STATE (moving).
- */
-int sstep_set_position(struct sstep* m, int32_t position);
-
-/**
- * @brief  Change the run and hold currents.
- * @param  m        Driver instance.
- * @param  run_ma   Peak phase current while moving [mA].
- * @param  hold_ma  Peak phase current at standstill [mA], <= run_ma.
- * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM, ::SSTEP_ERR_CONFIG (above the trip level).
- */
-int sstep_set_current(struct sstep* m, uint32_t run_ma, uint32_t hold_ma);
-
-/**
- * @brief  Change the motion limits; applies to the next command.
- * @param  m      Driver instance.
- * @param  v_max  Maximum velocity [microsteps/s].
- * @param  accel  Acceleration [microsteps/s^2].
- * @param  decel  Deceleration [microsteps/s^2]; 0 = same as accel.
- * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM.
- */
-int sstep_set_motion_limits(struct sstep* m, uint32_t v_max, uint32_t accel, uint32_t decel);
-
-/**
- * @brief  Report a fault detected by the application (driver fault pin, temperature).
- *         Switches the outputs off. May be called from an interrupt.
- * @param  m       Driver instance.
- * @param  faults  Flags to raise, typically ::SSTEP_FAULT_EXTERNAL.
- * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM.
- */
-int sstep_report_fault(struct sstep* m, uint16_t faults);
-
-/**
- * @brief  Clear all faults; the driver goes to ::SSTEP_STATE_DISABLED.
- * @param  m  Driver instance.
- * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM.
- */
-int sstep_clear_faults(struct sstep* m);
-
-/**
- * @brief  Read a status snapshot in engineering units.
- * @param  m       Driver instance.
- * @param  status  Filled on success.
- * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM.
- */
-int sstep_get_status(const struct sstep* m, struct sstep_status* status);
 
 #ifdef __cplusplus
 }
 #endif
-
-/** @} */
 
 #endif /* SSTEP_CTRL_H */

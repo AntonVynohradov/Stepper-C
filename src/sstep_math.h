@@ -122,6 +122,25 @@ struct sstep_gain
 /** @brief Accumulator constant from a floating literal (initializers only). */
 #define SSTEP_ACC_C(x) ((sstep_acc_t)((x) * 32768.0))
 
+/** @brief Zero as a signal. */
+#define SSTEP_REAL_ZERO ((sstep_real_t)0)
+
+/** @brief Zero as an accumulator. */
+#define SSTEP_ACC_ZERO ((sstep_acc_t)0)
+
+/** @brief 0.5 as an accumulator. */
+#define SSTEP_ACC_HALF ((sstep_acc_t)16384)
+
+/** @brief 1.0 as an accumulator. */
+#define SSTEP_ACC_ONE ((sstep_acc_t)32768)
+
+/** @brief Largest magnitude accepted by sstep_gain_mul_acc() and the integrator
+ *         updates from accumulators (4 pu - 2^-15); larger inputs are saturated. */
+#define SSTEP_ACC_IN_MAX ((sstep_acc_t)131071)
+
+/** @brief Largest magnitude accepted by sstep_acc_scale() (2 pu - 2^-15). */
+#define SSTEP_ACC_SCALE_MAX ((sstep_acc_t)65535)
+
 /**
  * @brief Integrator: Q27 in 32 bits (range +/-16 pu, resolution 7.5e-9 pu). The extra
  *        12 fractional bits keep small increments (Ki * Ts * e is often below one Q15
@@ -171,6 +190,25 @@ struct sstep_gain
 /** @brief Accumulator constant. */
 #define SSTEP_ACC_C(x) ((sstep_acc_t)(x))
 
+/** @brief Zero as a signal. */
+#define SSTEP_REAL_ZERO (0.0f)
+
+/** @brief Zero as an accumulator. */
+#define SSTEP_ACC_ZERO (0.0f)
+
+/** @brief 0.5 as an accumulator. */
+#define SSTEP_ACC_HALF (0.5f)
+
+/** @brief 1.0 as an accumulator. */
+#define SSTEP_ACC_ONE (1.0f)
+
+/** @brief Largest magnitude accepted by sstep_gain_mul_acc() and the integrator
+ *         updates from accumulators (4 pu - 2^-15); larger inputs are saturated. */
+#define SSTEP_ACC_IN_MAX (3.999969482421875f)
+
+/** @brief Largest magnitude accepted by sstep_acc_scale() (2 pu - 2^-15). */
+#define SSTEP_ACC_SCALE_MAX (1.999969482421875f)
+
 /** @brief Integrator (same range as the fixed point integrator, +/-16 pu). */
 typedef float sstep_integ_t;
 
@@ -180,19 +218,6 @@ typedef float sstep_integ_t;
     (((x) >= 1.0) ? SSTEP_REAL_MAX : (((x) <= -1.0) ? SSTEP_REAL_MIN : (sstep_real_t)(x)))
 
 #endif /* SSTEP_CFG_MATH_BACKEND */
-
-/** @brief Zero. */
-#define SSTEP_REAL_ZERO SSTEP_REAL_C(0.0)
-
-/** @brief 1.0 as an accumulator (exactly representable in both backends). */
-#define SSTEP_ACC_ONE SSTEP_ACC_C(1.0)
-
-/** @brief Largest magnitude accepted by sstep_gain_mul_acc() and the integrator
- *         updates from accumulators (4 pu - 2^-15); larger inputs are saturated. */
-#define SSTEP_ACC_IN_MAX SSTEP_ACC_C(3.999969482421875)
-
-/** @brief Largest magnitude accepted by sstep_acc_scale() (2 pu - 2^-15). */
-#define SSTEP_ACC_SCALE_MAX SSTEP_ACC_C(1.999969482421875)
 
 /** @brief Smallest gain exponent. */
 #define SSTEP_GAIN_EXP_MIN (-16)
@@ -223,13 +248,16 @@ struct sstep_sincos
 static inline int32_t sstep_asr(int32_t x, uint32_t n)
 {
     int32_t result;
+    uint32_t u;
     if (x >= 0)
     {
-        result = (int32_t)((uint32_t)x >> n);
+        u = (uint32_t)x >> n;
+        result = (int32_t)u;
     }
     else
     {
-        result = -(int32_t)((uint32_t)(-(x + 1)) >> n) - 1;
+        u = (uint32_t)(-(x + 1)) >> n;
+        result = -(int32_t)u - 1;
     }
     return result;
 }
@@ -310,7 +338,7 @@ static inline sstep_acc_t sstep_acc_add(sstep_acc_t a, sstep_acc_t b)
     }
     else if ((b < 0) && (a < (INT32_MIN - b)))
     {
-        r = INT32_MIN;
+        r = (int32_t)INT32_MIN;
     }
     else
     {
@@ -347,7 +375,8 @@ static inline sstep_acc_t sstep_acc_clamp(sstep_acc_t x, sstep_acc_t lo, sstep_a
 static inline sstep_acc_t sstep_gain_mul(const struct sstep_gain* g, sstep_real_t x)
 {
     int32_t p = (int32_t)x * (int32_t)g->mant;                 /* Q30, |p| <= 2^30 */
-    uint32_t sh = (uint32_t)(15 - (int32_t)g->exp);            /* 0 .. 31 */
+    int32_t s = 15 - (int32_t)g->exp;                          /* 0 .. 31 */
+    uint32_t sh = (uint32_t)s;
     int32_t r;
     if (sh == 0U)
     {
@@ -381,11 +410,12 @@ static inline sstep_acc_t sstep_gain_mul_int(const struct sstep_gain* g, int32_t
         }
         else if (p < -lim)
         {
-            r = INT32_MIN;
+            r = (int32_t)INT32_MIN;
         }
         else
         {
-            r = p * (int32_t)((uint32_t)1U << (uint32_t)e); /* |p| <= lim: no overflow */
+            uint32_t pw = (uint32_t)1U << (uint32_t)e;
+            r = p * (int32_t)pw; /* |p| <= lim: no overflow */
         }
     }
     else
@@ -409,7 +439,8 @@ static inline int32_t sstep_shift_round(int32_t p, int32_t sh)
     int32_t r;
     if (sh > 0)
     {
-        r = sstep_asr(sstep_asr(p, (uint32_t)(sh - 1)) + 1, 1U);
+        uint32_t n = (uint32_t)sh;
+        r = sstep_asr(sstep_asr(p, n - 1U) + 1, 1U);
     }
     else if (sh == 0)
     {
@@ -425,11 +456,12 @@ static inline int32_t sstep_shift_round(int32_t p, int32_t sh)
         }
         else if (p < -lim)
         {
-            r = INT32_MIN;
+            r = (int32_t)INT32_MIN;
         }
         else
         {
-            r = p * (int32_t)((uint32_t)1U << n); /* |p| <= lim: no overflow */
+            uint32_t pw = (uint32_t)1U << n;
+            r = p * (int32_t)pw; /* |p| <= lim: no overflow */
         }
     }
     return r;

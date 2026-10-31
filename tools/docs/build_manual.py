@@ -34,6 +34,7 @@ It is rendered with WeasyPrint, which needs the Pango library.
 from __future__ import annotations
 
 import argparse
+import base64
 import datetime
 import html
 import os
@@ -110,11 +111,13 @@ def markdown_converter():
 
     extensions = [
         "abbr", "admonition", "attr_list", "def_list", "footnotes", "md_in_html", "tables",
-        "toc", "pymdownx.details", "pymdownx.highlight", "pymdownx.inlinehilite",
-        "pymdownx.snippets", "pymdownx.superfences", "pymdownx.tasklist",
+        "toc", "pymdownx.arithmatex", "pymdownx.details", "pymdownx.highlight",
+        "pymdownx.inlinehilite", "pymdownx.snippets", "pymdownx.superfences",
+        "pymdownx.tasklist",
     ]
     config = {
         "toc": {"permalink": False},
+        "pymdownx.arithmatex": {"generic": True},
         "pymdownx.highlight": {"use_pygments": True},
         "pymdownx.snippets": {"base_path": [ROOT], "check_paths": True},
     }
@@ -127,6 +130,32 @@ def markdown_converter():
     except ImportError:
         pass
     return markdown.Markdown(extensions=extensions, extension_configs=config)
+
+
+MATH = re.compile(r'<(span|div) class="arithmatex">\\[(\[](.*?)\\[)\]]</\1>', re.S)
+
+
+def render_math(body: str) -> str:
+    """Formulas of pymdownx.arithmatex as SVG (WeasyPrint runs no JavaScript). Without
+    ziamath the TeX source stays in the PDF."""
+    try:
+        import ziamath
+    except ImportError:
+        return body
+
+    def svg(match: re.Match) -> str:
+        display = match.group(1) == "div"
+        tex = html.unescape(match.group(2)).strip()
+        image = ziamath.Math.fromlatex(tex, size=15 if display else 13.5,
+                                       mathstyle="display" if display else "text",
+                                       inline=not display).svg()
+        # an <img> per formula keeps the glyph ids of the SVGs apart
+        data = base64.b64encode(image.encode("utf-8")).decode("ascii")
+        css = "math-display" if display else "math-inline"
+        return (f'<{match.group(1)} class="{css}"><img src="data:image/svg+xml;base64,{data}" '
+                f'alt="{html.escape(tex)}"></{match.group(1)}>')
+
+    return MATH.sub(svg, body)
 
 
 def strip_front_matter(text: str) -> str:
@@ -234,7 +263,7 @@ def build_chapters(pages: List[str], manual: dict, site_url: str) -> List[Chapte
             text = strip_front_matter(f.read())
         md.reset()
         chapter = Chapter(page, label)
-        chapter.body = rewrite_links(md.convert(text), chapter, slugs, site_url)
+        chapter.body = rewrite_links(render_math(md.convert(text)), chapter, slugs, site_url)
         number_headings(chapter)
         chapters.append(chapter)
     return chapters

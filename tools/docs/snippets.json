@@ -1,12 +1,24 @@
 {
   "stubs": "tools/docs/snippet_stubs.h",
-  "include": [".", "inc"],
-  "variants": [[]],
+  "include": [
+    ".",
+    "inc",
+    "tools/docs/snippet_include"
+  ],
+  "variants": [
+    []
+  ],
   "optional": [
     {
-      "name": "link",
-      "pattern": "^\\s*(static\\s+)?struct sstep_link link\\b",
-      "code": "static struct sstep_link link;"
+      "name": "motor",
+      "pattern": "^\\s*(static\\s+)?struct sstep motor\\b",
+      "code": "static struct sstep motor;"
+    },
+    {
+      "name": "motor_config",
+      "pattern": "^\\s*(static\\s+)?(const\\s+)?struct sstep_config motor_config\\b",
+      "code": "extern const struct sstep_config motor_config;"
     }
-  ]
+  ],
+  "fragment_marker": "/* sstep_user_config.h */"
 }

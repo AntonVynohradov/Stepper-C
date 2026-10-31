@@ -228,6 +228,9 @@ struct Sim
 
     int init() { return sstep_init(&drv, &cfg); }
 
+    /* Private driver state, for white-box checks */
+    sstep_ctx& ctx() { return *sstep_ctx_of(&drv); }
+
     static uint16_t adc_current(double i)
     {
         long v = std::lround(kZero + i / kIFull * kSpan);
@@ -280,7 +283,7 @@ struct Sim
         const sstep_sample s = sample();
         (void)sstep_fast_loop(&drv, &s);
         /* angle used in this period: the fast loop advances it after use */
-        const uint32_t used = drv.cur.angle - static_cast<uint32_t>(drv.cur.dangle);
+        const uint32_t used = ctx().cur.angle - static_cast<uint32_t>(ctx().cur.dangle);
         phi_turns += static_cast<int32_t>(used - phi_last);
         phi_last = used;
         double vA = 0.0;

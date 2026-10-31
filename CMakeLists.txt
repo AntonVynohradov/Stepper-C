@@ -61,10 +61,8 @@ set(CMAKE_C_FLAGS_RELEASE "-Wall -Wextra -Wpedantic -Wconversion -O2 -DNDEBUG")
 # LIBRARY/EXECUTABLE TARGETS
 # ==============================================================================
 
-# Unit and integration tests are optional and can be enabled with CMake options
+# Unit tests are optional and can be enabled with CMake options
 option(SSTEP_UNIT_TESTS "Enable SSTEP unit tests (GoogleTest)" OFF)
-option(SSTEP_INTEGRATION_TESTS "Enable SSTEP integration tests (pytest)" OFF)
-option(SSTEP_EXAMPLES "Build the host-buildable examples (bare metal simulation, serial port PING)" OFF)
 
 # The static library target is defined in sstep.cmake
 include(sstep)
@@ -78,21 +76,7 @@ if(SSTEP_UNIT_TESTS)
     include(unit_tests)
 endif()
 
-# ==============================================================================
-# INTEGRATION TESTS
-# ==============================================================================
 
-if(SSTEP_INTEGRATION_TESTS)
-    # Python codec tests and the C/Python cross-check, run through CTest
-    include(integration_tests)
-endif()
-
-
-if(SSTEP_EXAMPLES)
-    # The bare-metal example runs against a simulated board as a CTest test
-    enable_testing()
-    add_subdirectory(examples)
-endif()
 
 # ==============================================================================
 # STATIC ANALYSIS TARGETS

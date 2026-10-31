@@ -16,12 +16,11 @@ applications that use it, not here.
 
 | Part | Files | Rule |
 | --- | --- | --- |
-| Umbrella | `sstep.h` | Includes all public headers; fallback `SSTEP_VERSION_*` |
+| Public API | `sstep.h` | All public function declarations; includes the public headers; fallback `SSTEP_VERSION_*` |
 | Configuration | `inc/sstep_config.h` | Build-time sizes, each overridable with `#ifndef` |
 | Codec | `inc/sstep_protocol.h`, `src/sstep_protocol.c` | TODO checksum, parser, encoder |
 | Constants | `inc/sstep_defs.h` | Values only from the specification |
 | Link | `inc/sstep_link.h`, `src/sstep_link.c` | No OS calls; I/O only through the write callback |
-| Python | `tests/integration/sstep/protocol.py` | Standard library only; byte-identical to the C encoder |
 | Build | `CMakeLists.txt`, `sstep.cmake`, `cmake/`, `CMakePresets.json` | Library target in `sstep.cmake`; tests and analysis in `cmake/` |
 | Examples | `examples/bare_metal`, `examples/host_serial`, `examples/zephyr` | Not library code; built with `SSTEP_EXAMPLES=ON` |
 | Tools | TODO `tools/sstep_<tool>` or remove the row | Desktop tool; its native bridge links the library |
@@ -31,6 +30,12 @@ applications that use it, not here.
 - The library sources include only `<stddef.h>`, `<stdint.h>`, `<stdbool.h>`,
   `<string.h>` and SSTEP headers. No heap, no RTOS, no driver headers, no global
   mutable state (all state lives in caller-owned structs).
+- Encapsulation: `sstep.h` and `inc/` contain the public API only. Internal types,
+  macros and `static inline` helpers live in `src/` (`sstep_internal.h`,
+  `sstep_math.h`, `sstep_sin_table.h`) and are never included from a public header.
+  `struct sstep` is opaque; the state is `struct sstep_ctx`, reached only through
+  `sstep_ctx_of()` (deviation DEV-01). When `struct sstep_ctx` grows, update
+  `SSTEP_STATE_BYTES` in `inc/sstep_ctrl.h` (a `_Static_assert` in `sstep_ctrl.c` fails).
 - Public symbols use the `sstep_` / `SSTEP_` prefix. Public headers keep the
   `extern "C"` guards and Doxygen comments for every public item.
 - Keep the public API stable within a major version. Record every user-visible
@@ -57,7 +62,6 @@ applications that use it, not here.
 ```sh
 cmake --preset "[Debug]Stepper Motor Control" && cmake --build "build/[Debug]Stepper Motor Control"
 cmake --preset "[UnitTests]Stepper Motor Control" && cmake --build "build/[UnitTests]Stepper Motor Control" --target coverage
-cmake --preset "[IntegrationTests]Stepper Motor Control" && cmake --build "build/[IntegrationTests]Stepper Motor Control" --target integration_tests
 cmake --build "build/[Debug]Stepper Motor Control" --target misra-analyze
 cmake --preset "[Examples]Stepper Motor Control" && cmake --build "build/[Examples]Stepper Motor Control" && ctest --test-dir "build/[Examples]Stepper Motor Control" -L example
 python tools/docs/check_snippets.py
@@ -65,9 +69,7 @@ python tools/docs/check_snippets.py
 
 The `coverage` target fails below 100 % line or branch coverage of `src/`;
 `misra-analyze` fails on any violation. Unit tests are GoogleTest files
-`tests/unit/gtest_sstep_*.cpp` (register new files in `sstep.cmake`). The
-pytest suite cross-checks the C codec against the Python twin; it is skipped
-without `gcc`, so say so when reporting results on such a machine.
+`tests/unit/gtest_sstep_*.cpp` (register new files in `sstep.cmake`).
 
 Reference vectors (from the specification) that must keep passing: TODO.
 

@@ -1,10 +1,9 @@
-# MkDocs configuration template for a SystemFromScratch® protocol library.
-# Replace every __TOKEN__ and every TODO; keep the structure.
+# MkDocs configuration of Stepper-C (SystemFromScratch® library layout).
 
 site_name: Stepper-C
 site_description: >-
-  TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems:
-  no heap, no RTOS, MISRA C:2012, 100 % test coverage.
+  Closed-loop microstepping current control for two-phase stepper motors in portable C11
+  for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.
 site_author: Anton Vynohradov
 site_url: https://antonvynohradov.github.io/Stepper-C/   # GitHub Pages path = repository name
 repo_url: https://github.com/AntonVynohradov/Stepper-C
@@ -24,11 +23,8 @@ nav:
       - Using the Library: usage.md
       - Extending the Library: extending.md
       - Configuration: configuration.md
-  - Protocol: protocol.md
-  - Integration:
-      - Integration Guide: integration.md
-      - Examples: examples.md
-      # - __TOOL__: gui.md            # only if the project has a desktop tool
+  - Motor Control: motor-control.md
+  - Integration: integration.md
   - Reference:
       - API Reference: api.md
       - Doxygen:
@@ -109,11 +105,13 @@ extra:
     title: Stepper Motor Control                      # first hero line (uppercase via CSS)
     accent: in portable C                    # second hero line, accent color
     lead: >-
-      TODO: Stepper-C turns [the raw medium] into validated [protocol units], and your
-      replies back into bytes on the wire — with no heap, no RTOS and code that passes
-      MISRA C:2012.
+      Stepper-C turns phase-current measurements and motion commands into PWM duty cycles
+      for two-phase stepper motors: closed-loop microstepping current control on any MCU,
+      with no heap, no RTOS and code that passes MISRA C:2012.
     hero_image: assets/images/hero-3d.svg
-    hero_alt: TODO describe the 3D scene (the problem being solved)
+    hero_alt: >-
+      Isometric scene: a controller board with the Stepper-C chip and three half-bridges
+      drives a stepper motor; the two phase currents flow along the wires as sine waves.
     buttons:
       - {text: Get started, link: guide/, style: primary}
       - {text: View on GitHub, link: "https://github.com/AntonVynohradov/Stepper-C", style: outline}
@@ -124,40 +122,54 @@ extra:
       - {icon: code, line1: Apache-2.0, line2: open source}
     problem:
       eyebrow: The problem
-      title: TODO the engineering pain in plain words
+      title: Smooth, quiet and exact, on a small MCU
       intro: >-
-        TODO the real environment: the medium and its failures, the platform budget,
-        the assurance that is expected.
+        A stepper driver chip hides the current control in silicon. When you build the
+        power stage yourself (an MCU with gate drivers, a three-leg ESC board, a custom
+        H-bridge) the firmware has to regulate two phase currents at the PWM rate, keep
+        the position exact over millions of microsteps, stay inside the voltage the
+        bridge can apply and switch off within one period on a fault, often on a core
+        without an FPU.
       cards:
         - icon: wave
-          title: TODO medium problem (noise, framing, timing)
-          text: TODO what the library does about it.
-          tags: [TODO mechanism, TODO mechanism]
+          title: Currents that follow the angle at 20 kHz
+          text: >-
+            One PI controller per phase with gains derived from R, L and one bandwidth
+            value, back-EMF feed-forward and anti-windup. On the motor model a 2 A step
+            settles in 0.40 ms with 1.1 % overshoot.
+          tags: [PI + feed-forward, Anti-windup, Bus compensation]
         - icon: memory
           title: Tight embedded budgets
-          text: TODO measured RAM per instance and stack; no allocation, no globals, no OS.
-          tags: [Static memory, Bare metal, Zephyr]
+          text: >-
+            360 B of RAM per motor, 184 B worst-case stack in the PWM interrupt, 6.6 KiB
+            of flash on Cortex-M4. A fixed-point backend for cores without FPU; no
+            allocation, no globals, no OS.
+          tags: [Q15 or float, Static memory, Bare metal & RTOS]
         - icon: shield
           title: Code you can certify
           text: >-
             Zero MISRA C:2012 violations, a documented deviation register, 100 % line
-            and branch coverage and static analysis in CI.
+            and branch coverage in both numeric backends, bounded execution time and
+            static analysis in CI.
           tags: [MISRA C, Cppcheck, CodeQL]
     offer:
       eyebrow: What you get
-      title: A small library with a clear job
-      intro: TODO layers and number of functions.
+      title: One library from motion command to PWM
+      intro: >-
+        15 public functions, four modules (control, motion, power stage, numeric
+        backend), two power stage topologies and two numeric backends, verified in
+        closed loop on a motor model.
       cards:
-        - {icon: layers, title: Codec and link, text: TODO, tags: [sstep_protocol, sstep_link], link: architecture/}
-        - {icon: plug, title: Any transport, text: TODO, tags: [UART, RS-485], link: integration/}
-        - {icon: brackets, title: Working examples, text: TODO, tags: [Bare metal, Zephyr, Host], link: examples/}
-        - {icon: monitor, title: TODO tool or "Reference vectors", text: TODO, tags: [TODO], link: gui/}
-        - {icon: document, title: Complete documentation, text: TODO, tags: [API, Guides, PDF], link: api/}
-        - {icon: check, title: Quality gates in CI, text: TODO, tags: [GoogleTest, pytest, Coverage], link: misra/}
+        - {icon: wave, title: Current control and microstepping, text: "PI per phase with feed-forward, sine/cosine references from a 32-bit electrical angle, 1 to 256 microsteps.", tags: [PI, Sine table, Microsteps], link: motor-control/}
+        - {icon: gauge, title: Motion planner, text: "Trapezoidal moves without overshoot, constant-velocity runs, smooth stop and retargeting, exact integer positions.", tags: [Trapezoid, Q16 positions], link: "motor-control/#motion-profile"}
+        - {icon: plug, title: Any power stage, text: "Two H-bridges or three half-bridges with a shared leg; the voltage limit keeps the direction; the bus voltage is compensated.", tags: [4 legs, 3 legs, B-G431B-ESC1], link: integration/}
+        - {icon: lock, title: Protection in the interrupt, text: "Overcurrent, overvoltage and undervoltage trips, callback errors and external faults switch the outputs off in the same period.", tags: [Trips, Fault callback], link: "usage/#handling-faults"}
+        - {icon: document, title: Complete documentation, text: "Guides, the control theory with measured results, the integration guide and a full API reference, also as a PDF.", tags: [API, Guides, PDF], link: api/}
+        - {icon: check, title: Quality gates in CI, text: "Unit and closed-loop tests in both backends with a 100 % coverage gate, MISRA C:2012 gate, Cppcheck and CodeQL.", tags: [GoogleTest, Coverage, MISRA C], link: misra/}
     stats:                                   # measured values only
-      - {value: "TODO", label: public functions}
-      - {value: "TODO B", label: RAM per instance}
-      - {value: "TODO B", label: stack on Cortex-M4}
+      - {value: "15", label: public functions}
+      - {value: "360 B", label: RAM per motor}
+      - {value: "184 B", label: stack in the PWM interrupt}
       - {value: "0", label: MISRA C:2012 violations}
     portfolio:
       title: Part of an open-source embedded portfolio
@@ -168,9 +180,9 @@ extra:
         - {text: SystemFromScratch®, link: "https://systemfromscratch.com", style: primary}
         - {text: About the author, link: about/, style: outline}
     trademark: >-
-      SystemFromScratch® is a registered trademark. TODO [vendor marks] are trademarks of
-      [vendor]. Stepper-C is an independent implementation and is not affiliated with or
-      endorsed by [vendor].
+      SystemFromScratch® is a registered trademark. STM32 is a registered trademark of
+      STMicroelectronics International N.V.; Stepper-C is not affiliated with or endorsed
+      by STMicroelectronics.
 
   # ---------------------------------------------------------------- PDF manual
   # Read by tools/docs/build_manual.py. See references/pdf-manual.md.
@@ -185,14 +197,20 @@ extra:
     appendices: [changelog.md, LICENSE.md]
     unnumbered: [about.md]
     web_only: [index.md, reference/]
-    keywords: Stepper Motor Control, embedded, C, MISRA C:2012
+    keywords: stepper motor, microstepping, current control, embedded, C, MISRA C:2012
     vendor_trademarks: >-
-      TODO [vendor marks] are trademarks of [vendor]. They are used only to identify the
-      protocol that Stepper-C implements. Stepper-C is an independent implementation
-      and is not affiliated with or endorsed by [vendor].
+      STM32 is a registered trademark of STMicroelectronics International N.V. Motor and
+      board names are used only as examples of hardware the library can drive; Stepper-C
+      is not affiliated with or endorsed by STMicroelectronics or any motor manufacturer.
 
 extra_css:
   - assets/stylesheets/extra.css
+  - https://unpkg.com/katex@0.16.9/dist/katex.min.css
+
+extra_javascript:
+  - assets/javascripts/katex.js
+  - https://unpkg.com/katex@0.16.9/dist/katex.min.js
+  - https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js
 
 plugins:
   - search
@@ -218,6 +236,8 @@ markdown_extensions:
   - tables
   - toc:
       permalink: true
+  - pymdownx.arithmatex:
+      generic: true
   - pymdownx.details
   - pymdownx.highlight:
       anchor_linenums: true

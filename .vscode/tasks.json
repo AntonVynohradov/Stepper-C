@@ -31,7 +31,7 @@
     {
       "label": "Python: Install requirements",
       "hide": true,
-      "detail": "pip install -r requirements-dev.txt (tool, pytest, MkDocs)",
+      "detail": "pip install -r requirements-dev.txt (tool, MkDocs)",
       "type": "process",
       "command": "${workspaceFolder}/.venv/bin/python",
       "windows": {
@@ -160,48 +160,6 @@
       "command": "cmake",
       "args": ["--build", "build/[UnitTests]Stepper Motor Control", "--target", "coverage"],
       "dependsOn": ["Tests: Configure unit tests"],
-      "problemMatcher": []
-    },
-    {
-      "label": "Tests: Run integration tests",
-      "group": "build",
-      "detail": "pytest suite (Python codec and C/Python cross-check), uses .venv",
-      "type": "process",
-      "command": "${workspaceFolder}/.venv/bin/python",
-      "windows": {
-        "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe"
-      },
-      "args": ["-m", "pytest", "tests/integration", "-v", "-p", "no:cacheprovider"],
-      "problemMatcher": []
-    },
-    {
-      "label": "Tests: Configure examples",
-      "hide": true,
-      "type": "process",
-      "command": "cmake",
-      "args": ["--preset", "[Examples]Stepper Motor Control"],
-      "problemMatcher": []
-    },
-    {
-      "label": "Tests: Build examples",
-      "hide": true,
-      "type": "process",
-      "command": "cmake",
-      "args": ["--build", "build/[Examples]Stepper Motor Control"],
-      "dependsOn": ["Tests: Configure examples"],
-      "problemMatcher": {
-        "base": "$gcc",
-        "fileLocation": "absolute"
-      }
-    },
-    {
-      "label": "Tests: Run examples",
-      "group": "build",
-      "detail": "Build the examples and run the bare-metal example on the simulated bus",
-      "type": "process",
-      "command": "ctest",
-      "args": ["--test-dir", "build/[Examples]Stepper Motor Control", "-L", "example", "--output-on-failure"],
-      "dependsOn": ["Tests: Build examples"],
       "problemMatcher": []
     },
 

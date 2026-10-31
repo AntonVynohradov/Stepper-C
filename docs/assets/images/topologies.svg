@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520" role="img" aria-label="Full bridge and shared-leg topologies with their voltage limits">
+<title>Full bridge and shared-leg topologies with their voltage limits</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5A6472"/></marker><marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F8B9A"/></marker><marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E07A00"/></marker><marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker></defs>
+<rect x="0" y="0" width="1000" height="520" rx="12" fill="#FFFFFF"/>
+<rect x="20" y="16" width="460" height="488" rx="12" fill="#F7F9FC" stroke="#C9D3E0" stroke-width="1.5"/>
+<text x="250" y="44" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="14" font-weight="bold" fill="#1E5AA8" text-anchor="middle">SSTEP_TOPOLOGY_FULL_BRIDGE · 4 legs</text>
+<rect x="520" y="16" width="460" height="488" rx="12" fill="#F7F9FC" stroke="#C9D3E0" stroke-width="1.5"/>
+<text x="750" y="44" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="14" font-weight="bold" fill="#1E5AA8" text-anchor="middle">SSTEP_TOPOLOGY_SHARED_LEG · 3 legs</text>
+<line x1="50" y1="70" x2="430" y2="70" stroke="#C62828" stroke-width="2"/>
+<line x1="50" y1="250" x2="430" y2="250" stroke="#5A6472" stroke-width="2"/>
+<text x="436" y="74" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#C62828" text-anchor="start">Vbus</text>
+<text x="436" y="254" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#5A6472" text-anchor="start">0</text>
+<rect x="54" y="88" width="32" height="34" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<rect x="54" y="174.0" width="32" height="34" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<line x1="70" y1="70" x2="70" y2="88" stroke="#0B2545" stroke-width="1.6"/>
+<line x1="70" y1="122" x2="70" y2="174.0" stroke="#0B2545" stroke-width="1.6"/>
+<line x1="70" y1="208.0" x2="70" y2="250" stroke="#0B2545" stroke-width="1.6"/>
+<circle cx="70" cy="166.0" r="4" fill="#0B2545"/>
+<text x="70" y="270" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="13" font-weight="bold" fill="#0B2545" text-anchor="middle">A+</text>
+<rect x="154" y="88" width="32" height="34" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<rect x="154" y="174.0" width="32" height="34" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<line x1="170" y1="70" x2="170" y2="88" stroke="#0B2545" stroke-width="1.6"/>
+<line x1="170" y1="122" x2="170" y2="174.0" stroke="#0B2545" stroke-width="1.6"/>
+<line x1="170" y1="208.0" x2="170" y2="250" stroke="#0B2545" stroke-width="1.6"/>
+<circle cx="170" cy="166.0" r="4" fill="#0B2545"/>
+<text x="170" y="270" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="13" font-weight="bold" fill="#0B2545" text-anchor="middle">A−</text>
+<rect x="284" y="88" width="32" height="34" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<rect x="284" y="174.0" width="32" height="34" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<line x1="300" y1="70" x2="300" y2="88" stroke="#0B2545" stroke-width="1.6"/>
+<line x1="300" y1="122" x2="300" y2="174.0" stroke="#0B2545" stroke-width="1.6"/>
+<line x1="300" y1="208.0" x2="300" y2="250" stroke="#0B2545" stroke-width="1.6"/>
+<circle cx="300" cy="166.0" r="4" fill="#0B2545"/>
+<text x="300" y="270" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="13" font-weight="bold" fill="#0B2545" text-anchor="middle">B+</text>
+<rect x="384" y="88" width="32" height="34" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<rect x="384" y="174.0" width="32" height="34" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<line x1="400" y1="70" x2="400" y2="88" stroke="#0B2545" stroke-width="1.6"/>
+<line x1="400" y1="122" x2="400" y2="174.0" stroke="#0B2545" stroke-width="1.6"/>
+<line x1="400" y1="208.0" x2="400" y2="250" stroke="#0B2545" stroke-width="1.6"/>
+<circle cx="400" cy="166.0" r="4" fill="#0B2545"/>
+<text x="400" y="270" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="13" font-weight="bold" fill="#0B2545" text-anchor="middle">B−</text>
+<line x1="70" y1="166.0" x2="88" y2="166.0" stroke="#1E5AA8" stroke-width="1.6"/>
+<line x1="152" y1="166.0" x2="170" y2="166.0" stroke="#1E5AA8" stroke-width="1.6"/>
+<rect x="88" y="154.0" width="64" height="24" rx="12" fill="#FFFFFF" stroke="#1E5AA8" stroke-width="2"/>
+<text x="120.0" y="171.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="bold" fill="#1E5AA8" text-anchor="middle">A</text>
+<line x1="300" y1="166.0" x2="318" y2="166.0" stroke="#0F8B9A" stroke-width="1.6"/>
+<line x1="382" y1="166.0" x2="400" y2="166.0" stroke="#0F8B9A" stroke-width="1.6"/>
+<rect x="318" y="154.0" width="64" height="24" rx="12" fill="#FFFFFF" stroke="#0F8B9A" stroke-width="2"/>
+<text x="350.0" y="171.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="bold" fill="#0F8B9A" text-anchor="middle">B</text>
+<text x="250" y="288" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" font-weight="normal" fill="#0B2545" text-anchor="middle">vA = A+ − A−;  vB = B+ − B−</text>
+<line x1="170" y1="400" x2="330" y2="400" stroke="#C9D3E0" stroke-width="1.6"/>
+<line x1="250" y1="480" x2="250" y2="320" stroke="#C9D3E0" stroke-width="1.6"/>
+<polygon points="316.0,334.0 184.0,334.0 184.0,466.0 316.0,466.0" fill="#FFF7EC" stroke="#E07A00" stroke-width="1.8"/>
+<circle cx="250" cy="400" r="66.0" fill="none" stroke="#0F8B9A" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="334" y="404" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="normal" fill="#5A6472" text-anchor="start">vA</text>
+<text x="244" y="316" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="normal" fill="#5A6472" text-anchor="end">vB</text>
+<text x="250" y="494" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#5A6472" text-anchor="middle">max(|vA|, |vB|) ≤ Vbus · circle: amplitude Vbus</text>
+<line x1="580" y1="70" x2="940" y2="70" stroke="#C62828" stroke-width="2"/>
+<line x1="580" y1="250" x2="940" y2="250" stroke="#5A6472" stroke-width="2"/>
+<text x="944" y="74" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#C62828" text-anchor="start">Vbus</text>
+<text x="944" y="254" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#5A6472" text-anchor="start">0</text>
+<rect x="584" y="88" width="32" height="34" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<rect x="584" y="174.0" width="32" height="34" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<line x1="600" y1="70" x2="600" y2="88" stroke="#0B2545" stroke-width="1.6"/>
+<line x1="600" y1="122" x2="600" y2="174.0" stroke="#0B2545" stroke-width="1.6"/>
+<line x1="600" y1="208.0" x2="600" y2="250" stroke="#0B2545" stroke-width="1.6"/>
+<circle cx="600" cy="166.0" r="4" fill="#0B2545"/>
+<text x="600" y="270" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="13" font-weight="bold" fill="#0B2545" text-anchor="middle">U</text>
+<rect x="724" y="88" width="32" height="34" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<rect x="724" y="174.0" width="32" height="34" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<line x1="740" y1="70" x2="740" y2="88" stroke="#0B2545" stroke-width="1.6"/>
+<line x1="740" y1="122" x2="740" y2="174.0" stroke="#0B2545" stroke-width="1.6"/>
+<line x1="740" y1="208.0" x2="740" y2="250" stroke="#0B2545" stroke-width="1.6"/>
+<circle cx="740" cy="166.0" r="4" fill="#0B2545"/>
+<text x="740" y="270" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="13" font-weight="bold" fill="#0B2545" text-anchor="middle">V</text>
+<rect x="864" y="88" width="32" height="34" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<rect x="864" y="174.0" width="32" height="34" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<line x1="880" y1="70" x2="880" y2="88" stroke="#0B2545" stroke-width="1.6"/>
+<line x1="880" y1="122" x2="880" y2="174.0" stroke="#0B2545" stroke-width="1.6"/>
+<line x1="880" y1="208.0" x2="880" y2="250" stroke="#0B2545" stroke-width="1.6"/>
+<circle cx="880" cy="166.0" r="4" fill="#0B2545"/>
+<text x="880" y="270" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="13" font-weight="bold" fill="#0B2545" text-anchor="middle">W (shared)</text>
+<line x1="600" y1="132.0" x2="620" y2="132.0" stroke="#1E5AA8" stroke-width="1.6"/>
+<rect x="620" y="120.0" width="102" height="24" rx="12" fill="#FFFFFF" stroke="#1E5AA8" stroke-width="2"/>
+<text x="671.0" y="137.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="bold" fill="#1E5AA8" text-anchor="middle">A (U − W)</text>
+<line x1="722" y1="132.0" x2="880" y2="132.0" stroke="#1E5AA8" stroke-width="1.6"/>
+<line x1="740" y1="152.0" x2="766" y2="152.0" stroke="#0F8B9A" stroke-width="1.6"/>
+<rect x="766" y="140.0" width="96" height="24" rx="12" fill="#FFFFFF" stroke="#0F8B9A" stroke-width="2"/>
+<text x="814.0" y="157.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="bold" fill="#0F8B9A" text-anchor="middle">B (V − W)</text>
+<line x1="862" y1="152.0" x2="880" y2="152.0" stroke="#0F8B9A" stroke-width="1.6"/>
+<circle cx="600" cy="132.0" r="4" fill="#0B2545"/>
+<circle cx="880" cy="132.0" r="4" fill="#0B2545"/>
+<circle cx="740" cy="152.0" r="4" fill="#0B2545"/>
+<circle cx="880" cy="152.0" r="4" fill="#0B2545"/>
+<text x="750" y="288" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="12.5" font-weight="normal" fill="#0B2545" text-anchor="middle">vA = U − W;  vB = V − W</text>
+<line x1="670" y1="400" x2="830" y2="400" stroke="#C9D3E0" stroke-width="1.6"/>
+<line x1="750" y1="480" x2="750" y2="320" stroke="#C9D3E0" stroke-width="1.6"/>
+<polygon points="816.0,400.0 816.0,334.0 750.0,334.0 684.0,400.0 684.0,466.0 750.0,466.0" fill="#FFF7EC" stroke="#E07A00" stroke-width="1.8"/>
+<circle cx="750" cy="400" r="46.7" fill="none" stroke="#0F8B9A" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="834" y="404" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="normal" fill="#5A6472" text-anchor="start">vA</text>
+<text x="744" y="316" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="normal" fill="#5A6472" text-anchor="end">vB</text>
+<text x="750" y="494" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#5A6472" text-anchor="middle">max(vA, vB, 0) − min(vA, vB, 0) ≤ Vbus · circle: Vbus / √2</text>
+</svg>

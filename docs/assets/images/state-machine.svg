@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 420" width="920" height="420" role="img" aria-label="Driver states and transitions">
+<title>Driver states and transitions</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5A6472"/></marker><marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F8B9A"/></marker><marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E07A00"/></marker><marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker></defs>
+<rect x="0" y="0" width="920" height="420" rx="12" fill="#FFFFFF"/>
+<rect x="60" y="160" width="200" height="70" rx="35" fill="#F2F5FA" stroke="#5A6472" stroke-width="2"/>
+<text x="160.0" y="192" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="11" font-weight="normal" fill="#5A6472" text-anchor="middle">SSTEP_STATE_</text>
+<text x="160.0" y="212" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="16" font-weight="bold" fill="#5A6472" text-anchor="middle">DISABLED</text>
+<rect x="360" y="60" width="200" height="70" rx="35" fill="#EAF5EA" stroke="#2E7D32" stroke-width="2"/>
+<text x="460.0" y="92" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="11" font-weight="normal" fill="#5A6472" text-anchor="middle">SSTEP_STATE_</text>
+<text x="460.0" y="112" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="16" font-weight="bold" fill="#2E7D32" text-anchor="middle">HOLDING</text>
+<rect x="660" y="160" width="200" height="70" rx="35" fill="#E6F4F5" stroke="#0F8B9A" stroke-width="2"/>
+<text x="760.0" y="192" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="11" font-weight="normal" fill="#5A6472" text-anchor="middle">SSTEP_STATE_</text>
+<text x="760.0" y="212" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="16" font-weight="bold" fill="#0F8B9A" text-anchor="middle">MOVING</text>
+<rect x="360" y="290" width="200" height="70" rx="35" fill="#FDECEC" stroke="#C62828" stroke-width="2"/>
+<text x="460.0" y="322" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="11" font-weight="normal" fill="#5A6472" text-anchor="middle">SSTEP_STATE_</text>
+<text x="460.0" y="342" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="16" font-weight="bold" fill="#C62828" text-anchor="middle">FAULT</text>
+<path d="M200,160 C220,110 280,95 360,95" stroke="#2E7D32" stroke-width="1.8" fill="none" marker-end="url(#arrow-green)"/>
+<text x="232" y="112" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#2E7D32" text-anchor="end">sstep_enable()</text>
+<path d="M360,115 C300,120 270,150 260,170" stroke="#5A6472" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+<text x="268" y="140" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#5A6472" text-anchor="start">sstep_disable()</text>
+<path d="M560,95 C640,95 700,110 720,160" stroke="#0F8B9A" stroke-width="1.8" fill="none" marker-end="url(#arrow-teal)"/>
+<text x="668" y="92" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#0F8B9A" text-anchor="start">move_to / move_by / run</text>
+<path d="M680,160 C650,135 610,125 560,118" stroke="#2E7D32" stroke-width="1.6" fill="none" marker-end="url(#arrow-green)"/>
+<text x="608" y="152" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#2E7D32" text-anchor="middle">move done, stopped</text>
+<path d="M660,205 C520,230 400,230 260,205" stroke="#5A6472" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+<text x="460" y="246" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#5A6472" text-anchor="middle">sstep_disable()</text>
+<path d="M460,130 L460,290" stroke="#C62828" stroke-width="1.8" fill="none"/>
+<path d="M455,282 L460,290 L465,282" stroke="#C62828" stroke-width="1.8" fill="none"/>
+<path d="M740,230 C720,290 640,320 560,325" stroke="#C62828" stroke-width="1.8" fill="none"/>
+<path d="M570,320 L560,325 L570,331" stroke="#C62828" stroke-width="1.8" fill="none"/>
+<text x="472" y="262" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#C62828" text-anchor="start">fault</text>
+<text x="700" y="300" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#C62828" text-anchor="start">fault</text>
+<path d="M360,325 C250,325 170,290 160,230" stroke="#5A6472" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+<text x="190" y="318" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="end">sstep_clear_faults()</text>
+<text x="460" y="395" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">Faults: overcurrent, over/undervoltage, callback error, sstep_report_fault(). Outputs go off at once.</text>
+</svg>

@@ -41,8 +41,8 @@ remotely worldwide.
 Buildroot · ARM Cortex-M · STM32 · Microchip FPGA · RISC-V · CAN / ISO-TP · ROS 2 ·
 Docker · Git · CI/CD · MISRA C/C++ · EU CRA
 
-For Stepper-C, Anton wrote the library, its unit and integration tests, the examples, the
-desktop tool (if any) and this documentation.
+For Stepper-C, Anton wrote the library, its unit tests and closed-loop tests on a motor
+model, and this documentation.
 
 ## SystemFromScratch®
 
@@ -98,9 +98,7 @@ in this documentation to identify the publisher of Stepper-C; the Apache License
 no rights to use them, and they may not be used to endorse or promote products derived
 from Stepper-C without prior written permission.
 
-Stepper-C implements the protocol as published by SystemFromScratch in the
-[Stepper Motor Control specification](TODO-specification-url).
-The reference packets used in the tests come from that specification. TODO [vendor marks]
-are trademarks of SystemFromScratch; Stepper-C is an independent implementation and is not
-affiliated with or endorsed by SystemFromScratch. (Delete this paragraph for an open standard
-without trademarks.)
+Motor and board names (17HS19-2004S1, B-G431B-ESC1, STM32) appear only as examples of
+hardware the library can drive. STM32 is a registered trademark of STMicroelectronics
+International N.V.; Stepper-C is not affiliated with or endorsed by STMicroelectronics
+or any motor manufacturer.

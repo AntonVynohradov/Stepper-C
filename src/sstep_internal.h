@@ -76,6 +76,104 @@ struct sstep_bridge_out
 };
 
 /* ==============================================================================
+ * DRIVER INSTANCE
+ * =============================================================================*/
+
+/** @brief Setpoint handed from the slow loop to the fast loop. */
+struct sstep_setpoint
+{
+    sstep_angle_t angle;        /**< Electrical angle at the start of the slow period. */
+    int32_t dangle;             /**< Angle increment per fast loop period. */
+    sstep_real_t i_amp;         /**< Current amplitude [pu]. */
+    sstep_real_t ff;            /**< Back-EMF feed-forward amplitude [pu of V_base]. */
+    struct sstep_gain inv_vbus; /**< V_base / measured bus voltage. */
+};
+
+/**
+ * @brief Motion generator state. Integer arithmetic in both numeric backends:
+ *        positions in 1/65536 microstep, velocities in 1/65536 microstep per slow loop
+ *        period, accelerations in 1/65536 microstep per period squared.
+ */
+struct sstep_motion
+{
+    int64_t pos;          /**< Position [Q16 microsteps]. */
+    int64_t target;       /**< Move target [Q16 microsteps]. */
+    int64_t brake_vmax;   /**< Braking distance from v_max [Q16 microsteps]. */
+    int32_t vel;          /**< Velocity [Q16 microsteps / period]. */
+    int32_t v_run;        /**< Requested velocity of a RUN command. */
+    int32_t v_max;        /**< Velocity limit. */
+    int32_t acc;          /**< Acceleration limit [Q16 microsteps / period^2]. */
+    int32_t dec;          /**< Deceleration limit. */
+    uint8_t mode;         /**< 0 hold, 1 move, 2 run. */
+};
+
+/** @brief Driver state behind the opaque ::sstep. Its layout may change in any release. */
+struct sstep_ctx
+{
+    struct sstep_config cfg;          /**< Copy of the configuration. */
+
+    /* Constants derived by sstep_init() */
+    struct sstep_gain kp;             /**< Proportional gain [pu V / pu A]. */
+    struct sstep_gain ki;             /**< Integral gain per fast loop period. */
+    struct sstep_gain kb;             /**< Anti-windup gain Ts / Tt. */
+    struct sstep_gain r_pu;           /**< Phase resistance [pu] (voltage drive). */
+    struct sstep_gain adc_i;          /**< Current per ADC count [pu]. */
+    struct sstep_gain adc_v;          /**< Bus voltage per ADC count [pu]. */
+    struct sstep_gain ff_gain;        /**< Feed-forward per microstep/s [pu]. */
+    sstep_real_t i_run;               /**< Run current [pu]. */
+    sstep_real_t i_hold;              /**< Hold current [pu]. */
+    uint16_t i_trip_counts;           /**< Overcurrent trip [ADC counts from zero]. */
+    uint16_t vbus_min_raw;            /**< Undervoltage trip [ADC counts], 0 = off. */
+    uint16_t vbus_max_raw;            /**< Overvoltage trip [ADC counts], 0 = off. */
+    uint16_t ratio;                   /**< Fast loop periods per slow loop period. */
+    uint32_t hold_ticks;              /**< Slow periods at standstill before hold. */
+    uint8_t angle_shift;              /**< 14 - log2(microsteps). */
+
+    /* Slow loop -> fast loop hand-off (double buffer) */
+    struct sstep_setpoint sp[2];      /**< Setpoints; the fast loop owns sp[sp_active]. */
+    volatile uint8_t sp_active;       /**< Buffer in use by the fast loop. */
+    volatile uint8_t sp_pending;      /**< 1: sp[1 - sp_active] is complete and new. */
+
+    /* Fast loop state */
+    struct sstep_setpoint cur;        /**< Setpoint in use. */
+    uint16_t adv;                     /**< Angle increments applied since the hand-off. */
+    sstep_integ_t integ[2];           /**< PI integrators [pu V]. */
+    sstep_real_t i_meas[2];           /**< Last measured phase currents [pu]. */
+    volatile uint16_t vbus_raw;       /**< Last bus voltage [ADC counts]. */
+    uint16_t compare[SSTEP_LEGS_MAX]; /**< Last compare values. */
+
+    /* Slow loop state */
+    struct sstep_motion mo;           /**< Motion generator. */
+    sstep_angle_t angle_offset;       /**< Electrical angle of position 0. */
+    uint32_t still;                   /**< Slow periods at standstill. */
+    bool hold_active;                 /**< Hold current applied. */
+    struct sstep_gain inv_vbus;       /**< Last V_base / bus voltage. */
+
+    volatile uint16_t faults;         /**< Active faults. */
+    volatile enum sstep_state state;  /**< Driver state. */
+};
+
+/**
+ * @brief  Driver state of an instance.
+ * @note   MISRA C:2012 Rule 11.3, deviation DEV-01 (docs/misra.md): ::sstep is the
+ *         opaque storage of ::sstep_ctx; size and alignment are checked in sstep_ctrl.c.
+ * @param  drv  Driver instance, may be NULL.
+ * @return Driver state, NULL if drv is NULL.
+ */
+static inline struct sstep_ctx* sstep_ctx_of(struct sstep* drv)
+{
+    /* cppcheck-suppress misra-c2012-11.3 ; DEV-01 opaque instance */
+    return (struct sstep_ctx*)drv;
+}
+
+/** @brief Read-only variant of sstep_ctx_of(). */
+static inline const struct sstep_ctx* sstep_ctx_of_const(const struct sstep* drv)
+{
+    /* cppcheck-suppress misra-c2012-11.3 ; DEV-01 opaque instance */
+    return (const struct sstep_ctx*)drv;
+}
+
+/* ==============================================================================
  * PUBLIC FUNCTION DECLARATIONS (library internal)
  * =============================================================================*/
 

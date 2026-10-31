@@ -342,7 +342,7 @@ TEST(SstepApi, BusVoltageTrips)
         sim.vbus = c.v;
         sim.run_for(0.0001);
         EXPECT_EQ(sim.hal.faults, c.fault);
-        EXPECT_EQ(sim.drv.state, SSTEP_STATE_FAULT);
+        EXPECT_EQ(sim.ctx().state, SSTEP_STATE_FAULT);
     }
     /* disabled thresholds: no trip */
     Sim sim;
@@ -375,9 +375,9 @@ TEST(SstepApi, ReportedFault)
     ASSERT_EQ(sim.init(), SSTEP_OK);
     ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
     EXPECT_EQ(sstep_report_fault(&sim.drv, 0U), SSTEP_OK); /* nothing */
-    EXPECT_EQ(sim.drv.state, SSTEP_STATE_HOLDING);
+    EXPECT_EQ(sim.ctx().state, SSTEP_STATE_HOLDING);
     EXPECT_EQ(sstep_report_fault(&sim.drv, SSTEP_FAULT_EXTERNAL), SSTEP_OK);
-    EXPECT_EQ(sim.drv.state, SSTEP_STATE_FAULT);
+    EXPECT_EQ(sim.ctx().state, SSTEP_STATE_FAULT);
     EXPECT_FALSE(sim.hal.enabled);
     EXPECT_EQ(sim.hal.faults, SSTEP_FAULT_EXTERNAL);
 }
@@ -392,7 +392,7 @@ TEST(SstepApi, FaultWithoutCallbacks)
     ASSERT_EQ(sstep_move_to(&sim.drv, 20), SSTEP_OK);
     sim.run_for(0.2); /* move done and hold current without event callback */
     EXPECT_EQ(sstep_report_fault(&sim.drv, SSTEP_FAULT_EXTERNAL), SSTEP_OK);
-    EXPECT_EQ(sim.drv.state, SSTEP_STATE_FAULT);
+    EXPECT_EQ(sim.ctx().state, SSTEP_STATE_FAULT);
 }
 
 TEST(SstepApi, HardwareErrors)
@@ -404,7 +404,7 @@ TEST(SstepApi, HardwareErrors)
         sim.hal.pwm_result = -5;
         sim.run_for(0.0001);
         EXPECT_EQ(sim.hal.faults, SSTEP_FAULT_HAL);
-        EXPECT_EQ(sim.drv.state, SSTEP_STATE_FAULT);
+        EXPECT_EQ(sim.ctx().state, SSTEP_STATE_FAULT);
     }
     {
         Sim sim; /* enabling the outputs fails */
@@ -420,7 +420,7 @@ TEST(SstepApi, HardwareErrors)
         sim.hal.enable_result = -1;
         EXPECT_EQ(sstep_disable(&sim.drv), SSTEP_OK);
         EXPECT_EQ(sim.hal.faults, SSTEP_FAULT_HAL);
-        EXPECT_EQ(sim.drv.state, SSTEP_STATE_FAULT);
+        EXPECT_EQ(sim.ctx().state, SSTEP_STATE_FAULT);
     }
 }
 
@@ -430,9 +430,9 @@ TEST(SstepApi, FaultDuringSlowLoopIsKept)
     Sim sim;
     ASSERT_EQ(sim.init(), SSTEP_OK);
     ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
-    sim.drv.faults = SSTEP_FAULT_EXTERNAL; /* as if set by an interrupt */
+    sim.ctx().faults = SSTEP_FAULT_EXTERNAL; /* as if set by an interrupt */
     ASSERT_EQ(sstep_slow_loop(&sim.drv), SSTEP_OK);
-    EXPECT_EQ(sim.drv.state, SSTEP_STATE_FAULT);
+    EXPECT_EQ(sim.ctx().state, SSTEP_STATE_FAULT);
 }
 
 TEST(SstepApi, SlowLoopLateHoldsTheAngle)
@@ -448,12 +448,12 @@ TEST(SstepApi, SlowLoopLateHoldsTheAngle)
     {
         ASSERT_EQ(sstep_fast_loop(&sim.drv, &s), SSTEP_OK);
     }
-    const sstep_angle_t a = sim.drv.cur.angle;
+    const sstep_angle_t a = sim.ctx().cur.angle;
     for (int k = 0; k < 40; k++)
     {
         ASSERT_EQ(sstep_fast_loop(&sim.drv, &s), SSTEP_OK);
     }
-    EXPECT_EQ(sim.drv.cur.angle, a);
+    EXPECT_EQ(sim.ctx().cur.angle, a);
 }
 
 TEST(SstepApi, BusVoltageZeroKeepsLastScale)
@@ -464,7 +464,7 @@ TEST(SstepApi, BusVoltageZeroKeepsLastScale)
     ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
     sim.vbus = 0.0;
     sim.run_for(0.003);
-    EXPECT_EQ(sim.drv.state, SSTEP_STATE_HOLDING);
+    EXPECT_EQ(sim.ctx().state, SSTEP_STATE_HOLDING);
 }
 
 TEST(SstepApi, NoBackEmfConstant)
@@ -476,7 +476,7 @@ TEST(SstepApi, NoBackEmfConstant)
     ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
     ASSERT_EQ(sstep_run(&sim.drv, 3200), SSTEP_OK);
     sim.run_for(0.1);
-    EXPECT_EQ(sim.drv.cur.ff, SSTEP_REAL_ZERO);
+    EXPECT_EQ(sim.ctx().cur.ff, SSTEP_REAL_ZERO);
     EXPECT_LT(std::fabs(sim.load_angle_deg()), 90.0);
 }
 
@@ -486,8 +486,8 @@ TEST(SstepApi, BusVoltageThresholdsBeyondAdcRange)
     Sim sim;
     sim.cfg.stage.adc_vbus_mv_full = 100U; /* 100 mV at full scale */
     ASSERT_EQ(sim.init(), SSTEP_OK);
-    EXPECT_EQ(sim.drv.vbus_max_raw, 65535U);
-    EXPECT_EQ(sim.drv.vbus_min_raw, 65535U);
+    EXPECT_EQ(sim.ctx().vbus_max_raw, 65535U);
+    EXPECT_EQ(sim.ctx().vbus_min_raw, 65535U);
 }
 
 TEST(SstepApi, BusVoltageScaleOutOfRangeKeepsLast)
@@ -499,12 +499,12 @@ TEST(SstepApi, BusVoltageScaleOutOfRangeKeepsLast)
     sim.cfg.stage.vbus_max_mv = 0U;
     ASSERT_EQ(sim.init(), SSTEP_OK);
     ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
-    const sstep_gain before = sim.drv.inv_vbus;
+    const sstep_gain before = sim.ctx().inv_vbus;
     sstep_sample s = sim.sample();
     s.vbus = 1U;
     ASSERT_EQ(sstep_fast_loop(&sim.drv, &s), SSTEP_OK);
     ASSERT_EQ(sstep_slow_loop(&sim.drv), SSTEP_OK);
-    EXPECT_EQ(std::memcmp(&before, &sim.drv.inv_vbus, sizeof(before)), 0);
+    EXPECT_EQ(std::memcmp(&before, &sim.ctx().inv_vbus, sizeof(before)), 0);
 }
 
 TEST(SstepApi, FeedForwardSaturates)
@@ -525,12 +525,12 @@ TEST(SstepApi, FeedForwardSaturates)
     }
     sstep_sample s = sim.sample();
     ASSERT_EQ(sstep_fast_loop(&sim.drv, &s), SSTEP_OK);
-    EXPECT_EQ(sim.drv.cur.ff, SSTEP_REAL_MAX);
+    EXPECT_EQ(sim.ctx().cur.ff, SSTEP_REAL_MAX);
     ASSERT_EQ(sstep_run(&sim.drv, -500), SSTEP_OK);
     for (int k = 0; k < 30; k++)
     {
         ASSERT_EQ(sstep_slow_loop(&sim.drv), SSTEP_OK);
     }
     ASSERT_EQ(sstep_fast_loop(&sim.drv, &s), SSTEP_OK);
-    EXPECT_EQ(sim.drv.cur.ff, SSTEP_REAL_MIN);
+    EXPECT_EQ(sim.ctx().cur.ff, SSTEP_REAL_MIN);
 }

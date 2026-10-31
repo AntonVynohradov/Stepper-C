@@ -10,18 +10,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Repository skeleton from the SystemFromScratch® library blueprint (CMake, presets,
   CI workflows, VS Code tasks, documentation site and PDF manual tooling).
+  The template's pytest integration tests were dropped: the library has no wire
+  protocol to cross-check, and the closed-loop tests run in GoogleTest.
 - Public API contract (headers only, no implementation yet):
   - `inc/sstep_config.h`: build-time configuration (numeric backend, topologies,
     microstep limit, sine table size, argument checks), each value range-checked;
   - `inc/sstep_defs.h`: status codes, topologies, fault flags, driver states;
-  - `inc/sstep_math.h`: backend types (Q15 `int16_t` or `float`), per-unit convention,
-    32-bit electrical angle;
   - `inc/sstep_ctrl.h`: configuration structures in integer engineering units, hardware
-    callbacks given at initialisation, fast/slow loop functions, motion commands.
+    callbacks given at initialisation, measurements, status;
+  - `sstep.h`: every public function (init, fast/slow loops, motion commands, faults,
+    status) and the version;
+  - `struct sstep` is opaque (`uint64_t opaque[SSTEP_INSTANCE_WORDS]`): the application
+    allocates it, the driver state (`struct sstep_ctx`) and all numeric types stay in
+    `src/` (MISRA deviation DEV-01). `sstep.h` exposes the public API only.
 - CMake cache variables `SSTEP_MATH_BACKEND` (FIXED/FLOAT) and `SSTEP_CONFIG_DIR`.
 - `tests/compile/sstep_api_check.c`: compile check of the API with an example
   configuration (17HS19-2004S1 on B-G431B-ESC1).
-- Numeric backend (`inc/sstep_math.h`, `src/sstep_math.c`):
+- Numeric backend (`src/sstep_math.h`, `src/sstep_math.c`; private, not part of the API):
   - saturating `static inline` operations for both backends (add, sub, neg, abs, mul,
     clamp, accumulator add/clamp, gain multiply), identical ranges in both backends;
   - `struct sstep_gain` (Q15 mantissa + exponent, or float) and

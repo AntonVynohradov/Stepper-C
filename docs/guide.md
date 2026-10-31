@@ -29,7 +29,7 @@ include path.
 ## Prerequisites for development
 
 - C11 compiler, CMake 3.20+
-- Optional: GoogleTest and gcovr, Python 3 and pytest, Cppcheck, clang-format, MkDocs
+- Optional: GoogleTest and gcovr, Python 3, Cppcheck, clang-format, MkDocs
   (requirements-dev.txt), Doxygen, WeasyPrint with Pango
 
 ## Build with presets
@@ -38,17 +38,12 @@ include path.
 | --- | --- |
 | `[Debug]Stepper Motor Control` | Static library with debug information |
 | `[Release]Stepper Motor Control` | Optimized static library |
-| `[UnitTests]Stepper Motor Control` | GoogleTest executable with coverage; target `coverage` |
-| `[IntegrationTests]Stepper Motor Control` | pytest suite; target `integration_tests` |
-| `[Examples]Stepper Motor Control` | Host examples and the bare-metal simulation test |
+| `[UnitTests]Stepper Motor Control` | GoogleTest suite, fixed-point backend, with coverage; target `coverage` |
+| `[UnitTestsFloat]Stepper Motor Control` | The same suite with the float backend |
 
 ## Unit tests and coverage
 
 The `coverage` target fails below `SSTEP_COVERAGE_MIN` (100 %) line or branch coverage.
-
-## Integration tests
-
-TODO the Python twin and the C/Python cross-check.
 
 ## Static analysis
 
@@ -61,12 +56,19 @@ TODO the Python twin and the C/Python cross-check.
 ## Formatting
 
 ```bash
-clang-format -i src/*.c inc/*.h sstep.h tests/unit/*.cpp examples/*/*.[ch]
+clang-format -i src/*.c src/*.h inc/*.h sstep.h tests/unit/*.cpp tests/unit/*.hpp
 ```
 
 ## Versioning and releases
 
-TODO (see the skill's repository.md → Release).
+Stepper-C follows [Semantic Versioning](https://semver.org): the public API (`sstep.h` and
+`inc/`) is stable within a major version. The version comes from the latest `vX.Y.Z` Git
+tag (`cmake/version.cmake`), with `SSTEP_VERSION` in `sstep.h` as the fallback for builds
+without CMake; every change is recorded under `[Unreleased]` in `CHANGELOG.md`.
+
+A release tag runs `release.yml`: version check, unit tests with the coverage gate, MISRA
+gate, release build, and a GitHub Release with the static library, the headers, the MISRA
+report and the PDF manual.
 
 ## Documentation
 

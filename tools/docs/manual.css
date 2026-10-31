@@ -376,6 +376,27 @@ img[src$=".svg"] {
   border-radius: 2mm;
 }
 
+/* Formulas rendered to SVG by build_manual.py (pymdownx.arithmatex + ziamath) */
+.math-display {
+  display: block;
+  margin: 3mm 0;
+  text-align: center;
+  break-inside: avoid;
+}
+
+.math-display img {
+  display: inline-block;
+  margin: 0;
+  border: none;
+}
+
+.math-inline img {
+  display: inline;
+  margin: 0;
+  border: none;
+  vertical-align: middle;
+}
+
 pre, code {
   font-family: "JetBrains Mono", Consolas, "DejaVu Sans Mono", monospace;
   hyphens: manual;

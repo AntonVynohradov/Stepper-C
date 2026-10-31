@@ -31,12 +31,10 @@
 #include "sstep.h"
 
 
-#if SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED
-_Static_assert(sizeof(sstep_real_t) == 2, "Q15");
-#else
-_Static_assert(sizeof(sstep_real_t) == 4, "float");
+/* The public API must not expose the library internals */
+#if defined(SSTEP_MATH_H) || defined(SSTEP_INTERNAL_H) || defined(SSTEP_SIN_TABLE_H)
+#error "sstep.h includes a private header"
 #endif
-_Static_assert(sizeof(sstep_angle_t) == 4, "angle");
 
 static int pwm(void* c, const uint16_t cmp[SSTEP_LEGS_MAX]) { (void)c; (void)cmp; return 0; }
 static int en(void* c, bool e) { (void)c; (void)e; return 0; }

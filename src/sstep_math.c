@@ -53,7 +53,7 @@
 #define FRAC_BITS (QUADRANT_BITS - SSTEP_CFG_SINE_TABLE_BITS)
 
 /** Operand limit of sstep_gain_from_ratio64(): 2^62. */
-#define RATIO64_LIMIT ((int64_t)1 << 62)
+#define RATIO64_LIMIT ((int64_t)0x4000000000000000)
 
 /* ==============================================================================
  * PRIVATE FUNCTION DECLARATIONS
@@ -104,7 +104,8 @@ static sstep_real_t quarter_sin(uint32_t pos)
 {
     uint32_t idx = pos >> FRAC_BITS;
     /* the 15 most significant bits of the fraction (FRAC_BITS >= 20) */
-    int32_t frac = (int32_t)((pos >> (FRAC_BITS - 15U)) & 0x7FFFUL);
+    uint32_t frac_u = (pos >> (FRAC_BITS - 15U)) & 0x7FFFUL;
+    int32_t frac = (int32_t)frac_u;
     int32_t y0 = (int32_t)sstep_sin_table[idx];
     int32_t dy = (int32_t)sstep_sin_table[idx + 1U] - y0; /* |dy| < 2^10 */
     return (sstep_real_t)(y0 + sstep_asr((dy * frac) + 0x4000, 15U));
@@ -185,8 +186,9 @@ int sstep_gain_from_ratio64(int64_t num, int64_t den, struct sstep_gain* gain)
         if (ld > 47U)
         {
             /* keep n << s below 2^63; the relative error of d is below 2^-46 */
-            n >>= (ld - 47U);
-            d >>= (ld - 47U);
+            uint32_t drop = ld - 47U;
+            n >>= drop;
+            d >>= drop;
             ld = 47U;
         }
 
@@ -294,7 +296,7 @@ int32_t sstep_real_to_units(sstep_acc_t x, int32_t base)
     }
     else if (v < (int64_t)INT32_MIN)
     {
-        result = INT32_MIN;
+        result = (int32_t)INT32_MIN;
     }
     else
     {
@@ -362,7 +364,7 @@ int32_t sstep_real_to_units(sstep_acc_t x, int32_t base)
     }
     else if (v <= -2147483648.0f)
     {
-        result = INT32_MIN;
+        result = (int32_t)INT32_MIN;
     }
     else
     {

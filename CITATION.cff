@@ -3,8 +3,10 @@ message: "If you use Stepper-C in your work, please cite it as below."
 type: software
 title: "Stepper-C"
 abstract: >-
-  TODO: one or two sentences: what the library implements (Stepper Motor Control) and for which
-  systems.
+  Closed-loop microstepping current control for two-phase hybrid stepper motors in
+  portable C11 for embedded systems: PI current control with back-EMF feed-forward,
+  trapezoidal motion planning, two power stage topologies and fixed-point or float
+  arithmetic, with no heap, no RTOS and MISRA C:2012 compliance.
 authors:
   - family-names: Vynohradov
     given-names: Anton

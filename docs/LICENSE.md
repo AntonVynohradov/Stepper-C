@@ -8,7 +8,7 @@ Stepper-C is free and open-source software, licensed under the
 | Copyright | © 2026 Anton Vynohradov |
 | License | Apache License 2.0 |
 | SPDX identifier | `Apache-2.0` |
-| Applies to | The library (`sstep.h`, `inc/`, `src/`), tests, examples, tools and this documentation |
+| Applies to | The library (`sstep.h`, `inc/`, `src/`), tests, tools and this documentation |
 
 ## What the license allows
 
@@ -42,9 +42,10 @@ copyright notice available, for example in its documentation or "about" screen.
 ## Trademarks
 
 SystemFromScratch® is a registered trademark; the license grants no rights to use the
-name or logo. TODO [vendor marks] are trademarks of SystemFromScratch. They are used in this
-documentation only to identify the protocol that Stepper-C implements. Stepper-C is an
-independent implementation and is not affiliated with or endorsed by SystemFromScratch.
+name or logo. Motor and board names (17HS19-2004S1, B-G431B-ESC1, STM32) appear only as examples of
+hardware the library can drive. STM32 is a registered trademark of STMicroelectronics
+International N.V.; Stepper-C is not affiliated with or endorsed by STMicroelectronics
+or any motor manufacturer.
 
 ## Full license text
 

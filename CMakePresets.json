@@ -38,22 +38,6 @@
                 "SSTEP_UNIT_TESTS": "ON",
                 "SSTEP_MATH_BACKEND": "FLOAT"
             }
-        },
-        {
-            "name": "[IntegrationTests]Stepper Motor Control",
-            "inherits": "default",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
-                "SSTEP_INTEGRATION_TESTS": "ON"
-            }
-        },
-        {
-            "name": "[Examples]Stepper Motor Control",
-            "inherits": "default",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
-                "SSTEP_EXAMPLES": "ON"
-            }
         }
     ]
 }

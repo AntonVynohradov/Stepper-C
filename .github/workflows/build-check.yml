@@ -29,12 +29,3 @@ jobs:
 
       - name: Build
         run: cmake --build "build/[Release]Stepper Motor Control"
-
-      - name: Configure (Examples preset)
-        run: cmake --preset "[Examples]Stepper Motor Control" -B "build/[Examples]Stepper Motor Control"
-
-      - name: Build examples
-        run: cmake --build "build/[Examples]Stepper Motor Control"
-
-      - name: Run bare-metal example on the simulated board
-        run: ctest --test-dir "build/[Examples]Stepper Motor Control" -L example --output-on-failure
