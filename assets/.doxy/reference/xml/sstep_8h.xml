@@ -4,19 +4,19 @@
     <compoundname>sstep.h</compoundname>
     <includes refid="sstep__config_8h" local="yes">sstep_config.h</includes>
     <includes refid="sstep__defs_8h" local="yes">sstep_defs.h</includes>
-    <includes refid="sstep__math_8h" local="yes">sstep_math.h</includes>
     <includes refid="sstep__ctrl_8h" local="yes">sstep_ctrl.h</includes>
+    <includedby refid="sstep__ctrl_8c" local="yes">src/sstep_ctrl.c</includedby>
     <incdepgraph>
       <node id="2">
         <label>sstep_config.h</label>
         <link refid="sstep__config_8h_source"/>
       </node>
-      <node id="6">
+      <node id="5">
         <label>sstep_ctrl.h</label>
         <link refid="sstep__ctrl_8h_source"/>
-        <childnode refid="7" relation="include">
+        <childnode refid="6" relation="include">
         </childnode>
-        <childnode refid="8" relation="include">
+        <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="4" relation="include">
         </childnode>
@@ -24,21 +24,11 @@
         </childnode>
         <childnode refid="3" relation="include">
         </childnode>
-        <childnode refid="5" relation="include">
-        </childnode>
       </node>
       <node id="3">
         <label>sstep_defs.h</label>
         <link refid="sstep__defs_8h_source"/>
         <childnode refid="4" relation="include">
-        </childnode>
-      </node>
-      <node id="5">
-        <label>sstep_math.h</label>
-        <link refid="sstep__math_8h_source"/>
-        <childnode refid="4" relation="include">
-        </childnode>
-        <childnode refid="2" relation="include">
         </childnode>
       </node>
       <node id="1">
@@ -50,13 +40,11 @@
         </childnode>
         <childnode refid="5" relation="include">
         </childnode>
-        <childnode refid="6" relation="include">
-        </childnode>
       </node>
-      <node id="7">
+      <node id="6">
         <label>stdbool.h</label>
       </node>
-      <node id="8">
+      <node id="7">
         <label>stddef.h</label>
       </node>
       <node id="4">
@@ -109,6 +97,23 @@
         <location file="sstep.h" line="53" column="9" bodyfile="sstep.h" bodystart="53" bodyend="-1"/>
       </memberdef>
     </sectiondef>
+    <sectiondef kind="func">
+      <member refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kind="function"><name>sstep_init</name></member>
+      <member refid="group__sstep__api_1ga3f592ef6f7e95b2c4b0792f113eae5ac" kind="function"><name>sstep_enable</name></member>
+      <member refid="group__sstep__api_1ga296ffb294291431f36e14fc306c20027" kind="function"><name>sstep_disable</name></member>
+      <member refid="group__sstep__api_1ga8c3b6798f83c32337a21d4ccdd61239b" kind="function"><name>sstep_fast_loop</name></member>
+      <member refid="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" kind="function"><name>sstep_slow_loop</name></member>
+      <member refid="group__sstep__api_1gab5ac3f4056af2b982b8131016df0541e" kind="function"><name>sstep_move_to</name></member>
+      <member refid="group__sstep__api_1gacc99b6a8006f7c7f950133873a5a8fce" kind="function"><name>sstep_move_by</name></member>
+      <member refid="group__sstep__api_1gaa21dff174e881ddaddd22b9bf334f3f8" kind="function"><name>sstep_run</name></member>
+      <member refid="group__sstep__api_1ga41ae3f6b6cc322b50c3e3884d48dd7a1" kind="function"><name>sstep_stop</name></member>
+      <member refid="group__sstep__api_1ga17aff99dbb74c27b0eb1995024c28e71" kind="function"><name>sstep_set_position</name></member>
+      <member refid="group__sstep__api_1ga75cb79da6deda7b271d7a01d70f5d718" kind="function"><name>sstep_set_current</name></member>
+      <member refid="group__sstep__api_1gae9224e0f9e8f1822529ef015bb88f382" kind="function"><name>sstep_set_motion_limits</name></member>
+      <member refid="group__sstep__api_1gaafe3bb709aaa93b20884f9e7f6e31498" kind="function"><name>sstep_report_fault</name></member>
+      <member refid="group__sstep__api_1gafff498925b2f3c0de622702a2f181b9b" kind="function"><name>sstep_clear_faults</name></member>
+      <member refid="group__sstep__api_1ga1568aad455503ed6e062cf7048bf01ba" kind="function"><name>sstep_get_status</name></member>
+    </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
@@ -118,7 +123,7 @@
 <codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Stepper-C:<sp/>Stepper<sp/>Motor<sp/>Control<sp/>Implementation</highlight></codeline>
 <codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
 <codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Project:<sp/><sp/><sp/><sp/><sp/>Stepper-C<sp/>-<sp/>Hardware-Agnostic<sp/>Stepper<sp/>Motor<sp/>Control<sp/>Library</highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Description:<sp/>Umbrella<sp/>header:<sp/>includes<sp/>the<sp/>public<sp/>API<sp/>and<sp/>defines<sp/>the<sp/>version.</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Description:<sp/>Public<sp/>API:<sp/>library<sp/>version,<sp/>public<sp/>types<sp/>and<sp/>all<sp/>public<sp/>functions.</highlight></codeline>
 <codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
 <codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Author:<sp/><sp/><sp/><sp/><sp/><sp/>Anton<sp/>Vynohradov</highlight></codeline>
 <codeline lineno="8"><highlight class="comment"><sp/>*<sp/>Email:<sp/><sp/><sp/><sp/><sp/><sp/><sp/>avynohradov@systemfromscratch.com</highlight></codeline>
@@ -175,10 +180,51 @@
 <codeline lineno="59"><highlight class="normal"></highlight></codeline>
 <codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;sstep_config.h&quot;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="61"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;sstep_defs.h&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;sstep_math.h&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="63"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;sstep_ctrl.h&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="64"><highlight class="normal"></highlight></codeline>
-<codeline lineno="65"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;sstep_ctrl.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="90"><highlight class="comment"><sp/>*<sp/>PUBLIC<sp/>FUNCTION<sp/>DECLARATIONS</highlight></codeline>
+<codeline lineno="91"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kindref="member">sstep_init</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__config" kindref="compound">sstep_config</ref>*<sp/>cfg);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga3f592ef6f7e95b2c4b0792f113eae5ac" kindref="member">sstep_enable</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga296ffb294291431f36e14fc306c20027" kindref="member">sstep_disable</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv);</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga8c3b6798f83c32337a21d4ccdd61239b" kindref="member">sstep_fast_loop</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__sample" kindref="compound">sstep_sample</ref>*<sp/>sample);</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" kindref="member">sstep_slow_loop</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv);</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gab5ac3f4056af2b982b8131016df0541e" kindref="member">sstep_move_to</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>int32_t<sp/>position);</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gacc99b6a8006f7c7f950133873a5a8fce" kindref="member">sstep_move_by</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>int32_t<sp/>delta);</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gaa21dff174e881ddaddd22b9bf334f3f8" kindref="member">sstep_run</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>int32_t<sp/>velocity);</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga41ae3f6b6cc322b50c3e3884d48dd7a1" kindref="member">sstep_stop</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv);</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga17aff99dbb74c27b0eb1995024c28e71" kindref="member">sstep_set_position</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>int32_t<sp/>position);</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga75cb79da6deda7b271d7a01d70f5d718" kindref="member">sstep_set_current</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>uint32_t<sp/>run_ma,<sp/>uint32_t<sp/>hold_ma);</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gae9224e0f9e8f1822529ef015bb88f382" kindref="member">sstep_set_motion_limits</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>uint32_t<sp/>v_max,<sp/>uint32_t<sp/>accel,<sp/>uint32_t<sp/>decel);</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"></highlight></codeline>
+<codeline lineno="207"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gaafe3bb709aaa93b20884f9e7f6e31498" kindref="member">sstep_report_fault</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>uint16_t<sp/>faults);</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gafff498925b2f3c0de622702a2f181b9b" kindref="member">sstep_clear_faults</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv);</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga1568aad455503ed6e062cf7048bf01ba" kindref="member">sstep_get_status</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__status" kindref="compound">sstep_status</ref>*<sp/>status);</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
     <location file="sstep.h"/>
   </compounddef>

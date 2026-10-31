@@ -18,7 +18,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="135" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="135" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="113" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="113" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__motor__cfg_1a47e7a1d154b7344326223ebcf452033b" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -34,7 +34,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="136" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="136" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="114" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="114" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__motor__cfg_1a0f89ebb7450c77fe433b6c461722aabc" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -50,7 +50,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="137" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="137" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="115" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="115" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__motor__cfg_1a184580641a91fd80650e46db387b3d88" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -66,7 +66,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="138" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="138" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="116" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="116" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__motor__cfg_1a4af5fb3c2b5ef8aef36ca6995f29f218" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -82,7 +82,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="141" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="141" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="119" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="119" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -91,7 +91,7 @@
     <detaileddescription>
 <para>Example: 17HS19-2004S1. </para>
     </detaileddescription>
-    <location file="inc/sstep_ctrl.h" line="133" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="134" bodyend="142"/>
+    <location file="inc/sstep_ctrl.h" line="111" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="112" bodyend="120"/>
     <listofallmembers>
       <member refid="structsstep__motor__cfg_1a4af5fb3c2b5ef8aef36ca6995f29f218" prot="public" virt="non-virtual"><scope>sstep_motor_cfg</scope><name>full_steps_per_rev</name></member>
       <member refid="structsstep__motor__cfg_1a0f89ebb7450c77fe433b6c461722aabc" prot="public" virt="non-virtual"><scope>sstep_motor_cfg</scope><name>i_rated_ma</name></member>

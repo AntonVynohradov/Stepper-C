@@ -18,7 +18,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="86" column="18" bodyfile="inc/sstep_math.h" bodystart="86" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="86" column="18" bodyfile="src/sstep_math.h" bodystart="86" bodyend="-1"/>
       </memberdef>
       <memberdef kind="typedef" id="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" prot="public" static="no">
         <type>int16_t</type>
@@ -32,7 +32,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="91" column="17" bodyfile="inc/sstep_math.h" bodystart="91" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="91" column="17" bodyfile="src/sstep_math.h" bodystart="91" bodyend="-1"/>
       </memberdef>
       <memberdef kind="typedef" id="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" prot="public" static="no">
         <type>int32_t</type>
@@ -46,7 +46,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="94" column="17" bodyfile="inc/sstep_math.h" bodystart="94" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="94" column="17" bodyfile="src/sstep_math.h" bodystart="94" bodyend="-1"/>
       </memberdef>
       <memberdef kind="typedef" id="group__sstep__math_1ga9e868b8abdb662b36b33ac870301e70e" prot="public" static="no">
         <type>int32_t</type>
@@ -61,7 +61,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="130" column="17" bodyfile="inc/sstep_math.h" bodystart="130" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="149" column="17" bodyfile="src/sstep_math.h" bodystart="149" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="func">
@@ -105,7 +105,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="223" column="23" bodyfile="inc/sstep_math.h" bodystart="223" bodyend="235"/>
+        <location file="src/sstep_math.h" line="248" column="23" bodyfile="src/sstep_math.h" bodystart="248" bodyend="263"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga7ec9beaf906b9acf3dc087e7b604c3f9" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
@@ -135,7 +135,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="242" column="28" bodyfile="inc/sstep_math.h" bodystart="242" bodyend="258"/>
+        <location file="src/sstep_math.h" line="270" column="28" bodyfile="src/sstep_math.h" bodystart="270" bodyend="286"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gaa61e33801d34c76e41958120eb247295" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
@@ -157,7 +157,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="261" column="28" bodyfile="inc/sstep_math.h" bodystart="261" bodyend="264"/>
+        <location file="src/sstep_math.h" line="289" column="28" bodyfile="src/sstep_math.h" bodystart="289" bodyend="292"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga350fb7f187b94aacd36c096cc600d749" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
@@ -179,7 +179,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="267" column="28" bodyfile="inc/sstep_math.h" bodystart="267" bodyend="270"/>
+        <location file="src/sstep_math.h" line="295" column="28" bodyfile="src/sstep_math.h" bodystart="295" bodyend="298"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gae0623586947a6ec69960fa92334f2086" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
@@ -197,7 +197,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="273" column="28" bodyfile="inc/sstep_math.h" bodystart="273" bodyend="276"/>
+        <location file="src/sstep_math.h" line="301" column="28" bodyfile="src/sstep_math.h" bodystart="301" bodyend="304"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga81334d38a08431afaf48758f215d9895" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
@@ -215,7 +215,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="279" column="28" bodyfile="inc/sstep_math.h" bodystart="279" bodyend="282"/>
+        <location file="src/sstep_math.h" line="307" column="28" bodyfile="src/sstep_math.h" bodystart="307" bodyend="310"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gaafcba01db966fc81640ddf2ff317fc57" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
@@ -237,7 +237,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="285" column="28" bodyfile="inc/sstep_math.h" bodystart="285" bodyend="289"/>
+        <location file="src/sstep_math.h" line="313" column="28" bodyfile="src/sstep_math.h" bodystart="313" bodyend="317"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gab171a77888376acddfe2094fbc06ae81" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
@@ -255,7 +255,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="292" column="27" bodyfile="inc/sstep_math.h" bodystart="292" bodyend="295"/>
+        <location file="src/sstep_math.h" line="320" column="27" bodyfile="src/sstep_math.h" bodystart="320" bodyend="323"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga6b64c92a9ceccd3180cba57a7e39f626" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
@@ -273,7 +273,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="298" column="28" bodyfile="inc/sstep_math.h" bodystart="298" bodyend="301"/>
+        <location file="src/sstep_math.h" line="326" column="28" bodyfile="src/sstep_math.h" bodystart="326" bodyend="329"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga04e550038c8eb6713b66f17bd7bc7213" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
@@ -295,7 +295,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="304" column="27" bodyfile="inc/sstep_math.h" bodystart="304" bodyend="320"/>
+        <location file="src/sstep_math.h" line="332" column="27" bodyfile="src/sstep_math.h" bodystart="332" bodyend="348"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga4a6254d0a1a96206ef68d438e01f4c36" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
@@ -322,7 +322,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="323" column="27" bodyfile="inc/sstep_math.h" bodystart="323" bodyend="339"/>
+        <location file="src/sstep_math.h" line="351" column="27" bodyfile="src/sstep_math.h" bodystart="351" bodyend="367"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gad8e0d02e7c89ea12e39be5e14e3afc72" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
@@ -364,7 +364,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="347" column="27" bodyfile="inc/sstep_math.h" bodystart="347" bodyend="361"/>
+        <location file="src/sstep_math.h" line="375" column="27" bodyfile="src/sstep_math.h" bodystart="375" bodyend="390"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga71ccd4b896e9eef2f6cb6442c7c767ae" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
@@ -406,7 +406,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="370" column="27" bodyfile="inc/sstep_math.h" bodystart="370" bodyend="397"/>
+        <location file="src/sstep_math.h" line="399" column="27" bodyfile="src/sstep_math.h" bodystart="399" bodyend="427"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga7f8cdce8173ce75ac943dc8a52d0235d" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type>int32_t</type>
@@ -448,7 +448,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="407" column="23" bodyfile="inc/sstep_math.h" bodystart="407" bodyend="436"/>
+        <location file="src/sstep_math.h" line="437" column="23" bodyfile="src/sstep_math.h" bodystart="437" bodyend="468"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga21616f2931dd283656a5ef643c11d112" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
@@ -466,7 +466,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="439" column="27" bodyfile="inc/sstep_math.h" bodystart="439" bodyend="442"/>
+        <location file="src/sstep_math.h" line="471" column="27" bodyfile="src/sstep_math.h" bodystart="471" bodyend="474"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gaf21c64b6aa57fc0554fa14a27bad0626" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
@@ -484,7 +484,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="445" column="27" bodyfile="inc/sstep_math.h" bodystart="445" bodyend="448"/>
+        <location file="src/sstep_math.h" line="477" column="27" bodyfile="src/sstep_math.h" bodystart="477" bodyend="480"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gafef1880081473f33cb1d59737e55e670" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
@@ -502,7 +502,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="451" column="27" bodyfile="inc/sstep_math.h" bodystart="451" bodyend="454"/>
+        <location file="src/sstep_math.h" line="483" column="27" bodyfile="src/sstep_math.h" bodystart="483" bodyend="486"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga54945b74505388f94cb21ea9eb33e5ce" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
@@ -525,7 +525,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="460" column="27" bodyfile="inc/sstep_math.h" bodystart="460" bodyend="464"/>
+        <location file="src/sstep_math.h" line="492" column="27" bodyfile="src/sstep_math.h" bodystart="492" bodyend="496"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga7a281326bb584cfbe5b72b10adf05c52" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1ga9e868b8abdb662b36b33ac870301e70e" kindref="member">sstep_integ_t</ref></type>
@@ -551,7 +551,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="467" column="29" bodyfile="inc/sstep_math.h" bodystart="467" bodyend="472"/>
+        <location file="src/sstep_math.h" line="499" column="29" bodyfile="src/sstep_math.h" bodystart="499" bodyend="504"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga4f3836c8c1a80877ae14030dd46bea5e" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1ga9e868b8abdb662b36b33ac870301e70e" kindref="member">sstep_integ_t</ref></type>
@@ -577,7 +577,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="475" column="29" bodyfile="inc/sstep_math.h" bodystart="475" bodyend="480"/>
+        <location file="src/sstep_math.h" line="507" column="29" bodyfile="src/sstep_math.h" bodystart="507" bodyend="512"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gac80da88f0659dabd7c65480692644430" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
@@ -595,7 +595,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="483" column="27" bodyfile="inc/sstep_math.h" bodystart="483" bodyend="486"/>
+        <location file="src/sstep_math.h" line="515" column="27" bodyfile="src/sstep_math.h" bodystart="515" bodyend="518"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga8091cd9bc55515a7288e43411d995eb8" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
@@ -618,7 +618,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="492" column="28" bodyfile="inc/sstep_math.h" bodystart="492" bodyend="508"/>
+        <location file="src/sstep_math.h" line="524" column="28" bodyfile="src/sstep_math.h" bodystart="524" bodyend="540"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga5b9bf61d837b5d694567e13b0bb2a8ad" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
@@ -640,7 +640,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="511" column="27" bodyfile="inc/sstep_math.h" bodystart="511" bodyend="515"/>
+        <location file="src/sstep_math.h" line="543" column="27" bodyfile="src/sstep_math.h" bodystart="543" bodyend="547"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga95a5390d6c38da589ee213c1cf62a231" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type>uint16_t</type>
@@ -663,7 +663,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="518" column="24" bodyfile="inc/sstep_math.h" bodystart="518" bodyend="522"/>
+        <location file="src/sstep_math.h" line="550" column="24" bodyfile="src/sstep_math.h" bodystart="550" bodyend="554"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga444816f4be653b1ef3eb2282e4398b07" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
@@ -690,7 +690,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="712" column="28" bodyfile="inc/sstep_math.h" bodystart="712" bodyend="728"/>
+        <location file="src/sstep_math.h" line="744" column="28" bodyfile="src/sstep_math.h" bodystart="744" bodyend="760"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1ga7836410f8c904ba6e53b55a137fc4222" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>struct <ref refid="structsstep__sincos" kindref="compound">sstep_sincos</ref></type>
@@ -720,7 +720,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="741" column="19" bodyfile="src/sstep_math.c" bodystart="133" bodyend="163" declfile="inc/sstep_math.h" declline="741" declcolumn="19"/>
+        <location file="src/sstep_math.h" line="773" column="19" bodyfile="src/sstep_math.c" bodystart="134" bodyend="164" declfile="src/sstep_math.h" declline="773" declcolumn="19"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gafe58f850f3ec0ea7b1d369e4a8d692fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -791,7 +791,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="753" column="5" bodyfile="src/sstep_math.c" bodystart="253" bodyend="256" declfile="inc/sstep_math.h" declline="753" declcolumn="5"/>
+        <location file="src/sstep_math.h" line="785" column="5" bodyfile="src/sstep_math.c" bodystart="255" bodyend="258" declfile="src/sstep_math.h" declline="785" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gadc561c4232ca81e9f509d23da7b48fa4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -853,7 +853,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="765" column="5" bodyfile="src/sstep_math.c" bodystart="167" bodyend="251" declfile="inc/sstep_math.h" declline="765" declcolumn="5"/>
+        <location file="src/sstep_math.h" line="797" column="5" bodyfile="src/sstep_math.c" bodystart="168" bodyend="253" declfile="src/sstep_math.h" declline="797" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gac4d9af6078161c3a89d38aae434af758" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -915,7 +915,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="775" column="5" bodyfile="src/sstep_math.c" bodystart="258" bodyend="281" declfile="inc/sstep_math.h" declline="775" declcolumn="5"/>
+        <location file="src/sstep_math.h" line="807" column="5" bodyfile="src/sstep_math.c" bodystart="260" bodyend="283" declfile="src/sstep_math.h" declline="807" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gafb1fd7f556a7ff09ab6bccb8fe887c26" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int32_t</type>
@@ -957,7 +957,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="784" column="9" bodyfile="src/sstep_math.c" bodystart="283" bodyend="304" declfile="inc/sstep_math.h" declline="784" declcolumn="9"/>
+        <location file="src/sstep_math.h" line="816" column="9" bodyfile="src/sstep_math.c" bodystart="285" bodyend="306" declfile="src/sstep_math.h" declline="816" declcolumn="9"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="define">
@@ -971,7 +971,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="108" column="9" bodyfile="inc/sstep_math.h" bodystart="108" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="108" column="9" bodyfile="src/sstep_math.h" bodystart="108" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__math_1ga43cd75513da21713b316fd7d6df854e1" prot="public" static="no">
         <name>SSTEP_REAL_MAX</name>
@@ -983,7 +983,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="111" column="9" bodyfile="inc/sstep_math.h" bodystart="111" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="111" column="9" bodyfile="src/sstep_math.h" bodystart="111" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__math_1ga1cd53fc2bce98f290420c03ef74bfe5a" prot="public" static="no">
         <name>SSTEP_REAL_MIN</name>
@@ -995,7 +995,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="114" column="9" bodyfile="inc/sstep_math.h" bodystart="114" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="114" column="9" bodyfile="src/sstep_math.h" bodystart="114" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__math_1ga6439406841b4ed53c1ce2ee0fe81aa53" prot="public" static="no">
         <name>SSTEP_ACC_MAX</name>
@@ -1007,7 +1007,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="117" column="9" bodyfile="inc/sstep_math.h" bodystart="117" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="117" column="9" bodyfile="src/sstep_math.h" bodystart="117" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__math_1ga4402962590ac756f8fb162a9e403af6d" prot="public" static="no">
         <name>SSTEP_ACC_MIN</name>
@@ -1019,7 +1019,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="120" column="9" bodyfile="inc/sstep_math.h" bodystart="120" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="120" column="9" bodyfile="src/sstep_math.h" bodystart="120" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" prot="public" static="no">
         <name>SSTEP_ACC_C</name>
@@ -1032,7 +1032,79 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="123" column="9" bodyfile="inc/sstep_math.h" bodystart="123" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="123" column="9" bodyfile="src/sstep_math.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1ga49210b7ca8593d5d0eb7b9f360fd17ba" prot="public" static="no">
+        <name>SSTEP_REAL_ZERO</name>
+        <initializer>((<ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref>)0)</initializer>
+        <briefdescription>
+<para>Zero as a signal. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_math.h" line="126" column="9" bodyfile="src/sstep_math.h" bodystart="126" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1gacc0a5a1b8573c3ed89560e08122d958c" prot="public" static="no">
+        <name>SSTEP_ACC_ZERO</name>
+        <initializer>((<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref>)0)</initializer>
+        <briefdescription>
+<para>Zero as an accumulator. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_math.h" line="129" column="9" bodyfile="src/sstep_math.h" bodystart="129" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1ga2ff93d11d0bada9efacace4cc6776743" prot="public" static="no">
+        <name>SSTEP_ACC_HALF</name>
+        <initializer>((<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref>)16384)</initializer>
+        <briefdescription>
+<para>0.5 as an accumulator. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_math.h" line="132" column="9" bodyfile="src/sstep_math.h" bodystart="132" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1ga75e8b014aa4abda04e37cd97addabfdb" prot="public" static="no">
+        <name>SSTEP_ACC_ONE</name>
+        <initializer>((<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref>)32768)</initializer>
+        <briefdescription>
+<para>1.0 as an accumulator. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_math.h" line="135" column="9" bodyfile="src/sstep_math.h" bodystart="135" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1gaedc6f7b47e26254fefb82c8c45608834" prot="public" static="no">
+        <name>SSTEP_ACC_IN_MAX</name>
+        <initializer>((<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref>)131071)</initializer>
+        <briefdescription>
+<para>Largest magnitude accepted by <ref refid="group__sstep__math_1ga54945b74505388f94cb21ea9eb33e5ce" kindref="member">sstep_gain_mul_acc()</ref> and the integrator updates from accumulators (4 pu - 2^-15); larger inputs are saturated. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_math.h" line="139" column="9" bodyfile="src/sstep_math.h" bodystart="139" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__math_1gafe4b9cb66063a93b889ffb432a2b1fa6" prot="public" static="no">
+        <name>SSTEP_ACC_SCALE_MAX</name>
+        <initializer>((<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref>)65535)</initializer>
+        <briefdescription>
+<para>Largest magnitude accepted by <ref refid="group__sstep__math_1ga5b9bf61d837b5d694567e13b0bb2a8ad" kindref="member">sstep_acc_scale()</ref> (2 pu - 2^-15). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_math.h" line="142" column="9" bodyfile="src/sstep_math.h" bodystart="142" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__math_1ga04216138ad07146cf6400fdf1645ac66" prot="public" static="no">
         <name>SSTEP_INTEG_FRAC_BITS</name>
@@ -1044,7 +1116,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="133" column="9" bodyfile="inc/sstep_math.h" bodystart="133" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="152" column="9" bodyfile="src/sstep_math.h" bodystart="152" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__math_1gae0c7646e62896d744b49d47b83483d61" prot="public" static="no">
         <name>SSTEP_REAL_C</name>
@@ -1059,55 +1131,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="140" column="9" bodyfile="inc/sstep_math.h" bodystart="140" bodyend="142"/>
-      </memberdef>
-      <memberdef kind="define" id="group__sstep__math_1ga49210b7ca8593d5d0eb7b9f360fd17ba" prot="public" static="no">
-        <name>SSTEP_REAL_ZERO</name>
-        <initializer><ref refid="group__sstep__math_1gae0c7646e62896d744b49d47b83483d61" kindref="member">SSTEP_REAL_C</ref>(0.0)</initializer>
-        <briefdescription>
-<para>Zero. </para>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/sstep_math.h" line="185" column="9" bodyfile="inc/sstep_math.h" bodystart="185" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="define" id="group__sstep__math_1ga75e8b014aa4abda04e37cd97addabfdb" prot="public" static="no">
-        <name>SSTEP_ACC_ONE</name>
-        <initializer><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(1.0)</initializer>
-        <briefdescription>
-<para>1.0 as an accumulator (exactly representable in both backends). </para>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/sstep_math.h" line="188" column="9" bodyfile="inc/sstep_math.h" bodystart="188" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="define" id="group__sstep__math_1gaedc6f7b47e26254fefb82c8c45608834" prot="public" static="no">
-        <name>SSTEP_ACC_IN_MAX</name>
-        <initializer><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(3.999969482421875)</initializer>
-        <briefdescription>
-<para>Largest magnitude accepted by <ref refid="group__sstep__math_1ga54945b74505388f94cb21ea9eb33e5ce" kindref="member">sstep_gain_mul_acc()</ref> and the integrator updates from accumulators (4 pu - 2^-15); larger inputs are saturated. </para>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/sstep_math.h" line="192" column="9" bodyfile="inc/sstep_math.h" bodystart="192" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="define" id="group__sstep__math_1gafe4b9cb66063a93b889ffb432a2b1fa6" prot="public" static="no">
-        <name>SSTEP_ACC_SCALE_MAX</name>
-        <initializer><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(1.999969482421875)</initializer>
-        <briefdescription>
-<para>Largest magnitude accepted by <ref refid="group__sstep__math_1ga5b9bf61d837b5d694567e13b0bb2a8ad" kindref="member">sstep_acc_scale()</ref> (2 pu - 2^-15). </para>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/sstep_math.h" line="195" column="9" bodyfile="inc/sstep_math.h" bodystart="195" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="159" column="9" bodyfile="src/sstep_math.h" bodystart="159" bodyend="161"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__math_1gae0d7a92d278d7b421a62aeefe11adb13" prot="public" static="no">
         <name>SSTEP_GAIN_EXP_MIN</name>
@@ -1119,7 +1143,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="198" column="9" bodyfile="inc/sstep_math.h" bodystart="198" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="223" column="9" bodyfile="src/sstep_math.h" bodystart="223" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__math_1ga969c943dfb6f5d0fe6aa409e8e95ce3a" prot="public" static="no">
         <name>SSTEP_GAIN_EXP_MAX</name>
@@ -1131,7 +1155,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="201" column="9" bodyfile="inc/sstep_math.h" bodystart="201" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="226" column="9" bodyfile="src/sstep_math.h" bodystart="226" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -1139,7 +1163,7 @@
     </briefdescription>
     <detaileddescription>
 <para>The control code is written once against these types and operations; the backend is selected at build time with <ref refid="group__sstep__config_1gac0ee05e0335a33c6e3ecc3c9c59587d5" kindref="member">SSTEP_CFG_MATH_BACKEND</ref>.</para>
-<para><bold>Per-unit signals.</bold> Inside the control loops every electrical signal is normalised to a base value computed by <ref refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kindref="member">sstep_init()</ref>:<itemizedlist>
+<para><bold>Per-unit signals.</bold> Inside the control loops every electrical signal is normalised to a base value computed by <ref refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kindref="member">sstep_init()</ref>:<itemizedlist>
 <listitem><para>current: 1.0 = power stage current full scale (<computeroutput>i_full_scale_ma</computeroutput>),</para>
 </listitem><listitem><para>voltage: 1.0 = nominal bus voltage (<computeroutput>vbus_nominal_mv</computeroutput>),</para>
 </listitem><listitem><para>duty cycle: 1.0 = 100 %.</para>

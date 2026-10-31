@@ -21,21 +21,11 @@
         </childnode>
         <childnode refid="8" relation="include">
         </childnode>
-        <childnode refid="9" relation="include">
-        </childnode>
       </node>
       <node id="8">
         <label>sstep_defs.h</label>
         <link refid="sstep__defs_8h_source"/>
         <childnode refid="4" relation="include">
-        </childnode>
-      </node>
-      <node id="9">
-        <label>sstep_math.h</label>
-        <link refid="sstep__math_8h_source"/>
-        <childnode refid="4" relation="include">
-        </childnode>
-        <childnode refid="7" relation="include">
         </childnode>
       </node>
       <node id="1">
@@ -56,6 +46,14 @@
         <childnode refid="9" relation="include">
         </childnode>
       </node>
+      <node id="9">
+        <label>sstep_math.h</label>
+        <link refid="sstep__math_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
       <node id="3">
         <label>stdbool.h</label>
       </node>
@@ -69,7 +67,7 @@
     <sectiondef kind="define">
       <memberdef kind="define" id="sstep__bridge_8c_1a5aab94c290a6275ed87184f3c89a4615" prot="public" static="no">
         <name>ACC_HALF</name>
-        <initializer><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(0.5)</initializer>
+        <initializer><ref refid="group__sstep__math_1ga2ff93d11d0bada9efacace4cc6776743" kindref="member">SSTEP_ACC_HALF</ref></initializer>
         <briefdescription>
 <para>0.5 (50 % duty cycle). </para>
         </briefdescription>
@@ -263,7 +261,7 @@
 <codeline lineno="37"><highlight class="comment"><sp/>*<sp/>DEFINES<sp/>&amp;<sp/>MACROS</highlight></codeline>
 <codeline lineno="38"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="39"><highlight class="normal"></highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ACC_HALF<sp/>SSTEP_ACC_C(0.5)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ACC_HALF<sp/>SSTEP_ACC_HALF</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="42"><highlight class="normal"></highlight></codeline>
 <codeline lineno="43"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
 <codeline lineno="44"><highlight class="comment"><sp/>*<sp/>PRIVATE<sp/>FUNCTION<sp/>DECLARATIONS</highlight></codeline>
@@ -303,7 +301,7 @@
 <codeline lineno="81"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>scale_to_unit(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>x,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>m)</highlight></codeline>
 <codeline lineno="82"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>q<sp/>=<sp/><ref refid="group__sstep__math_1gab171a77888376acddfe2094fbc06ae81" kindref="member">sstep_acc_from_real</ref>(<ref refid="group__sstep__math_1ga8091cd9bc55515a7288e43411d995eb8" kindref="member">sstep_div_unit</ref>(<ref refid="group__sstep__math_1ga21616f2931dd283656a5ef643c11d112" kindref="member">sstep_acc_abs</ref>(x),<sp/>m));</highlight></codeline>
-<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(x<sp/>&lt;<sp/><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(0.0))<sp/>?<sp/>-q<sp/>:<sp/>q;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(x<sp/>&lt;<sp/><ref refid="group__sstep__math_1gacc0a5a1b8573c3ed89560e08122d958c" kindref="member">SSTEP_ACC_ZERO</ref>)<sp/>?<sp/>-q<sp/>:<sp/>q;</highlight></codeline>
 <codeline lineno="85"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="86"><highlight class="normal"></highlight></codeline>
 <codeline lineno="87"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_TOPOLOGY_FULL_BRIDGE<sp/>==<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
@@ -329,14 +327,14 @@
 <codeline lineno="109"><highlight class="normal"></highlight></codeline>
 <codeline lineno="111"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>span_shared(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>a,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>b)</highlight></codeline>
 <codeline lineno="112"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>acc_max(acc_max(a,<sp/>b),<sp/><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(0.0))<sp/>-<sp/>acc_min(acc_min(a,<sp/>b),<sp/><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(0.0));</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>acc_max(acc_max(a,<sp/>b),<sp/><ref refid="group__sstep__math_1gacc0a5a1b8573c3ed89560e08122d958c" kindref="member">SSTEP_ACC_ZERO</ref>)<sp/>-<sp/>acc_min(acc_min(a,<sp/>b),<sp/><ref refid="group__sstep__math_1gacc0a5a1b8573c3ed89560e08122d958c" kindref="member">SSTEP_ACC_ZERO</ref>);</highlight></codeline>
 <codeline lineno="114"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="115"><highlight class="normal"></highlight></codeline>
 <codeline lineno="118"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>duties_shared(<ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>a,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>b,<sp/>uint16_t<sp/>period,</highlight></codeline>
 <codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__bridge__out" kindref="compound">sstep_bridge_out</ref>*<sp/>out)</highlight></codeline>
 <codeline lineno="120"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>hi<sp/>=<sp/>acc_max(acc_max(a,<sp/>b),<sp/><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(0.0));</highlight></codeline>
-<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>lo<sp/>=<sp/>acc_min(acc_min(a,<sp/>b),<sp/><ref refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kindref="member">SSTEP_ACC_C</ref>(0.0));</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>hi<sp/>=<sp/>acc_max(acc_max(a,<sp/>b),<sp/><ref refid="group__sstep__math_1gacc0a5a1b8573c3ed89560e08122d958c" kindref="member">SSTEP_ACC_ZERO</ref>);</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>lo<sp/>=<sp/>acc_min(acc_min(a,<sp/>b),<sp/><ref refid="group__sstep__math_1gacc0a5a1b8573c3ed89560e08122d958c" kindref="member">SSTEP_ACC_ZERO</ref>);</highlight></codeline>
 <codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>w<sp/>=<sp/>ACC_HALF<sp/>-<sp/><ref refid="group__sstep__math_1gaf21c64b6aa57fc0554fa14a27bad0626" kindref="member">sstep_acc_halve</ref>(hi<sp/>+<sp/>lo);</highlight></codeline>
 <codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/>out-&gt;<ref refid="structsstep__bridge__out_1a49e42fd980a0fcccd4b1cdce35113ce4" kindref="member">compare</ref>[0]<sp/>=<sp/><ref refid="group__sstep__math_1ga95a5390d6c38da589ee213c1cf62a231" kindref="member">sstep_acc_to_ticks</ref>(a<sp/>+<sp/>w,<sp/>period);</highlight></codeline>
 <codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/>out-&gt;<ref refid="structsstep__bridge__out_1a49e42fd980a0fcccd4b1cdce35113ce4" kindref="member">compare</ref>[1]<sp/>=<sp/><ref refid="group__sstep__math_1ga95a5390d6c38da589ee213c1cf62a231" kindref="member">sstep_acc_to_ticks</ref>(b<sp/>+<sp/>w,<sp/>period);</highlight></codeline>

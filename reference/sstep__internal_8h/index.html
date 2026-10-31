@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -52,6 +52,8 @@
     
     
       <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -268,13 +270,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../protocol/" class="md-tabs__link">
+      <a href="../../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -286,18 +288,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -646,14 +647,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../protocol/" class="md-nav__link">
+      <a href="../../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -668,58 +669,6 @@
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -732,7 +681,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -741,42 +690,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1288,6 +1201,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#public-static-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public Static Functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#macros" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1337,6 +1261,45 @@
     <span class="md-ellipsis">
       
         function sstep_motion_step
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#public-static-functions-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public Static Functions Documentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Public Static Functions Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_ctx_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_ctx_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_ctx_of_const" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_ctx_of_const
       
     </span>
   </a>
@@ -1470,6 +1433,18 @@
 <td style="text-align: right;">struct</td>
 <td style="text-align: left;"><a href="../structsstep__bridge__out/"><strong>sstep_bridge_out</strong></a> <br><em>Result of the power stage mapping.</em></td>
 </tr>
+<tr>
+<td style="text-align: right;">struct</td>
+<td style="text-align: left;"><a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> <br><em>Driver state behind the opaque</em> <a href="../structsstep/"><em><strong>sstep</strong></em></a> <em>.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">struct</td>
+<td style="text-align: left;"><a href="../structsstep__motion/"><strong>sstep_motion</strong></a> <br><em>Motion generator state.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">struct</td>
+<td style="text-align: left;"><a href="../structsstep__setpoint/"><strong>sstep_setpoint</strong></a> <br><em>Setpoint handed from the slow loop to the fast loop.</em></td>
+</tr>
 </tbody>
 </table>
 <h2 id="public-functions">Public Functions<a class="headerlink" href="#public-functions" title="Permanent link">&para;</a></h2>
@@ -1492,6 +1467,25 @@
 <tr>
 <td style="text-align: right;">uint8_t</td>
 <td style="text-align: left;"><a href="#function-sstep_motion_step"><strong>sstep_motion_step</strong></a> (struct <a href="../structsstep__motion/"><strong>sstep_motion</strong></a> * mo) <br><em>One slow loop period of the motion generator: trapezoidal velocity profile with one-period look-ahead braking for moves, exact stop on the target.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="public-static-functions">Public Static Functions<a class="headerlink" href="#public-static-functions" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Type</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">struct <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> *</td>
+<td style="text-align: left;"><a href="#function-sstep_ctx_of"><strong>sstep_ctx_of</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv) <br><em>Driver state of an instance.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">const struct <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> *</td>
+<td style="text-align: left;"><a href="#function-sstep_ctx_of_const"><strong>sstep_ctx_of_const</strong></a> (const struct <a href="../structsstep/"><strong>sstep</strong></a> * drv) <br><em>Read-only variant of sstep_ctx_of().</em></td>
 </tr>
 </tbody>
 </table>
@@ -1582,38 +1576,62 @@
 <p><strong>Returns:</strong></p>
 <p>SSTEP_MOTION_DONE when a move reached its target in this period, else 0. </p>
 <hr>
+<h2 id="public-static-functions-documentation">Public Static Functions Documentation<a class="headerlink" href="#public-static-functions-documentation" title="Permanent link">&para;</a></h2>
+<h3 id="function-sstep_ctx_of">function sstep_ctx_of<a class="headerlink" href="#function-sstep_ctx_of" title="Permanent link">&para;</a></h3>
+<p><em>Driver state of an instance.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sstep_ctx_of</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">drv</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<p><strong>Note:</strong></p>
+<p>MISRA C:2012 Rule 11.3, deviation DEV-01 (docs/misra.md): <a href="../structsstep/"><strong>sstep</strong></a> is the opaque storage of <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>; size and alignment are checked in sstep_ctrl.c. </p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>drv</code> Driver instance, may be NULL. </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Driver state, NULL if drv is NULL. </p>
+<hr>
+
+<h3 id="function-sstep_ctx_of_const">function sstep_ctx_of_const<a class="headerlink" href="#function-sstep_ctx_of_const" title="Permanent link">&para;</a></h3>
+<p><em>Read-only variant of sstep_ctx_of().</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sstep_ctx_of_const</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">drv</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<hr>
 <h2 id="macro-definition-documentation">Macro Definition Documentation<a class="headerlink" href="#macro-definition-documentation" title="Permanent link">&para;</a></h2>
 <h3 id="define-sstep_mode_hold">define SSTEP_MODE_HOLD<a class="headerlink" href="#define-sstep_mode_hold" title="Permanent link">&para;</a></h3>
 <p><em>Motion generator modes.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cp">#define SSTEP_MODE_HOLD `0U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cp">#define SSTEP_MODE_HOLD `0U`</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_mode_move">define SSTEP_MODE_MOVE<a class="headerlink" href="#define-sstep_mode_move" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="cp">#define SSTEP_MODE_MOVE `1U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="cp">#define SSTEP_MODE_MOVE `1U`</span>
 </code></pre></div>
 <hr>
 
 <h3 id="define-sstep_mode_run">define SSTEP_MODE_RUN<a class="headerlink" href="#define-sstep_mode_run" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cp">#define SSTEP_MODE_RUN `2U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="cp">#define SSTEP_MODE_RUN `2U`</span>
 </code></pre></div>
 <hr>
 
 <h3 id="define-sstep_motion_done">define SSTEP_MOTION_DONE<a class="headerlink" href="#define-sstep_motion_done" title="Permanent link">&para;</a></h3>
 <p><em>Result flags of sstep_motion_step().</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="cp">#define SSTEP_MOTION_DONE `0x01U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">#define SSTEP_MOTION_DONE `0x01U`</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_pos_one">define SSTEP_POS_ONE<a class="headerlink" href="#define-sstep_pos_one" title="Permanent link">&para;</a></h3>
 <p><em>Fixed point position: 1 microstep = 2^16.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="cp">#define SSTEP_POS_ONE `((int64_t)65536)`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="cp">#define SSTEP_POS_ONE `((int64_t)65536)`</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_pos_snap">define SSTEP_POS_SNAP<a class="headerlink" href="#define-sstep_pos_snap" title="Permanent link">&para;</a></h3>
 <p><em>A move ends when it is closer than this to the target and slow enough (1/1024 microstep).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">#define SSTEP_POS_SNAP `((int64_t)64)`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="cp">#define SSTEP_POS_SNAP `((int64_t)64)`</span>
 </code></pre></div></p>
 <hr>
 
@@ -1716,6 +1734,12 @@
     
     
       <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

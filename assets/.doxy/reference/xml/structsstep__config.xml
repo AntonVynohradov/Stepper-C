@@ -17,7 +17,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="198" column="26" bodyfile="inc/sstep_ctrl.h" bodystart="198" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="176" column="26" bodyfile="inc/sstep_ctrl.h" bodystart="176" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__config_1a2b8a71c5384cc46b3b2f14b26c85e3ee" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__stage__cfg" kindref="compound">sstep_stage_cfg</ref></type>
@@ -32,7 +32,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="199" column="26" bodyfile="inc/sstep_ctrl.h" bodystart="199" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="177" column="26" bodyfile="inc/sstep_ctrl.h" bodystart="177" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__config_1aa3d8f72548a27c3853bd503d2bc86467" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__ctrl__cfg" kindref="compound">sstep_ctrl_cfg</ref></type>
@@ -47,7 +47,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="200" column="25" bodyfile="inc/sstep_ctrl.h" bodystart="200" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="178" column="25" bodyfile="inc/sstep_ctrl.h" bodystart="178" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__config_1a9861b9347f5bbb71123b041927f42edb" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__callbacks" kindref="compound">sstep_callbacks</ref></type>
@@ -62,14 +62,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="201" column="26" bodyfile="inc/sstep_ctrl.h" bodystart="201" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="179" column="26" bodyfile="inc/sstep_ctrl.h" bodystart="179" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
-<para>Complete configuration given to <ref refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kindref="member">sstep_init()</ref>. </para>
+<para>Complete configuration given to <ref refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kindref="member">sstep_init()</ref>. </para>
     </briefdescription>
     <detaileddescription>
-<para>Copied by <ref refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kindref="member">sstep_init()</ref>; the structure may be discarded afterwards. </para>
+<para>Copied by <ref refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kindref="member">sstep_init()</ref>; the structure may be discarded afterwards. </para>
     </detaileddescription>
     <collaborationgraph>
       <node id="5">
@@ -105,7 +105,7 @@
         <link refid="structsstep__stage__cfg"/>
       </node>
     </collaborationgraph>
-    <location file="inc/sstep_ctrl.h" line="196" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="197" bodyend="202"/>
+    <location file="inc/sstep_ctrl.h" line="174" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="175" bodyend="180"/>
     <listofallmembers>
       <member refid="structsstep__config_1aa3d8f72548a27c3853bd503d2bc86467" prot="public" virt="non-virtual"><scope>sstep_config</scope><name>ctrl</name></member>
       <member refid="structsstep__config_1a9861b9347f5bbb71123b041927f42edb" prot="public" virt="non-virtual"><scope>sstep_config</scope><name>hal</name></member>

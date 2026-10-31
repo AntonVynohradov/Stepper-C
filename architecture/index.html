@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -56,6 +56,8 @@
     
     
       <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -274,13 +276,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../protocol/" class="md-tabs__link">
+      <a href="../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -292,18 +294,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -598,10 +599,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#layers" class="md-nav__link">
+  <a href="#modules" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Layers
+        Modules
       
     </span>
   </a>
@@ -609,10 +610,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#data-flow" class="md-nav__link">
+  <a href="#the-two-loops" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Data flow
+        The two loops
       
     </span>
   </a>
@@ -620,21 +621,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-parser" class="md-nav__link">
+  <a href="#driver-states" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The parser
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-encoder" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The encoder
+        Driver states
       
     </span>
   </a>
@@ -792,14 +782,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../protocol/" class="md-nav__link">
+      <a href="../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -814,58 +804,6 @@
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -878,7 +816,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -887,42 +825,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1412,10 +1314,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#layers" class="md-nav__link">
+  <a href="#modules" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Layers
+        Modules
       
     </span>
   </a>
@@ -1423,10 +1325,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#data-flow" class="md-nav__link">
+  <a href="#the-two-loops" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Data flow
+        The two loops
       
     </span>
   </a>
@@ -1434,21 +1336,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-parser" class="md-nav__link">
+  <a href="#driver-states" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The parser
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-encoder" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The encoder
+        Driver states
       
     </span>
   </a>
@@ -1517,72 +1408,195 @@
 
 
 <h1 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h1>
-<p>TODO one paragraph: what this chapter explains.</p>
-<h2 id="layers">Layers<a class="headerlink" href="#layers" title="Permanent link">&para;</a></h2>
-<p><img alt="Stepper-C architecture" src="assets/images/architecture.svg" /></p>
+<p>This chapter explains how Stepper-C is built: its modules, the two loops and how they
+exchange data, the driver states, the memory model, error handling and the rules for
+calling it from interrupts. The control algorithms themselves (current control,
+microstepping, trajectory, voltage limits) are described in <a href="../motor-control/">Motor Control</a>.</p>
+<h2 id="modules">Modules<a class="headerlink" href="#modules" title="Permanent link">&para;</a></h2>
+<p><img alt="Stepper-C modules" src="../assets/images/architecture.svg" /></p>
 <table>
 <thead>
 <tr>
-<th>Layer</th>
-<th>Header</th>
+<th>Module</th>
+<th>Files</th>
 <th>Responsibility</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Definitions</td>
-<td><code>sstep_defs.h</code></td>
-<td>TODO</td>
+<td>Public API</td>
+<td><code>sstep.h</code>, <code>inc/sstep_ctrl.h</code>, <code>inc/sstep_defs.h</code>, <code>inc/sstep_config.h</code></td>
+<td>Functions, configuration and status types, status codes, fault flags, build-time options</td>
 </tr>
 <tr>
-<td>Codec</td>
-<td><code>sstep_protocol.h</code></td>
-<td>TODO</td>
+<td>Control</td>
+<td><code>src/sstep_ctrl.c</code></td>
+<td>Configuration check, derived constants, fast loop (current control, protection, PWM), slow loop (setpoints, hold current, events), commands, state machine</td>
 </tr>
 <tr>
-<td>Link</td>
-<td><code>sstep_link.h</code></td>
-<td>TODO</td>
+<td>Motion</td>
+<td><code>src/sstep_motion.c</code></td>
+<td>Trapezoidal trajectory in integer arithmetic (both backends)</td>
+</tr>
+<tr>
+<td>Power stage</td>
+<td><code>src/sstep_bridge.c</code></td>
+<td>Voltage limit of the topology, phase voltages to leg compare values</td>
+</tr>
+<tr>
+<td>Numeric backend</td>
+<td><code>src/sstep_math.h</code>, <code>src/sstep_math.c</code>, <code>src/sstep_sin_table.c</code></td>
+<td>Saturating Q15/Q31 or float operations, gains, sine/cosine table</td>
 </tr>
 </tbody>
 </table>
-<h2 id="data-flow">Data flow<a class="headerlink" href="#data-flow" title="Permanent link">&para;</a></h2>
-<p><img alt="Receive and reply data flow" src="assets/images/data-flow.svg" /></p>
-<p><strong>Receive path.</strong> TODO</p>
-<p><strong>Transmit path.</strong> TODO</p>
-<h2 id="the-parser">The parser<a class="headerlink" href="#the-parser" title="Permanent link">&para;</a></h2>
-<p><img alt="Parser algorithm" src="assets/images/parser-flow.svg" /></p>
-<ol>
-<li><strong>Append.</strong> TODO</li>
-<li><strong>Synchronize.</strong> TODO</li>
-<li><strong>Check the length.</strong> TODO</li>
-<li><strong>Wait.</strong> TODO</li>
-<li><strong>Validate and decode.</strong> TODO</li>
-<li><strong>Reset.</strong> TODO</li>
-</ol>
-<div class="admonition note">
-<p class="admonition-title">Recovery after errors</p>
-<p>TODO what is lost after a corrupted length, and what the controller should do.</p>
-</div>
-<h2 id="the-encoder">The encoder<a class="headerlink" href="#the-encoder" title="Permanent link">&para;</a></h2>
-<p>TODO escaping, capacity checks, checksum.</p>
-<h2 id="memory-model">Memory model<a class="headerlink" href="#memory-model" title="Permanent link">&para;</a></h2>
+<p>Only the public API is visible to the application. Everything under <code>src/</code> is private:
+the driver instance <code>struct sstep</code> is an opaque block of memory whose layout may change
+in any release.</p>
+<h2 id="the-two-loops">The two loops<a class="headerlink" href="#the-two-loops" title="Permanent link">&para;</a></h2>
+<p><img alt="Fast loop and slow loop" src="../assets/images/data-flow.svg" /></p>
+<p>The application calls two functions periodically. Both work on the same instance.</p>
 <table>
 <thead>
 <tr>
-<th>Structure</th>
-<th>Contents</th>
-<th>Size with the default configuration</th>
+<th></th>
+<th>Fast loop <code>sstep_fast_loop()</code></th>
+<th>Slow loop <code>sstep_slow_loop()</code></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>TODO</td>
-<td>TODO</td>
-<td>TODO</td>
+<td>Rate</td>
+<td><code>fast_loop_hz</code>, typically the PWM frequency (20 kHz)</td>
+<td><code>slow_loop_hz</code>, typically 1 kHz; <code>fast_loop_hz</code> must be an integer multiple</td>
+</tr>
+<tr>
+<td>Context</td>
+<td>PWM/ADC interrupt</td>
+<td>Main loop or a timer task</td>
+</tr>
+<tr>
+<td>Input</td>
+<td>Raw ADC counts: phase A and B currents, bus voltage</td>
+<td>Commands given since the last call</td>
+</tr>
+<tr>
+<td>Work</td>
+<td>Convert the measurements, check the trip levels, interpolate the electrical angle, current references, PI controllers, voltage limit, leg duty cycles</td>
+<td>Advance the trajectory one step, compute the setpoint of the next slow period, hold current, bus voltage compensation, state, events</td>
+</tr>
+<tr>
+<td>Output</td>
+<td><code>pwm_write()</code> with one compare value per leg</td>
+<td>A setpoint for the fast loop; <code>on_event()</code></td>
+</tr>
+<tr>
+<td>Time</td>
+<td>Bounded: no loops over data; the only loops have fixed limits (voltage pre-scale at most 18, division at most 16 iterations); two divisions, only while the voltage is limited</td>
+<td>Bounded: integer square root at most 32 iterations; one gain computation for the bus voltage</td>
 </tr>
 </tbody>
 </table>
+<p><strong>Hand-off.</strong> The slow loop computes a <em>setpoint</em> for the next slow period: the
+electrical angle at its start, the angle increment per fast period, the current
+amplitude, the back-EMF feed-forward and the bus voltage correction. It writes it into
+the free half of a double buffer and marks it pending. The fast loop takes a pending
+setpoint at the start of its next period and from then on advances the angle by the
+increment once per period. If the slow loop is late, the fast loop stops advancing after
+<code>fast_loop_hz / slow_loop_hz</code> periods and holds the angle, so a late slow loop never
+makes the motor run ahead of the trajectory.</p>
+<p>The fast loop never reads the half being written: <code>sp_pending</code> is cleared before the
+write and set after it. This relies on the fast loop interrupting the slow loop on the
+same core, never running in parallel with it.</p>
+<h2 id="driver-states">Driver states<a class="headerlink" href="#driver-states" title="Permanent link">&para;</a></h2>
+<p><img alt="Driver states" src="../assets/images/state-machine.svg" /></p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Outputs</th>
+<th>Entered by</th>
+<th>Left by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SSTEP_STATE_DISABLED</code></td>
+<td>Off (all legs high impedance)</td>
+<td><code>sstep_init()</code>, <code>sstep_disable()</code>, <code>sstep_clear_faults()</code></td>
+<td><code>sstep_enable()</code></td>
+</tr>
+<tr>
+<td><code>SSTEP_STATE_HOLDING</code></td>
+<td>On, holding the position</td>
+<td><code>sstep_enable()</code>; a move or stop completes</td>
+<td>A command; a fault; <code>sstep_disable()</code></td>
+</tr>
+<tr>
+<td><code>SSTEP_STATE_MOVING</code></td>
+<td>On, following the trajectory</td>
+<td><code>sstep_move_to()</code>, <code>sstep_move_by()</code>, <code>sstep_run()</code> (seen at the next slow loop)</td>
+<td>Move or stop completes; a fault; <code>sstep_disable()</code></td>
+</tr>
+<tr>
+<td><code>SSTEP_STATE_FAULT</code></td>
+<td>Off</td>
+<td>Any fault, in any active state</td>
+<td><code>sstep_clear_faults()</code> only</td>
+</tr>
+</tbody>
+</table>
+<p>The state is updated by the slow loop; a command changes it at the next
+<code>sstep_slow_loop()</code>. Faults switch the outputs off immediately, in the context that
+detects them.</p>
+<h2 id="memory-model">Memory model<a class="headerlink" href="#memory-model" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Owner</th>
+<th>Size</th>
+<th>Lifetime</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>struct sstep</code> (driver instance)</td>
+<td>Application (static, stack or pool)</td>
+<td>360 B fixed point, 384 B float</td>
+<td>From <code>sstep_init()</code> as long as the motor runs</td>
+</tr>
+<tr>
+<td><code>struct sstep_config</code></td>
+<td>Application; copied by <code>sstep_init()</code></td>
+<td>136 B on Cortex-M4</td>
+<td>Only during <code>sstep_init()</code></td>
+</tr>
+<tr>
+<td><code>struct sstep_sample</code></td>
+<td>Application</td>
+<td>6 B</td>
+<td>Only during <code>sstep_fast_loop()</code></td>
+</tr>
+<tr>
+<td><code>struct sstep_status</code></td>
+<td>Application</td>
+<td>32 B on Cortex-M4</td>
+<td>Filled by <code>sstep_get_status()</code></td>
+</tr>
+<tr>
+<td>Sine table</td>
+<td>Library, <code>static const</code> (flash)</td>
+<td>514 B fixed point, 1028 B float (default 257 entries)</td>
+<td>Program</td>
+</tr>
+</tbody>
+</table>
+<p>There is no heap, no global or static mutable variable and no hidden buffer: everything
+the library writes is in the instance or in the caller's structures. Several instances
+(axes) are independent.</p>
+<p>The instance size is fixed at compile time by <code>SSTEP_INSTANCE_WORDS</code> in <code>sstep_ctrl.h</code>
+and checked against the private state by <code>_Static_assert</code>.</p>
 <h2 id="error-handling">Error handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1593,21 +1607,57 @@
 </thead>
 <tbody>
 <tr>
-<td>A <code>NULL</code> pointer or inconsistent length</td>
-<td><code>SSTEP_PARSE_ERROR</code>; nothing is written</td>
+<td><code>NULL</code> instance, configuration or sample</td>
+<td><code>SSTEP_ERR_PARAM</code>; nothing is changed</td>
 </tr>
 <tr>
-<td>TODO</td>
-<td>TODO</td>
+<td>A configuration field outside its range or a missing required callback</td>
+<td><code>sstep_init()</code> returns <code>SSTEP_ERR_PARAM</code></td>
+</tr>
+<tr>
+<td>Fields that are valid alone but not together (trip above full scale, bandwidth above <code>fast_loop_hz / 4</code>, a gain that does not fit)</td>
+<td><code>sstep_init()</code> returns <code>SSTEP_ERR_CONFIG</code></td>
+</tr>
+<tr>
+<td>A topology that is not compiled in</td>
+<td><code>sstep_init()</code> returns <code>SSTEP_ERR_UNSUPPORTED</code></td>
+</tr>
+<tr>
+<td>A motion command while disabled or faulted</td>
+<td><code>SSTEP_ERR_STATE</code></td>
+</tr>
+<tr>
+<td>A phase current above <code>i_trip_ma</code> (current drive)</td>
+<td><code>SSTEP_FAULT_OVERCURRENT</code>, outputs off in the same fast period</td>
+</tr>
+<tr>
+<td>Bus voltage above <code>vbus_max_mv</code> or below <code>vbus_min_mv</code></td>
+<td><code>SSTEP_FAULT_OVERVOLTAGE</code> / <code>SSTEP_FAULT_UNDERVOLTAGE</code>, outputs off</td>
+</tr>
+<tr>
+<td><code>pwm_write()</code> or <code>output_enable()</code> returns a negative value</td>
+<td><code>SSTEP_FAULT_HAL</code>, outputs off</td>
+</tr>
+<tr>
+<td><code>sstep_report_fault()</code></td>
+<td>The given flags, outputs off</td>
 </tr>
 </tbody>
 </table>
+<p>Every fault calls <code>output_enable(false)</code> and then <code>on_fault()</code> (if set) with the new
+flags, in the context that detected it. Faults accumulate until <code>sstep_clear_faults()</code>.
+Arithmetic never overflows: every operation of the numeric backend saturates.</p>
 <h2 id="threading-and-reentrancy">Threading and reentrancy<a class="headerlink" href="#threading-and-reentrancy" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Codec functions</strong> are reentrant.</li>
-<li><strong>A link</strong> is not thread-safe; call receive from one context, never from an ISR.</li>
-<li><strong>Sending</strong> from several contexts needs the application's mutex.</li>
-<li><strong>The handler</strong> data is valid only during the call.</li>
+<li><strong>Per instance, two contexts:</strong> <code>sstep_fast_loop()</code> from the PWM/ADC interrupt;
+  every other function from one task or the main loop (the slow-loop context).</li>
+<li><code>sstep_report_fault()</code> may also be called from an interrupt.</li>
+<li><strong>No locking inside.</strong> The hand-off between the loops is lock-free on a single core
+  (see above). Do not call the slow-loop functions from two tasks without your own mutex.</li>
+<li><strong>Multi-core:</strong> both loops of one instance must run on the same core.</li>
+<li><strong>Different instances</strong> share nothing and may run on different cores.</li>
+<li><strong>Callbacks</strong> run in the context of the function that calls them: <code>pwm_write()</code> and
+  <code>on_fault()</code> may run in the interrupt.</li>
 </ul>
 <h2 id="design-decisions">Design decisions<a class="headerlink" href="#design-decisions" title="Permanent link">&para;</a></h2>
 <table>
@@ -1619,12 +1669,36 @@
 </thead>
 <tbody>
 <tr>
-<td>One byte per parser call</td>
-<td>Works with any transport chunking.</td>
+<td>Two loops at different rates</td>
+<td>Current control needs the PWM rate; the trajectory and the square root of the motion planner do not. The fast loop stays short and bounded.</td>
 </tr>
 <tr>
-<td>TODO</td>
-<td>TODO</td>
+<td>Configuration in integer engineering units</td>
+<td>Values from the datasheet and the schematic are entered as they are (<code>r_mohm = 1600</code>); no floating point is needed to configure a fixed-point build.</td>
+</tr>
+<tr>
+<td>Gains derived by the library</td>
+<td>Kp and Ki follow from R, L and one bandwidth value; there is nothing to tune by hand for a first run.</td>
+</tr>
+<tr>
+<td>Fixed point and float backends with the same ranges</td>
+<td>The same code and the same tests run on MCUs with and without FPU; the results match within the quantization.</td>
+</tr>
+<tr>
+<td>Motion planner in integer arithmetic in both backends</td>
+<td>Positions must be exact over long runs; Q16 microsteps in 64 bits never drift.</td>
+</tr>
+<tr>
+<td>Callbacks given once at initialization</td>
+<td>No link-time coupling to a HAL; several instances can drive different timers.</td>
+</tr>
+<tr>
+<td>Raw ADC counts as input</td>
+<td>The library owns the scaling (zero offset, span, polarity) and the trip levels in counts, so the protection does not depend on a conversion done elsewhere.</td>
+</tr>
+<tr>
+<td>Opaque instance</td>
+<td>The application cannot depend on internal fields; the layout can change without breaking the API (MISRA deviation <a href="../misra/#dev-01-rule-113-required-opaque-driver-instance">DEV-01</a>).</td>
 </tr>
 </tbody>
 </table>
@@ -1763,6 +1837,12 @@
     
     
       <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -56,6 +56,8 @@
     
     
       <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -272,13 +274,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../protocol/" class="md-tabs__link">
+      <a href="../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -290,18 +292,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -652,14 +653,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../protocol/" class="md-nav__link">
+      <a href="../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -674,58 +675,6 @@
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -738,7 +687,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -747,42 +696,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1187,10 +1100,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#dev-01-todo-ruledir-category" class="md-nav__link">
+  <a href="#dev-01-rule-113-required-opaque-driver-instance" class="md-nav__link">
     <span class="md-ellipsis">
       
-        DEV-01: TODO (Rule/Dir, category)
+        DEV-01: Rule 11.3 (required), opaque driver instance
       
     </span>
   </a>
@@ -1433,10 +1346,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#dev-01-todo-ruledir-category" class="md-nav__link">
+  <a href="#dev-01-rule-113-required-opaque-driver-instance" class="md-nav__link">
     <span class="md-ellipsis">
       
-        DEV-01: TODO (Rule/Dir, category)
+        DEV-01: Rule 11.3 (required), opaque driver instance
       
     </span>
   </a>
@@ -1516,15 +1429,15 @@ it. It covers the library code only: <code>src/</code>, <code>inc/</code> and <c
 <tbody>
 <tr>
 <td>Cppcheck MISRA addon</td>
-<td>TODO violations (versions)</td>
+<td>0 violations (Cppcheck 2.16.2)</td>
 </tr>
 <tr>
 <td>Unit test coverage of <code>src/</code></td>
-<td>TODO</td>
+<td>100 % lines, branches and functions, fixed point and float (gcovr 8.6)</td>
 </tr>
 <tr>
 <td>Deviations</td>
-<td>TODO</td>
+<td>1 (DEV-01)</td>
 </tr>
 </tbody>
 </table>
@@ -1539,11 +1452,11 @@ it. It covers the library code only: <code>src/</code>, <code>inc/</code> and <c
 <tbody>
 <tr>
 <td>Dir 4.1 (run-time failures)</td>
-<td>TODO</td>
+<td>Every arithmetic operation of the numeric backend saturates; shifts of signed values use <code>sstep_asr()</code>; divisions are by validated non-zero values; the gains are range-checked by <code>sstep_init()</code>.</td>
 </tr>
 <tr>
 <td>Dir 4.11 (validity of arguments)</td>
-<td>TODO</td>
+<td>Every public function checks its pointers and ranges and returns <code>SSTEP_ERR_PARAM</code>; <code>SSTEP_CFG_ARG_CHECKS = 0</code> removes only the <code>NULL</code> checks of <code>sstep_fast_loop()</code>.</td>
 </tr>
 <tr>
 <td>Dir 4.12, Rule 21.3 (dynamic memory)</td>
@@ -1564,11 +1477,22 @@ it. It covers the library code only: <code>src/</code>, <code>inc/</code> and <c
 </tbody>
 </table>
 <h2 id="deviation-register">Deviation register<a class="headerlink" href="#deviation-register" title="Permanent link">&para;</a></h2>
-<h3 id="dev-01-todo-ruledir-category">DEV-01: TODO (Rule/Dir, category)<a class="headerlink" href="#dev-01-todo-ruledir-category" title="Permanent link">&para;</a></h3>
+<h3 id="dev-01-rule-113-required-opaque-driver-instance">DEV-01: Rule 11.3 (required), opaque driver instance<a class="headerlink" href="#dev-01-rule-113-required-opaque-driver-instance" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Location:</strong> TODO</li>
-<li><strong>Rationale:</strong> TODO</li>
-<li><strong>Risk control:</strong> TODO</li>
+<li><strong>Location:</strong> <code>sstep_ctx_of()</code> and <code>sstep_ctx_of_const()</code> in <code>src/sstep_internal.h</code>, the
+  only casts from <code>struct sstep *</code> to <code>struct sstep_ctx *</code>. Marked with
+  <code>cppcheck-suppress misra-c2012-11.3</code>.</li>
+<li><strong>Rationale:</strong> The application allocates the driver instance (no heap, no global state),
+  so it must know its size, but not its layout. The public <code>struct sstep</code> in <code>sstep_ctrl.h</code>
+  is an array of <code>uint64_t</code> of that size; the private <code>struct sstep_ctx</code> holds the state.
+  This keeps the internal types (gains, integrators, setpoints, numeric backend) out of
+  the application code and lets them change without breaking the API.</li>
+<li><strong>Risk control:</strong> <code>sstep_ctrl.c</code> checks at compile time that <code>struct sstep</code> is at least
+  as large and as aligned as <code>struct sstep_ctx</code>; a layout change that outgrows
+  <code>SSTEP_STATE_BYTES</code> does not compile. The application never accesses
+  <code>struct sstep::opaque</code>, so the storage is only ever accessed as <code>struct sstep_ctx</code>.
+  The cast is applied to every public entry point before any member access, and the NULL
+  check is done on its result (a NULL pointer converts to NULL).</li>
 </ul>
 
 
@@ -1705,6 +1629,12 @@ it. It covers the library code only: <code>src/</code>, <code>inc/</code> and <c
     
     
       <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

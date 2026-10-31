@@ -10,7 +10,7 @@
 
 _Motion generator state._ [More...](#detailed-description)
 
-* `#include <sstep_ctrl.h>`
+* `#include <sstep_internal.h>`
 
 
 
@@ -92,7 +92,7 @@ _Motion generator state._ [More...](#detailed-description)
 ## Detailed Description
 
 
-Private. Integer arithmetic in both numeric backends: positions in 1/65536 microstep, velocities in 1/65536 microstep per slow loop period, accelerations in 1/65536 microstep per period squared. 
+Integer arithmetic in both numeric backends: positions in 1/65536 microstep, velocities in 1/65536 microstep per slow loop period, accelerations in 1/65536 microstep per period squared. 
 
 
     
@@ -226,5 +226,5 @@ int32_t sstep_motion::vel;
 <hr>
 
 ------------------------------
-The documentation for this class was generated from the following file `inc/sstep_ctrl.h`
+The documentation for this class was generated from the following file `src/sstep_internal.h`
 

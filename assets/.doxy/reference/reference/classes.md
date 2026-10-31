@@ -2,6 +2,12 @@
 # Class Index
 
 
+## a
+
+* [**align\_ctx**](structalign__ctx.md)
+* [**align\_pub**](structalign__pub.md)
+
+
 ## s
 
 * [**sstep**](structsstep.md)
@@ -9,6 +15,7 @@
 * [**sstep\_callbacks**](structsstep__callbacks.md)
 * [**sstep\_config**](structsstep__config.md)
 * [**sstep\_ctrl\_cfg**](structsstep__ctrl__cfg.md)
+* [**sstep\_ctx**](structsstep__ctx.md)
 * [**sstep\_gain**](structsstep__gain.md)
 * [**sstep\_motion**](structsstep__motion.md)
 * [**sstep\_motor\_cfg**](structsstep__motor__cfg.md)

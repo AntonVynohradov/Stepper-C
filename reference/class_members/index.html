@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -52,6 +52,8 @@
     
     
       <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -268,13 +270,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../protocol/" class="md-tabs__link">
+      <a href="../../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -286,18 +288,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -646,14 +647,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../protocol/" class="md-nav__link">
+      <a href="../../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -668,58 +669,6 @@
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -732,7 +681,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -741,42 +690,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1452,6 +1365,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        x
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1472,12 +1396,12 @@
 <h1 id="class-members">Class Members<a class="headerlink" href="#class-members" title="Permanent link">&para;</a></h1>
 <h2 id="a">a<a class="headerlink" href="#a" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>adc_i</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>adc_v</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>adv</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>angle_offset</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>angle_shift</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
 <li><strong>accel</strong> (<a href="../structsstep__ctrl__cfg/"><strong>sstep_ctrl_cfg</strong></a>)</li>
+<li><strong>adc_i</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>adc_v</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>adv</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>angle_offset</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>angle_shift</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
 <li><strong>acc</strong> (<a href="../structsstep__motion/"><strong>sstep_motion</strong></a>)</li>
 <li><strong>angle</strong> (<a href="../structsstep__setpoint/"><strong>sstep_setpoint</strong></a>)</li>
 <li><strong>adc_full</strong> (<a href="../structsstep__stage__cfg/"><strong>sstep_stage_cfg</strong></a>)</li>
@@ -1491,12 +1415,13 @@
 </ul>
 <h2 id="c">c<a class="headerlink" href="#c" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>cfg</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>compare</strong> (<a href="../structsstep/"><strong>sstep</strong></a>, <a href="../structsstep__bridge__out/"><strong>sstep_bridge_out</strong></a>)</li>
-<li><strong>cur</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
+<li><strong>c</strong> (<a href="../structalign__ctx/"><strong>align_ctx</strong></a>, <a href="../structalign__pub/"><strong>align_pub</strong></a>)</li>
+<li><strong>compare</strong> (<a href="../structsstep__bridge__out/"><strong>sstep_bridge_out</strong></a>, <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
 <li><strong>context</strong> (<a href="../structsstep__callbacks/"><strong>sstep_callbacks</strong></a>)</li>
 <li><strong>ctrl</strong> (<a href="../structsstep__config/"><strong>sstep_config</strong></a>)</li>
 <li><strong>current_bw_hz</strong> (<a href="../structsstep__ctrl__cfg/"><strong>sstep_ctrl_cfg</strong></a>)</li>
+<li><strong>cfg</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>cur</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
 <li><strong>cos</strong> (<a href="../structsstep__sincos/"><strong>sstep_sincos</strong></a>)</li>
 </ul>
 <h2 id="d">d<a class="headerlink" href="#d" title="Permanent link">&para;</a></h2>
@@ -1513,29 +1438,29 @@
 </ul>
 <h2 id="f">f<a class="headerlink" href="#f" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>faults</strong> (<a href="../structsstep/"><strong>sstep</strong></a>, <a href="../structsstep__status/"><strong>sstep_status</strong></a>)</li>
-<li><strong>ff_gain</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
 <li><strong>fast_loop_hz</strong> (<a href="../structsstep__ctrl__cfg/"><strong>sstep_ctrl_cfg</strong></a>)</li>
+<li><strong>faults</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>, <a href="../structsstep__status/"><strong>sstep_status</strong></a>)</li>
+<li><strong>ff_gain</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
 <li><strong>full_steps_per_rev</strong> (<a href="../structsstep__motor__cfg/"><strong>sstep_motor_cfg</strong></a>)</li>
 <li><strong>ff</strong> (<a href="../structsstep__setpoint/"><strong>sstep_setpoint</strong></a>)</li>
 </ul>
 <h2 id="h">h<a class="headerlink" href="#h" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>hold_active</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>hold_ticks</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
 <li><strong>hal</strong> (<a href="../structsstep__config/"><strong>sstep_config</strong></a>)</li>
 <li><strong>hold_delay_ms</strong> (<a href="../structsstep__ctrl__cfg/"><strong>sstep_ctrl_cfg</strong></a>)</li>
+<li><strong>hold_active</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>hold_ticks</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
 </ul>
 <h2 id="i">i<a class="headerlink" href="#i" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>i_hold</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>i_meas</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>i_run</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>i_trip_counts</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>integ</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>inv_vbus</strong> (<a href="../structsstep/"><strong>sstep</strong></a>, <a href="../structsstep__setpoint/"><strong>sstep_setpoint</strong></a>)</li>
 <li><strong>i_hold_ma</strong> (<a href="../structsstep__ctrl__cfg/"><strong>sstep_ctrl_cfg</strong></a>)</li>
 <li><strong>i_run_ma</strong> (<a href="../structsstep__ctrl__cfg/"><strong>sstep_ctrl_cfg</strong></a>)</li>
+<li><strong>i_hold</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>i_meas</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>i_run</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>i_trip_counts</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>integ</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>inv_vbus</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>, <a href="../structsstep__setpoint/"><strong>sstep_setpoint</strong></a>)</li>
 <li><strong>i_rated_ma</strong> (<a href="../structsstep__motor__cfg/"><strong>sstep_motor_cfg</strong></a>)</li>
 <li><strong>i_a</strong> (<a href="../structsstep__sample/"><strong>sstep_sample</strong></a>)</li>
 <li><strong>i_b</strong> (<a href="../structsstep__sample/"><strong>sstep_sample</strong></a>)</li>
@@ -1547,9 +1472,9 @@
 </ul>
 <h2 id="k">k<a class="headerlink" href="#k" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>kb</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>ki</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>kp</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
+<li><strong>kb</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>ki</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>kp</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
 <li><strong>ke_uv_s_per_rad</strong> (<a href="../structsstep__motor__cfg/"><strong>sstep_motor_cfg</strong></a>)</li>
 </ul>
 <h2 id="l">l<a class="headerlink" href="#l" title="Permanent link">&para;</a></h2>
@@ -1559,14 +1484,15 @@
 </ul>
 <h2 id="m">m<a class="headerlink" href="#m" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>mo</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
 <li><strong>motor</strong> (<a href="../structsstep__config/"><strong>sstep_config</strong></a>)</li>
 <li><strong>microsteps</strong> (<a href="../structsstep__ctrl__cfg/"><strong>sstep_ctrl_cfg</strong></a>)</li>
+<li><strong>mo</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
 <li><strong>mant</strong> (<a href="../structsstep__gain/"><strong>sstep_gain</strong></a>)</li>
 <li><strong>mode</strong> (<a href="../structsstep__motion/"><strong>sstep_motion</strong></a>)</li>
 </ul>
 <h2 id="o">o<a class="headerlink" href="#o" title="Permanent link">&para;</a></h2>
 <ul>
+<li><strong>opaque</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
 <li><strong>on_event</strong> (<a href="../structsstep__callbacks/"><strong>sstep_callbacks</strong></a>)</li>
 <li><strong>on_fault</strong> (<a href="../structsstep__callbacks/"><strong>sstep_callbacks</strong></a>)</li>
 <li><strong>output_enable</strong> (<a href="../structsstep__callbacks/"><strong>sstep_callbacks</strong></a>)</li>
@@ -1581,19 +1507,19 @@
 </ul>
 <h2 id="r">r<a class="headerlink" href="#r" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>r_pu</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>ratio</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
+<li><strong>r_pu</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>ratio</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
 <li><strong>r_mohm</strong> (<a href="../structsstep__motor__cfg/"><strong>sstep_motor_cfg</strong></a>)</li>
 </ul>
 <h2 id="s">s<a class="headerlink" href="#s" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>sp</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>sp_active</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>sp_pending</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>state</strong> (<a href="../structsstep/"><strong>sstep</strong></a>, <a href="../structsstep__status/"><strong>sstep_status</strong></a>)</li>
-<li><strong>still</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
 <li><strong>stage</strong> (<a href="../structsstep__config/"><strong>sstep_config</strong></a>)</li>
 <li><strong>slow_loop_hz</strong> (<a href="../structsstep__ctrl__cfg/"><strong>sstep_ctrl_cfg</strong></a>)</li>
+<li><strong>sp</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>sp_active</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>sp_pending</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>state</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>, <a href="../structsstep__status/"><strong>sstep_status</strong></a>)</li>
+<li><strong>still</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
 <li><strong>sin</strong> (<a href="../structsstep__sincos/"><strong>sstep_sincos</strong></a>)</li>
 </ul>
 <h2 id="t">t<a class="headerlink" href="#t" title="Permanent link">&para;</a></h2>
@@ -1603,11 +1529,11 @@
 </ul>
 <h2 id="v">v<a class="headerlink" href="#v" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>vbus_max_raw</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>vbus_min_raw</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
-<li><strong>vbus_raw</strong> (<a href="../structsstep/"><strong>sstep</strong></a>)</li>
 <li><strong>v</strong> (<a href="../structsstep__bridge__out/"><strong>sstep_bridge_out</strong></a>)</li>
 <li><strong>v_max</strong> (<a href="../structsstep__ctrl__cfg/"><strong>sstep_ctrl_cfg</strong></a>, <a href="../structsstep__motion/"><strong>sstep_motion</strong></a>)</li>
+<li><strong>vbus_max_raw</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>vbus_min_raw</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
+<li><strong>vbus_raw</strong> (<a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>)</li>
 <li><strong>v_run</strong> (<a href="../structsstep__motion/"><strong>sstep_motion</strong></a>)</li>
 <li><strong>vel</strong> (<a href="../structsstep__motion/"><strong>sstep_motion</strong></a>)</li>
 <li><strong>vbus</strong> (<a href="../structsstep__sample/"><strong>sstep_sample</strong></a>)</li>
@@ -1616,6 +1542,10 @@
 <li><strong>vbus_nominal_mv</strong> (<a href="../structsstep__stage__cfg/"><strong>sstep_stage_cfg</strong></a>)</li>
 <li><strong>vbus_mv</strong> (<a href="../structsstep__status/"><strong>sstep_status</strong></a>)</li>
 <li><strong>velocity</strong> (<a href="../structsstep__status/"><strong>sstep_status</strong></a>)</li>
+</ul>
+<h2 id="x">x<a class="headerlink" href="#x" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>x</strong> (<a href="../structalign__ctx/"><strong>align_ctx</strong></a>, <a href="../structalign__pub/"><strong>align_pub</strong></a>)</li>
 </ul>
 
 
@@ -1714,6 +1644,12 @@
     
     
       <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

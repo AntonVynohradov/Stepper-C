@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -56,6 +56,8 @@
     
     
       <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -274,13 +276,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../protocol/" class="md-tabs__link">
+      <a href="../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -292,18 +294,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -665,43 +666,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adding-a-transport" class="md-nav__link">
+  <a href="#homing-example" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Adding a transport
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#building-device-models" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Building device models
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#building-multi-device-commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Building multi-device commands
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#vendor-specific-values" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Vendor-specific values
+        Homing example
       
     </span>
   </a>
@@ -781,14 +749,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../protocol/" class="md-nav__link">
+      <a href="../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -803,58 +771,6 @@
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -867,7 +783,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -876,42 +792,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1412,43 +1292,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adding-a-transport" class="md-nav__link">
+  <a href="#homing-example" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Adding a transport
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#building-device-models" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Building device models
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#building-multi-device-commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Building multi-device commands
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#vendor-specific-values" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Vendor-specific values
+        Homing example
       
     </span>
   </a>
@@ -1495,7 +1342,10 @@
 
 
 <h1 id="extending-the-library">Extending the Library<a class="headerlink" href="#extending-the-library" title="Permanent link">&para;</a></h1>
-<p>TODO one paragraph: extension points; almost everything is done on top of the library.</p>
+<p>Most extensions are built on top of Stepper-C without changing it: homing, limit
+switches, communication, multi-axis coordination and encoders are application code that
+calls the public API. This chapter shows where each extension belongs and the rules for
+changes to the library itself.</p>
 <h2 id="where-to-extend">Where to extend<a class="headerlink" href="#where-to-extend" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1507,30 +1357,122 @@
 </thead>
 <tbody>
 <tr>
-<td>Support another transport</td>
-<td>your write function and receive loop</td>
+<td>Drive another MCU or board</td>
+<td>Your <code>pwm_write()</code>, <code>output_enable()</code>, ADC and interrupt code</td>
 <td>No</td>
 </tr>
 <tr>
-<td>TODO</td>
-<td>TODO</td>
-<td>TODO</td>
+<td>Home the axis on a switch</td>
+<td>Application: <code>sstep_run()</code> towards the switch, <code>sstep_stop()</code> on the edge, <code>sstep_set_position(0)</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td>Add soft limits</td>
+<td>Application: clamp targets before <code>sstep_move_to()</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td>Accept commands over UART, CAN, Modbus</td>
+<td>Application: protocol handler that calls the commands from the slow-loop context</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Coordinate several axes</td>
+<td>Application: one instance per axis, start moves in the same slow period, scale <code>v_max</code> per axis</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Detect a stall with an encoder</td>
+<td>Application: compare the encoder with <code>sstep_get_status()</code> position, <code>sstep_report_fault()</code> on a large difference</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Report a temperature or driver fault</td>
+<td><code>sstep_report_fault()</code> from the interrupt or task that detects it</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Use another numeric format or table size</td>
+<td>Build-time options in <code>sstep_user_config.h</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td>Support a new power stage topology</td>
+<td><code>src/sstep_bridge.c</code> (limit and duty cycles), <code>enum sstep_topology</code>, a build-time option</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>A different motion profile (S-curve)</td>
+<td><code>src/sstep_motion.c</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Dead-time compensation</td>
+<td>Fast loop; the configuration already has <code>dead_time_ns</code></td>
+<td>Yes</td>
 </tr>
 </tbody>
 </table>
-<h2 id="adding-a-transport">Adding a transport<a class="headerlink" href="#adding-a-transport" title="Permanent link">&para;</a></h2>
-<h2 id="building-device-models">Building device models<a class="headerlink" href="#building-device-models" title="Permanent link">&para;</a></h2>
-<h2 id="building-multi-device-commands">Building multi-device commands<a class="headerlink" href="#building-multi-device-commands" title="Permanent link">&para;</a></h2>
-<h2 id="vendor-specific-values">Vendor-specific values<a class="headerlink" href="#vendor-specific-values" title="Permanent link">&para;</a></h2>
+<h2 id="homing-example">Homing example<a class="headerlink" href="#homing-example" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">enum</span><span class="w"> </span><span class="n">homing_state</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">HOMING_SEEK</span><span class="p">,</span><span class="w"> </span><span class="n">HOMING_STOP</span><span class="p">,</span><span class="w"> </span><span class="n">HOMING_DONE</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">static</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">homing_state</span><span class="w"> </span><span class="n">homing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HOMING_SEEK</span><span class="p">;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="cm">/* called from the slow-loop context after sstep_slow_loop() */</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kt">void</span><span class="w"> </span><span class="nf">homing_step</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">switch_pressed</span><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">{</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_status</span><span class="w"> </span><span class="n">st</span><span class="p">;</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">homing</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">HOMING_SEEK</span><span class="p">:</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">switch_pressed</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">            </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">sstep_stop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">);</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">            </span><span class="n">homing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HOMING_STOP</span><span class="p">;</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="no">HOMING_STOP</span><span class="p">:</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">sstep_get_status</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">st</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SSTEP_OK</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">st</span><span class="p">.</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SSTEP_STATE_HOLDING</span><span class="p">))</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">            </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">sstep_set_position</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">            </span><span class="n">homing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HOMING_DONE</span><span class="p">;</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">    </span><span class="k">default</span><span class="o">:</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="p">}</span>
+</code></pre></div>
+<p>Start it with <code>sstep_run(&amp;motor, -1600)</code> (towards the switch, at a low speed). The stop
+uses the configured deceleration, so the zero is where the motor came to rest, a few
+microsteps after the switch; for a repeatable zero, move back off the switch slowly and
+take the edge again.</p>
 <h2 id="changing-the-configuration">Changing the configuration<a class="headerlink" href="#changing-the-configuration" title="Permanent link">&para;</a></h2>
+<p>Build-time options go into <code>sstep_user_config.h</code> in a folder of your project:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cm">/* sstep_user_config.h */</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="cp">#define SSTEP_CFG_MATH_BACKEND SSTEP_MATH_BACKEND_FLOAT</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="cp">#define SSTEP_CFG_TOPOLOGY_FULL_BRIDGE 0U </span><span class="cm">/* only the 3-leg stage of this board */</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="cp">#define SSTEP_CFG_MICROSTEPS_MAX 64U</span>
+</code></pre></div>
+<p>and CMake gets <code>-DSSTEP_CONFIG_DIR=&lt;folder&gt;</code>. Run-time values (motor, currents, limits)
+need no rebuild: pass another <code>struct sstep_config</code> to <code>sstep_init()</code>, or use
+<code>sstep_set_current()</code> and <code>sstep_set_motion_limits()</code> while running.</p>
 <h2 id="contributing-to-the-library">Contributing to the library<a class="headerlink" href="#contributing-to-the-library" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>Code.</strong> C11, no new dependencies, no heap, MISRA rules used in the code.</li>
-<li><strong>Tests.</strong> 100 % line and branch coverage; update the Python twin when the codec changes.</li>
-<li><strong>Analysis.</strong> <code>misra-analyze</code> 0 violations or a recorded deviation.</li>
-<li><strong>Format.</strong> <code>clang-format</code> reports no changes.</li>
-<li><strong>Documentation.</strong> Pages, stack table, diagrams, <code>CHANGELOG.md</code> <code>[Unreleased]</code>.</li>
-<li><strong>Compatibility.</strong> Public API stable within a major version.</li>
+<li><strong>Code.</strong> C11, no new dependencies, no heap, no global state; the rules of
+   <code>misra-analyze</code>; internal types stay in <code>src/</code>, <code>sstep.h</code> declares the public API only.</li>
+<li><strong>Both backends.</strong> Every arithmetic change works with fixed point and float; the
+   <code>[UnitTests]</code> and <code>[UnitTestsFloat]</code> presets must both pass.</li>
+<li><strong>Tests.</strong> 100 % line and branch coverage of <code>src/</code>; a closed-loop test on the motor
+   model for any change of the control behavior.</li>
+<li><strong>Instance size.</strong> If the private state grows, update <code>SSTEP_STATE_BYTES</code> in
+   <code>inc/sstep_ctrl.h</code>; the build fails until it fits.</li>
+<li><strong>Analysis.</strong> <code>misra-analyze</code> 0 violations, or a recorded deviation in
+   <a href="../misra/">MISRA C:2012</a>.</li>
+<li><strong>Format.</strong> <code>clang-format</code> reports no changes in the files you touched.</li>
+<li><strong>Documentation.</strong> The affected pages, the stack table, the diagrams and
+   <code>CHANGELOG.md</code> <code>[Unreleased]</code>.</li>
+<li><strong>Compatibility.</strong> The public API is stable within a major version.</li>
 </ol>
 
 
@@ -1667,6 +1609,12 @@
     
     
       <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

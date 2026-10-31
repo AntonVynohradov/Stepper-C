@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -18,7 +18,7 @@
         <link rel="prev" href="../extending/">
       
       
-        <link rel="next" href="../protocol/">
+        <link rel="next" href="../motor-control/">
       
       
         
@@ -56,6 +56,8 @@
     
     
       <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -274,13 +276,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../protocol/" class="md-tabs__link">
+      <a href="../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -292,18 +294,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -682,6 +683,78 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#build-time-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build-time options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-time-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run-time configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Run-time configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-stage-and-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power stage and measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-and-motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control and motion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#callbacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Callbacks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#memory-footprint" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -737,14 +810,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../protocol/" class="md-nav__link">
+      <a href="../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -759,58 +832,6 @@
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -823,7 +844,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -832,42 +853,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1357,6 +1342,78 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#build-time-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build-time options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-time-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run-time configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Run-time configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-stage-and-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power stage and measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-and-motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control and motion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#callbacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Callbacks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#memory-footprint" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1407,83 +1464,532 @@
 
 
 <h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h1>
-<p>Build-time parameters live in <code>inc/sstep_config.h</code>. Each one is guarded by <code>#ifndef</code>
-and range-checked at compile time; override it with a compiler definition.</p>
+<p>Stepper-C has two kinds of configuration. <strong>Build-time options</strong> select the code that is
+compiled in (numeric backend, topologies, table size); they are macros in
+<code>inc/sstep_config.h</code>. <strong>Run-time configuration</strong> describes the motor, the power stage and
+the control; it is a <code>struct sstep_config</code> passed to <code>sstep_init()</code>. This chapter lists
+both, then the memory footprint and the measured stack usage.</p>
+<h2 id="build-time-options">Build-time options<a class="headerlink" href="#build-time-options" title="Permanent link">&para;</a></h2>
+<p>Each macro has a default, is range-checked with <code>#error</code> and can be overridden on the
+compiler command line or in a header <code>sstep_user_config.h</code> (included when
+<code>SSTEP_USER_CONFIG</code> is defined; with CMake, set <code>SSTEP_CONFIG_DIR</code> to its folder).
+The application must be compiled with the same values as the library: they change the
+size of <code>struct sstep</code>.</p>
 <table>
 <thead>
 <tr>
-<th>Parameter</th>
+<th>Macro</th>
 <th>Default</th>
+<th>Range</th>
 <th>Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>SSTEP_MAX_…</code></td>
-<td>TODO</td>
-<td>TODO (range checked at compile time)</td>
+<td><code>SSTEP_CFG_MATH_BACKEND</code></td>
+<td><code>SSTEP_MATH_BACKEND_FIXED</code></td>
+<td><code>…_FIXED</code>, <code>…_FLOAT</code></td>
+<td>Numeric backend (CMake: <code>SSTEP_MATH_BACKEND=FIXED</code> or <code>FLOAT</code>)</td>
+</tr>
+<tr>
+<td><code>SSTEP_CFG_TOPOLOGY_FULL_BRIDGE</code></td>
+<td><code>1</code></td>
+<td>0, 1</td>
+<td>Compile the two-H-bridge topology</td>
+</tr>
+<tr>
+<td><code>SSTEP_CFG_TOPOLOGY_SHARED_LEG</code></td>
+<td><code>1</code></td>
+<td>0, 1</td>
+<td>Compile the three-leg topology; at least one must be 1</td>
+</tr>
+<tr>
+<td><code>SSTEP_CFG_MICROSTEPS_MAX</code></td>
+<td><code>256U</code></td>
+<td>power of two, 1 .. 256</td>
+<td>Largest <code>microsteps</code> accepted by <code>sstep_init()</code></td>
+</tr>
+<tr>
+<td><code>SSTEP_CFG_SINE_TABLE_BITS</code></td>
+<td><code>8U</code></td>
+<td>6 .. 10</td>
+<td>Quarter-wave table of <span class="arithmatex">\(2^\mathrm{bits} + 1\)</span> entries (see the <a href="../motor-control/#microstepping">accuracy table</a>)</td>
+</tr>
+<tr>
+<td><code>SSTEP_CFG_ARG_CHECKS</code></td>
+<td><code>1</code></td>
+<td>0, 1</td>
+<td>0 removes the <code>NULL</code> checks from <code>sstep_fast_loop()</code> only</td>
+</tr>
+</tbody>
+</table>
+<h2 id="run-time-configuration">Run-time configuration<a class="headerlink" href="#run-time-configuration" title="Permanent link">&para;</a></h2>
+<p><code>struct sstep_config</code> has four parts. All values are integers in engineering units;
+<code>sstep_init()</code> copies the structure, so it may be a temporary or a <code>const</code> in flash.
+Fields outside their range make <code>sstep_init()</code> return <code>SSTEP_ERR_PARAM</code>; combinations
+that do not fit return <code>SSTEP_ERR_CONFIG</code>.</p>
+<h3 id="motor">Motor<a class="headerlink" href="#motor" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Unit</th>
+<th>Range</th>
+<th>17HS19-2004S1</th>
+<th>Where to get it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>r_mohm</code></td>
+<td>mΩ</td>
+<td>1 .. <span class="arithmatex">\(10^7\)</span></td>
+<td>1600</td>
+<td>Datasheet (phase resistance at 25 °C) or an ohmmeter</td>
+</tr>
+<tr>
+<td><code>l_uh</code></td>
+<td>µH</td>
+<td>1 .. <span class="arithmatex">\(10^7\)</span></td>
+<td>3000</td>
+<td>Datasheet (phase inductance) or an LCR meter at 1 kHz</td>
+</tr>
+<tr>
+<td><code>i_rated_ma</code></td>
+<td>mA</td>
+<td>1 .. <span class="arithmatex">\(10^7\)</span></td>
+<td>2000</td>
+<td>Datasheet; <code>i_run_ma</code> may not exceed it</td>
+</tr>
+<tr>
+<td><code>ke_uv_s_per_rad</code></td>
+<td>µV·s/rad</td>
+<td>0 .. <span class="arithmatex">\(10^7\)</span></td>
+<td>208600</td>
+<td><span class="arithmatex">\(T_\mathrm{hold} / (\sqrt{2}\, I_\mathrm{rated})\)</span> in µN·m/A (<span class="arithmatex">\(0.59 / (\sqrt{2} \cdot 2) = 0.2086\)</span> N·m/A); 0 disables the feed-forward</td>
+</tr>
+<tr>
+<td><code>full_steps_per_rev</code></td>
+<td>–</td>
+<td>≥ 1</td>
+<td>200</td>
+<td>200 for 1.8°, 400 for 0.9°</td>
+</tr>
+</tbody>
+</table>
+<h3 id="power-stage-and-measurement">Power stage and measurement<a class="headerlink" href="#power-stage-and-measurement" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Unit</th>
+<th>Range</th>
+<th>B-G431B-ESC1 example</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>topology</code></td>
+<td>–</td>
+<td>compiled-in value</td>
+<td><code>SSTEP_TOPOLOGY_SHARED_LEG</code></td>
+<td>See <a href="../motor-control/#voltage-limits">Voltage limits</a></td>
+</tr>
+<tr>
+<td><code>vbus_nominal_mv</code></td>
+<td>mV</td>
+<td>1 .. <span class="arithmatex">\(10^7\)</span></td>
+<td>24000</td>
+<td>Nominal supply; base of the per-unit voltage</td>
+</tr>
+<tr>
+<td><code>vbus_min_mv</code></td>
+<td>mV</td>
+<td>0 or below nominal</td>
+<td>10000</td>
+<td>Undervoltage trip; 0 disables it</td>
+</tr>
+<tr>
+<td><code>vbus_max_mv</code></td>
+<td>mV</td>
+<td>0 or above nominal</td>
+<td>28000</td>
+<td>Overvoltage trip; 0 disables it</td>
+</tr>
+<tr>
+<td><code>i_full_scale_ma</code></td>
+<td>mA</td>
+<td>1 .. <span class="arithmatex">\(10^7\)</span></td>
+<td>4000</td>
+<td>Phase current at the ADC reading <code>adc_i_zero + adc_i_span</code>; base of the per-unit current</td>
+</tr>
+<tr>
+<td><code>i_trip_ma</code></td>
+<td>mA</td>
+<td>1 .. <code>i_full_scale_ma</code></td>
+<td>3500</td>
+<td>Overcurrent trip (either polarity)</td>
+</tr>
+<tr>
+<td><code>pwm_period_ticks</code></td>
+<td>timer ticks</td>
+<td>≥ 2</td>
+<td>4250</td>
+<td>Compare value for 100 % duty cycle (timer auto-reload)</td>
+</tr>
+<tr>
+<td><code>pwm_freq_hz</code></td>
+<td>Hz</td>
+<td>–</td>
+<td>20000</td>
+<td>Reserved; not used by this version</td>
+</tr>
+<tr>
+<td><code>dead_time_ns</code></td>
+<td>ns</td>
+<td>–</td>
+<td>0</td>
+<td>Reserved for dead-time compensation; not used by this version</td>
+</tr>
+<tr>
+<td><code>adc_i_zero</code></td>
+<td>counts</td>
+<td>≤ <code>adc_full</code></td>
+<td>2048</td>
+<td>Current ADC reading at 0 A (measure with the outputs off)</td>
+</tr>
+<tr>
+<td><code>adc_i_span</code></td>
+<td>counts</td>
+<td>±1 .. ±65535</td>
+<td>2047</td>
+<td>Counts from 0 A to +<code>i_full_scale_ma</code>; negative for an inverting amplifier</td>
+</tr>
+<tr>
+<td><code>adc_vbus_mv_full</code></td>
+<td>mV</td>
+<td>1 .. <span class="arithmatex">\(10^7\)</span></td>
+<td>34320</td>
+<td>Bus voltage that gives the reading <code>adc_full</code> (divider ratio × ADC reference)</td>
+</tr>
+<tr>
+<td><code>adc_full</code></td>
+<td>counts</td>
+<td>≥ 1</td>
+<td>4095</td>
+<td>Largest ADC reading</td>
+</tr>
+</tbody>
+</table>
+<p>The B-G431B-ESC1 values above are placeholders derived from the schematic; measure
+<code>adc_i_zero</code>, <code>adc_i_span</code> and <code>adc_vbus_mv_full</code> on your board.</p>
+<h3 id="control-and-motion">Control and motion<a class="headerlink" href="#control-and-motion" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Unit</th>
+<th>Range</th>
+<th>Example</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>drive_mode</code></td>
+<td>–</td>
+<td><code>SSTEP_DRIVE_CURRENT</code>, <code>SSTEP_DRIVE_VOLTAGE</code></td>
+<td>current</td>
+<td>Closed-loop current or open-loop voltage drive</td>
+</tr>
+<tr>
+<td><code>fast_loop_hz</code></td>
+<td>Hz</td>
+<td>1 .. <span class="arithmatex">\(10^7\)</span></td>
+<td>20000</td>
+<td>Rate of <code>sstep_fast_loop()</code></td>
+</tr>
+<tr>
+<td><code>slow_loop_hz</code></td>
+<td>Hz</td>
+<td>divides <code>fast_loop_hz</code>, ratio ≤ 65535</td>
+<td>1000</td>
+<td>Rate of <code>sstep_slow_loop()</code></td>
+</tr>
+<tr>
+<td><code>microsteps</code></td>
+<td>–</td>
+<td>power of two, 1 .. <code>SSTEP_CFG_MICROSTEPS_MAX</code></td>
+<td>16</td>
+<td>Microsteps per full step</td>
+</tr>
+<tr>
+<td><code>current_bw_hz</code></td>
+<td>Hz</td>
+<td>1 .. <code>fast_loop_hz / 4</code></td>
+<td>1000</td>
+<td>Current loop bandwidth; the PI gains follow from it</td>
+</tr>
+<tr>
+<td><code>i_run_ma</code></td>
+<td>mA</td>
+<td>1 .. min(<code>i_trip_ma</code>, <code>i_rated_ma</code>)</td>
+<td>1500</td>
+<td>Peak phase current while moving</td>
+</tr>
+<tr>
+<td><code>i_hold_ma</code></td>
+<td>mA</td>
+<td>0 .. <code>i_run_ma</code></td>
+<td>500</td>
+<td>Peak phase current at standstill</td>
+</tr>
+<tr>
+<td><code>hold_delay_ms</code></td>
+<td>ms</td>
+<td>any</td>
+<td>500</td>
+<td>Standstill time before the hold current</td>
+</tr>
+<tr>
+<td><code>v_max</code></td>
+<td>microsteps/s</td>
+<td>see below</td>
+<td>16000</td>
+<td>Velocity limit</td>
+</tr>
+<tr>
+<td><code>accel</code></td>
+<td>microsteps/s²</td>
+<td>see below</td>
+<td>64000</td>
+<td>Acceleration</td>
+</tr>
+<tr>
+<td><code>decel</code></td>
+<td>microsteps/s²</td>
+<td>as <code>accel</code>, or 0</td>
+<td>0</td>
+<td>Deceleration; 0 = same as <code>accel</code></td>
+</tr>
+</tbody>
+</table>
+<p>The motion limits are converted to 1/65 536 microstep per slow period. Each must round
+to at least 1 and stay below <span class="arithmatex">\(2^{30}\)</span>: with <code>slow_loop_hz = 1000</code>, <code>v_max</code> from 0.008 to
+below 16 384 000 microsteps/s, <code>accel</code> and <code>decel</code> from 8 to below
+<span class="arithmatex">\(1.638 \cdot 10^{10}\)</span> microsteps/s².</p>
+<h3 id="callbacks">Callbacks<a class="headerlink" href="#callbacks" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required</th>
+<th>Called from</th>
+<th>Contract</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>context</code></td>
+<td>–</td>
+<td>–</td>
+<td>Passed unchanged to every callback</td>
+</tr>
+<tr>
+<td><code>pwm_write</code></td>
+<td>Yes</td>
+<td><code>sstep_fast_loop()</code></td>
+<td>Load one compare value per leg (<code>compare[0..3]</code>, <code>compare[3]</code> is 0 for the shared leg) for the next PWM period; return 0, or a negative value on error</td>
+</tr>
+<tr>
+<td><code>output_enable</code></td>
+<td>Yes</td>
+<td>Any function that enables, disables or faults</td>
+<td>true: enable the gate drivers; false: all legs high impedance. Return 0, or a negative value on error</td>
+</tr>
+<tr>
+<td><code>on_fault</code></td>
+<td>No</td>
+<td>The context that detects the fault (may be the interrupt)</td>
+<td>Informs the application of new fault flags; outputs are already off</td>
+</tr>
+<tr>
+<td><code>on_event</code></td>
+<td>No</td>
+<td><code>sstep_slow_loop()</code></td>
+<td><code>SSTEP_EVENT_MOVE_DONE</code>, <code>SSTEP_EVENT_HOLD_CURRENT</code></td>
 </tr>
 </tbody>
 </table>
 <h2 id="memory-footprint">Memory footprint<a class="headerlink" href="#memory-footprint" title="Permanent link">&para;</a></h2>
+<p>Measured with <code>arm-none-eabi-gcc</code> 15.2.1 for Cortex-M4 (<code>-mthumb</code>, float backend with
+<code>-mfpu=fpv4-sp-d16 -mfloat-abi=hard</code>), default build-time options, both topologies.</p>
 <table>
 <thead>
 <tr>
 <th>Object</th>
-<th>Size</th>
+<th>Fixed point</th>
+<th>Float</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>TODO</td>
-<td>TODO</td>
+<td><code>struct sstep</code> (RAM per motor)</td>
+<td>360 B</td>
+<td>384 B</td>
+</tr>
+<tr>
+<td>Code and constants, <code>-Os</code> (flash)</td>
+<td>6756 B</td>
+<td>7214 B</td>
+</tr>
+<tr>
+<td>of which the sine table</td>
+<td>514 B</td>
+<td>1028 B</td>
+</tr>
+<tr>
+<td><code>.data</code> + <code>.bss</code></td>
+<td>0 B</td>
+<td>0 B</td>
 </tr>
 </tbody>
 </table>
+<p><code>struct sstep</code> is the configuration copy (136 B on Cortex-M4, 160 B on 64-bit hosts)
+plus the private state (<code>SSTEP_STATE_BYTES</code>: 200 B fixed point, 224 B float).</p>
 <h2 id="stack-usage">Stack usage<a class="headerlink" href="#stack-usage" title="Permanent link">&para;</a></h2>
-<p>Measured with <code>-fstack-usage</code>, default configuration, bytes per function frame:</p>
+<p>Worst-case stack of each public function including the library functions it calls,
+measured with <code>-fstack-usage -fcallgraph-info=su</code> and <code>tools/docs/stack_usage.py</code>
+(Cortex-M4, toolchain as above). Calls through the callbacks are not included: add the
+stack of your <code>pwm_write()</code>, <code>output_enable()</code>, <code>on_fault()</code> and <code>on_event()</code> to the
+functions that call them.</p>
 <table>
 <thead>
 <tr>
 <th>Function</th>
-<th>Cortex-M4 <code>-Os</code></th>
-<th>Cortex-M4 <code>-O0</code></th>
-<th>x86-64 <code>-O2</code></th>
+<th style="text-align: right;">Fixed <code>-Os</code></th>
+<th style="text-align: right;">Fixed <code>-O0</code></th>
+<th style="text-align: right;">Float <code>-Os</code></th>
+<th style="text-align: right;">Float <code>-O0</code></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>TODO</td>
-<td>TODO</td>
-<td>TODO</td>
-<td>TODO</td>
+<td><code>sstep_init()</code></td>
+<td style="text-align: right;">192</td>
+<td style="text-align: right;">1096</td>
+<td style="text-align: right;">168</td>
+<td style="text-align: right;">1064</td>
+</tr>
+<tr>
+<td><code>sstep_enable()</code></td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">88</td>
+</tr>
+<tr>
+<td><code>sstep_disable()</code></td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr>
+<td><code>sstep_fast_loop()</code></td>
+<td style="text-align: right;">184</td>
+<td style="text-align: right;">304</td>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">312</td>
+</tr>
+<tr>
+<td><code>sstep_slow_loop()</code></td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">560</td>
+<td style="text-align: right;">132</td>
+<td style="text-align: right;">552</td>
+</tr>
+<tr>
+<td><code>sstep_move_to()</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">48</td>
+</tr>
+<tr>
+<td><code>sstep_move_by()</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">112</td>
+</tr>
+<tr>
+<td><code>sstep_run()</code></td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">104</td>
+</tr>
+<tr>
+<td><code>sstep_stop()</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr>
+<td><code>sstep_set_position()</code></td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">72</td>
+</tr>
+<tr>
+<td><code>sstep_set_current()</code></td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">216</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">128</td>
+</tr>
+<tr>
+<td><code>sstep_set_motion_limits()</code></td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">224</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">224</td>
+</tr>
+<tr>
+<td><code>sstep_report_fault()</code></td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr>
+<td><code>sstep_clear_faults()</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr>
+<td><code>sstep_get_status()</code></td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">184</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">152</td>
 </tr>
 </tbody>
 </table>
-<p>Toolchains: TODO versions.</p>
-<table>
-<thead>
-<tr>
-<th>Path</th>
-<th>Chain</th>
-<th>Stack</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Transmit</td>
-<td>TODO</td>
-<td>TODO B + write callback</td>
-</tr>
-<tr>
-<td>Receive</td>
-<td>TODO</td>
-<td>TODO B + handler</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>arm-none-eabi-gcc<span class="w"> </span>-mcpu<span class="o">=</span>cortex-m4<span class="w"> </span>-mthumb<span class="w"> </span>-Os<span class="w"> </span>-std<span class="o">=</span>c11<span class="w"> </span>-fstack-usage<span class="w"> </span>-Iinc<span class="w"> </span>-I.<span class="w"> </span>-c<span class="w"> </span>src/*.c
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>cat<span class="w"> </span>*.su
+<p>The interrupt stack must hold the frame of <code>sstep_fast_loop()</code> plus <code>pwm_write()</code> (and
+<code>output_enable()</code> + <code>on_fault()</code> for the fault path) plus the interrupt entry. There is
+no recursion; every frame is static.</p>
+<p>To re-measure:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir<span class="w"> </span>stack<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>stack
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>arm-none-eabi-gcc<span class="w"> </span>-mcpu<span class="o">=</span>cortex-m4<span class="w"> </span>-mthumb<span class="w"> </span>-Os<span class="w"> </span>-std<span class="o">=</span>c11<span class="w"> </span>-fstack-usage<span class="w"> </span>-fcallgraph-info<span class="o">=</span>su<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span>-I..<span class="w"> </span>-I../inc<span class="w"> </span>-c<span class="w"> </span>../src/*.c
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>python<span class="w"> </span>../tools/docs/stack_usage.py<span class="w"> </span>.<span class="w"> </span>--markdown
 </code></pre></div>
 <h2 id="cmake-options">CMake options<a class="headerlink" href="#cmake-options" title="Permanent link">&para;</a></h2>
 <table>
@@ -1496,34 +2002,34 @@ and range-checked at compile time; override it with a compiler definition.</p>
 </thead>
 <tbody>
 <tr>
+<td><code>SSTEP_MATH_BACKEND</code></td>
+<td><code>FIXED</code></td>
+<td>Numeric backend: <code>FIXED</code> or <code>FLOAT</code></td>
+</tr>
+<tr>
+<td><code>SSTEP_CONFIG_DIR</code></td>
+<td>empty</td>
+<td>Folder with <code>sstep_user_config.h</code></td>
+</tr>
+<tr>
 <td><code>SSTEP_UNIT_TESTS</code></td>
 <td><code>OFF</code></td>
 <td>GoogleTest suite and <code>coverage</code> target</td>
 </tr>
 <tr>
-<td><code>SSTEP_INTEGRATION_TESTS</code></td>
-<td><code>OFF</code></td>
-<td>pytest suite</td>
-</tr>
-<tr>
-<td><code>SSTEP_EXAMPLES</code></td>
-<td><code>OFF</code></td>
-<td>Host examples and the bare-metal simulation test</td>
-</tr>
-<tr>
 <td><code>SSTEP_COVERAGE_MIN</code></td>
 <td><code>100</code></td>
-<td>Coverage gate</td>
+<td>Coverage gate (lines and branches, %)</td>
 </tr>
 <tr>
 <td><code>SSTEP_MISRA_FAIL_ON_VIOLATION</code></td>
 <td><code>ON</code></td>
-<td>MISRA gate</td>
+<td><code>misra-analyze</code> fails on any violation</td>
 </tr>
 <tr>
 <td><code>SSTEP_MISRA_RULE_TEXTS</code></td>
 <td>empty</td>
-<td>Licensed MISRA rule texts</td>
+<td>Licensed MISRA rule texts for readable reports</td>
 </tr>
 </tbody>
 </table>
@@ -1579,13 +2085,13 @@ and range-checked at compile time; override it with a compiler definition.</p>
         
         
           
-          <a href="../protocol/" class="md-footer__link md-footer__link--next" aria-label="Next: Protocol">
+          <a href="../motor-control/" class="md-footer__link md-footer__link--next" aria-label="Next: Motor Control">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Protocol
+                Motor Control
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1662,6 +2168,12 @@ and range-checked at compile time; override it with a compiler definition.</p>
     
     
       <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

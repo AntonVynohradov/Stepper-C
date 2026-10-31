@@ -125,5 +125,5 @@ int16_t sstep_gain::mant;
 <hr>
 
 ------------------------------
-The documentation for this class was generated from the following file `inc/sstep_math.h`
+The documentation for this class was generated from the following file `src/sstep_math.h`
 

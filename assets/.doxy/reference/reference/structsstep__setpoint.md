@@ -8,9 +8,9 @@
 
 
 
-_Setpoint handed from the slow loop to the fast loop._ [More...](#detailed-description)
+_Setpoint handed from the slow loop to the fast loop._ 
 
-* `#include <sstep_ctrl.h>`
+* `#include <sstep_internal.h>`
 
 
 
@@ -85,13 +85,6 @@ _Setpoint handed from the slow loop to the fast loop._ [More...](#detailed-descr
 
 
 
-## Detailed Description
-
-
-Private. 
-
-
-    
 ## Public Attributes Documentation
 
 
@@ -166,5 +159,5 @@ struct sstep_gain sstep_setpoint::inv_vbus;
 <hr>
 
 ------------------------------
-The documentation for this class was generated from the following file `inc/sstep_ctrl.h`
+The documentation for this class was generated from the following file `src/sstep_internal.h`
 

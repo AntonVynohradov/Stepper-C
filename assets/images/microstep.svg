@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" width="960" height="400" role="img" aria-label="Current vector, electrical angle and microsteps">
+<title>Current vector, electrical angle and microsteps</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5A6472"/></marker><marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F8B9A"/></marker><marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E07A00"/></marker><marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker></defs>
+<rect x="0" y="0" width="960" height="400" rx="12" fill="#FFFFFF"/>
+<line x1="20" y1="200" x2="360" y2="200" stroke="#C9D3E0" stroke-width="1.6"/>
+<line x1="190" y1="370" x2="190" y2="30" stroke="#C9D3E0" stroke-width="1.6"/>
+<text x="364" y="205" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="13" font-weight="bold" fill="#0B2545" text-anchor="start">iA</text>
+<text x="198" y="30" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="13" font-weight="bold" fill="#0B2545" text-anchor="start">iB</text>
+<circle cx="190" cy="200" r="140" fill="none" stroke="#1E5AA8" stroke-width="1.5" stroke-dasharray="4 4"/>
+<circle cx="330.0" cy="200.0" r="6" fill="#0B2545"/>
+<circle cx="319.3" cy="146.4" r="4" fill="#0F8B9A"/>
+<circle cx="289.0" cy="101.0" r="4" fill="#0F8B9A"/>
+<circle cx="243.6" cy="70.7" r="4" fill="#0F8B9A"/>
+<circle cx="190.0" cy="60.0" r="6" fill="#0B2545"/>
+<circle cx="136.4" cy="70.7" r="4" fill="#0F8B9A"/>
+<circle cx="91.0" cy="101.0" r="4" fill="#0F8B9A"/>
+<circle cx="60.7" cy="146.4" r="4" fill="#0F8B9A"/>
+<circle cx="50.0" cy="200.0" r="6" fill="#0B2545"/>
+<circle cx="60.7" cy="253.6" r="4" fill="#0F8B9A"/>
+<circle cx="91.0" cy="299.0" r="4" fill="#0F8B9A"/>
+<circle cx="136.4" cy="329.3" r="4" fill="#0F8B9A"/>
+<circle cx="190.0" cy="340.0" r="6" fill="#0B2545"/>
+<circle cx="243.6" cy="329.3" r="4" fill="#0F8B9A"/>
+<circle cx="289.0" cy="299.0" r="4" fill="#0F8B9A"/>
+<circle cx="319.3" cy="253.6" r="4" fill="#0F8B9A"/>
+<line x1="190" y1="200" x2="243.57568053111257" y2="70.65686544841986" stroke="#E07A00" stroke-width="2.6" marker-end="url(#arrow-orange)"/>
+<path d="M236,200 A46,46 0 0,0 207.6,157.5" stroke="#E07A00" stroke-width="1.6" fill="none"/>
+<text x="248" y="180" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="16" font-weight="bold" fill="#E07A00" text-anchor="start">φ</text>
+<circle cx="40" cy="392" r="6" fill="#0B2545"/>
+<text x="52" y="396" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#5A6472" text-anchor="start">full step (90° electrical)</text>
+<circle cx="220" cy="392" r="4" fill="#0F8B9A"/>
+<text x="230" y="396" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#5A6472" text-anchor="start">microstep (M = 4)</text>
+<line x1="420" y1="200.0" x2="920" y2="200.0" stroke="#C9D3E0" stroke-width="1.6"/>
+<line x1="420.0" y1="76" x2="420.0" y2="324" stroke="#C9D3E0" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="420.0" y="348" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="normal" fill="#5A6472" text-anchor="middle">0°</text>
+<line x1="545.0" y1="76" x2="545.0" y2="324" stroke="#C9D3E0" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="545.0" y="348" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="normal" fill="#5A6472" text-anchor="middle">90°</text>
+<line x1="670.0" y1="76" x2="670.0" y2="324" stroke="#C9D3E0" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="670.0" y="348" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="normal" fill="#5A6472" text-anchor="middle">180°</text>
+<line x1="795.0" y1="76" x2="795.0" y2="324" stroke="#C9D3E0" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="795.0" y="348" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="normal" fill="#5A6472" text-anchor="middle">270°</text>
+<line x1="920.0" y1="76" x2="920.0" y2="324" stroke="#C9D3E0" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="920.0" y="348" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="normal" fill="#5A6472" text-anchor="middle">360°</text>
+<path d="M420.0,86.0 L435.6,86.0 L435.6,88.2 L451.2,88.2 L451.2,94.7 L466.9,94.7 L466.9,105.2 L482.5,105.2 L482.5,119.4 L498.1,119.4 L498.1,136.7 L513.8,136.7 L513.8,156.4 L529.4,156.4 L529.4,177.8 L545.0,177.8 L545.0,200.0 L560.6,200.0 L560.6,222.2 L576.2,222.2 L576.2,243.6 L591.9,243.6 L591.9,263.3 L607.5,263.3 L607.5,280.6 L623.1,280.6 L623.1,294.8 L638.8,294.8 L638.8,305.3 L654.4,305.3 L654.4,311.8 L670.0,311.8 L670.0,314.0 L685.6,314.0 L685.6,311.8 L701.2,311.8 L701.2,305.3 L716.9,305.3 L716.9,294.8 L732.5,294.8 L732.5,280.6 L748.1,280.6 L748.1,263.3 L763.8,263.3 L763.8,243.6 L779.4,243.6 L779.4,222.2 L795.0,222.2 L795.0,200.0 L810.6,200.0 L810.6,177.8 L826.2,177.8 L826.2,156.4 L841.9,156.4 L841.9,136.7 L857.5,136.7 L857.5,119.4 L873.1,119.4 L873.1,105.2 L888.8,105.2 L888.8,94.7 L904.4,94.7 L904.4,88.2 L920.0,88.2" stroke="#1E5AA8" stroke-width="2" fill="none"/>
+<line x1="420" y1="56" x2="444" y2="56" stroke="#1E5AA8" stroke-width="2.4"/>
+<text x="450" y="61" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="bold" fill="#1E5AA8" text-anchor="start">iA = I cos φ</text>
+<path d="M420.0,200.0 L435.6,200.0 L435.6,177.8 L451.2,177.8 L451.2,156.4 L466.9,156.4 L466.9,136.7 L482.5,136.7 L482.5,119.4 L498.1,119.4 L498.1,105.2 L513.8,105.2 L513.8,94.7 L529.4,94.7 L529.4,88.2 L545.0,88.2 L545.0,86.0 L560.6,86.0 L560.6,88.2 L576.2,88.2 L576.2,94.7 L591.9,94.7 L591.9,105.2 L607.5,105.2 L607.5,119.4 L623.1,119.4 L623.1,136.7 L638.8,136.7 L638.8,156.4 L654.4,156.4 L654.4,177.8 L670.0,177.8 L670.0,200.0 L685.6,200.0 L685.6,222.2 L701.2,222.2 L701.2,243.6 L716.9,243.6 L716.9,263.3 L732.5,263.3 L732.5,280.6 L748.1,280.6 L748.1,294.8 L763.8,294.8 L763.8,305.3 L779.4,305.3 L779.4,311.8 L795.0,311.8 L795.0,314.0 L810.6,314.0 L810.6,311.8 L826.2,311.8 L826.2,305.3 L841.9,305.3 L841.9,294.8 L857.5,294.8 L857.5,280.6 L873.1,280.6 L873.1,263.3 L888.8,263.3 L888.8,243.6 L904.4,243.6 L904.4,222.2 L920.0,222.2" stroke="#0F8B9A" stroke-width="2" fill="none"/>
+<line x1="590" y1="56" x2="614" y2="56" stroke="#0F8B9A" stroke-width="2.4"/>
+<text x="620" y="61" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="bold" fill="#0F8B9A" text-anchor="start">iB = I sin φ</text>
+<text x="670.0" y="26" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="13" font-weight="normal" fill="#0B2545" text-anchor="middle">One electrical turn = 4 full steps = 2^32 angle units; a microstep = 2^30 / M</text>
+<text x="670.0" y="374" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#5A6472" text-anchor="middle">8 microsteps per full step shown; the fast loop interpolates between them</text>
+</svg>

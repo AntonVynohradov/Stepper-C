@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors, in portable C11 for any MCU, with no heap, no RTOS and MISRA C:2012.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -55,6 +55,8 @@
     
       <link rel="stylesheet" href="assets/stylesheets/extra.css">
     
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
+    
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -80,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#a-minimal-device-in-one-file" class="md-skip">
+        <a href="#a-motor-running-in-one-file" class="md-skip">
           Skip to content
         </a>
       
@@ -273,13 +275,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="protocol/" class="md-tabs__link">
+      <a href="motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -291,18 +293,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -358,7 +359,7 @@
       <span class="sfs-eyebrow">Open-source embedded library</span>
       <h1>Stepper Motor Control<span class="sfs-accent">in portable C</span></h1>
       <div class="sfs-rule"></div>
-      <p class="sfs-lead">TODO: Stepper-C turns [the raw medium] into validated [protocol units], and your replies back into bytes on the wire — with no heap, no RTOS and code that passes MISRA C:2012.</p>
+      <p class="sfs-lead">Stepper-C turns phase-current measurements and motion commands into PWM duty cycles for two-phase stepper motors: closed-loop microstepping current control on any MCU, with no heap, no RTOS and code that passes MISRA C:2012.</p>
       <div class="sfs-actions">
   
   <a class="sfs-btn sfs-btn--primary" href="guide/">Get started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
@@ -379,7 +380,7 @@
       </ul>
     </div>
     <div class="sfs-hero__visual">
-      <img src="assets/images/hero-3d.svg" alt="TODO describe the 3D scene (the problem being solved)">
+      <img src="assets/images/hero-3d.svg" alt="Isometric scene: a controller board with the Stepper-C chip and three half-bridges drives a stepper motor; the two phase currents flow along the wires as sine waves.">
     </div>
   </div>
 </section>
@@ -396,23 +397,23 @@
 
   <section class="sfs-section">
     <span class="sfs-eyebrow">The problem</span>
-    <h2 class="sfs-title">TODO the engineering pain in plain words</h2>
-    <p class="sfs-intro">TODO the real environment: the medium and its failures, the platform budget, the assurance that is expected.</p>
+    <h2 class="sfs-title">Smooth, quiet and exact, on a small MCU</h2>
+    <p class="sfs-intro">A stepper driver chip hides the current control in silicon. When you build the power stage yourself (an MCU with gate drivers, a three-leg ESC board, a custom H-bridge) the firmware has to regulate two phase currents at the PWM rate, keep the position exact over millions of microsteps, stay inside the voltage the bridge can apply and switch off within one period on a fault, often on a core without an FPU.</p>
     <div class="sfs-grid">
       <article class="sfs-card">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h3l2-6 3 12 3-9 2 5 2-2h5"/></svg></div>
-  <h3>TODO medium problem (noise, framing, timing)</h3>
-  <p>TODO what the library does about it.</p>
-  <ul class="sfs-tags"><li>TODO mechanism</li><li>TODO mechanism</li></ul>
+  <h3>Currents that follow the angle at 20 kHz</h3>
+  <p>One PI controller per phase with gains derived from R, L and one bandwidth value, back-EMF feed-forward and anti-windup. On the motor model a 2 A step settles in 0.40 ms with 1.1 % overshoot.</p>
+  <ul class="sfs-tags"><li>PI + feed-forward</li><li>Anti-windup</li><li>Bus compensation</li></ul>
 </article><article class="sfs-card">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h6"/></svg></div>
   <h3>Tight embedded budgets</h3>
-  <p>TODO measured RAM per instance and stack; no allocation, no globals, no OS.</p>
-  <ul class="sfs-tags"><li>Static memory</li><li>Bare metal</li><li>Zephyr</li></ul>
+  <p>360 B of RAM per motor, 184 B worst-case stack in the PWM interrupt, 6.6 KiB of flash on Cortex-M4. A fixed-point backend for cores without FPU; no allocation, no globals, no OS.</p>
+  <ul class="sfs-tags"><li>Q15 or float</li><li>Static memory</li><li>Bare metal & RTOS</li></ul>
 </article><article class="sfs-card">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
   <h3>Code you can certify</h3>
-  <p>Zero MISRA C:2012 violations, a documented deviation register, 100 % line and branch coverage and static analysis in CI.</p>
+  <p>Zero MISRA C:2012 violations, a documented deviation register, 100 % line and branch coverage in both numeric backends, bounded execution time and static analysis in CI.</p>
   <ul class="sfs-tags"><li>MISRA C</li><li>Cppcheck</li><li>CodeQL</li></ul>
 </article>
     </div>
@@ -420,39 +421,39 @@
 
   <section class="sfs-section">
     <span class="sfs-eyebrow">What you get</span>
-    <h2 class="sfs-title">A small library with a clear job</h2>
-    <p class="sfs-intro">TODO layers and number of functions.</p>
+    <h2 class="sfs-title">One library from motion command to PWM</h2>
+    <p class="sfs-intro">15 public functions, four modules (control, motion, power stage, numeric backend), two power stage topologies and two numeric backends, verified in closed loop on a motor model.</p>
     <div class="sfs-grid">
-      <a class="sfs-card sfs-card--link" href="architecture/">
-  <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></div>
-  <h3>Codec and link</h3>
-  <p>TODO</p>
-  <ul class="sfs-tags"><li>sstep_protocol</li><li>sstep_link</li></ul>
+      <a class="sfs-card sfs-card--link" href="motor-control/">
+  <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h3l2-6 3 12 3-9 2 5 2-2h5"/></svg></div>
+  <h3>Current control and microstepping</h3>
+  <p>PI per phase with feed-forward, sine/cosine references from a 32-bit electrical angle, 1 to 256 microsteps.</p>
+  <ul class="sfs-tags"><li>PI</li><li>Sine table</li><li>Microsteps</li></ul>
+</a><a class="sfs-card sfs-card--link" href="motor-control/#motion-profile">
+  <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-6"/></svg></div>
+  <h3>Motion planner</h3>
+  <p>Trapezoidal moves without overshoot, constant-velocity runs, smooth stop and retargeting, exact integer positions.</p>
+  <ul class="sfs-tags"><li>Trapezoid</li><li>Q16 positions</li></ul>
 </a><a class="sfs-card sfs-card--link" href="integration/">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3M15 7V3M6 7h12v4a6 6 0 0 1-12 0zM12 17v4"/></svg></div>
-  <h3>Any transport</h3>
-  <p>TODO</p>
-  <ul class="sfs-tags"><li>UART</li><li>RS-485</li></ul>
-</a><a class="sfs-card sfs-card--link" href="examples/">
-  <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg></div>
-  <h3>Working examples</h3>
-  <p>TODO</p>
-  <ul class="sfs-tags"><li>Bare metal</li><li>Zephyr</li><li>Host</li></ul>
-</a><a class="sfs-card sfs-card--link" href="gui/">
-  <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4M6 13l3-3 3 2 4-5"/></svg></div>
-  <h3>TODO tool or "Reference vectors"</h3>
-  <p>TODO</p>
-  <ul class="sfs-tags"><li>TODO</li></ul>
+  <h3>Any power stage</h3>
+  <p>Two H-bridges or three half-bridges with a shared leg; the voltage limit keeps the direction; the bus voltage is compensated.</p>
+  <ul class="sfs-tags"><li>4 legs</li><li>3 legs</li><li>B-G431B-ESC1</li></ul>
+</a><a class="sfs-card sfs-card--link" href="usage/#handling-faults">
+  <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+  <h3>Protection in the interrupt</h3>
+  <p>Overcurrent, overvoltage and undervoltage trips, callback errors and external faults switch the outputs off in the same period.</p>
+  <ul class="sfs-tags"><li>Trips</li><li>Fault callback</li></ul>
 </a><a class="sfs-card sfs-card--link" href="api/">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h5"/></svg></div>
   <h3>Complete documentation</h3>
-  <p>TODO</p>
+  <p>Guides, the control theory with measured results, the integration guide and a full API reference, also as a PDF.</p>
   <ul class="sfs-tags"><li>API</li><li>Guides</li><li>PDF</li></ul>
 </a><a class="sfs-card sfs-card--link" href="misra/">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></div>
   <h3>Quality gates in CI</h3>
-  <p>TODO</p>
-  <ul class="sfs-tags"><li>GoogleTest</li><li>pytest</li><li>Coverage</li></ul>
+  <p>Unit and closed-loop tests in both backends with a 100 % coverage gate, MISRA C:2012 gate, Cppcheck and CodeQL.</p>
+  <ul class="sfs-tags"><li>GoogleTest</li><li>Coverage</li><li>MISRA C</li></ul>
 </a>
     </div>
   </section>
@@ -460,20 +461,81 @@
   
   <section class="sfs-section">
     <div class="sfs-stats">
-      <div><strong>TODO</strong><span>public functions</span></div><div><strong>TODO B</strong><span>RAM per instance</span></div><div><strong>TODO B</strong><span>stack on Cortex-M4</span></div><div><strong>0</strong><span>MISRA C:2012 violations</span></div>
+      <div><strong>15</strong><span>public functions</span></div><div><strong>360 B</strong><span>RAM per motor</span></div><div><strong>184 B</strong><span>stack in the PWM interrupt</span></div><div><strong>0</strong><span>MISRA C:2012 violations</span></div>
     </div>
   </section>
   
 
   <section class="sfs-section sfs-markdown md-typeset">
     <p><span class="sfs-eyebrow">Quick start</span></p>
-<h2 id="a-minimal-device-in-one-file">A minimal device in one file<a class="headerlink" href="#a-minimal-device-in-one-file" title="Permanent link">&para;</a></h2>
-<p>TODO one paragraph: the two callbacks that connect the library to the hardware.</p>
+<h2 id="a-motor-running-in-one-file">A motor running in one file<a class="headerlink" href="#a-motor-running-in-one-file" title="Permanent link">&para;</a></h2>
+<p>Two callbacks connect the library to the power stage: one writes the PWM compare values,
+one switches the gate drivers. The PWM/ADC interrupt passes the raw ADC readings to the
+fast loop; the main loop runs the slow loop once per millisecond and gives the commands.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">"sstep.h"</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="cm">/* TODO: the smallest complete device or controller program; it must compile. */</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="n">motor</span><span class="p">;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">pwm_write</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">compare</span><span class="p">[</span><span class="n">SSTEP_LEGS_MAX</span><span class="p">])</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">{</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">context</span><span class="p">;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="n">board_pwm_set</span><span class="p">(</span><span class="n">compare</span><span class="p">);</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">}</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">output_enable</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">enable</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">{</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">context</span><span class="p">;</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="n">board_gates_enable</span><span class="p">(</span><span class="n">enable</span><span class="p">);</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">}</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="cm">/* 17HS19-2004S1 on a B-G431B-ESC1: 24 V, 20 kHz PWM, 16 microsteps */</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_config</span><span class="w"> </span><span class="n">motor_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="p">.</span><span class="n">motor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{.</span><span class="n">r_mohm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1600U</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">l_uh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3000U</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">i_rated_ma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2000U</span><span class="p">,</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">              </span><span class="p">.</span><span class="n">ke_uv_s_per_rad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">208600U</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">full_steps_per_rev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200U</span><span class="p">},</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">    </span><span class="p">.</span><span class="n">stage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{.</span><span class="n">topology</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SSTEP_TOPOLOGY_SHARED_LEG</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">vbus_nominal_mv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">24000U</span><span class="p">,</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">              </span><span class="p">.</span><span class="n">vbus_min_mv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10000U</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">vbus_max_mv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">28000U</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">i_full_scale_ma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4000U</span><span class="p">,</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">              </span><span class="p">.</span><span class="n">i_trip_ma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3500U</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">pwm_period_ticks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4250U</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">pwm_freq_hz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20000U</span><span class="p">,</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">              </span><span class="p">.</span><span class="n">adc_i_zero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2048U</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">adc_i_span</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2047</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">adc_vbus_mv_full</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">34320U</span><span class="p">,</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">              </span><span class="p">.</span><span class="n">adc_full</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4095U</span><span class="p">},</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">    </span><span class="p">.</span><span class="n">ctrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{.</span><span class="n">drive_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SSTEP_DRIVE_CURRENT</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">fast_loop_hz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20000U</span><span class="p">,</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">             </span><span class="p">.</span><span class="n">slow_loop_hz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000U</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">microsteps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16U</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">current_bw_hz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000U</span><span class="p">,</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">             </span><span class="p">.</span><span class="n">i_run_ma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1500U</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">i_hold_ma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500U</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">hold_delay_ms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500U</span><span class="p">,</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">             </span><span class="p">.</span><span class="n">v_max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16000U</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">accel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">64000U</span><span class="p">},</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">    </span><span class="p">.</span><span class="n">hal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{.</span><span class="n">pwm_write</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pwm_write</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">output_enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">output_enable</span><span class="p">},</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="p">};</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="cm">/* PWM/ADC interrupt, 20 kHz */</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="kt">void</span><span class="w"> </span><span class="nf">ADC1_2_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="kt">void</span><span class="w"> </span><span class="nf">ADC1_2_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="p">{</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_sample</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">board_adc_phase_a</span><span class="p">(),</span><span class="w"> </span><span class="n">board_adc_phase_b</span><span class="p">(),</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="w">                                        </span><span class="n">board_adc_vbus</span><span class="p">()};</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">sstep_fast_loop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sample</span><span class="p">);</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="p">}</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="p">{</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="w">    </span><span class="n">board_init</span><span class="p">();</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">sstep_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">motor_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">SSTEP_OK</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">(</span><span class="n">sstep_enable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">SSTEP_OK</span><span class="p">))</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a><span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">sstep_move_to</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">,</span><span class="w"> </span><span class="mi">3200</span><span class="p">);</span><span class="w"> </span><span class="cm">/* one revolution */</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">board_tick_1ms</span><span class="p">())</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a><span class="w">            </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">sstep_slow_loop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">);</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a><span class="p">}</span>
 </code></pre></div>
-<p>TODO one sentence naming the board functions used above and linking the <a href="examples/">examples</a>.</p>
+<p>The <code>board_…</code> functions stand for your timer, ADC and GPIO code; the ADC scaling values
+above must be measured on your board (<a href="configuration/#power-stage-and-measurement">Configuration</a>).</p>
 <h2 id="find-your-way">Find your way<a class="headerlink" href="#find-your-way" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -492,20 +554,20 @@
 <td><a href="guide/">Getting Started</a></td>
 </tr>
 <tr>
-<td>Understand the layers, data flow and parser</td>
+<td>Understand the loops, states and memory</td>
 <td><a href="architecture/">How It Works</a></td>
 </tr>
 <tr>
-<td>Write a device or a controller with it</td>
+<td>Configure a motor and command motion</td>
 <td><a href="usage/">Using the Library</a></td>
 </tr>
 <tr>
-<td>Add transports, device models or contribute</td>
-<td><a href="extending/">Extending the Library</a></td>
+<td>Understand the current control, microstepping and limits</td>
+<td><a href="motor-control/">Motor Control</a></td>
 </tr>
 <tr>
-<td>Look up the bytes on the wire</td>
-<td><a href="protocol/">Protocol</a></td>
+<td>Connect it to timers, ADC and interrupts</td>
+<td><a href="integration/">Integration Guide</a></td>
 </tr>
 <tr>
 <td>Look up a function</td>
@@ -513,7 +575,7 @@
 </tr>
 <tr>
 <td>Read everything offline or print it</td>
-<td><a href="https://antonvynohradov.github.io/stepper-c/downloads/Stepper-C_User_Manual.pdf">PDF user manual</a></td>
+<td><a href="https://antonvynohradov.github.io/Stepper-C/downloads/Stepper-C_User_Manual.pdf">PDF user manual</a></td>
 </tr>
 </tbody>
 </table>
@@ -535,7 +597,7 @@
   
 </div>
     </div>
-    <p class="sfs-trademark">SystemFromScratch® is a registered trademark. TODO [vendor marks] are trademarks of [vendor]. Stepper-C is an independent implementation and is not affiliated with or endorsed by [vendor].</p>
+    <p class="sfs-trademark">SystemFromScratch® is a registered trademark. STM32 is a registered trademark of STMicroelectronics International N.V.; Stepper-C is not affiliated with or endorsed by STMicroelectronics.</p>
   </section>
 
 </div>
@@ -648,6 +710,12 @@
     
     
       <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

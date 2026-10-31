@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -52,6 +52,8 @@
     
     
       <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -268,13 +270,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../protocol/" class="md-tabs__link">
+      <a href="../../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -286,18 +288,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -646,14 +647,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../protocol/" class="md-nav__link">
+      <a href="../../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -668,58 +669,6 @@
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -732,7 +681,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -741,42 +690,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1431,7 +1344,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-sstep_cfg_microsteps_max"><strong>SSTEP_CFG_MICROSTEPS_MAX</strong></a>  <code>256U</code><br><em>Largest microstep division accepted by</em> <a href="../group__sstep__ctrl/#function-sstep_init"><em><strong>sstep_init()</strong></em></a> <em>(power of two, 1..256).</em></td>
+<td style="text-align: left;"><a href="./#define-sstep_cfg_microsteps_max"><strong>SSTEP_CFG_MICROSTEPS_MAX</strong></a>  <code>256U</code><br><em>Largest microstep division accepted by</em> <a href="../group__sstep__api/#function-sstep_init"><em><strong>sstep_init()</strong></em></a> <em>(power of two, 1..256).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
@@ -1459,13 +1372,13 @@
 <p>Every macro has a default and may be overridden in one of two ways:
 * on the compiler command line (<code>-DSSTEP_CFG_MATH_BACKEND=SSTEP_MATH_BACKEND_FLOAT</code>), or
 * in a user header <code>sstep_user_config.h</code>, included when the macro <code>SSTEP_USER_CONFIG</code> is defined (CMake: set <code>SSTEP_CONFIG_DIR</code> to its folder).</p>
-<p>Values that cannot change at run time (code size, table sizes, which code paths exist) live here. Motor and board parameters are run-time values passed to <a href="../group__sstep__ctrl/#function-sstep_init"><strong>sstep_init()</strong></a>. </p>
+<p>Values that cannot change at run time (code size, table sizes, which code paths exist) live here. Motor and board parameters are run-time values passed to <a href="../group__sstep__api/#function-sstep_init"><strong>sstep_init()</strong></a>. </p>
 <h2 id="macro-definition-documentation">Macro Definition Documentation<a class="headerlink" href="#macro-definition-documentation" title="Permanent link">&para;</a></h2>
 <h3 id="define-sstep_cfg_arg_checks">define SSTEP_CFG_ARG_CHECKS<a class="headerlink" href="#define-sstep_cfg_arg_checks" title="Permanent link">&para;</a></h3>
 <p><em>1: every public function validates its pointer arguments (MISRA Dir 4.11).</em> 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>#define SSTEP_CFG_ARG_CHECKS `1`
 </code></pre></div></p>
-<p>0 removes the checks from <a href="../group__sstep__ctrl/#function-sstep_fast_loop"><strong>sstep_fast_loop()</strong></a> only, the function called from the PWM interrupt; all other functions always check. </p>
+<p>0 removes the checks from <a href="../group__sstep__api/#function-sstep_fast_loop"><strong>sstep_fast_loop()</strong></a> only, the function called from the PWM interrupt; all other functions always check. </p>
 <hr>
 
 <h3 id="define-sstep_cfg_math_backend">define SSTEP_CFG_MATH_BACKEND<a class="headerlink" href="#define-sstep_cfg_math_backend" title="Permanent link">&para;</a></h3>
@@ -1475,7 +1388,7 @@
 <hr>
 
 <h3 id="define-sstep_cfg_microsteps_max">define SSTEP_CFG_MICROSTEPS_MAX<a class="headerlink" href="#define-sstep_cfg_microsteps_max" title="Permanent link">&para;</a></h3>
-<p><em>Largest microstep division accepted by</em> <a href="../group__sstep__ctrl/#function-sstep_init"><em><strong>sstep_init()</strong></em></a> <em>(power of two, 1..256).</em>
+<p><em>Largest microstep division accepted by</em> <a href="../group__sstep__api/#function-sstep_init"><em><strong>sstep_init()</strong></em></a> <em>(power of two, 1..256).</em>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>#define SSTEP_CFG_MICROSTEPS_MAX `256U`
 </code></pre></div></p>
 <hr>
@@ -1611,6 +1524,12 @@
     
     
       <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

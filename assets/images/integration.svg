@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 400" width="980" height="400" role="img" aria-label="PWM, ADC and the two loops on a microcontroller">
+<title>PWM, ADC and the two loops on a microcontroller</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5A6472"/></marker><marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F8B9A"/></marker><marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E07A00"/></marker><marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker></defs>
+<rect x="0" y="0" width="980" height="400" rx="12" fill="#FFFFFF"/>
+<path d="M130.0,120 L222.5,40 L315.0,120 L315.0,120 L407.5,40 L500.0,120 L500.0,120 L592.5,40 L685.0,120 L685.0,120 L777.5,40 L870.0,120" stroke="#1E5AA8" stroke-width="2" fill="none"/>
+<text x="118" y="86" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#1E5AA8" text-anchor="end">PWM counter</text>
+<text x="118" y="102" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11" font-weight="normal" fill="#5A6472" text-anchor="end">(center-aligned)</text>
+<line x1="222.5" y1="40" x2="222.5" y2="330" stroke="#C9D3E0" stroke-width="1.6" stroke-dasharray="6 4"/>
+<rect x="222.5" y="140" width="50" height="26" rx="4" fill="#FFF7EC" stroke="#E07A00" stroke-width="1.5"/>
+<text x="247.5" y="158" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="bold" fill="#E07A00" text-anchor="middle">ADC</text>
+<rect x="276.5" y="186" width="92" height="26" rx="4" fill="#E6F4F5" stroke="#0F8B9A" stroke-width="1.5"/>
+<text x="322.5" y="204" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="bold" fill="#0F8B9A" text-anchor="middle">fast loop</text>
+<line x1="368.5" y1="199" x2="313.0" y2="240" stroke="#5A6472" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="281.0" y="240" width="68" height="24" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<text x="315.0" y="257" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11" font-weight="normal" fill="#0B2545" text-anchor="middle">preload</text>
+<line x1="407.5" y1="40" x2="407.5" y2="330" stroke="#C9D3E0" stroke-width="1.6" stroke-dasharray="6 4"/>
+<rect x="407.5" y="140" width="50" height="26" rx="4" fill="#FFF7EC" stroke="#E07A00" stroke-width="1.5"/>
+<text x="432.5" y="158" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="bold" fill="#E07A00" text-anchor="middle">ADC</text>
+<rect x="461.5" y="186" width="92" height="26" rx="4" fill="#E6F4F5" stroke="#0F8B9A" stroke-width="1.5"/>
+<text x="507.5" y="204" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="bold" fill="#0F8B9A" text-anchor="middle">fast loop</text>
+<line x1="553.5" y1="199" x2="498.0" y2="240" stroke="#5A6472" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="466.0" y="240" width="68" height="24" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<text x="500.0" y="257" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11" font-weight="normal" fill="#0B2545" text-anchor="middle">preload</text>
+<line x1="592.5" y1="40" x2="592.5" y2="330" stroke="#C9D3E0" stroke-width="1.6" stroke-dasharray="6 4"/>
+<rect x="592.5" y="140" width="50" height="26" rx="4" fill="#FFF7EC" stroke="#E07A00" stroke-width="1.5"/>
+<text x="617.5" y="158" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="bold" fill="#E07A00" text-anchor="middle">ADC</text>
+<rect x="646.5" y="186" width="92" height="26" rx="4" fill="#E6F4F5" stroke="#0F8B9A" stroke-width="1.5"/>
+<text x="692.5" y="204" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="bold" fill="#0F8B9A" text-anchor="middle">fast loop</text>
+<line x1="738.5" y1="199" x2="683.0" y2="240" stroke="#5A6472" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="651.0" y="240" width="68" height="24" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<text x="685.0" y="257" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11" font-weight="normal" fill="#0B2545" text-anchor="middle">preload</text>
+<line x1="777.5" y1="40" x2="777.5" y2="330" stroke="#C9D3E0" stroke-width="1.6" stroke-dasharray="6 4"/>
+<rect x="777.5" y="140" width="50" height="26" rx="4" fill="#FFF7EC" stroke="#E07A00" stroke-width="1.5"/>
+<text x="802.5" y="158" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="bold" fill="#E07A00" text-anchor="middle">ADC</text>
+<rect x="831.5" y="186" width="92" height="26" rx="4" fill="#E6F4F5" stroke="#0F8B9A" stroke-width="1.5"/>
+<text x="877.5" y="204" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="bold" fill="#0F8B9A" text-anchor="middle">fast loop</text>
+<line x1="923.5" y1="199" x2="868.0" y2="240" stroke="#5A6472" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="836.0" y="240" width="68" height="24" rx="4" fill="#FFFFFF" stroke="#0B2545" stroke-width="1.5"/>
+<text x="870.0" y="257" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11" font-weight="normal" fill="#0B2545" text-anchor="middle">preload</text>
+<text x="118" y="158" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#E07A00" text-anchor="end">ADC trigger</text>
+<text x="118" y="204" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#0F8B9A" text-anchor="end">EOC interrupt</text>
+<text x="118" y="257" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#0B2545" text-anchor="end">compare update</text>
+<rect x="150" y="290" width="700" height="30" rx="6" fill="#F2F5FA" stroke="#1E5AA8" stroke-width="1.5"/>
+<text x="500.0" y="310" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#1E5AA8" text-anchor="middle">slow loop: once every fast_loop_hz / slow_loop_hz periods (20 at 20 kHz / 1 kHz), preempted by the interrupt</text>
+<text x="118" y="310" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#1E5AA8" text-anchor="end">Main loop/task</text>
+<text x="500.0" y="366" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#0B2545" text-anchor="middle">Sample at the center of the period (low-side switches on); the new duty cycles take effect at the next period boundary.</text>
+</svg>

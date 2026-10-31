@@ -4,7 +4,7 @@
 
 
 
-[**FileList**](files.md) **>** [**inc**](dir_bfccd401955b95cf8c75461437045ac0.md) **>** [**sstep\_math.h**](sstep__math_8h.md)
+[**FileList**](files.md) **>** [**src**](dir_68267d1309a1af8e8297ef4c3efbcdba.md) **>** [**sstep\_math.h**](sstep__math_8h.md)
 
 [Go to the source code of this file](sstep__math_8h_source.md)
 
@@ -85,5 +85,5 @@
 
 
 ------------------------------
-The documentation for this class was generated from the following file `inc/sstep_math.h`
+The documentation for this class was generated from the following file `src/sstep_math.h`
 

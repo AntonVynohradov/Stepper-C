@@ -6,13 +6,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
       
       
-        <link rel="canonical" href="https://antonvynohradov.github.io/Stepper-C/reference/group__sstep__ctrl/">
+        <link rel="canonical" href="https://antonvynohradov.github.io/Stepper-C/reference/group__sstep__api/">
       
       
       
@@ -25,7 +25,7 @@
     
     
       
-        <title>Group sstep_ctrl - Stepper-C</title>
+        <title>Group sstep_api - Stepper-C</title>
       
     
     
@@ -53,6 +53,8 @@
     
       <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
     
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -78,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#group-sstep_ctrl" class="md-skip">
+        <a href="#group-sstep_api" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Group sstep_ctrl
+              Group sstep_api
             
           </span>
         </div>
@@ -268,13 +270,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../protocol/" class="md-tabs__link">
+      <a href="../../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -286,18 +288,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -646,14 +647,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../protocol/" class="md-nav__link">
+      <a href="../../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -668,58 +669,6 @@
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -732,7 +681,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -741,42 +690,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1266,28 +1179,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#classes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Classes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#public-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Public Types
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#public-functions" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1306,89 +1197,6 @@
       
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#public-types-documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Public Types Documentation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Public Types Documentation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#enum-sstep_drive_mode" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        enum sstep_drive_mode
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#enum-sstep_event" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        enum sstep_event
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#typedef-sstep_event_fn" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        typedef sstep_event_fn
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#typedef-sstep_fault_fn" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        typedef sstep_fault_fn
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#typedef-sstep_output_enable_fn" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        typedef sstep_output_enable_fn
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#typedef-sstep_pwm_write_fn" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        typedef sstep_pwm_write_fn
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1591,95 +1399,9 @@
 
 
 
-<h1 id="group-sstep_ctrl">Group sstep_ctrl<a class="headerlink" href="#group-sstep_ctrl" title="Permanent link">&para;</a></h1>
-<p><a href="../modules/"><strong>Modules</strong></a> <strong>&gt;</strong> <a href="./"><strong>sstep_ctrl</strong></a></p>
+<h1 id="group-sstep_api">Group sstep_api<a class="headerlink" href="#group-sstep_api" title="Permanent link">&para;</a></h1>
+<p><a href="../modules/"><strong>Modules</strong></a> <strong>&gt;</strong> <a href="./"><strong>sstep_api</strong></a></p>
 <p><em>Initialise a driver, run its loops and command motion.</em> <a href="#detailed-description">More...</a></p>
-<h2 id="classes">Classes<a class="headerlink" href="#classes" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;">Type</th>
-<th style="text-align: left;">Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;">struct</td>
-<td style="text-align: left;"><a href="../structsstep/"><strong>sstep</strong></a> <br><em>Driver instance.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">struct</td>
-<td style="text-align: left;"><a href="../structsstep__callbacks/"><strong>sstep_callbacks</strong></a> <br><em>Hardware callbacks.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">struct</td>
-<td style="text-align: left;"><a href="../structsstep__config/"><strong>sstep_config</strong></a> <br><em>Complete configuration given to</em> <a href="./#function-sstep_init"><em><strong>sstep_init()</strong></em></a> <em>.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">struct</td>
-<td style="text-align: left;"><a href="../structsstep__ctrl__cfg/"><strong>sstep_ctrl_cfg</strong></a> <br><em>Control and motion parameters.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">struct</td>
-<td style="text-align: left;"><a href="../structsstep__motion/"><strong>sstep_motion</strong></a> <br><em>Motion generator state.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">struct</td>
-<td style="text-align: left;"><a href="../structsstep__motor__cfg/"><strong>sstep_motor_cfg</strong></a> <br><em>Motor parameters, from the datasheet or measured.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">struct</td>
-<td style="text-align: left;"><a href="../structsstep__sample/"><strong>sstep_sample</strong></a> <br><em>Raw measurements of one fast loop period, as read from the ADC.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">struct</td>
-<td style="text-align: left;"><a href="../structsstep__setpoint/"><strong>sstep_setpoint</strong></a> <br><em>Setpoint handed from the slow loop to the fast loop.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">struct</td>
-<td style="text-align: left;"><a href="../structsstep__stage__cfg/"><strong>sstep_stage_cfg</strong></a> <br><em>Power stage and measurement parameters.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">struct</td>
-<td style="text-align: left;"><a href="../structsstep__status/"><strong>sstep_status</strong></a> <br><em>Snapshot returned by</em> <a href="./#function-sstep_get_status"><em><strong>sstep_get_status()</strong></em></a> <em>, in engineering units.</em></td>
-</tr>
-</tbody>
-</table>
-<h2 id="public-types">Public Types<a class="headerlink" href="#public-types" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;">Type</th>
-<th style="text-align: left;">Name</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;">enum</td>
-<td style="text-align: left;"><a href="#enum-sstep_drive_mode"><strong>sstep_drive_mode</strong></a>  <br><em>How the phase voltages are obtained.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">enum</td>
-<td style="text-align: left;"><a href="#enum-sstep_event"><strong>sstep_event</strong></a>  <br><em>Events reported through</em> <a href="./#typedef-sstep_event_fn"><em><strong>sstep_event_fn</strong></em></a> <em>.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">typedef void(*</td>
-<td style="text-align: left;"><a href="#typedef-sstep_event_fn"><strong>sstep_event_fn</strong></a>  <br><em>Notify the application of a motion event (optional).</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">typedef void(*</td>
-<td style="text-align: left;"><a href="#typedef-sstep_fault_fn"><strong>sstep_fault_fn</strong></a>  <br><em>Notify the application of new faults (optional).</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">typedef int(*</td>
-<td style="text-align: left;"><a href="#typedef-sstep_output_enable_fn"><strong>sstep_output_enable_fn</strong></a>  <br><em>Enable or disable the power stage outputs (disabled = all legs high impedance).</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">typedef int(*</td>
-<td style="text-align: left;"><a href="#typedef-sstep_pwm_write_fn"><strong>sstep_pwm_write_fn</strong></a>  <br><em>Write the PWM compare values of all legs.</em></td>
-</tr>
-</tbody>
-</table>
 <h2 id="public-functions">Public Functions<a class="headerlink" href="#public-functions" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1691,63 +1413,63 @@
 <tbody>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-sstep_clear_faults"><strong>sstep_clear_faults</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m) <br><em>Clear all faults; the driver goes to</em> SSTEP_STATE_DISABLED <em>.</em></td>
+<td style="text-align: left;"><a href="#function-sstep_clear_faults"><strong>sstep_clear_faults</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv) <br><em>Clear all faults; the driver goes to</em> SSTEP_STATE_DISABLED <em>.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-sstep_disable"><strong>sstep_disable</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m) <br><em>Stop immediately and switch the outputs off (motor coasts, no holding torque).</em></td>
+<td style="text-align: left;"><a href="#function-sstep_disable"><strong>sstep_disable</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv) <br><em>Stop immediately and switch the outputs off (motor coasts, no holding torque).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-sstep_enable"><strong>sstep_enable</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m) <br><em>Enable the outputs and hold the current position with the hold current.</em></td>
+<td style="text-align: left;"><a href="#function-sstep_enable"><strong>sstep_enable</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv) <br><em>Enable the outputs and hold the current position with the hold current.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-sstep_fast_loop"><strong>sstep_fast_loop</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m, const struct <a href="../structsstep__sample/"><strong>sstep_sample</strong></a> * sample) <br><em>Fast loop: convert the measurements, run the current controllers, limit the voltage, map it to the legs of the topology and write the PWM.</em></td>
+<td style="text-align: left;"><a href="#function-sstep_fast_loop"><strong>sstep_fast_loop</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv, const struct <a href="../structsstep__sample/"><strong>sstep_sample</strong></a> * sample) <br><em>Fast loop: convert the measurements, run the current controllers, limit the voltage, map it to the legs of the topology and write the PWM.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-sstep_get_status"><strong>sstep_get_status</strong></a> (const struct <a href="../structsstep/"><strong>sstep</strong></a> * m, struct <a href="../structsstep__status/"><strong>sstep_status</strong></a> * status) <br><em>Read a status snapshot in engineering units.</em></td>
+<td style="text-align: left;"><a href="#function-sstep_get_status"><strong>sstep_get_status</strong></a> (const struct <a href="../structsstep/"><strong>sstep</strong></a> * drv, struct <a href="../structsstep__status/"><strong>sstep_status</strong></a> * status) <br><em>Read a status snapshot in engineering units.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-sstep_init"><strong>sstep_init</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m, const struct <a href="../structsstep__config/"><strong>sstep_config</strong></a> * cfg) <br><em>Validate a configuration and initialise a driver.</em></td>
+<td style="text-align: left;"><a href="#function-sstep_init"><strong>sstep_init</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv, const struct <a href="../structsstep__config/"><strong>sstep_config</strong></a> * cfg) <br><em>Validate a configuration and initialise a driver.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-sstep_move_by"><strong>sstep_move_by</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m, int32_t delta) <br><em>Start a move relative to the current target.</em></td>
+<td style="text-align: left;"><a href="#function-sstep_move_by"><strong>sstep_move_by</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv, int32_t delta) <br><em>Start a move relative to the current target.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-sstep_move_to"><strong>sstep_move_to</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m, int32_t position) <br><em>Start a move to an absolute position with the trapezoidal profile.</em></td>
+<td style="text-align: left;"><a href="#function-sstep_move_to"><strong>sstep_move_to</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv, int32_t position) <br><em>Start a move to an absolute position with the trapezoidal profile.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-sstep_report_fault"><strong>sstep_report_fault</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m, uint16_t faults) <br><em>Report a fault detected by the application (driver fault pin, temperature).</em></td>
+<td style="text-align: left;"><a href="#function-sstep_report_fault"><strong>sstep_report_fault</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv, uint16_t faults) <br><em>Report a fault detected by the application (driver fault pin, temperature).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-sstep_run"><strong>sstep_run</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m, int32_t velocity) <br><em>Run at a constant velocity (accelerating with the configured limits) until another command.</em></td>
+<td style="text-align: left;"><a href="#function-sstep_run"><strong>sstep_run</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv, int32_t velocity) <br><em>Run at a constant velocity (accelerating with the configured limits) until another command.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-sstep_set_current"><strong>sstep_set_current</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m, uint32_t run_ma, uint32_t hold_ma) <br><em>Change the run and hold currents.</em></td>
+<td style="text-align: left;"><a href="#function-sstep_set_current"><strong>sstep_set_current</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv, uint32_t run_ma, uint32_t hold_ma) <br><em>Change the run and hold currents.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-sstep_set_motion_limits"><strong>sstep_set_motion_limits</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m, uint32_t v_max, uint32_t accel, uint32_t decel) <br><em>Change the motion limits; applies to the next command.</em></td>
+<td style="text-align: left;"><a href="#function-sstep_set_motion_limits"><strong>sstep_set_motion_limits</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv, uint32_t v_max, uint32_t accel, uint32_t decel) <br><em>Change the motion limits; they apply from the next</em> <a href="./#function-sstep_slow_loop"><em><strong>sstep_slow_loop()</strong></em></a> <em>, also to a running command.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-sstep_set_position"><strong>sstep_set_position</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m, int32_t position) <br><em>Redefine the current position (homing).</em></td>
+<td style="text-align: left;"><a href="#function-sstep_set_position"><strong>sstep_set_position</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv, int32_t position) <br><em>Redefine the current position (homing).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-sstep_slow_loop"><strong>sstep_slow_loop</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m) <br><em>Slow loop: advance the trajectory, update the angle and current references, handle the hold current and report events.</em></td>
+<td style="text-align: left;"><a href="#function-sstep_slow_loop"><strong>sstep_slow_loop</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv) <br><em>Slow loop: advance the trajectory, update the angle and current references, handle the hold current and report events.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-sstep_stop"><strong>sstep_stop</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m) <br><em>Decelerate to standstill with the configured deceleration and hold.</em></td>
+<td style="text-align: left;"><a href="#function-sstep_stop"><strong>sstep_stop</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv) <br><em>Decelerate to standstill with the configured deceleration and hold.</em></td>
 </tr>
 </tbody>
 </table>
@@ -1779,91 +1501,16 @@
 </table>
 <p>All other functions are called from the same context as <a href="./#function-sstep_slow_loop"><strong>sstep_slow_loop()</strong></a>. The library never reads a clock, never blocks, allocates no memory and has no global state: time is given by the configured loop rates.</p>
 <p><strong>Hardware access</strong> is done only through the callbacks in <a href="../structsstep__callbacks/"><strong>sstep_callbacks</strong></a>, given once to <a href="./#function-sstep_init"><strong>sstep_init()</strong></a>. Measurements are passed to <a href="./#function-sstep_fast_loop"><strong>sstep_fast_loop()</strong></a> as raw ADC counts. </p>
-<h2 id="public-types-documentation">Public Types Documentation<a class="headerlink" href="#public-types-documentation" title="Permanent link">&para;</a></h2>
-<h3 id="enum-sstep_drive_mode">enum sstep_drive_mode<a class="headerlink" href="#enum-sstep_drive_mode" title="Permanent link">&para;</a></h3>
-<p><em>How the phase voltages are obtained.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>enum sstep_drive_mode {
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    SSTEP_DRIVE_CURRENT = 0,
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    SSTEP_DRIVE_VOLTAGE = 1
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>};
-</code></pre></div></p>
-<hr>
-
-<h3 id="enum-sstep_event">enum sstep_event<a class="headerlink" href="#enum-sstep_event" title="Permanent link">&para;</a></h3>
-<p><em>Events reported through</em> <a href="./#typedef-sstep_event_fn"><em><strong>sstep_event_fn</strong></em></a> <em>.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>enum sstep_event {
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    SSTEP_EVENT_MOVE_DONE = 0,
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    SSTEP_EVENT_HOLD_CURRENT = 1
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>};
-</code></pre></div></p>
-<hr>
-
-<h3 id="typedef-sstep_event_fn">typedef sstep_event_fn<a class="headerlink" href="#typedef-sstep_event_fn" title="Permanent link">&para;</a></h3>
-<p><em>Notify the application of a motion event (optional).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>typedef void(* sstep_event_fn) (void *context, enum sstep_event event);
-</code></pre></div></p>
-<p>Called from <a href="./#function-sstep_slow_loop"><strong>sstep_slow_loop()</strong></a>. </p>
-<p><strong>Parameters:</strong></p>
-<ul>
-<li><code>context</code> <a href="../structsstep__callbacks/#variable-context"><strong>sstep_callbacks::context</strong></a>. </li>
-<li><code>event</code> The event. </li>
-</ul>
-<hr>
-
-<h3 id="typedef-sstep_fault_fn">typedef sstep_fault_fn<a class="headerlink" href="#typedef-sstep_fault_fn" title="Permanent link">&para;</a></h3>
-<p><em>Notify the application of new faults (optional).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>typedef void(* sstep_fault_fn) (void *context, uint16_t faults);
-</code></pre></div></p>
-<p>Called from the context that detected the fault, which may be <a href="./#function-sstep_fast_loop"><strong>sstep_fast_loop()</strong></a> (interrupt). </p>
-<p><strong>Parameters:</strong></p>
-<ul>
-<li><code>context</code> <a href="../structsstep__callbacks/#variable-context"><strong>sstep_callbacks::context</strong></a>. </li>
-<li><code>faults</code> Newly raised <a href="../group__sstep__defs/#define-sstep_fault_overcurrent"><strong>SSTEP_FAULT_OVERCURRENT</strong></a> ... flags. </li>
-</ul>
-<hr>
-
-<h3 id="typedef-sstep_output_enable_fn">typedef sstep_output_enable_fn<a class="headerlink" href="#typedef-sstep_output_enable_fn" title="Permanent link">&para;</a></h3>
-<p><em>Enable or disable the power stage outputs (disabled = all legs high impedance).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>typedef int(* sstep_output_enable_fn) (void *context, bool enable);
-</code></pre></div></p>
-<p><strong>Parameters:</strong></p>
-<ul>
-<li><code>context</code> <a href="../structsstep__callbacks/#variable-context"><strong>sstep_callbacks::context</strong></a>. </li>
-<li><code>enable</code> true to enable the gate drivers, false to switch every leg off. </li>
-</ul>
-<p><strong>Return value:</strong></p>
-<ul>
-<li><code>0</code> Success. </li>
-<li><code>&lt;0</code> Error, reported as <a href="../group__sstep__defs/#define-sstep_fault_hal"><strong>SSTEP_FAULT_HAL</strong></a>. </li>
-</ul>
-<hr>
-
-<h3 id="typedef-sstep_pwm_write_fn">typedef sstep_pwm_write_fn<a class="headerlink" href="#typedef-sstep_pwm_write_fn" title="Permanent link">&para;</a></h3>
-<p><em>Write the PWM compare values of all legs.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>typedef int(* sstep_pwm_write_fn) (void *context, const uint16_t compare[SSTEP_LEGS_MAX]);
-</code></pre></div></p>
-<p>Called from <a href="./#function-sstep_fast_loop"><strong>sstep_fast_loop()</strong></a>. </p>
-<p><strong>Parameters:</strong></p>
-<ul>
-<li><code>context</code> <a href="../structsstep__callbacks/#variable-context"><strong>sstep_callbacks::context</strong></a>. </li>
-<li><code>compare</code> One compare value per leg, 0 .. <code>pwm_period_ticks</code> (0 = low-side on, <code>pwm_period_ticks</code> = high-side on). Entries above the leg count of the topology are 0. Valid only during the call. </li>
-</ul>
-<p><strong>Return value:</strong></p>
-<ul>
-<li><code>0</code> Success. </li>
-<li><code>&lt;0</code> Error: the driver switches the outputs off with <a href="../group__sstep__defs/#define-sstep_fault_hal"><strong>SSTEP_FAULT_HAL</strong></a>. </li>
-</ul>
-<hr>
 <h2 id="public-functions-documentation">Public Functions Documentation<a class="headerlink" href="#public-functions-documentation" title="Permanent link">&para;</a></h2>
 <h3 id="function-sstep_clear_faults">function sstep_clear_faults<a class="headerlink" href="#function-sstep_clear_faults" title="Permanent link">&para;</a></h3>
 <p><em>Clear all faults; the driver goes to</em> SSTEP_STATE_DISABLED <em>.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>int sstep_clear_faults (
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    struct sstep * m
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>int sstep_clear_faults (
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    struct sstep * drv
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>) 
 </code></pre></div></p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>m</code> Driver instance. </li>
+<li><code>drv</code> Driver instance. </li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
@@ -1873,13 +1520,13 @@
 
 <h3 id="function-sstep_disable">function sstep_disable<a class="headerlink" href="#function-sstep_disable" title="Permanent link">&para;</a></h3>
 <p><em>Stop immediately and switch the outputs off (motor coasts, no holding torque).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>int sstep_disable (
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    struct sstep * m
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>int sstep_disable (
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    struct sstep * drv
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>) 
 </code></pre></div></p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>m</code> Driver instance. </li>
+<li><code>drv</code> Driver instance. </li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
@@ -1889,13 +1536,13 @@
 
 <h3 id="function-sstep_enable">function sstep_enable<a class="headerlink" href="#function-sstep_enable" title="Permanent link">&para;</a></h3>
 <p><em>Enable the outputs and hold the current position with the hold current.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>int sstep_enable (
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    struct sstep * m
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>int sstep_enable (
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    struct sstep * drv
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>) 
 </code></pre></div></p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>m</code> Driver instance. </li>
+<li><code>drv</code> Driver instance. </li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
@@ -1905,15 +1552,15 @@
 
 <h3 id="function-sstep_fast_loop">function sstep_fast_loop<a class="headerlink" href="#function-sstep_fast_loop" title="Permanent link">&para;</a></h3>
 <p><em>Fast loop: convert the measurements, run the current controllers, limit the voltage, map it to the legs of the topology and write the PWM.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>int sstep_fast_loop (
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    struct sstep * m,
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    const struct sstep_sample * sample
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>int sstep_fast_loop (
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    struct sstep * drv,
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    const struct sstep_sample * sample
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>) 
 </code></pre></div></p>
 <p>Call from the PWM/ADC interrupt at <code>fast_loop_hz</code>. Bounded execution time, no loops over data. </p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>m</code> Driver instance. </li>
+<li><code>drv</code> Driver instance. </li>
 <li><code>sample</code> Measurements of this period. </li>
 </ul>
 <p><strong>Return value:</strong></p>
@@ -1924,14 +1571,14 @@
 
 <h3 id="function-sstep_get_status">function sstep_get_status<a class="headerlink" href="#function-sstep_get_status" title="Permanent link">&para;</a></h3>
 <p><em>Read a status snapshot in engineering units.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>int sstep_get_status (
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    const struct sstep * m,
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    struct sstep_status * status
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>int sstep_get_status (
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    const struct sstep * drv,
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    struct sstep_status * status
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>) 
 </code></pre></div></p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>m</code> Driver instance. </li>
+<li><code>drv</code> Driver instance. </li>
 <li><code>status</code> Filled on success. </li>
 </ul>
 <p><strong>Return value:</strong></p>
@@ -1942,15 +1589,15 @@
 
 <h3 id="function-sstep_init">function sstep_init<a class="headerlink" href="#function-sstep_init" title="Permanent link">&para;</a></h3>
 <p><em>Validate a configuration and initialise a driver.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>int sstep_init (
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    struct sstep * m,
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    const struct sstep_config * cfg
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>int sstep_init (
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    struct sstep * drv,
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    const struct sstep_config * cfg
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>) 
 </code></pre></div></p>
 <p>Outputs stay disabled. Derives the per-unit bases, the PI gains (Kp = L * wc, Ki = R * wc) and the trajectory constants; no floating point is used with the fixed point backend. </p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>m</code> Driver instance. </li>
+<li><code>drv</code> Driver instance. </li>
 <li><code>cfg</code> Configuration; copied. </li>
 </ul>
 <p><strong>Return value:</strong></p>
@@ -1964,14 +1611,14 @@
 
 <h3 id="function-sstep_move_by">function sstep_move_by<a class="headerlink" href="#function-sstep_move_by" title="Permanent link">&para;</a></h3>
 <p><em>Start a move relative to the current target.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>int sstep_move_by (
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    struct sstep * m,
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    int32_t delta
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>int sstep_move_by (
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    struct sstep * drv,
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    int32_t delta
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>) 
 </code></pre></div></p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>m</code> Driver instance. </li>
+<li><code>drv</code> Driver instance. </li>
 <li><code>delta</code> Distance [microsteps]. </li>
 </ul>
 <p><strong>Return value:</strong></p>
@@ -1982,15 +1629,15 @@
 
 <h3 id="function-sstep_move_to">function sstep_move_to<a class="headerlink" href="#function-sstep_move_to" title="Permanent link">&para;</a></h3>
 <p><em>Start a move to an absolute position with the trapezoidal profile.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>int sstep_move_to (
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    struct sstep * m,
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    int32_t position
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>int sstep_move_to (
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    struct sstep * drv,
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    int32_t position
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>) 
 </code></pre></div></p>
 <p>Replaces the current move; the change is smooth (no velocity step). </p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>m</code> Driver instance. </li>
+<li><code>drv</code> Driver instance. </li>
 <li><code>position</code> Target [microsteps]. </li>
 </ul>
 <p><strong>Return value:</strong></p>
@@ -2001,15 +1648,15 @@
 
 <h3 id="function-sstep_report_fault">function sstep_report_fault<a class="headerlink" href="#function-sstep_report_fault" title="Permanent link">&para;</a></h3>
 <p><em>Report a fault detected by the application (driver fault pin, temperature).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>int sstep_report_fault (
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    struct sstep * m,
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    uint16_t faults
-<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>int sstep_report_fault (
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    struct sstep * drv,
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    uint16_t faults
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>) 
 </code></pre></div></p>
 <p>Switches the outputs off. May be called from an interrupt. </p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>m</code> Driver instance. </li>
+<li><code>drv</code> Driver instance. </li>
 <li><code>faults</code> Flags to raise, typically <a href="../group__sstep__defs/#define-sstep_fault_external"><strong>SSTEP_FAULT_EXTERNAL</strong></a>. </li>
 </ul>
 <p><strong>Return value:</strong></p>
@@ -2020,14 +1667,14 @@
 
 <h3 id="function-sstep_run">function sstep_run<a class="headerlink" href="#function-sstep_run" title="Permanent link">&para;</a></h3>
 <p><em>Run at a constant velocity (accelerating with the configured limits) until another command.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>int sstep_run (
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    struct sstep * m,
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>    int32_t velocity
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>int sstep_run (
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    struct sstep * drv,
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    int32_t velocity
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>) 
 </code></pre></div></p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>m</code> Driver instance. </li>
+<li><code>drv</code> Driver instance. </li>
 <li><code>velocity</code> Signed velocity [microsteps/s], |velocity| &lt;= v_max. </li>
 </ul>
 <p><strong>Return value:</strong></p>
@@ -2038,15 +1685,15 @@
 
 <h3 id="function-sstep_set_current">function sstep_set_current<a class="headerlink" href="#function-sstep_set_current" title="Permanent link">&para;</a></h3>
 <p><em>Change the run and hold currents.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>int sstep_set_current (
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    struct sstep * m,
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    uint32_t run_ma,
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>    uint32_t hold_ma
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>int sstep_set_current (
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    struct sstep * drv,
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    uint32_t run_ma,
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    uint32_t hold_ma
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>) 
 </code></pre></div></p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>m</code> Driver instance. </li>
+<li><code>drv</code> Driver instance. </li>
 <li><code>run_ma</code> Peak phase current while moving [mA]. </li>
 <li><code>hold_ma</code> Peak phase current at standstill [mA], &lt;= run_ma. </li>
 </ul>
@@ -2057,17 +1704,17 @@
 <hr>
 
 <h3 id="function-sstep_set_motion_limits">function sstep_set_motion_limits<a class="headerlink" href="#function-sstep_set_motion_limits" title="Permanent link">&para;</a></h3>
-<p><em>Change the motion limits; applies to the next command.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>int sstep_set_motion_limits (
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    struct sstep * m,
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>    uint32_t v_max,
-<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>    uint32_t accel,
-<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>    uint32_t decel
-<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>) 
+<p><em>Change the motion limits; they apply from the next</em> <a href="./#function-sstep_slow_loop"><em><strong>sstep_slow_loop()</strong></em></a> <em>, also to a running command.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>int sstep_set_motion_limits (
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    struct sstep * drv,
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    uint32_t v_max,
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    uint32_t accel,
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    uint32_t decel
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>) 
 </code></pre></div></p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>m</code> Driver instance. </li>
+<li><code>drv</code> Driver instance. </li>
 <li><code>v_max</code> Maximum velocity [microsteps/s]. </li>
 <li><code>accel</code> Acceleration [microsteps/s^2]. </li>
 <li><code>decel</code> Deceleration [microsteps/s^2]; 0 = same as accel. </li>
@@ -2080,15 +1727,15 @@
 
 <h3 id="function-sstep_set_position">function sstep_set_position<a class="headerlink" href="#function-sstep_set_position" title="Permanent link">&para;</a></h3>
 <p><em>Redefine the current position (homing).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>int sstep_set_position (
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>    struct sstep * m,
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>    int32_t position
-<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>int sstep_set_position (
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    struct sstep * drv,
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    int32_t position
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>) 
 </code></pre></div></p>
 <p>Only at standstill. </p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>m</code> Driver instance. </li>
+<li><code>drv</code> Driver instance. </li>
 <li><code>position</code> New value of the current position [microsteps]. </li>
 </ul>
 <p><strong>Return value:</strong></p>
@@ -2099,14 +1746,14 @@
 
 <h3 id="function-sstep_slow_loop">function sstep_slow_loop<a class="headerlink" href="#function-sstep_slow_loop" title="Permanent link">&para;</a></h3>
 <p><em>Slow loop: advance the trajectory, update the angle and current references, handle the hold current and report events.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>int sstep_slow_loop (
-<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>    struct sstep * m
-<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>int sstep_slow_loop (
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    struct sstep * drv
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>) 
 </code></pre></div></p>
 <p>Call at <code>slow_loop_hz</code>. </p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>m</code> Driver instance. </li>
+<li><code>drv</code> Driver instance. </li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
@@ -2116,13 +1763,13 @@
 
 <h3 id="function-sstep_stop">function sstep_stop<a class="headerlink" href="#function-sstep_stop" title="Permanent link">&para;</a></h3>
 <p><em>Decelerate to standstill with the configured deceleration and hold.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>int sstep_stop (
-<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>    struct sstep * m
-<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>int sstep_stop (
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    struct sstep * drv
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>) 
 </code></pre></div></p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>m</code> Driver instance. </li>
+<li><code>drv</code> Driver instance. </li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
@@ -2228,6 +1875,12 @@
     
     
       <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

@@ -1,38 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.9.8" xml:lang="en-US">
+  <compound refid="structalign__ctx" kind="struct"><name>align_ctx</name>
+    <member refid="structalign__ctx_1a5ad44bd2ec97e5289e03d91d4c63bc8b" kind="variable"><name>c</name></member>
+    <member refid="structalign__ctx_1ad7c4135b1d6f23ebc1a2eaf2391b9937" kind="variable"><name>x</name></member>
+  </compound>
+  <compound refid="structalign__pub" kind="struct"><name>align_pub</name>
+    <member refid="structalign__pub_1a4e98cca38fae5adedd606dba7ae5cb3a" kind="variable"><name>c</name></member>
+    <member refid="structalign__pub_1a55e81b23c0db7a293f8d6f8dc3bdb1b1" kind="variable"><name>x</name></member>
+  </compound>
   <compound refid="structsstep" kind="struct"><name>sstep</name>
-    <member refid="structsstep_1aaf32205eee316315323718cbd5dc5301" kind="variable"><name>cfg</name></member>
-    <member refid="structsstep_1a14930162be2c835735a68f859841bec9" kind="variable"><name>kp</name></member>
-    <member refid="structsstep_1a75c15629fef7a691be3f553f40a05e05" kind="variable"><name>ki</name></member>
-    <member refid="structsstep_1adc926c66f97ffd3f280f01d15ec07ac7" kind="variable"><name>kb</name></member>
-    <member refid="structsstep_1a124d1d6e95a1e3a7c1b5c21aca780547" kind="variable"><name>r_pu</name></member>
-    <member refid="structsstep_1a136c344d7530598ecdfa2c7e7bb0c710" kind="variable"><name>adc_i</name></member>
-    <member refid="structsstep_1a3c81bb3e85126d11d22f7b20ed870d68" kind="variable"><name>adc_v</name></member>
-    <member refid="structsstep_1aee3b5d055416a3e62d6b8e09a814059a" kind="variable"><name>ff_gain</name></member>
-    <member refid="structsstep_1a7870776465573337dff855584ae76b50" kind="variable"><name>i_run</name></member>
-    <member refid="structsstep_1a3e60e2db178682e77b626eb4ea2824ad" kind="variable"><name>i_hold</name></member>
-    <member refid="structsstep_1a9ca0047888ad1c514b114b7e2d0d7b31" kind="variable"><name>i_trip_counts</name></member>
-    <member refid="structsstep_1afa154a5d23ee28817f9de911fc327608" kind="variable"><name>vbus_min_raw</name></member>
-    <member refid="structsstep_1a8eeb0afe59cae95621960f09e09df3df" kind="variable"><name>vbus_max_raw</name></member>
-    <member refid="structsstep_1a2dea5d2680bfcfa8237cf05a6f671e5f" kind="variable"><name>ratio</name></member>
-    <member refid="structsstep_1aed229d21567330d4ab3f0241b6f97ccf" kind="variable"><name>hold_ticks</name></member>
-    <member refid="structsstep_1ababdbe75dd8546892c2266b46853c5cd" kind="variable"><name>angle_shift</name></member>
-    <member refid="structsstep_1a90473274d9e1b801d3865659d0f85055" kind="variable"><name>sp</name></member>
-    <member refid="structsstep_1a5807cb386bed6ad0c4a0cf3ae39dcd8b" kind="variable"><name>sp_active</name></member>
-    <member refid="structsstep_1a51598947c301c0a667faeef2723c7e04" kind="variable"><name>sp_pending</name></member>
-    <member refid="structsstep_1ac258a64c8a63035b3868d27edb5a10af" kind="variable"><name>cur</name></member>
-    <member refid="structsstep_1a21e446827c1881949a398ecbfb468e7f" kind="variable"><name>adv</name></member>
-    <member refid="structsstep_1a05ad83e4710ca2c9cd6c9de56e8e7f56" kind="variable"><name>integ</name></member>
-    <member refid="structsstep_1aa89189b8a14977165caa1b19ba763378" kind="variable"><name>i_meas</name></member>
-    <member refid="structsstep_1a0883601991a0f25d489658fc5709f4b1" kind="variable"><name>vbus_raw</name></member>
-    <member refid="structsstep_1a14a56b984dd39c9e0c610e0a81e888f9" kind="variable"><name>compare</name></member>
-    <member refid="structsstep_1a1796a9a192a29ba109c19eed5d14714e" kind="variable"><name>mo</name></member>
-    <member refid="structsstep_1a2ce8b5156bad21cb9858de00499087f0" kind="variable"><name>angle_offset</name></member>
-    <member refid="structsstep_1a4f1dfc4cfa09204cd8e4b23d7509d06c" kind="variable"><name>still</name></member>
-    <member refid="structsstep_1adfda4969fe4a677377a45a3173a26fe8" kind="variable"><name>hold_active</name></member>
-    <member refid="structsstep_1ae4c9d9de16a1fe20a5e231a60dfd4dbd" kind="variable"><name>inv_vbus</name></member>
-    <member refid="structsstep_1a81c2007417dd8e12f117b056cb20bed7" kind="variable"><name>faults</name></member>
-    <member refid="structsstep_1a291e470876400ad0ec2386cca3209fff" kind="variable"><name>state</name></member>
+    <member refid="structsstep_1ae0006c41c8870dbea132e771ad935889" kind="variable"><name>opaque</name></member>
   </compound>
   <compound refid="structsstep__bridge__out" kind="struct"><name>sstep_bridge_out</name>
     <member refid="structsstep__bridge__out_1a49e42fd980a0fcccd4b1cdce35113ce4" kind="variable"><name>compare</name></member>
@@ -64,6 +41,40 @@
     <member refid="structsstep__ctrl__cfg_1afb1d36d1a16777c4de7424713c978145" kind="variable"><name>v_max</name></member>
     <member refid="structsstep__ctrl__cfg_1aba43930ef8fb8e0f915a1afad82b38be" kind="variable"><name>accel</name></member>
     <member refid="structsstep__ctrl__cfg_1afcad15a338d34337026c2b2960f4fa7a" kind="variable"><name>decel</name></member>
+  </compound>
+  <compound refid="structsstep__ctx" kind="struct"><name>sstep_ctx</name>
+    <member refid="structsstep__ctx_1a95044f0e3e149efbdef19cf5023add21" kind="variable"><name>cfg</name></member>
+    <member refid="structsstep__ctx_1a1e67c4340162d418cc5d5e9f3bc3e95b" kind="variable"><name>kp</name></member>
+    <member refid="structsstep__ctx_1a46b595654e2f1e01563b1a2d8cf9aaa9" kind="variable"><name>ki</name></member>
+    <member refid="structsstep__ctx_1abfdd76cdb0afb54c2c51505114092405" kind="variable"><name>kb</name></member>
+    <member refid="structsstep__ctx_1a3d086e65b6a2ad860e427c36f27e56ec" kind="variable"><name>r_pu</name></member>
+    <member refid="structsstep__ctx_1a48ede8aad4c742c12faa8dc92b22df8b" kind="variable"><name>adc_i</name></member>
+    <member refid="structsstep__ctx_1af6d85c1fd40cd00ebcc402bc6b1d5c19" kind="variable"><name>adc_v</name></member>
+    <member refid="structsstep__ctx_1a8be09d137512077d21285ac8e0886db7" kind="variable"><name>ff_gain</name></member>
+    <member refid="structsstep__ctx_1a23be414f6e03d7d3d45b80929eeabe4c" kind="variable"><name>i_run</name></member>
+    <member refid="structsstep__ctx_1a332c6bbffbe5d21901e7741e05264261" kind="variable"><name>i_hold</name></member>
+    <member refid="structsstep__ctx_1a8fd6a548bab8493551c729472a1ec5b8" kind="variable"><name>i_trip_counts</name></member>
+    <member refid="structsstep__ctx_1addb60a18b6f3a27bc6c70b0ecb81738a" kind="variable"><name>vbus_min_raw</name></member>
+    <member refid="structsstep__ctx_1a3da3a12210a404943e9d2e236a63ea0b" kind="variable"><name>vbus_max_raw</name></member>
+    <member refid="structsstep__ctx_1a82d7b9f7d886bb1943ba901e336e0d8b" kind="variable"><name>ratio</name></member>
+    <member refid="structsstep__ctx_1ae64fcf3425b2598936138ba299cf6b4d" kind="variable"><name>hold_ticks</name></member>
+    <member refid="structsstep__ctx_1a810f186b003933d53d8554a10541f92d" kind="variable"><name>angle_shift</name></member>
+    <member refid="structsstep__ctx_1a9b6ace7a3294a768d244e4a00d428b15" kind="variable"><name>sp</name></member>
+    <member refid="structsstep__ctx_1aac285fd52795b36c9e83f80427f82eab" kind="variable"><name>sp_active</name></member>
+    <member refid="structsstep__ctx_1ab258c071b68ef99090b0b7255f42e3cb" kind="variable"><name>sp_pending</name></member>
+    <member refid="structsstep__ctx_1adb272b220e797957556b8b3e37253a98" kind="variable"><name>cur</name></member>
+    <member refid="structsstep__ctx_1a01ff4c75981ac1ac5e216372bd4cd965" kind="variable"><name>adv</name></member>
+    <member refid="structsstep__ctx_1a17668c85b69646377aa7c84cac353b3d" kind="variable"><name>integ</name></member>
+    <member refid="structsstep__ctx_1a012c6e0d1edfaeba7a920f3f5a78b6f7" kind="variable"><name>i_meas</name></member>
+    <member refid="structsstep__ctx_1a396559c5cf7e80f8284a758090e4c9fa" kind="variable"><name>vbus_raw</name></member>
+    <member refid="structsstep__ctx_1a3eb1be70191acef8e88f3479fae8e0e9" kind="variable"><name>compare</name></member>
+    <member refid="structsstep__ctx_1a2e1ad5b7ce1ec2becb6891b47e153811" kind="variable"><name>mo</name></member>
+    <member refid="structsstep__ctx_1abec952592f81b9471eebd6e308761ad6" kind="variable"><name>angle_offset</name></member>
+    <member refid="structsstep__ctx_1a60464f27495ad8b58110fcf1b479937e" kind="variable"><name>still</name></member>
+    <member refid="structsstep__ctx_1aa5dbd43a4ab41881800819204db9071c" kind="variable"><name>hold_active</name></member>
+    <member refid="structsstep__ctx_1a2faf30dd7bf5a3afcae0aa32f8377a38" kind="variable"><name>inv_vbus</name></member>
+    <member refid="structsstep__ctx_1aea889ec3ad563cb14a4e9203b6624175" kind="variable"><name>faults</name></member>
+    <member refid="structsstep__ctx_1a49e7de50e5440d9aa544c0c9038fc968" kind="variable"><name>state</name></member>
   </compound>
   <compound refid="structsstep__gain" kind="struct"><name>sstep_gain</name>
     <member refid="structsstep__gain_1a24f22986696b88f390cd5a47fed49ac0" kind="variable"><name>mant</name></member>
@@ -139,27 +150,18 @@
     <member refid="group__sstep__config_1ga61a368eeac97ae6ab0f43c70a2acc423" kind="define"><name>SSTEP_CFG_ARG_CHECKS</name></member>
   </compound>
   <compound refid="sstep__ctrl_8h" kind="file"><name>sstep_ctrl.h</name>
-    <member refid="group__sstep__ctrl_1ga9765926896e39cbaf1a643817ed8cb1c" kind="enum"><name>sstep_event</name></member>
-    <member refid="group__sstep__ctrl_1ga4bf2c449cd0d7182351a1e7f2654bc3f" kind="enum"><name>sstep_drive_mode</name></member>
-    <member refid="group__sstep__ctrl_1ga20872bd7139bc69948fde3a9d70b74ed" kind="typedef"><name>sstep_pwm_write_fn</name></member>
-    <member refid="group__sstep__ctrl_1ga4ce54e97216a52981a4dca1f0e38a2a4" kind="typedef"><name>sstep_output_enable_fn</name></member>
-    <member refid="group__sstep__ctrl_1ga82d9a26444da72841a7c26547472ae94" kind="typedef"><name>sstep_fault_fn</name></member>
-    <member refid="group__sstep__ctrl_1ga1f844e0d5ebd90cbe7e3044802574c7d" kind="typedef"><name>sstep_event_fn</name></member>
-    <member refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kind="function"><name>sstep_init</name></member>
-    <member refid="group__sstep__ctrl_1ga2137580fc98132f74adb37aa68e43101" kind="function"><name>sstep_enable</name></member>
-    <member refid="group__sstep__ctrl_1ga02b70096cdf1d22d320236519d12370b" kind="function"><name>sstep_disable</name></member>
-    <member refid="group__sstep__ctrl_1ga9d39aedf45b1e59f71fe94a1dc0df79b" kind="function"><name>sstep_fast_loop</name></member>
-    <member refid="group__sstep__ctrl_1ga4ab2695d05ff19f5e9ed61018af7d83a" kind="function"><name>sstep_slow_loop</name></member>
-    <member refid="group__sstep__ctrl_1ga6e1233931109cb8b8cbfc878e5f40f19" kind="function"><name>sstep_move_to</name></member>
-    <member refid="group__sstep__ctrl_1ga36f9bbbff003e82fe6844c5d049ebe1c" kind="function"><name>sstep_move_by</name></member>
-    <member refid="group__sstep__ctrl_1ga31e75aa1193a151a7fb3b0831e8c530b" kind="function"><name>sstep_run</name></member>
-    <member refid="group__sstep__ctrl_1ga364a4cd8cc079f56138fc124032757e0" kind="function"><name>sstep_stop</name></member>
-    <member refid="group__sstep__ctrl_1gaed90e750a1d179c79e7cd4610eb1c4fe" kind="function"><name>sstep_set_position</name></member>
-    <member refid="group__sstep__ctrl_1ga66f834a5478abb9bf5575de900ed4569" kind="function"><name>sstep_set_current</name></member>
-    <member refid="group__sstep__ctrl_1ga3636c6db7fcb51655b8ca63f6156f578" kind="function"><name>sstep_set_motion_limits</name></member>
-    <member refid="group__sstep__ctrl_1gadb944552719e659be1da950534631023" kind="function"><name>sstep_report_fault</name></member>
-    <member refid="group__sstep__ctrl_1ga7f4318600b1b000315230db98dd426cb" kind="function"><name>sstep_clear_faults</name></member>
-    <member refid="group__sstep__ctrl_1gafda7fec931ffa0ac11e671c75cd39300" kind="function"><name>sstep_get_status</name></member>
+    <member refid="sstep__ctrl_8h_1a9af422d11c76726b25e77f5c71412614" kind="define"><name>SSTEP_STATE_BYTES</name></member>
+    <member refid="sstep__ctrl_8h_1a5c53f1fde1dc641be449a4e57e4848d9" kind="define"><name>SSTEP_INSTANCE_WORDS</name></member>
+    <member refid="sstep__ctrl_8h_1a9765926896e39cbaf1a643817ed8cb1c" kind="enum"><name>sstep_event</name></member>
+    <member refid="sstep__ctrl_8h_1a9765926896e39cbaf1a643817ed8cb1ca724dd2f3716f9027ffc285f1ff20ca66" kind="enumvalue"><name>SSTEP_EVENT_MOVE_DONE</name></member>
+    <member refid="sstep__ctrl_8h_1a9765926896e39cbaf1a643817ed8cb1ca455ac81133f81866f3546e14006ae896" kind="enumvalue"><name>SSTEP_EVENT_HOLD_CURRENT</name></member>
+    <member refid="sstep__ctrl_8h_1a4bf2c449cd0d7182351a1e7f2654bc3f" kind="enum"><name>sstep_drive_mode</name></member>
+    <member refid="sstep__ctrl_8h_1a4bf2c449cd0d7182351a1e7f2654bc3fa85b15ad052155339018a6bc76f25f468" kind="enumvalue"><name>SSTEP_DRIVE_CURRENT</name></member>
+    <member refid="sstep__ctrl_8h_1a4bf2c449cd0d7182351a1e7f2654bc3fac9139624ce10c97984c9fead23ce3485" kind="enumvalue"><name>SSTEP_DRIVE_VOLTAGE</name></member>
+    <member refid="sstep__ctrl_8h_1a20872bd7139bc69948fde3a9d70b74ed" kind="typedef"><name>sstep_pwm_write_fn</name></member>
+    <member refid="sstep__ctrl_8h_1a4ce54e97216a52981a4dca1f0e38a2a4" kind="typedef"><name>sstep_output_enable_fn</name></member>
+    <member refid="sstep__ctrl_8h_1a82d9a26444da72841a7c26547472ae94" kind="typedef"><name>sstep_fault_fn</name></member>
+    <member refid="sstep__ctrl_8h_1a1f844e0d5ebd90cbe7e3044802574c7d" kind="typedef"><name>sstep_event_fn</name></member>
   </compound>
   <compound refid="sstep__defs_8h" kind="file"><name>sstep_defs.h</name>
     <member refid="group__sstep__defs_1gad80c1718aa6b968cfd521404803da291" kind="define"><name>SSTEP_OK</name></member>
@@ -177,6 +179,79 @@
     <member refid="group__sstep__defs_1gabd2c373f4d8a7502c78952555c8cb23c" kind="enum"><name>sstep_topology</name></member>
     <member refid="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" kind="enum"><name>sstep_state</name></member>
   </compound>
+  <compound refid="sstep__bridge_8c" kind="file"><name>sstep_bridge.c</name>
+    <member refid="sstep__bridge_8c_1a5aab94c290a6275ed87184f3c89a4615" kind="define"><name>ACC_HALF</name></member>
+    <member refid="sstep__bridge_8c_1a01178ec7d293eefd6c70f75cd04c41f9" kind="function"><name>acc_max</name></member>
+    <member refid="sstep__bridge_8c_1a57372824a0f9a1ca8e3f0062807d34fd" kind="function"><name>scale_to_unit</name></member>
+    <member refid="sstep__bridge_8c_1a0461923af61066b8d47e2ccbd491eec2" kind="function"><name>sstep_bridge_map</name></member>
+  </compound>
+  <compound refid="sstep__ctrl_8c" kind="file"><name>sstep_ctrl.c</name>
+    <member refid="sstep__ctrl_8c_1abe87adb13c67378e75be142a6305e5e4" kind="define"><name>TWO_PI_NUM</name></member>
+    <member refid="sstep__ctrl_8c_1aa059cff969f0def5e941bf574cc5838d" kind="define"><name>TWO_PI_DEN</name></member>
+    <member refid="sstep__ctrl_8c_1a3f2d877c9ff1e95e195bf1e0f191e90d" kind="define"><name>RATIO_LIMIT</name></member>
+    <member refid="sstep__ctrl_8c_1aacdeb883b8cfc24b1ea6133e987a556d" kind="define"><name>VALUE_MAX</name></member>
+    <member refid="sstep__ctrl_8c_1a9d3ab963a0ff46ba3d0f234ce62f609f" kind="define"><name>Q16_LIMIT</name></member>
+    <member refid="sstep__ctrl_8c_1af75e49422b094fa407cf160b6b10fb74" kind="define"><name>VBUS_PU_MAX</name></member>
+    <member refid="sstep__ctrl_8c_1a62588e9e8ee88905af3c1e963eeab0b6" kind="function"><name>is_pow2</name></member>
+    <member refid="sstep__ctrl_8c_1a3e9a6dd4efe5659ae81289d9c2c6e3db" kind="function"><name>log2_u32</name></member>
+    <member refid="sstep__ctrl_8c_1a4ead7cee00ae34bea4dd095beca907ba" kind="function"><name>mul_ok</name></member>
+    <member refid="sstep__ctrl_8c_1a2cfbb3ba7c4907ffe69e201594bebf8d" kind="function"><name>ratio</name></member>
+    <member refid="sstep__ctrl_8c_1aa347fb466fba0c88b232caf8e3346cf4" kind="function"><name>div_round</name></member>
+    <member refid="sstep__ctrl_8c_1a512d04c7782912202921b1dcdd1b3efd" kind="function"><name>pow2_i64</name></member>
+    <member refid="sstep__ctrl_8c_1a2bcdd0a307bf3d4c06c9a2e9a7fd380d" kind="function"><name>gain_apply_i32</name></member>
+    <member refid="sstep__ctrl_8c_1a6ea967f43c250969cf8118a7bf90a4cf" kind="function"><name>raw_angle</name></member>
+    <member refid="sstep__ctrl_8c_1ada3ddd09b297fe3df6d29fea7a1cece7" kind="function"><name>check_config</name></member>
+    <member refid="sstep__ctrl_8c_1a5fc0414477f649ed79976c9f47c30fbd" kind="function"><name>set_currents</name></member>
+    <member refid="sstep__ctrl_8c_1ab537c97201fa367e9086185c6cbd712e" kind="function"><name>set_limits</name></member>
+    <member refid="sstep__ctrl_8c_1a77a5b6ec2576e97859a08cb2b9228ed7" kind="function"><name>derive</name></member>
+    <member refid="sstep__ctrl_8c_1a6d49a854190c5f8aafe129d3b9c7b2de" kind="function"><name>shutdown</name></member>
+    <member refid="sstep__ctrl_8c_1ac22829c55eff88b7e656930b20a46767" kind="function"><name>publish</name></member>
+    <member refid="sstep__ctrl_8c_1a9c7f37837400705fc6063c4f68de10dc" kind="function"><name>is_active</name></member>
+    <member refid="sstep__ctrl_8c_1a1dfa2289eaca533ff5997ae8d8bbee1f" kind="function"><name>is_moving</name></member>
+    <member refid="sstep__ctrl_8c_1a020f38072151e100c3223632862a602a" kind="function"><name>control</name></member>
+    <member refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kind="function"><name>sstep_init</name></member>
+    <member refid="group__sstep__api_1ga3f592ef6f7e95b2c4b0792f113eae5ac" kind="function"><name>sstep_enable</name></member>
+    <member refid="group__sstep__api_1ga296ffb294291431f36e14fc306c20027" kind="function"><name>sstep_disable</name></member>
+    <member refid="group__sstep__api_1ga8c3b6798f83c32337a21d4ccdd61239b" kind="function"><name>sstep_fast_loop</name></member>
+    <member refid="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" kind="function"><name>sstep_slow_loop</name></member>
+    <member refid="group__sstep__api_1gab5ac3f4056af2b982b8131016df0541e" kind="function"><name>sstep_move_to</name></member>
+    <member refid="group__sstep__api_1gacc99b6a8006f7c7f950133873a5a8fce" kind="function"><name>sstep_move_by</name></member>
+    <member refid="group__sstep__api_1gaa21dff174e881ddaddd22b9bf334f3f8" kind="function"><name>sstep_run</name></member>
+    <member refid="group__sstep__api_1ga41ae3f6b6cc322b50c3e3884d48dd7a1" kind="function"><name>sstep_stop</name></member>
+    <member refid="group__sstep__api_1ga17aff99dbb74c27b0eb1995024c28e71" kind="function"><name>sstep_set_position</name></member>
+    <member refid="group__sstep__api_1ga75cb79da6deda7b271d7a01d70f5d718" kind="function"><name>sstep_set_current</name></member>
+    <member refid="group__sstep__api_1gae9224e0f9e8f1822529ef015bb88f382" kind="function"><name>sstep_set_motion_limits</name></member>
+    <member refid="group__sstep__api_1gaafe3bb709aaa93b20884f9e7f6e31498" kind="function"><name>sstep_report_fault</name></member>
+    <member refid="group__sstep__api_1gafff498925b2f3c0de622702a2f181b9b" kind="function"><name>sstep_clear_faults</name></member>
+    <member refid="group__sstep__api_1ga1568aad455503ed6e062cf7048bf01ba" kind="function"><name>sstep_get_status</name></member>
+  </compound>
+  <compound refid="sstep__internal_8h" kind="file"><name>sstep_internal.h</name>
+    <member refid="sstep__internal_8h_1a2e51989a1e049a9de727cfe086579022" kind="define"><name>SSTEP_MODE_HOLD</name></member>
+    <member refid="sstep__internal_8h_1ab4c1d62a11dc197e667adfe9bf9c5518" kind="define"><name>SSTEP_MODE_MOVE</name></member>
+    <member refid="sstep__internal_8h_1a0a237eb1318ccd127da69a7e7ad1ce8b" kind="define"><name>SSTEP_MODE_RUN</name></member>
+    <member refid="sstep__internal_8h_1ac3a3403e1053f6f8970b375a56652fba" kind="define"><name>SSTEP_MOTION_DONE</name></member>
+    <member refid="sstep__internal_8h_1a7abcc94f6af80c76c498c708a18e5e2b" kind="define"><name>SSTEP_POS_ONE</name></member>
+    <member refid="sstep__internal_8h_1ae76a8a3215f734efc5d88f524a24e8bd" kind="define"><name>SSTEP_POS_SNAP</name></member>
+    <member refid="sstep__internal_8h_1ae305d555b363553b0fa27fc09937a780" kind="function"><name>sstep_ctx_of</name></member>
+    <member refid="sstep__internal_8h_1ae3072da3090d284396a49652702be4d6" kind="function"><name>sstep_ctx_of_const</name></member>
+    <member refid="sstep__internal_8h_1a0461923af61066b8d47e2ccbd491eec2" kind="function"><name>sstep_bridge_map</name></member>
+    <member refid="sstep__internal_8h_1a6972dea5b1b230e9affdf5678071d270" kind="function"><name>sstep_motion_step</name></member>
+    <member refid="sstep__internal_8h_1ab255367c0431d4183dc752ba1c4f1779" kind="function"><name>sstep_isqrt64</name></member>
+  </compound>
+  <compound refid="sstep__math_8c" kind="file"><name>sstep_math.c</name>
+    <member refid="sstep__math_8c_1aa2765cdce7ddb768248c1e90d5c2898b" kind="define"><name>QUADRANT_BITS</name></member>
+    <member refid="sstep__math_8c_1ab0e2ca3994106ff82e4b19de1c8e9972" kind="define"><name>QUADRANT_MASK</name></member>
+    <member refid="sstep__math_8c_1a0ac65b37442b7b10d74dedeb7d25e737" kind="define"><name>FRAC_BITS</name></member>
+    <member refid="sstep__math_8c_1ae8be0c92441e54347f84cd5a390904c2" kind="define"><name>RATIO64_LIMIT</name></member>
+    <member refid="sstep__math_8c_1a71b14d4127d7ff7a5f62367b1dd582f9" kind="function"><name>quarter_sin</name></member>
+    <member refid="sstep__math_8c_1ae7657db742fda4b214def031883fb492" kind="function"><name>bit_length</name></member>
+    <member refid="sstep__math_8c_1a06f8e7ef90f710983da1f0783acdf5d4" kind="function"><name>ratio_round</name></member>
+    <member refid="group__sstep__math_1ga7836410f8c904ba6e53b55a137fc4222" kind="function"><name>sstep_sin_cos</name></member>
+    <member refid="group__sstep__math_1gadc561c4232ca81e9f509d23da7b48fa4" kind="function"><name>sstep_gain_from_ratio64</name></member>
+    <member refid="group__sstep__math_1gafe58f850f3ec0ea7b1d369e4a8d692fe" kind="function"><name>sstep_gain_from_ratio</name></member>
+    <member refid="group__sstep__math_1gac4d9af6078161c3a89d38aae434af758" kind="function"><name>sstep_real_from_ratio</name></member>
+    <member refid="group__sstep__math_1gafb1fd7f556a7ff09ab6bccb8fe887c26" kind="function"><name>sstep_real_to_units</name></member>
+  </compound>
   <compound refid="sstep__math_8h" kind="file"><name>sstep_math.h</name>
     <member refid="group__sstep__math_1ga2d5482dea51a4ab7080e8f4eb44d3aa0" kind="define"><name>SSTEP_REAL_FRAC_BITS</name></member>
     <member refid="group__sstep__math_1ga43cd75513da21713b316fd7d6df854e1" kind="define"><name>SSTEP_REAL_MAX</name></member>
@@ -184,12 +259,14 @@
     <member refid="group__sstep__math_1ga6439406841b4ed53c1ce2ee0fe81aa53" kind="define"><name>SSTEP_ACC_MAX</name></member>
     <member refid="group__sstep__math_1ga4402962590ac756f8fb162a9e403af6d" kind="define"><name>SSTEP_ACC_MIN</name></member>
     <member refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kind="define"><name>SSTEP_ACC_C</name></member>
-    <member refid="group__sstep__math_1ga04216138ad07146cf6400fdf1645ac66" kind="define"><name>SSTEP_INTEG_FRAC_BITS</name></member>
-    <member refid="group__sstep__math_1gae0c7646e62896d744b49d47b83483d61" kind="define"><name>SSTEP_REAL_C</name></member>
     <member refid="group__sstep__math_1ga49210b7ca8593d5d0eb7b9f360fd17ba" kind="define"><name>SSTEP_REAL_ZERO</name></member>
+    <member refid="group__sstep__math_1gacc0a5a1b8573c3ed89560e08122d958c" kind="define"><name>SSTEP_ACC_ZERO</name></member>
+    <member refid="group__sstep__math_1ga2ff93d11d0bada9efacace4cc6776743" kind="define"><name>SSTEP_ACC_HALF</name></member>
     <member refid="group__sstep__math_1ga75e8b014aa4abda04e37cd97addabfdb" kind="define"><name>SSTEP_ACC_ONE</name></member>
     <member refid="group__sstep__math_1gaedc6f7b47e26254fefb82c8c45608834" kind="define"><name>SSTEP_ACC_IN_MAX</name></member>
     <member refid="group__sstep__math_1gafe4b9cb66063a93b889ffb432a2b1fa6" kind="define"><name>SSTEP_ACC_SCALE_MAX</name></member>
+    <member refid="group__sstep__math_1ga04216138ad07146cf6400fdf1645ac66" kind="define"><name>SSTEP_INTEG_FRAC_BITS</name></member>
+    <member refid="group__sstep__math_1gae0c7646e62896d744b49d47b83483d61" kind="define"><name>SSTEP_REAL_C</name></member>
     <member refid="group__sstep__math_1gae0d7a92d278d7b421a62aeefe11adb13" kind="define"><name>SSTEP_GAIN_EXP_MIN</name></member>
     <member refid="group__sstep__math_1ga969c943dfb6f5d0fe6aa409e8e95ce3a" kind="define"><name>SSTEP_GAIN_EXP_MAX</name></member>
     <member refid="group__sstep__math_1ga2d9b6ce2135a467c6d227cde4dd9c12b" kind="typedef"><name>sstep_angle_t</name></member>
@@ -227,76 +304,6 @@
     <member refid="group__sstep__math_1gac4d9af6078161c3a89d38aae434af758" kind="function"><name>sstep_real_from_ratio</name></member>
     <member refid="group__sstep__math_1gafb1fd7f556a7ff09ab6bccb8fe887c26" kind="function"><name>sstep_real_to_units</name></member>
   </compound>
-  <compound refid="sstep__bridge_8c" kind="file"><name>sstep_bridge.c</name>
-    <member refid="sstep__bridge_8c_1a5aab94c290a6275ed87184f3c89a4615" kind="define"><name>ACC_HALF</name></member>
-    <member refid="sstep__bridge_8c_1a01178ec7d293eefd6c70f75cd04c41f9" kind="function"><name>acc_max</name></member>
-    <member refid="sstep__bridge_8c_1a57372824a0f9a1ca8e3f0062807d34fd" kind="function"><name>scale_to_unit</name></member>
-    <member refid="sstep__bridge_8c_1a0461923af61066b8d47e2ccbd491eec2" kind="function"><name>sstep_bridge_map</name></member>
-  </compound>
-  <compound refid="sstep__ctrl_8c" kind="file"><name>sstep_ctrl.c</name>
-    <member refid="sstep__ctrl_8c_1abe87adb13c67378e75be142a6305e5e4" kind="define"><name>TWO_PI_NUM</name></member>
-    <member refid="sstep__ctrl_8c_1aa059cff969f0def5e941bf574cc5838d" kind="define"><name>TWO_PI_DEN</name></member>
-    <member refid="sstep__ctrl_8c_1a3f2d877c9ff1e95e195bf1e0f191e90d" kind="define"><name>RATIO_LIMIT</name></member>
-    <member refid="sstep__ctrl_8c_1aacdeb883b8cfc24b1ea6133e987a556d" kind="define"><name>VALUE_MAX</name></member>
-    <member refid="sstep__ctrl_8c_1a9d3ab963a0ff46ba3d0f234ce62f609f" kind="define"><name>Q16_LIMIT</name></member>
-    <member refid="sstep__ctrl_8c_1af75e49422b094fa407cf160b6b10fb74" kind="define"><name>VBUS_PU_MAX</name></member>
-    <member refid="sstep__ctrl_8c_1a62588e9e8ee88905af3c1e963eeab0b6" kind="function"><name>is_pow2</name></member>
-    <member refid="sstep__ctrl_8c_1a3e9a6dd4efe5659ae81289d9c2c6e3db" kind="function"><name>log2_u32</name></member>
-    <member refid="sstep__ctrl_8c_1a4ead7cee00ae34bea4dd095beca907ba" kind="function"><name>mul_ok</name></member>
-    <member refid="sstep__ctrl_8c_1a2cfbb3ba7c4907ffe69e201594bebf8d" kind="function"><name>ratio</name></member>
-    <member refid="sstep__ctrl_8c_1aa347fb466fba0c88b232caf8e3346cf4" kind="function"><name>div_round</name></member>
-    <member refid="sstep__ctrl_8c_1a2bcdd0a307bf3d4c06c9a2e9a7fd380d" kind="function"><name>gain_apply_i32</name></member>
-    <member refid="sstep__ctrl_8c_1a034fb2595f04b6661996c345e3b51c94" kind="function"><name>raw_angle</name></member>
-    <member refid="sstep__ctrl_8c_1ada3ddd09b297fe3df6d29fea7a1cece7" kind="function"><name>check_config</name></member>
-    <member refid="sstep__ctrl_8c_1a73465ae53be845bfd2b5ff515c32da0c" kind="function"><name>set_currents</name></member>
-    <member refid="sstep__ctrl_8c_1af815bcb24a0979b058e88c4f5c83f8c0" kind="function"><name>set_limits</name></member>
-    <member refid="sstep__ctrl_8c_1a59c55c325a17c0ee8c4450a5d8189992" kind="function"><name>derive</name></member>
-    <member refid="sstep__ctrl_8c_1a847114bcb689781e6844428eb4607910" kind="function"><name>shutdown</name></member>
-    <member refid="sstep__ctrl_8c_1a1d772333980d24822d15bfc5d5c4b583" kind="function"><name>publish</name></member>
-    <member refid="sstep__ctrl_8c_1a9c7f37837400705fc6063c4f68de10dc" kind="function"><name>is_active</name></member>
-    <member refid="sstep__ctrl_8c_1ae709d34b0bc57b19c7644921f81231d9" kind="function"><name>is_moving</name></member>
-    <member refid="sstep__ctrl_8c_1abc3bd1122a03aa55b8705a0c5c093750" kind="function"><name>control</name></member>
-    <member refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kind="function"><name>sstep_init</name></member>
-    <member refid="group__sstep__ctrl_1ga2137580fc98132f74adb37aa68e43101" kind="function"><name>sstep_enable</name></member>
-    <member refid="group__sstep__ctrl_1ga02b70096cdf1d22d320236519d12370b" kind="function"><name>sstep_disable</name></member>
-    <member refid="group__sstep__ctrl_1ga9d39aedf45b1e59f71fe94a1dc0df79b" kind="function"><name>sstep_fast_loop</name></member>
-    <member refid="group__sstep__ctrl_1ga4ab2695d05ff19f5e9ed61018af7d83a" kind="function"><name>sstep_slow_loop</name></member>
-    <member refid="group__sstep__ctrl_1ga6e1233931109cb8b8cbfc878e5f40f19" kind="function"><name>sstep_move_to</name></member>
-    <member refid="group__sstep__ctrl_1ga36f9bbbff003e82fe6844c5d049ebe1c" kind="function"><name>sstep_move_by</name></member>
-    <member refid="group__sstep__ctrl_1ga31e75aa1193a151a7fb3b0831e8c530b" kind="function"><name>sstep_run</name></member>
-    <member refid="group__sstep__ctrl_1ga364a4cd8cc079f56138fc124032757e0" kind="function"><name>sstep_stop</name></member>
-    <member refid="group__sstep__ctrl_1gaed90e750a1d179c79e7cd4610eb1c4fe" kind="function"><name>sstep_set_position</name></member>
-    <member refid="group__sstep__ctrl_1ga66f834a5478abb9bf5575de900ed4569" kind="function"><name>sstep_set_current</name></member>
-    <member refid="group__sstep__ctrl_1ga3636c6db7fcb51655b8ca63f6156f578" kind="function"><name>sstep_set_motion_limits</name></member>
-    <member refid="group__sstep__ctrl_1gadb944552719e659be1da950534631023" kind="function"><name>sstep_report_fault</name></member>
-    <member refid="group__sstep__ctrl_1ga7f4318600b1b000315230db98dd426cb" kind="function"><name>sstep_clear_faults</name></member>
-    <member refid="group__sstep__ctrl_1gafda7fec931ffa0ac11e671c75cd39300" kind="function"><name>sstep_get_status</name></member>
-  </compound>
-  <compound refid="sstep__internal_8h" kind="file"><name>sstep_internal.h</name>
-    <member refid="sstep__internal_8h_1a2e51989a1e049a9de727cfe086579022" kind="define"><name>SSTEP_MODE_HOLD</name></member>
-    <member refid="sstep__internal_8h_1ab4c1d62a11dc197e667adfe9bf9c5518" kind="define"><name>SSTEP_MODE_MOVE</name></member>
-    <member refid="sstep__internal_8h_1a0a237eb1318ccd127da69a7e7ad1ce8b" kind="define"><name>SSTEP_MODE_RUN</name></member>
-    <member refid="sstep__internal_8h_1ac3a3403e1053f6f8970b375a56652fba" kind="define"><name>SSTEP_MOTION_DONE</name></member>
-    <member refid="sstep__internal_8h_1a7abcc94f6af80c76c498c708a18e5e2b" kind="define"><name>SSTEP_POS_ONE</name></member>
-    <member refid="sstep__internal_8h_1ae76a8a3215f734efc5d88f524a24e8bd" kind="define"><name>SSTEP_POS_SNAP</name></member>
-    <member refid="sstep__internal_8h_1a0461923af61066b8d47e2ccbd491eec2" kind="function"><name>sstep_bridge_map</name></member>
-    <member refid="sstep__internal_8h_1a6972dea5b1b230e9affdf5678071d270" kind="function"><name>sstep_motion_step</name></member>
-    <member refid="sstep__internal_8h_1ab255367c0431d4183dc752ba1c4f1779" kind="function"><name>sstep_isqrt64</name></member>
-  </compound>
-  <compound refid="sstep__math_8c" kind="file"><name>sstep_math.c</name>
-    <member refid="sstep__math_8c_1aa2765cdce7ddb768248c1e90d5c2898b" kind="define"><name>QUADRANT_BITS</name></member>
-    <member refid="sstep__math_8c_1ab0e2ca3994106ff82e4b19de1c8e9972" kind="define"><name>QUADRANT_MASK</name></member>
-    <member refid="sstep__math_8c_1a0ac65b37442b7b10d74dedeb7d25e737" kind="define"><name>FRAC_BITS</name></member>
-    <member refid="sstep__math_8c_1ae8be0c92441e54347f84cd5a390904c2" kind="define"><name>RATIO64_LIMIT</name></member>
-    <member refid="sstep__math_8c_1a71b14d4127d7ff7a5f62367b1dd582f9" kind="function"><name>quarter_sin</name></member>
-    <member refid="sstep__math_8c_1ae7657db742fda4b214def031883fb492" kind="function"><name>bit_length</name></member>
-    <member refid="sstep__math_8c_1a06f8e7ef90f710983da1f0783acdf5d4" kind="function"><name>ratio_round</name></member>
-    <member refid="group__sstep__math_1ga7836410f8c904ba6e53b55a137fc4222" kind="function"><name>sstep_sin_cos</name></member>
-    <member refid="group__sstep__math_1gadc561c4232ca81e9f509d23da7b48fa4" kind="function"><name>sstep_gain_from_ratio64</name></member>
-    <member refid="group__sstep__math_1gafe58f850f3ec0ea7b1d369e4a8d692fe" kind="function"><name>sstep_gain_from_ratio</name></member>
-    <member refid="group__sstep__math_1gac4d9af6078161c3a89d38aae434af758" kind="function"><name>sstep_real_from_ratio</name></member>
-    <member refid="group__sstep__math_1gafb1fd7f556a7ff09ab6bccb8fe887c26" kind="function"><name>sstep_real_to_units</name></member>
-  </compound>
   <compound refid="sstep__motion_8c" kind="file"><name>sstep_motion.c</name>
     <member refid="sstep__motion_8c_1a30b86636e5851ad4cc08d486dfb2920c" kind="function"><name>clamp_i32</name></member>
     <member refid="sstep__motion_8c_1a811b87bdd85024909896d78f78dea9d8" kind="function"><name>abs_i32</name></member>
@@ -318,6 +325,38 @@
     <member refid="sstep_8h_1ae008ca8f66df44cfbad1b81ee50a0ee2" kind="define"><name>SSTEP_VERSION_MINOR</name></member>
     <member refid="sstep_8h_1a91bed6ab7865344902494ebd05732364" kind="define"><name>SSTEP_VERSION_PATCH</name></member>
     <member refid="sstep_8h_1adbcb80b18f3cf65751c3591180c8cfae" kind="define"><name>SSTEP_VERSION</name></member>
+    <member refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kind="function"><name>sstep_init</name></member>
+    <member refid="group__sstep__api_1ga3f592ef6f7e95b2c4b0792f113eae5ac" kind="function"><name>sstep_enable</name></member>
+    <member refid="group__sstep__api_1ga296ffb294291431f36e14fc306c20027" kind="function"><name>sstep_disable</name></member>
+    <member refid="group__sstep__api_1ga8c3b6798f83c32337a21d4ccdd61239b" kind="function"><name>sstep_fast_loop</name></member>
+    <member refid="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" kind="function"><name>sstep_slow_loop</name></member>
+    <member refid="group__sstep__api_1gab5ac3f4056af2b982b8131016df0541e" kind="function"><name>sstep_move_to</name></member>
+    <member refid="group__sstep__api_1gacc99b6a8006f7c7f950133873a5a8fce" kind="function"><name>sstep_move_by</name></member>
+    <member refid="group__sstep__api_1gaa21dff174e881ddaddd22b9bf334f3f8" kind="function"><name>sstep_run</name></member>
+    <member refid="group__sstep__api_1ga41ae3f6b6cc322b50c3e3884d48dd7a1" kind="function"><name>sstep_stop</name></member>
+    <member refid="group__sstep__api_1ga17aff99dbb74c27b0eb1995024c28e71" kind="function"><name>sstep_set_position</name></member>
+    <member refid="group__sstep__api_1ga75cb79da6deda7b271d7a01d70f5d718" kind="function"><name>sstep_set_current</name></member>
+    <member refid="group__sstep__api_1gae9224e0f9e8f1822529ef015bb88f382" kind="function"><name>sstep_set_motion_limits</name></member>
+    <member refid="group__sstep__api_1gaafe3bb709aaa93b20884f9e7f6e31498" kind="function"><name>sstep_report_fault</name></member>
+    <member refid="group__sstep__api_1gafff498925b2f3c0de622702a2f181b9b" kind="function"><name>sstep_clear_faults</name></member>
+    <member refid="group__sstep__api_1ga1568aad455503ed6e062cf7048bf01ba" kind="function"><name>sstep_get_status</name></member>
+  </compound>
+  <compound refid="group__sstep__api" kind="group"><name>sstep_api</name>
+    <member refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kind="function"><name>sstep_init</name></member>
+    <member refid="group__sstep__api_1ga3f592ef6f7e95b2c4b0792f113eae5ac" kind="function"><name>sstep_enable</name></member>
+    <member refid="group__sstep__api_1ga296ffb294291431f36e14fc306c20027" kind="function"><name>sstep_disable</name></member>
+    <member refid="group__sstep__api_1ga8c3b6798f83c32337a21d4ccdd61239b" kind="function"><name>sstep_fast_loop</name></member>
+    <member refid="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" kind="function"><name>sstep_slow_loop</name></member>
+    <member refid="group__sstep__api_1gab5ac3f4056af2b982b8131016df0541e" kind="function"><name>sstep_move_to</name></member>
+    <member refid="group__sstep__api_1gacc99b6a8006f7c7f950133873a5a8fce" kind="function"><name>sstep_move_by</name></member>
+    <member refid="group__sstep__api_1gaa21dff174e881ddaddd22b9bf334f3f8" kind="function"><name>sstep_run</name></member>
+    <member refid="group__sstep__api_1ga41ae3f6b6cc322b50c3e3884d48dd7a1" kind="function"><name>sstep_stop</name></member>
+    <member refid="group__sstep__api_1ga17aff99dbb74c27b0eb1995024c28e71" kind="function"><name>sstep_set_position</name></member>
+    <member refid="group__sstep__api_1ga75cb79da6deda7b271d7a01d70f5d718" kind="function"><name>sstep_set_current</name></member>
+    <member refid="group__sstep__api_1gae9224e0f9e8f1822529ef015bb88f382" kind="function"><name>sstep_set_motion_limits</name></member>
+    <member refid="group__sstep__api_1gaafe3bb709aaa93b20884f9e7f6e31498" kind="function"><name>sstep_report_fault</name></member>
+    <member refid="group__sstep__api_1gafff498925b2f3c0de622702a2f181b9b" kind="function"><name>sstep_clear_faults</name></member>
+    <member refid="group__sstep__api_1ga1568aad455503ed6e062cf7048bf01ba" kind="function"><name>sstep_get_status</name></member>
   </compound>
   <compound refid="group__sstep__config" kind="group"><name>sstep_config</name>
     <member refid="group__sstep__config_1gaabdd28b396cb602508fecd7d015ecbf9" kind="define"><name>SSTEP_MATH_BACKEND_FIXED</name></member>
@@ -328,33 +367,6 @@
     <member refid="group__sstep__config_1gacb1659c8029aeb92ff4062d4a265535b" kind="define"><name>SSTEP_CFG_MICROSTEPS_MAX</name></member>
     <member refid="group__sstep__config_1ga50ab8d5098e6740dbcd9dbc6f4200d70" kind="define"><name>SSTEP_CFG_SINE_TABLE_BITS</name></member>
     <member refid="group__sstep__config_1ga61a368eeac97ae6ab0f43c70a2acc423" kind="define"><name>SSTEP_CFG_ARG_CHECKS</name></member>
-  </compound>
-  <compound refid="group__sstep__ctrl" kind="group"><name>sstep_ctrl</name>
-    <member refid="group__sstep__ctrl_1ga9765926896e39cbaf1a643817ed8cb1c" kind="enum"><name>sstep_event</name></member>
-    <member refid="group__sstep__ctrl_1gga9765926896e39cbaf1a643817ed8cb1ca724dd2f3716f9027ffc285f1ff20ca66" kind="enumvalue"><name>SSTEP_EVENT_MOVE_DONE</name></member>
-    <member refid="group__sstep__ctrl_1gga9765926896e39cbaf1a643817ed8cb1ca455ac81133f81866f3546e14006ae896" kind="enumvalue"><name>SSTEP_EVENT_HOLD_CURRENT</name></member>
-    <member refid="group__sstep__ctrl_1ga4bf2c449cd0d7182351a1e7f2654bc3f" kind="enum"><name>sstep_drive_mode</name></member>
-    <member refid="group__sstep__ctrl_1gga4bf2c449cd0d7182351a1e7f2654bc3fa85b15ad052155339018a6bc76f25f468" kind="enumvalue"><name>SSTEP_DRIVE_CURRENT</name></member>
-    <member refid="group__sstep__ctrl_1gga4bf2c449cd0d7182351a1e7f2654bc3fac9139624ce10c97984c9fead23ce3485" kind="enumvalue"><name>SSTEP_DRIVE_VOLTAGE</name></member>
-    <member refid="group__sstep__ctrl_1ga20872bd7139bc69948fde3a9d70b74ed" kind="typedef"><name>sstep_pwm_write_fn</name></member>
-    <member refid="group__sstep__ctrl_1ga4ce54e97216a52981a4dca1f0e38a2a4" kind="typedef"><name>sstep_output_enable_fn</name></member>
-    <member refid="group__sstep__ctrl_1ga82d9a26444da72841a7c26547472ae94" kind="typedef"><name>sstep_fault_fn</name></member>
-    <member refid="group__sstep__ctrl_1ga1f844e0d5ebd90cbe7e3044802574c7d" kind="typedef"><name>sstep_event_fn</name></member>
-    <member refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kind="function"><name>sstep_init</name></member>
-    <member refid="group__sstep__ctrl_1ga2137580fc98132f74adb37aa68e43101" kind="function"><name>sstep_enable</name></member>
-    <member refid="group__sstep__ctrl_1ga02b70096cdf1d22d320236519d12370b" kind="function"><name>sstep_disable</name></member>
-    <member refid="group__sstep__ctrl_1ga9d39aedf45b1e59f71fe94a1dc0df79b" kind="function"><name>sstep_fast_loop</name></member>
-    <member refid="group__sstep__ctrl_1ga4ab2695d05ff19f5e9ed61018af7d83a" kind="function"><name>sstep_slow_loop</name></member>
-    <member refid="group__sstep__ctrl_1ga6e1233931109cb8b8cbfc878e5f40f19" kind="function"><name>sstep_move_to</name></member>
-    <member refid="group__sstep__ctrl_1ga36f9bbbff003e82fe6844c5d049ebe1c" kind="function"><name>sstep_move_by</name></member>
-    <member refid="group__sstep__ctrl_1ga31e75aa1193a151a7fb3b0831e8c530b" kind="function"><name>sstep_run</name></member>
-    <member refid="group__sstep__ctrl_1ga364a4cd8cc079f56138fc124032757e0" kind="function"><name>sstep_stop</name></member>
-    <member refid="group__sstep__ctrl_1gaed90e750a1d179c79e7cd4610eb1c4fe" kind="function"><name>sstep_set_position</name></member>
-    <member refid="group__sstep__ctrl_1ga66f834a5478abb9bf5575de900ed4569" kind="function"><name>sstep_set_current</name></member>
-    <member refid="group__sstep__ctrl_1ga3636c6db7fcb51655b8ca63f6156f578" kind="function"><name>sstep_set_motion_limits</name></member>
-    <member refid="group__sstep__ctrl_1gadb944552719e659be1da950534631023" kind="function"><name>sstep_report_fault</name></member>
-    <member refid="group__sstep__ctrl_1ga7f4318600b1b000315230db98dd426cb" kind="function"><name>sstep_clear_faults</name></member>
-    <member refid="group__sstep__ctrl_1gafda7fec931ffa0ac11e671c75cd39300" kind="function"><name>sstep_get_status</name></member>
   </compound>
   <compound refid="group__sstep__defs" kind="group"><name>sstep_defs</name>
     <member refid="group__sstep__defs_1gabd2c373f4d8a7502c78952555c8cb23c" kind="enum"><name>sstep_topology</name></member>
@@ -419,12 +431,14 @@
     <member refid="group__sstep__math_1ga6439406841b4ed53c1ce2ee0fe81aa53" kind="define"><name>SSTEP_ACC_MAX</name></member>
     <member refid="group__sstep__math_1ga4402962590ac756f8fb162a9e403af6d" kind="define"><name>SSTEP_ACC_MIN</name></member>
     <member refid="group__sstep__math_1gaeff48791886bf2b1beffc9446a47e649" kind="define"><name>SSTEP_ACC_C</name></member>
-    <member refid="group__sstep__math_1ga04216138ad07146cf6400fdf1645ac66" kind="define"><name>SSTEP_INTEG_FRAC_BITS</name></member>
-    <member refid="group__sstep__math_1gae0c7646e62896d744b49d47b83483d61" kind="define"><name>SSTEP_REAL_C</name></member>
     <member refid="group__sstep__math_1ga49210b7ca8593d5d0eb7b9f360fd17ba" kind="define"><name>SSTEP_REAL_ZERO</name></member>
+    <member refid="group__sstep__math_1gacc0a5a1b8573c3ed89560e08122d958c" kind="define"><name>SSTEP_ACC_ZERO</name></member>
+    <member refid="group__sstep__math_1ga2ff93d11d0bada9efacace4cc6776743" kind="define"><name>SSTEP_ACC_HALF</name></member>
     <member refid="group__sstep__math_1ga75e8b014aa4abda04e37cd97addabfdb" kind="define"><name>SSTEP_ACC_ONE</name></member>
     <member refid="group__sstep__math_1gaedc6f7b47e26254fefb82c8c45608834" kind="define"><name>SSTEP_ACC_IN_MAX</name></member>
     <member refid="group__sstep__math_1gafe4b9cb66063a93b889ffb432a2b1fa6" kind="define"><name>SSTEP_ACC_SCALE_MAX</name></member>
+    <member refid="group__sstep__math_1ga04216138ad07146cf6400fdf1645ac66" kind="define"><name>SSTEP_INTEG_FRAC_BITS</name></member>
+    <member refid="group__sstep__math_1gae0c7646e62896d744b49d47b83483d61" kind="define"><name>SSTEP_REAL_C</name></member>
     <member refid="group__sstep__math_1gae0d7a92d278d7b421a62aeefe11adb13" kind="define"><name>SSTEP_GAIN_EXP_MIN</name></member>
     <member refid="group__sstep__math_1ga969c943dfb6f5d0fe6aa409e8e95ce3a" kind="define"><name>SSTEP_GAIN_EXP_MAX</name></member>
   </compound>

@@ -12,7 +12,7 @@
  * Stepper-C: Stepper Motor Control Implementation
  *
  * Project:     Stepper-C - Hardware-Agnostic Stepper Motor Control Library
- * Description: Public API: configuration, hardware callbacks, control loops, motion commands.
+ * Description: Public types: configuration, hardware callbacks, measurements, driver instance.
  *
  * Author:      Anton Vynohradov
  * Email:       avynohradov@systemfromscratch.com
@@ -50,7 +50,6 @@
 
 #include "sstep_config.h"
 #include "sstep_defs.h"
-#include "sstep_math.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -166,104 +165,21 @@ struct sstep_status
 };
 
 /* ==============================================================================
- * DRIVER INSTANCE (PRIVATE)
+ * DRIVER INSTANCE
  * =============================================================================*/
 
-struct sstep_setpoint
-{
-    sstep_angle_t angle;        
-    int32_t dangle;             
-    sstep_real_t i_amp;         
-    sstep_real_t ff;            
-    struct sstep_gain inv_vbus; 
-};
+#if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
+#define SSTEP_STATE_BYTES 200U
+#else
+#define SSTEP_STATE_BYTES 224U
+#endif
 
-struct sstep_motion
-{
-    int64_t pos;          
-    int64_t target;       
-    int64_t brake_vmax;   
-    int32_t vel;          
-    int32_t v_run;        
-    int32_t v_max;        
-    int32_t acc;          
-    int32_t dec;          
-    uint8_t mode;         
-};
+#define SSTEP_INSTANCE_WORDS ((sizeof(struct sstep_config) + SSTEP_STATE_BYTES + 7U) / 8U)
 
 struct sstep
 {
-    struct sstep_config cfg;          
-    /* Constants derived by sstep_init() */
-    struct sstep_gain kp;             
-    struct sstep_gain ki;             
-    struct sstep_gain kb;             
-    struct sstep_gain r_pu;           
-    struct sstep_gain adc_i;          
-    struct sstep_gain adc_v;          
-    struct sstep_gain ff_gain;        
-    sstep_real_t i_run;               
-    sstep_real_t i_hold;              
-    uint16_t i_trip_counts;           
-    uint16_t vbus_min_raw;            
-    uint16_t vbus_max_raw;            
-    uint16_t ratio;                   
-    uint32_t hold_ticks;              
-    uint8_t angle_shift;              
-    /* Slow loop -> fast loop hand-off (double buffer) */
-    struct sstep_setpoint sp[2];      
-    volatile uint8_t sp_active;       
-    volatile uint8_t sp_pending;      
-    /* Fast loop state */
-    struct sstep_setpoint cur;        
-    uint16_t adv;                     
-    sstep_integ_t integ[2];           
-    sstep_real_t i_meas[2];           
-    volatile uint16_t vbus_raw;       
-    uint16_t compare[SSTEP_LEGS_MAX]; 
-    /* Slow loop state */
-    struct sstep_motion mo;           
-    sstep_angle_t angle_offset;       
-    uint32_t still;                   
-    bool hold_active;                 
-    struct sstep_gain inv_vbus;       
-    volatile uint16_t faults;         
-    volatile enum sstep_state state;  
+    uint64_t opaque[SSTEP_INSTANCE_WORDS]; 
 };
-
-/* ==============================================================================
- * PUBLIC FUNCTION DECLARATIONS
- * =============================================================================*/
-
-int sstep_init(struct sstep* m, const struct sstep_config* cfg);
-
-int sstep_enable(struct sstep* m);
-
-int sstep_disable(struct sstep* m);
-
-int sstep_fast_loop(struct sstep* m, const struct sstep_sample* sample);
-
-int sstep_slow_loop(struct sstep* m);
-
-int sstep_move_to(struct sstep* m, int32_t position);
-
-int sstep_move_by(struct sstep* m, int32_t delta);
-
-int sstep_run(struct sstep* m, int32_t velocity);
-
-int sstep_stop(struct sstep* m);
-
-int sstep_set_position(struct sstep* m, int32_t position);
-
-int sstep_set_current(struct sstep* m, uint32_t run_ma, uint32_t hold_ma);
-
-int sstep_set_motion_limits(struct sstep* m, uint32_t v_max, uint32_t accel, uint32_t decel);
-
-int sstep_report_fault(struct sstep* m, uint16_t faults);
-
-int sstep_clear_faults(struct sstep* m);
-
-int sstep_get_status(const struct sstep* m, struct sstep_status* status);
 
 #ifdef __cplusplus
 }

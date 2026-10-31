@@ -88,9 +88,9 @@ _Constants shared by the public API._ [More...](#detailed-description)
 | define  | [**SSTEP\_ERR\_PARAM**](group__sstep__defs.md#define-sstep_err_param)  `(-1)`<br>_NULL pointer or a value outside its documented range._  |
 | define  | [**SSTEP\_ERR\_STATE**](group__sstep__defs.md#define-sstep_err_state)  `(-3)`<br>_Call not allowed in the current state (for example a move while faulted)._  |
 | define  | [**SSTEP\_ERR\_UNSUPPORTED**](group__sstep__defs.md#define-sstep_err_unsupported)  `(-4)`<br>_Topology not compiled in (see_ [_**SSTEP\_CFG\_TOPOLOGY\_FULL\_BRIDGE**_](group__sstep__config.md#define-sstep_cfg_topology_full_bridge) _)._ |
-| define  | [**SSTEP\_FAULT\_EXTERNAL**](group__sstep__defs.md#define-sstep_fault_external)  `0x0010U`<br>_Reported by the application through_ [_**sstep\_report\_fault()**_](group__sstep__ctrl.md#function-sstep_report_fault) _(driver fault pin, over-temperature...)._ |
+| define  | [**SSTEP\_FAULT\_EXTERNAL**](group__sstep__defs.md#define-sstep_fault_external)  `0x0010U`<br>_Reported by the application through_ [_**sstep\_report\_fault()**_](group__sstep__api.md#function-sstep_report_fault) _(driver fault pin, over-temperature...)._ |
 | define  | [**SSTEP\_FAULT\_HAL**](group__sstep__defs.md#define-sstep_fault_hal)  `0x0008U`<br>_A hardware callback returned an error._  |
-| define  | [**SSTEP\_FAULT\_NONE**](group__sstep__defs.md#define-sstep_fault_none)  `0x0000U`<br>_Fault flags reported by_ [_**sstep\_get\_status()**_](group__sstep__ctrl.md#function-sstep_get_status) _and the fault callback._ |
+| define  | [**SSTEP\_FAULT\_NONE**](group__sstep__defs.md#define-sstep_fault_none)  `0x0000U`<br>_Fault flags reported by_ [_**sstep\_get\_status()**_](group__sstep__api.md#function-sstep_get_status) _and the fault callback._ |
 | define  | [**SSTEP\_FAULT\_OVERCURRENT**](group__sstep__defs.md#define-sstep_fault_overcurrent)  `0x0001U`<br>_Measured phase current above the configured trip level._  |
 | define  | [**SSTEP\_FAULT\_OVERVOLTAGE**](group__sstep__defs.md#define-sstep_fault_overvoltage)  `0x0002U`<br>_Bus voltage above the configured maximum._  |
 | define  | [**SSTEP\_FAULT\_UNDERVOLTAGE**](group__sstep__defs.md#define-sstep_fault_undervoltage)  `0x0004U`<br>_Bus voltage below the configured minimum._  |
@@ -100,7 +100,7 @@ _Constants shared by the public API._ [More...](#detailed-description)
 ## Detailed Description
 
 
-**Units.** Configuration values are integers in engineering units (milliohm, microhenry, milliampere, millivolt, hertz, nanosecond) so that [**sstep\_init()**](group__sstep__ctrl.md#function-sstep_init) needs no floating point with the fixed point backend. The unit is part of every field name (`r_mohm`, `l_uh`...). Positions are in microsteps, velocities in microsteps per second.
+**Units.** Configuration values are integers in engineering units (milliohm, microhenry, milliampere, millivolt, hertz, nanosecond) so that [**sstep\_init()**](group__sstep__api.md#function-sstep_init) needs no floating point with the fixed point backend. The unit is part of every field name (`r_mohm`, `l_uh`...). Positions are in microsteps, velocities in microsteps per second.
 
 
 **Sign convention.** A positive phase voltage drives a positive phase current; positive velocity increases the position. Phase A leads phase B by 90 electrical degrees for positive motion. 
@@ -209,7 +209,7 @@ _Topology not compiled in (see_ [_**SSTEP\_CFG\_TOPOLOGY\_FULL\_BRIDGE**_](group
 
 ### define SSTEP\_FAULT\_EXTERNAL 
 
-_Reported by the application through_ [_**sstep\_report\_fault()**_](group__sstep__ctrl.md#function-sstep_report_fault) _(driver fault pin, over-temperature...)._
+_Reported by the application through_ [_**sstep\_report\_fault()**_](group__sstep__api.md#function-sstep_report_fault) _(driver fault pin, over-temperature...)._
 ```
 #define SSTEP_FAULT_EXTERNAL `0x0010U`
 ```
@@ -237,14 +237,14 @@ _A hardware callback returned an error._
 
 ### define SSTEP\_FAULT\_NONE 
 
-_Fault flags reported by_ [_**sstep\_get\_status()**_](group__sstep__ctrl.md#function-sstep_get_status) _and the fault callback._
+_Fault flags reported by_ [_**sstep\_get\_status()**_](group__sstep__api.md#function-sstep_get_status) _and the fault callback._
 ```
 #define SSTEP_FAULT_NONE `0x0000U`
 ```
 
 
 
-A fault switches the outputs off; [**sstep\_clear\_faults()**](group__sstep__ctrl.md#function-sstep_clear_faults) re-arms the driver. 
+A fault switches the outputs off; [**sstep\_clear\_faults()**](group__sstep__api.md#function-sstep_clear_faults) re-arms the driver. 
 
 
         

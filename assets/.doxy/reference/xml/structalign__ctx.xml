@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structalign__ctx" kind="struct" language="C++" prot="public">
+    <compoundname>align_ctx</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structalign__ctx_1a5ad44bd2ec97e5289e03d91d4c63bc8b" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char align_ctx::c</definition>
+        <argsstring></argsstring>
+        <name>c</name>
+        <qualifiedname>align_ctx::c</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_ctrl.c" line="67" column="10" bodyfile="src/sstep_ctrl.c" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structalign__ctx_1ad7c4135b1d6f23ebc1a2eaf2391b9937" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__ctx" kindref="compound">sstep_ctx</ref></type>
+        <definition>struct sstep_ctx align_ctx::x</definition>
+        <argsstring></argsstring>
+        <name>x</name>
+        <qualifiedname>align_ctx::x</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_ctrl.c" line="68" column="20" bodyfile="src/sstep_ctrl.c" bodystart="68" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>align_ctx</label>
+        <link refid="structalign__ctx"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>x</edgelabel>
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sstep_callbacks</label>
+        <link refid="structsstep__callbacks"/>
+      </node>
+      <node id="3">
+        <label>sstep_config</label>
+        <link refid="structsstep__config"/>
+        <childnode refid="4" relation="usage">
+          <edgelabel>motor</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>stage</edgelabel>
+        </childnode>
+        <childnode refid="6" relation="usage">
+          <edgelabel>ctrl</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>hal</edgelabel>
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sstep_ctrl_cfg</label>
+        <link refid="structsstep__ctrl__cfg"/>
+      </node>
+      <node id="2">
+        <label>sstep_ctx</label>
+        <link refid="structsstep__ctx"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>cfg</edgelabel>
+        </childnode>
+        <childnode refid="8" relation="usage">
+          <edgelabel>adc_i</edgelabel>
+          <edgelabel>adc_v</edgelabel>
+          <edgelabel>ff_gain</edgelabel>
+          <edgelabel>inv_vbus</edgelabel>
+          <edgelabel>kb</edgelabel>
+          <edgelabel>ki</edgelabel>
+          <edgelabel>kp</edgelabel>
+          <edgelabel>r_pu</edgelabel>
+        </childnode>
+        <childnode refid="9" relation="usage">
+          <edgelabel>cur</edgelabel>
+          <edgelabel>sp</edgelabel>
+        </childnode>
+        <childnode refid="10" relation="usage">
+          <edgelabel>mo</edgelabel>
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sstep_gain</label>
+        <link refid="structsstep__gain"/>
+      </node>
+      <node id="10">
+        <label>sstep_motion</label>
+        <link refid="structsstep__motion"/>
+      </node>
+      <node id="4">
+        <label>sstep_motor_cfg</label>
+        <link refid="structsstep__motor__cfg"/>
+      </node>
+      <node id="9">
+        <label>sstep_setpoint</label>
+        <link refid="structsstep__setpoint"/>
+        <childnode refid="8" relation="usage">
+          <edgelabel>inv_vbus</edgelabel>
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sstep_stage_cfg</label>
+        <link refid="structsstep__stage__cfg"/>
+      </node>
+    </collaborationgraph>
+    <location file="src/sstep_ctrl.c" line="65" column="1" bodyfile="src/sstep_ctrl.c" bodystart="66" bodyend="69"/>
+    <listofallmembers>
+      <member refid="structalign__ctx_1a5ad44bd2ec97e5289e03d91d4c63bc8b" prot="public" virt="non-virtual"><scope>align_ctx</scope><name>c</name></member>
+      <member refid="structalign__ctx_1ad7c4135b1d6f23ebc1a2eaf2391b9937" prot="public" virt="non-virtual"><scope>align_ctx</scope><name>x</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

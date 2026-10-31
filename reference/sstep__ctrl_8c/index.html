@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -52,6 +52,8 @@
     
     
       <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -268,13 +270,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../protocol/" class="md-tabs__link">
+      <a href="../../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -286,18 +288,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -646,14 +647,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../protocol/" class="md-nav__link">
+      <a href="../../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -668,58 +669,6 @@
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -732,7 +681,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -741,42 +690,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1266,6 +1179,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#public-static-functions" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1403,6 +1327,17 @@
     <span class="md-ellipsis">
       
         function mul_ok
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-pow2_i64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function pow2_i64
       
     </span>
   </a>
@@ -1584,10 +1519,29 @@
 <p><a href="../files/"><strong>FileList</strong></a> <strong>&gt;</strong> <a href="../dir_68267d1309a1af8e8297ef4c3efbcdba/"><strong>src</strong></a> <strong>&gt;</strong> <a href="./"><strong>sstep_ctrl.c</strong></a></p>
 <p><a href="../sstep__ctrl_8c_source/">Go to the source code of this file</a></p>
 <ul>
-<li><code>#include "sstep_ctrl.h"</code></li>
+<li><code>#include "sstep.h"</code></li>
 <li><code>#include &lt;stddef.h&gt;</code></li>
 <li><code>#include "sstep_internal.h"</code></li>
 </ul>
+<h2 id="classes">Classes<a class="headerlink" href="#classes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Type</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">struct</td>
+<td style="text-align: left;"><a href="../structalign__ctx/"><strong>align_ctx</strong></a> <br></td>
+</tr>
+<tr>
+<td style="text-align: right;">struct</td>
+<td style="text-align: left;"><a href="../structalign__pub/"><strong>align_pub</strong></a> <br></td>
+</tr>
+</tbody>
+</table>
 <h2 id="public-static-functions">Public Static Functions<a class="headerlink" href="#public-static-functions" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1603,11 +1557,11 @@
 </tr>
 <tr>
 <td style="text-align: right;">void</td>
-<td style="text-align: left;"><a href="#function-control"><strong>control</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m) <br><em>Current control, power stage and PWM write of one fast loop period.</em></td>
+<td style="text-align: left;"><a href="#function-control"><strong>control</strong></a> (struct <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> * m) <br><em>Current control, power stage and PWM write of one fast loop period.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-derive"><strong>derive</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m) <br><em>Derive gains, scaling and limits from the (validated) configuration.</em></td>
+<td style="text-align: left;"><a href="#function-derive"><strong>derive</strong></a> (struct <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> * m) <br><em>Derive gains, scaling and limits from the (validated) configuration.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int64_t</td>
@@ -1623,7 +1577,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">bool</td>
-<td style="text-align: left;"><a href="#function-is_moving"><strong>is_moving</strong></a> (const struct <a href="../structsstep/"><strong>sstep</strong></a> * m) <br><em>A command is executing.</em></td>
+<td style="text-align: left;"><a href="#function-is_moving"><strong>is_moving</strong></a> (const struct <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> * m) <br><em>A command is executing.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">bool</td>
@@ -1638,8 +1592,12 @@
 <td style="text-align: left;"><a href="#function-mul_ok"><strong>mul_ok</strong></a> (uint64_t a, uint64_t b, uint64_t * out) <br><em>out = a * b; false when the product reaches 2^62.</em></td>
 </tr>
 <tr>
+<td style="text-align: right;">int64_t</td>
+<td style="text-align: left;"><a href="#function-pow2_i64"><strong>pow2_i64</strong></a> (uint32_t n) <br><em>2^n for n = 0 .</em></td>
+</tr>
+<tr>
 <td style="text-align: right;">void</td>
-<td style="text-align: left;"><a href="#function-publish"><strong>publish</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m, const struct <a href="../structsstep__setpoint/"><strong>sstep_setpoint</strong></a> * sp) <br><em>Hand a setpoint to the fast loop (slow loop context).</em></td>
+<td style="text-align: left;"><a href="#function-publish"><strong>publish</strong></a> (struct <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> * m, const struct <a href="../structsstep__setpoint/"><strong>sstep_setpoint</strong></a> * sp) <br><em>Hand a setpoint to the fast loop (slow loop context).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
@@ -1647,19 +1605,19 @@
 </tr>
 <tr>
 <td style="text-align: right;"><a href="../group__sstep__math/#typedef-sstep_angle_t"><strong>sstep_angle_t</strong></a></td>
-<td style="text-align: left;"><a href="#function-raw_angle"><strong>raw_angle</strong></a> (const struct <a href="../structsstep/"><strong>sstep</strong></a> * m, int64_t pos) <br><em>Electrical angle of a position [Q16 microsteps]: microstep = 2^30 / M.</em></td>
+<td style="text-align: left;"><a href="#function-raw_angle"><strong>raw_angle</strong></a> (const struct <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> * m, int64_t pos) <br><em>Electrical angle of a position [Q16 microsteps]: microstep = 2^30 / M.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-set_currents"><strong>set_currents</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m, uint32_t run_ma, uint32_t hold_ma) <br><em>Validate and store the run and hold currents.</em></td>
+<td style="text-align: left;"><a href="#function-set_currents"><strong>set_currents</strong></a> (struct <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> * m, uint32_t run_ma, uint32_t hold_ma) <br><em>Validate and store the run and hold currents.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-set_limits"><strong>set_limits</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m, uint32_t v_max, uint32_t accel, uint32_t decel) <br><em>Validate and store the motion limits (engineering units -&gt; Q16 per period).</em></td>
+<td style="text-align: left;"><a href="#function-set_limits"><strong>set_limits</strong></a> (struct <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> * m, uint32_t v_max, uint32_t accel, uint32_t decel) <br><em>Validate and store the motion limits (engineering units -&gt; Q16 per period).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">void</td>
-<td style="text-align: left;"><a href="#function-shutdown"><strong>shutdown</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * m, uint16_t faults) <br><em>Switch the outputs off and enter the fault state (any context).</em></td>
+<td style="text-align: left;"><a href="#function-shutdown"><strong>shutdown</strong></a> (struct <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> * m, uint16_t faults) <br><em>Switch the outputs off and enter the fault state (any context).</em></td>
 </tr>
 </tbody>
 </table>
@@ -1674,7 +1632,7 @@
 <tbody>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-q16_limit"><strong>Q16_LIMIT</strong></a>  <code>((int64\_t)1 &amp;lt;&amp;lt; 30)</code><br><em>Velocities and accelerations in Q16 per period stay below 2^30.</em></td>
+<td style="text-align: left;"><a href="./#define-q16_limit"><strong>Q16_LIMIT</strong></a>  <code>((int64\_t)0x40000000)</code><br><em>Velocities and accelerations in Q16 per period stay below 2^30.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
@@ -1710,7 +1668,7 @@
 <h3 id="function-control">function control<a class="headerlink" href="#function-control" title="Permanent link">&para;</a></h3>
 <p><em>Current control, power stage and PWM write of one fast loop period.</em> 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">control</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
@@ -1718,7 +1676,7 @@
 <h3 id="function-derive">function derive<a class="headerlink" href="#function-derive" title="Permanent link">&para;</a></h3>
 <p><em>Derive gains, scaling and limits from the (validated) configuration.</em> 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">derive</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
@@ -1752,7 +1710,7 @@
 <h3 id="function-is_moving">function is_moving<a class="headerlink" href="#function-is_moving" title="Permanent link">&para;</a></h3>
 <p><em>A command is executing.</em> 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">is_moving</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <p>In hold mode the velocity is always zero: a move ends with v = 0 on the target and a stop becomes hold only at v = 0. </p>
@@ -1784,100 +1742,109 @@
 </code></pre></div></p>
 <hr>
 
+<h3 id="function-pow2_i64">function pow2_i64<a class="headerlink" href="#function-pow2_i64" title="Permanent link">&para;</a></h3>
+<p><em>2^n for n = 0 .</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">pow2_i64</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">n</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<p>. 62, built with an unsigned shift (MISRA C:2012 Rule 10.1). </p>
+<hr>
+
 <h3 id="function-publish">function publish<a class="headerlink" href="#function-publish" title="Permanent link">&para;</a></h3>
 <p><em>Hand a setpoint to the fast loop (slow loop context).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">publish</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_setpoint</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sp</span>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">publish</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_setpoint</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sp</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <p>The fast loop never reads the buffer being written: sp_pending is cleared first (single core). </p>
 <hr>
 
 <h3 id="function-ratio">function ratio<a class="headerlink" href="#function-ratio" title="Permanent link">&para;</a></h3>
 <p><em>g = (n1 n2) / (d1 d2) with overflow checks (configuration only).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ratio</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">n1</span><span class="p">,</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">n2</span><span class="p">,</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">d1</span><span class="p">,</span>
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">d2</span><span class="p">,</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">g</span>
-<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ratio</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">n1</span><span class="p">,</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">n2</span><span class="p">,</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">d1</span><span class="p">,</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">d2</span><span class="p">,</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">g</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <p>Every factor is a product of at most two validated values (&lt; 10^7 each), so it fits. </p>
 <hr>
 
 <h3 id="function-raw_angle">function raw_angle<a class="headerlink" href="#function-raw_angle" title="Permanent link">&para;</a></h3>
 <p><em>Electrical angle of a position [Q16 microsteps]: microstep = 2^30 / M.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">static</span><span class="w"> </span><span class="n">sstep_angle_t</span><span class="w"> </span><span class="n">raw_angle</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">pos</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">static</span><span class="w"> </span><span class="n">sstep_angle_t</span><span class="w"> </span><span class="n">raw_angle</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">pos</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="function-set_currents">function set_currents<a class="headerlink" href="#function-set_currents" title="Permanent link">&para;</a></h3>
 <p><em>Validate and store the run and hold currents.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">set_currents</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">run_ma</span><span class="p">,</span>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">hold_ma</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">set_currents</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">run_ma</span><span class="p">,</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">hold_ma</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="function-set_limits">function set_limits<a class="headerlink" href="#function-set_limits" title="Permanent link">&para;</a></h3>
 <p><em>Validate and store the motion limits (engineering units -&gt; Q16 per period).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">set_limits</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">v_max</span><span class="p">,</span>
-<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">accel</span><span class="p">,</span>
-<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">decel</span>
-<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">set_limits</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">v_max</span><span class="p">,</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">accel</span><span class="p">,</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">decel</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="function-shutdown">function shutdown<a class="headerlink" href="#function-shutdown" title="Permanent link">&para;</a></h3>
 <p><em>Switch the outputs off and enter the fault state (any context).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">shutdown</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">faults</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">shutdown</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">faults</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 <h2 id="macro-definition-documentation">Macro Definition Documentation<a class="headerlink" href="#macro-definition-documentation" title="Permanent link">&para;</a></h2>
 <h3 id="define-q16_limit">define Q16_LIMIT<a class="headerlink" href="#define-q16_limit" title="Permanent link">&para;</a></h3>
 <p><em>Velocities and accelerations in Q16 per period stay below 2^30.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="cp">#define Q16_LIMIT `((int64_t)1 &lt;&lt; 30)`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="cp">#define Q16_LIMIT `((int64_t)0x40000000)`</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-ratio_limit">define RATIO_LIMIT<a class="headerlink" href="#define-ratio_limit" title="Permanent link">&para;</a></h3>
 <p><em>Operand limit of the gain ratios (sstep_gain_from_ratio64).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="cp">#define RATIO_LIMIT `((uint64_t)1U &lt;&lt; 62U)`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cp">#define RATIO_LIMIT `((uint64_t)1U &lt;&lt; 62U)`</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-two_pi_den">define TWO_PI_DEN<a class="headerlink" href="#define-two_pi_den" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cp">#define TWO_PI_DEN `113U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="cp">#define TWO_PI_DEN `113U`</span>
 </code></pre></div>
 <hr>
 
 <h3 id="define-two_pi_num">define TWO_PI_NUM<a class="headerlink" href="#define-two_pi_num" title="Permanent link">&para;</a></h3>
 <p><em>2 pi = 710 / 113 (error 8.5e-8).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="cp">#define TWO_PI_NUM `710U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="cp">#define TWO_PI_NUM `710U`</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-value_max">define VALUE_MAX<a class="headerlink" href="#define-value_max" title="Permanent link">&para;</a></h3>
 <p><em>Largest engineering value accepted in the motor and stage configuration.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="cp">#define VALUE_MAX `10000000U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="cp">#define VALUE_MAX `10000000U`</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-vbus_pu_max">define VBUS_PU_MAX<a class="headerlink" href="#define-vbus_pu_max" title="Permanent link">&para;</a></h3>
 <p><em>Bus voltage limit of the fast loop: 2 pu - 2^-15.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="cp">#define VBUS_PU_MAX `SSTEP_ACC_SCALE_MAX`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="cp">#define VBUS_PU_MAX `SSTEP_ACC_SCALE_MAX`</span>
 </code></pre></div></p>
 <hr>
 
@@ -1980,6 +1947,12 @@
     
     
       <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

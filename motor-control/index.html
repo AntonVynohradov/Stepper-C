@@ -6,13 +6,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
       
       
-        <link rel="canonical" href="https://antonvynohradov.github.io/Stepper-C/protocol/">
+        <link rel="canonical" href="https://antonvynohradov.github.io/Stepper-C/motor-control/">
       
       
         <link rel="prev" href="../configuration/">
@@ -29,7 +29,7 @@
     
     
       
-        <title>Protocol - Stepper-C</title>
+        <title>Motor Control - Stepper-C</title>
       
     
     
@@ -57,6 +57,8 @@
     
       <link rel="stylesheet" href="../assets/stylesheets/extra.css">
     
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -82,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#stepper-motor-control" class="md-skip">
+        <a href="#motor-control" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Protocol
+              Motor Control
             
           </span>
         </div>
@@ -280,7 +282,7 @@
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -292,18 +294,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -668,7 +669,7 @@
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -686,7 +687,7 @@
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -712,10 +713,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-bus" class="md-nav__link">
+  <a href="#motor-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The bus
+        Motor model
       
     </span>
   </a>
@@ -723,10 +724,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#frame" class="md-nav__link">
+  <a href="#per-unit-scaling" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Frame
+        Per-unit scaling
       
     </span>
   </a>
@@ -734,10 +735,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#checksum" class="md-nav__link">
+  <a href="#microstepping" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Checksum
+        Microstepping
       
     </span>
   </a>
@@ -745,10 +746,38 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#escaping" class="md-nav__link">
+  <a href="#current-control" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Escaping
+        Current control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Current control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voltage-drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Voltage drive
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bus-voltage-compensation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bus voltage compensation
       
     </span>
   </a>
@@ -756,10 +785,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
+  <a href="#voltage-limits" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Commands
+        Voltage limits
       
     </span>
   </a>
@@ -767,10 +796,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#error-codes" class="md-nav__link">
+  <a href="#motion-profile" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Error codes
+        Motion profile
       
     </span>
   </a>
@@ -778,10 +807,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#parser-behavior" class="md-nav__link">
+  <a href="#hold-current" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Parser behavior
+        Hold current
       
     </span>
   </a>
@@ -789,10 +818,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reference-frames-from-the-specification-used-in-the-tests" class="md-nav__link">
+  <a href="#numeric-backends" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Reference frames (from the specification, used in the tests)
+        Numeric backends
       
     </span>
   </a>
@@ -813,58 +842,6 @@
   
   
   
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
       <a href="../integration/" class="md-nav__link">
         
@@ -873,7 +850,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -882,42 +859,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1407,10 +1348,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-bus" class="md-nav__link">
+  <a href="#motor-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The bus
+        Motor model
       
     </span>
   </a>
@@ -1418,10 +1359,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#frame" class="md-nav__link">
+  <a href="#per-unit-scaling" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Frame
+        Per-unit scaling
       
     </span>
   </a>
@@ -1429,10 +1370,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#checksum" class="md-nav__link">
+  <a href="#microstepping" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Checksum
+        Microstepping
       
     </span>
   </a>
@@ -1440,10 +1381,38 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#escaping" class="md-nav__link">
+  <a href="#current-control" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Escaping
+        Current control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Current control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voltage-drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Voltage drive
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bus-voltage-compensation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bus voltage compensation
       
     </span>
   </a>
@@ -1451,10 +1420,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
+  <a href="#voltage-limits" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Commands
+        Voltage limits
       
     </span>
   </a>
@@ -1462,10 +1431,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#error-codes" class="md-nav__link">
+  <a href="#motion-profile" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Error codes
+        Motion profile
       
     </span>
   </a>
@@ -1473,10 +1442,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#parser-behavior" class="md-nav__link">
+  <a href="#hold-current" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Parser behavior
+        Hold current
       
     </span>
   </a>
@@ -1484,10 +1453,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reference-frames-from-the-specification-used-in-the-tests" class="md-nav__link">
+  <a href="#numeric-backends" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Reference frames (from the specification, used in the tests)
+        Numeric backends
       
     </span>
   </a>
@@ -1511,51 +1480,321 @@
 
 
 
-<h1 id="stepper-motor-control">Stepper Motor Control<a class="headerlink" href="#stepper-motor-control" title="Permanent link">&para;</a></h1>
-<p>This chapter describes the Stepper Motor Control wire format and exactly what Stepper-C does with
-each part of it. The normative reference is the <a href="TODO-specification-url">specification</a>.</p>
-<h2 id="the-bus">The bus<a class="headerlink" href="#the-bus" title="Permanent link">&para;</a></h2>
-<p><img alt="Bus topology" src="assets/images/bus-topology.svg" /></p>
-<h2 id="frame">Frame<a class="headerlink" href="#frame" title="Permanent link">&para;</a></h2>
-<p><img alt="Frame structure" src="assets/images/packet-structure.svg" /></p>
+<h1 id="motor-control">Motor Control<a class="headerlink" href="#motor-control" title="Permanent link">&para;</a></h1>
+<p>This chapter describes the algorithms of Stepper-C and the equations behind them: the
+motor model, per-unit scaling, the current controller, microstepping, the motion
+profile, the voltage limits of the two power stage topologies and the numeric backends.
+Every number in this chapter comes from the code or from the closed-loop tests on the
+motor model (<code>tests/unit/gtest_sstep_loop.cpp</code>).</p>
+<h2 id="motor-model">Motor model<a class="headerlink" href="#motor-model" title="Permanent link">&para;</a></h2>
+<p>A two-phase hybrid stepper motor with <span class="arithmatex">\(N_s\)</span> full steps per revolution has <span class="arithmatex">\(p = N_s / 4\)</span>
+pole pairs (50 for a 1.8° motor). With the rotor angle <span class="arithmatex">\(\theta\)</span> and its speed <span class="arithmatex">\(\omega\)</span>, each phase is
+a resistance, an inductance and a back-EMF:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+v_A &amp;= R\,i_A + L\,\frac{di_A}{dt} - K_t\,\omega \sin(p\theta) \\
+v_B &amp;= R\,i_B + L\,\frac{di_B}{dt} + K_t\,\omega \cos(p\theta) \\
+T_e &amp;= K_t \left( i_B \cos(p\theta) - i_A \sin(p\theta) \right)
+\end{aligned}
+\]</div>
+<p><span class="arithmatex">\(K_t\)</span> is the torque constant [N·m/A]; in SI units it equals the back-EMF constant
+[V·s/rad], the value entered as <code>ke_uv_s_per_rad</code>.</p>
+<p>The library imposes the phase currents</p>
+<div class="arithmatex">\[
+i_A = I \cos\varphi \qquad i_B = I \sin\varphi
+\]</div>
+<p>where <span class="arithmatex">\(\varphi\)</span> is the electrical angle commanded by the trajectory. The torque becomes</p>
+<div class="arithmatex">\[
+T_e = K_t\, I \sin(\varphi - p\theta)
+\]</div>
+<p>The rotor follows <span class="arithmatex">\(\varphi\)</span> with a lag (the <em>load angle</em>) that grows
+with the load. The motor holds up to <span class="arithmatex">\(K_t I\)</span> (0.42 N·m for 2 A with the 17HS19-2004S1)
+at a load angle of 90° and loses steps above it.</p>
+<p>The closed-loop test with a 0.25 N·m load at 1 rev/s measures a load angle of 37.21°,
+against <span class="arithmatex">\(\arcsin(0.25 / 0.4172) = 36.83°\)</span> predicted by the equation; with 0.50 N·m the
+motor slips, as expected.</p>
+<h2 id="per-unit-scaling">Per-unit scaling<a class="headerlink" href="#per-unit-scaling" title="Permanent link">&para;</a></h2>
+<p>Internally every signal is a fraction of a base value, so that the same arithmetic
+works for a 0.5 A and a 10 A motor:</p>
 <table>
 <thead>
 <tr>
-<th>Field</th>
-<th>Offset</th>
-<th>Size</th>
-<th>Meaning</th>
+<th>Quantity</th>
+<th>Base</th>
+<th>Range inside the loops</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>TODO</td>
-<td>TODO</td>
-<td>TODO</td>
-<td>TODO</td>
+<td>Current</td>
+<td><code>i_full_scale_ma</code>: the current at ADC full scale</td>
+<td>-1 .. +1 pu</td>
+</tr>
+<tr>
+<td>Voltage</td>
+<td><code>vbus_nominal_mv</code>: the nominal bus voltage</td>
+<td>-1 .. +1 pu for signals; up to ±65 536 pu in accumulators</td>
+</tr>
+<tr>
+<td>Bus voltage</td>
+<td><code>vbus_nominal_mv</code></td>
+<td>0 .. 2 pu</td>
+</tr>
+<tr>
+<td>Angle</td>
+<td>One electrical turn = <span class="arithmatex">\(2^{32}\)</span></td>
+<td><code>uint32_t</code>, wraps</td>
 </tr>
 </tbody>
 </table>
-<h2 id="checksum">Checksum<a class="headerlink" href="#checksum" title="Permanent link">&para;</a></h2>
-<h2 id="escaping">Escaping<a class="headerlink" href="#escaping" title="Permanent link">&para;</a></h2>
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<h2 id="error-codes">Error codes<a class="headerlink" href="#error-codes" title="Permanent link">&para;</a></h2>
-<h2 id="parser-behavior">Parser behavior<a class="headerlink" href="#parser-behavior" title="Permanent link">&para;</a></h2>
-<h2 id="reference-frames-from-the-specification-used-in-the-tests">Reference frames (from the specification, used in the tests)<a class="headerlink" href="#reference-frames-from-the-specification-used-in-the-tests" title="Permanent link">&para;</a></h2>
+<p><code>sstep_init()</code> converts every engineering value of the configuration into per-unit
+gains with integer arithmetic (<span class="arithmatex">\(2\pi \approx 710 / 113\)</span>, error <span class="arithmatex">\(8.5 \cdot 10^{-8}\)</span>), so a fixed-point
+build needs no floating point at all.</p>
+<h2 id="microstepping">Microstepping<a class="headerlink" href="#microstepping" title="Permanent link">&para;</a></h2>
+<p><img alt="Current vector and microsteps" src="../assets/images/microstep.svg" /></p>
+<p>One full step is a quarter of an electrical turn (<span class="arithmatex">\(2^{30}\)</span>). With <code>microsteps</code> <span class="arithmatex">\(= M\)</span>, one
+microstep is <span class="arithmatex">\(2^{30} / M\)</span> of the 32-bit angle; positions are kept in Q16 microsteps
+(1/65 536 microstep) in 64 bits, so the angle is exact and never drifts.</p>
+<p>The sine and cosine come from a quarter-wave table with linear interpolation
+(<code>SSTEP_CFG_SINE_TABLE_BITS</code>, default <span class="arithmatex">\(2^8\)</span> intervals, 257 entries in flash). Measured
+worst-case error over a full turn:</p>
 <table>
 <thead>
 <tr>
-<th>Frame</th>
-<th>Bytes</th>
+<th>Table bits</th>
+<th>Fixed point</th>
+<th>Float</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>TODO</td>
-<td>TODO</td>
+<td>6</td>
+<td><span class="arithmatex">\(1.08 \cdot 10^{-4}\)</span> (3.5 LSB of Q15)</td>
+<td><span class="arithmatex">\(7.5 \cdot 10^{-5}\)</span></td>
+</tr>
+<tr>
+<td>8 (default)</td>
+<td><span class="arithmatex">\(3.1 \cdot 10^{-5}\)</span> (1.0 LSB of Q15)</td>
+<td><span class="arithmatex">\(4.8 \cdot 10^{-6}\)</span></td>
+</tr>
+<tr>
+<td>10</td>
+<td><span class="arithmatex">\(3.1 \cdot 10^{-5}\)</span> (1.0 LSB of Q15)</td>
+<td><span class="arithmatex">\(3.5 \cdot 10^{-7}\)</span></td>
 </tr>
 </tbody>
 </table>
+<p>With the fixed-point backend the default table is already at the resolution of Q15;
+a larger table only helps the float backend.</p>
+<p>Between two slow-loop periods the fast loop advances the angle by a constant increment,
+so the current vector turns smoothly at the PWM rate instead of jumping once per
+millisecond.</p>
+<h2 id="current-control">Current control<a class="headerlink" href="#current-control" title="Permanent link">&para;</a></h2>
+<p><img alt="Current control loop" src="../assets/images/control-loop.svg" /></p>
+<p>Each phase has its own PI controller. The reference comes from the angle and the
+amplitude, the measurement from the ADC:</p>
+<div class="arithmatex">\[
+e = i_\mathrm{ref} - i_\mathrm{meas} \qquad
+v = K_p\, e + K_i \int e\, dt + v_\mathrm{ff}
+\]</div>
+<p><strong>Gains.</strong> <code>sstep_init()</code> places the zero of the controller on the pole of the winding
+(<span class="arithmatex">\(R / L\)</span>), which leaves an integrator with the crossover frequency
+<span class="arithmatex">\(\omega_c = 2\pi \cdot\)</span> <code>current_bw_hz</code>:</p>
+<div class="arithmatex">\[
+K_p = L\,\omega_c \qquad K_i = R\,\omega_c \qquad\Longrightarrow\qquad
+\frac{i_\mathrm{meas}}{i_\mathrm{ref}} = \frac{\omega_c}{s + \omega_c}
+\]</div>
+<p>The closed loop is a first-order low-pass with the requested bandwidth; no manual
+tuning is needed. The bandwidth must not exceed <code>fast_loop_hz / 4</code> (checked by
+<code>sstep_init()</code>).</p>
+<p><strong>Back-EMF feed-forward.</strong> At speed the motor generates a voltage that the PI would
+otherwise have to compensate with an error. The library adds it in advance from the
+commanded speed:</p>
+<div class="arithmatex">\[
+v_{A,\mathrm{ff}} = -K_e\,\omega \sin\varphi \qquad
+v_{B,\mathrm{ff}} = K_e\,\omega \cos\varphi \qquad
+\omega = \frac{2\pi\, v}{N_s M}
+\]</div>
+<p>with <span class="arithmatex">\(v\)</span> in microsteps/s. With <code>ke_uv_s_per_rad = 0</code> the feed-forward is off.</p>
+<p><strong>Anti-windup.</strong> When the requested voltage exceeds what the power stage can apply
+(see <a href="#voltage-limits">Voltage limits</a>), the integrator is corrected by the difference
+between the applied and the requested voltage (back-calculation with the tracking time
+constant <span class="arithmatex">\(T_t = L / R\)</span>, gain <span class="arithmatex">\(T_s R / L\)</span>). The integrator does not wind up while the voltage
+is limited.</p>
+<p><strong>Measured response</strong> (17HS19-2004S1, 24 V, 20 kHz, 1 kHz bandwidth, locked rotor, step
+0 → 2 A, ADC 12 bits):</p>
+<table>
+<thead>
+<tr>
+<th>Topology</th>
+<th>Overshoot</th>
+<th>Rise time 0–90 %</th>
+<th>Settling ±2 %</th>
+<th>Final value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full bridge</td>
+<td>1.11 %</td>
+<td>0.350 ms</td>
+<td>0.400 ms</td>
+<td>2.0002 A</td>
+</tr>
+<tr>
+<td>Shared leg</td>
+<td>1.11 %</td>
+<td>0.350 ms</td>
+<td>0.400 ms</td>
+<td>1.9999 A</td>
+</tr>
+</tbody>
+</table>
+<p>The float backend gives the same numbers within 0.01 %. A first-order system with
+1 kHz bandwidth rises to 90 % in <span class="arithmatex">\(2.3 / \omega_c = 0.37\)</span> ms; the small overshoot comes from the
+one-period delay between measurement and PWM update.</p>
+<h3 id="voltage-drive">Voltage drive<a class="headerlink" href="#voltage-drive" title="Permanent link">&para;</a></h3>
+<p>Boards without current sensing use <code>SSTEP_DRIVE_VOLTAGE</code>: the controller is replaced
+by <span class="arithmatex">\(v = R\, i_\mathrm{ref} + v_\mathrm{ff}\)</span>. The current settles at the reference at standstill (test:
+2.0 A within 10 mA) but the torque drops at speed, where the inductance and the
+error of the back-EMF estimate are not corrected. The overcurrent trip is not active in
+this mode (there is no current measurement).</p>
+<h2 id="bus-voltage-compensation">Bus voltage compensation<a class="headerlink" href="#bus-voltage-compensation" title="Permanent link">&para;</a></h2>
+<p>The controllers compute voltages in per unit of the <em>nominal</em> bus voltage. The fast loop
+converts them to duty cycles with the <em>measured</em> bus voltage (<span class="arithmatex">\(V_\mathrm{base} / V_\mathrm{bus}\)</span>, updated
+every slow period), so the phase voltage, and with it the current, does not depend on
+the supply. Test: with the supply at half its nominal value, the current still settles
+at 2.0 A within 4 mA.</p>
+<h2 id="voltage-limits">Voltage limits<a class="headerlink" href="#voltage-limits" title="Permanent link">&para;</a></h2>
+<p><img alt="Power stage topologies" src="../assets/images/topologies.svg" /></p>
+<p>The two supported topologies differ in how much phase voltage they can apply:</p>
+<table>
+<thead>
+<tr>
+<th>Topology</th>
+<th>Legs</th>
+<th>Phase voltages</th>
+<th>Limit (relative to Vbus)</th>
+<th>Sinusoidal amplitude</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SSTEP_TOPOLOGY_FULL_BRIDGE</code></td>
+<td>4: A+, A−, B+, B−</td>
+<td><span class="arithmatex">\(v_A = A^+ - A^-\)</span>, <span class="arithmatex">\(v_B = B^+ - B^-\)</span></td>
+<td><span class="arithmatex">\(\max(\lvert v_A \rvert, \lvert v_B \rvert) \le 1\)</span></td>
+<td><span class="arithmatex">\(V_\mathrm{bus}\)</span></td>
+</tr>
+<tr>
+<td><code>SSTEP_TOPOLOGY_SHARED_LEG</code></td>
+<td>3: U, V, W (shared)</td>
+<td><span class="arithmatex">\(v_A = U - W\)</span>, <span class="arithmatex">\(v_B = V - W\)</span></td>
+<td><span class="arithmatex">\(\max(v_A, v_B, 0) - \min(v_A, v_B, 0) \le 1\)</span></td>
+<td>about <span class="arithmatex">\(V_\mathrm{bus} / \sqrt{2}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>When the request is beyond the limit, both phase voltages are scaled down by the same
+factor: the direction of the voltage vector is kept, only its length is reduced, and the
+anti-windup takes the difference into account.</p>
+<p><strong>Duty cycles.</strong> Full bridge: each phase is centred at 50 %. Shared leg: the shared leg
+W is placed in the middle of the available range:</p>
+<div class="arithmatex">\[
+A^{\pm} = \frac{1}{2} \pm \frac{v_A}{2}, \quad B^{\pm} = \frac{1}{2} \pm \frac{v_B}{2}
+\qquad\qquad
+W = \frac{1}{2} - \frac{\max(v_A, v_B, 0) + \min(v_A, v_B, 0)}{2}, \quad
+U = v_A + W, \quad V = v_B + W
+\]</div>
+<p>The fourth compare value is 0 for the shared leg.</p>
+<p><strong>Consequence at speed.</strong> At 8 rev/s (2 A requested, 24 V) the measured current
+amplitude is 1.862 A with a full bridge and 1.557 A with a shared leg: the three-leg
+stage reaches its voltage limit first. Choose the supply voltage for the highest speed
+of the application.</p>
+<h2 id="motion-profile">Motion profile<a class="headerlink" href="#motion-profile" title="Permanent link">&para;</a></h2>
+<p><img alt="Trapezoidal motion profile" src="../assets/images/trajectory.svg" /></p>
+<p>The slow loop advances an integer trajectory once per period; positions are Q16
+microsteps (64 bits), velocities Q16 microsteps per period, so a position is exact after
+any number of moves.</p>
+<p><strong>Move (<code>sstep_move_to()</code>, <code>sstep_move_by()</code>).</strong> In each period the planner chooses the
+largest velocity from which it can still stop exactly on the target with the
+deceleration limit:</p>
+<div class="arithmatex">\[
+v_\mathrm{new} = \frac{-d + \sqrt{d^2 + 8\,d\,\lvert r \rvert - 4\,d\,\lvert v \rvert}}{2}
+\]</div>
+<p>with the deceleration <span class="arithmatex">\(d\)</span> and the remaining distance <span class="arithmatex">\(r\)</span>, both per slow period,</p>
+<p>then capped at <code>v_max</code> and changed by at most <code>accel</code> (speeding up) or <code>decel</code> (slowing down)
+per period. The result is a trapezoid (or a triangle for short moves) that ends on the
+target with zero velocity, without overshoot. A new target during a move is followed
+smoothly: there is no velocity step, and a target behind the motor makes it decelerate,
+reverse and approach from the other side.</p>
+<p><strong>Run (<code>sstep_run()</code>).</strong> Accelerate or decelerate with the limits to the requested
+signed velocity and keep it. A reversal passes through zero with <code>decel</code> and then
+<code>accel</code>.</p>
+<p><strong>Stop (<code>sstep_stop()</code>).</strong> Decelerate to zero with <code>decel</code>; the target becomes the
+position where the motor stops.</p>
+<p><strong>Measured</strong> (16 microsteps, <code>v_max</code> 16 000 microsteps/s, <code>accel</code> 160 000
+microsteps/s²): a move of 6 400 microsteps (2 revolutions) ends after 499 ms with the
+rotor at 6400.00 microsteps and a largest load angle of 10.8°; a reversal from +4 to
+−4 rev/s stays below a load angle of 8.7°.</p>
+<p><strong>Resolution.</strong> With <code>slow_loop_hz = 1000</code> the velocity resolution is
+<span class="arithmatex">\(1000 / 65536 = 0.015\)</span> microsteps/s. <code>sstep_set_motion_limits()</code> rejects values that
+round to zero or reach <span class="arithmatex">\(2^{30}\)</span> Q16 per period.</p>
+<h2 id="hold-current">Hold current<a class="headerlink" href="#hold-current" title="Permanent link">&para;</a></h2>
+<p>After <code>hold_delay_ms</code> without motion the current amplitude drops from <code>i_run_ma</code> to
+<code>i_hold_ma</code> and <code>on_event(SSTEP_EVENT_HOLD_CURRENT)</code> is reported. Any motion switches
+back to the run current in the same period. The hold current reduces heating at
+standstill; the holding torque is <span class="arithmatex">\(K_t\, i_\mathrm{hold}\)</span>.</p>
+<h2 id="numeric-backends">Numeric backends<a class="headerlink" href="#numeric-backends" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Fixed point</th>
+<th>Float</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Select</td>
+<td><code>SSTEP_MATH_BACKEND=FIXED</code> (default)</td>
+<td><code>SSTEP_MATH_BACKEND=FLOAT</code></td>
+</tr>
+<tr>
+<td>Signals</td>
+<td>Q15 in <code>int16_t</code></td>
+<td><code>float</code></td>
+</tr>
+<tr>
+<td>Accumulators</td>
+<td>Q15 in <code>int32_t</code> (±65 536)</td>
+<td><code>float</code>, clamped to the same range</td>
+</tr>
+<tr>
+<td>Integrators</td>
+<td>Q27 in <code>int32_t</code> (±16 pu)</td>
+<td><code>float</code>, clamped to ±16</td>
+</tr>
+<tr>
+<td>Gains</td>
+<td>Q15 mantissa and power-of-two exponent (−16 .. 15)</td>
+<td><code>float</code></td>
+</tr>
+<tr>
+<td>Arithmetic</td>
+<td>Saturating; rounding half up; no undefined shifts</td>
+<td>Saturating to the same ranges</td>
+</tr>
+<tr>
+<td>Typical target</td>
+<td>Cortex-M0/M0+/M3, RISC-V without F extension</td>
+<td>Cortex-M4F/M7/M33 with FPU, STM32G4</td>
+</tr>
+</tbody>
+</table>
+<p>Both backends saturate at the same limits, so the control behaves the same; the unit
+tests and the closed-loop tests run against both. The motion planner and the
+configuration are integer code in both backends.</p>
 
 
 
@@ -1608,13 +1847,13 @@ each part of it. The normative reference is the <a href="TODO-specification-url"
         
         
           
-          <a href="../integration/" class="md-footer__link md-footer__link--next" aria-label="Next: Integration Guide">
+          <a href="../integration/" class="md-footer__link md-footer__link--next" aria-label="Next: Integration">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Integration Guide
+                Integration
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1691,6 +1930,12 @@ each part of it. The normative reference is the <a href="TODO-specification-url"
     
     
       <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

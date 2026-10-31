@@ -17,10 +17,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="125" column="10" bodyfile="inc/sstep_ctrl.h" bodystart="125" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="103" column="10" bodyfile="inc/sstep_ctrl.h" bodystart="103" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__callbacks_1a4d1f3b9f2ef4569c97a3a514a29591b8" prot="public" static="no" mutable="no">
-        <type><ref refid="group__sstep__ctrl_1ga20872bd7139bc69948fde3a9d70b74ed" kindref="member">sstep_pwm_write_fn</ref></type>
+        <type>sstep_pwm_write_fn</type>
         <definition>sstep_pwm_write_fn sstep_callbacks::pwm_write</definition>
         <argsstring></argsstring>
         <name>pwm_write</name>
@@ -32,10 +32,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="126" column="24" bodyfile="inc/sstep_ctrl.h" bodystart="126" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="104" column="24" bodyfile="inc/sstep_ctrl.h" bodystart="104" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__callbacks_1aa1b9d6b57464225d02265dae98ca8095" prot="public" static="no" mutable="no">
-        <type><ref refid="group__sstep__ctrl_1ga4ce54e97216a52981a4dca1f0e38a2a4" kindref="member">sstep_output_enable_fn</ref></type>
+        <type>sstep_output_enable_fn</type>
         <definition>sstep_output_enable_fn sstep_callbacks::output_enable</definition>
         <argsstring></argsstring>
         <name>output_enable</name>
@@ -47,10 +47,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="127" column="28" bodyfile="inc/sstep_ctrl.h" bodystart="127" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="105" column="28" bodyfile="inc/sstep_ctrl.h" bodystart="105" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__callbacks_1a95ed6f0f305b3a6b45283ce4d6e0d20d" prot="public" static="no" mutable="no">
-        <type><ref refid="group__sstep__ctrl_1ga82d9a26444da72841a7c26547472ae94" kindref="member">sstep_fault_fn</ref></type>
+        <type>sstep_fault_fn</type>
         <definition>sstep_fault_fn sstep_callbacks::on_fault</definition>
         <argsstring></argsstring>
         <name>on_fault</name>
@@ -62,10 +62,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="128" column="20" bodyfile="inc/sstep_ctrl.h" bodystart="128" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="106" column="20" bodyfile="inc/sstep_ctrl.h" bodystart="106" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__callbacks_1aa7e3f799c26ff214979f7fdc671ff5b0" prot="public" static="no" mutable="no">
-        <type><ref refid="group__sstep__ctrl_1ga1f844e0d5ebd90cbe7e3044802574c7d" kindref="member">sstep_event_fn</ref></type>
+        <type>sstep_event_fn</type>
         <definition>sstep_event_fn sstep_callbacks::on_event</definition>
         <argsstring></argsstring>
         <name>on_event</name>
@@ -77,7 +77,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="129" column="20" bodyfile="inc/sstep_ctrl.h" bodystart="129" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="107" column="20" bodyfile="inc/sstep_ctrl.h" bodystart="107" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -86,7 +86,7 @@
     <detaileddescription>
 <para><computeroutput>pwm_write</computeroutput> and <computeroutput>output_enable</computeroutput> are required. </para>
     </detaileddescription>
-    <location file="inc/sstep_ctrl.h" line="123" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="124" bodyend="130"/>
+    <location file="inc/sstep_ctrl.h" line="101" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="102" bodyend="108"/>
     <listofallmembers>
       <member refid="structsstep__callbacks_1ac1126f7ecf9d1ba5cace738e6b9ed2ca" prot="public" virt="non-virtual"><scope>sstep_callbacks</scope><name>context</name></member>
       <member refid="structsstep__callbacks_1aa7e3f799c26ff214979f7fdc671ff5b0" prot="public" virt="non-virtual"><scope>sstep_callbacks</scope><name>on_event</name></member>

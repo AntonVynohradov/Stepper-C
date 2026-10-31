@@ -12,7 +12,6 @@
 
 * `#include "sstep_config.h"`
 * `#include "sstep_defs.h"`
-* `#include "sstep_math.h"`
 * `#include "sstep_ctrl.h"`
 
 

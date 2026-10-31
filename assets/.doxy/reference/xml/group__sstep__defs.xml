@@ -70,7 +70,7 @@
           <name>SSTEP_STATE_FAULT</name>
           <initializer>= 3</initializer>
           <briefdescription>
-<para>Outputs off after a fault, see <ref refid="group__sstep__ctrl_1ga7f4318600b1b000315230db98dd426cb" kindref="member">sstep_clear_faults()</ref>. </para>
+<para>Outputs off after a fault, see <ref refid="group__sstep__api_1gafff498925b2f3c0de622702a2f181b9b" kindref="member">sstep_clear_faults()</ref>. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -162,10 +162,10 @@
         <name>SSTEP_FAULT_NONE</name>
         <initializer>0x0000U</initializer>
         <briefdescription>
-<para>Fault flags reported by <ref refid="group__sstep__ctrl_1gafda7fec931ffa0ac11e671c75cd39300" kindref="member">sstep_get_status()</ref> and the fault callback. </para>
+<para>Fault flags reported by <ref refid="group__sstep__api_1ga1568aad455503ed6e062cf7048bf01ba" kindref="member">sstep_get_status()</ref> and the fault callback. </para>
         </briefdescription>
         <detaileddescription>
-<para>A fault switches the outputs off; <ref refid="group__sstep__ctrl_1ga7f4318600b1b000315230db98dd426cb" kindref="member">sstep_clear_faults()</ref> re-arms the driver. </para>
+<para>A fault switches the outputs off; <ref refid="group__sstep__api_1gafff498925b2f3c0de622702a2f181b9b" kindref="member">sstep_clear_faults()</ref> re-arms the driver. </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
@@ -223,7 +223,7 @@
         <name>SSTEP_FAULT_EXTERNAL</name>
         <initializer>0x0010U</initializer>
         <briefdescription>
-<para>Reported by the application through <ref refid="group__sstep__ctrl_1gadb944552719e659be1da950534631023" kindref="member">sstep_report_fault()</ref> (driver fault pin, over-temperature...). </para>
+<para>Reported by the application through <ref refid="group__sstep__api_1gaafe3bb709aaa93b20884f9e7f6e31498" kindref="member">sstep_report_fault()</ref> (driver fault pin, over-temperature...). </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
@@ -236,7 +236,7 @@
 <para>Constants shared by the public API. </para>
     </briefdescription>
     <detaileddescription>
-<para><bold>Units.</bold> Configuration values are integers in engineering units (milliohm, microhenry, milliampere, millivolt, hertz, nanosecond) so that <ref refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kindref="member">sstep_init()</ref> needs no floating point with the fixed point backend. The unit is part of every field name (<computeroutput>r_mohm</computeroutput>, <computeroutput>l_uh</computeroutput>...). Positions are in microsteps, velocities in microsteps per second.</para>
+<para><bold>Units.</bold> Configuration values are integers in engineering units (milliohm, microhenry, milliampere, millivolt, hertz, nanosecond) so that <ref refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kindref="member">sstep_init()</ref> needs no floating point with the fixed point backend. The unit is part of every field name (<computeroutput>r_mohm</computeroutput>, <computeroutput>l_uh</computeroutput>...). Positions are in microsteps, velocities in microsteps per second.</para>
 <para><bold>Sign convention.</bold> A positive phase voltage drives a positive phase current; positive velocity increases the position. Phase A leads phase B by 90 electrical degrees for positive motion. </para>
     </detaileddescription>
   </compounddef>

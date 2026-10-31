@@ -8,7 +8,7 @@
 
 
 
-_Snapshot returned by_ [_**sstep\_get\_status()**_](group__sstep__ctrl.md#function-sstep_get_status) _, in engineering units._
+_Snapshot returned by_ [_**sstep\_get\_status()**_](group__sstep__api.md#function-sstep_get_status) _, in engineering units._
 
 * `#include <sstep_ctrl.h>`
 

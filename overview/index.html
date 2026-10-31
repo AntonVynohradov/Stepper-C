@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -56,6 +56,8 @@
     
     
       <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -274,13 +276,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../protocol/" class="md-tabs__link">
+      <a href="../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -292,18 +294,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -770,14 +771,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../protocol/" class="md-nav__link">
+      <a href="../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -792,58 +793,6 @@
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -856,7 +805,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -865,42 +814,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1473,14 +1386,27 @@
 
 
 <h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h1>
-<p>TODO one paragraph: Stepper-C is a C11 library that implements the wire format of
-<a href="TODO-specification-url">Stepper Motor Control</a> for embedded systems that must be predictable and reviewable.</p>
+<p>Stepper-C is a C11 library that drives a two-phase hybrid stepper motor with closed-loop
+sinusoidal current control. Given the measured phase currents and bus voltage, it computes
+the PWM compare values of the power stage, and it turns motion commands (move to a
+position, run at a velocity, stop) into a smooth microstep trajectory. It runs on any MCU:
+the hardware is reached only through callbacks, and the numeric backend is either fixed
+point (no FPU needed) or single-precision float.</p>
 <h2 id="what-the-library-does">What the library does<a class="headerlink" href="#what-the-library-does" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Encodes frames.</strong> TODO</li>
-<li><strong>Parses a byte stream.</strong> TODO (any chunking, validation, resynchronization)</li>
-<li><strong>Connects the codec to a transport.</strong> TODO (link, handler, write function)</li>
-<li><strong>Defines the protocol constants.</strong> TODO</li>
+<li><strong>Controls the phase currents.</strong> One PI controller per phase with back-EMF
+  feed-forward and anti-windup, gains derived from the motor's R and L and the requested
+  bandwidth. An open-loop voltage mode is available for boards without current sensing.</li>
+<li><strong>Generates the microstep angle.</strong> Sine/cosine current references from a 32-bit
+  electrical angle, 1 to 256 microsteps per full step.</li>
+<li><strong>Plans the motion.</strong> Trapezoidal profile with separate acceleration and deceleration,
+  no overshoot, smooth replacement of a running command; constant-velocity mode; stop.</li>
+<li><strong>Fits the voltage to the power stage.</strong> Two full H-bridges (4 legs) or three
+  half-bridges with a shared leg (3 legs); the request is limited to what the topology and
+  the measured bus voltage can deliver, keeping its direction.</li>
+<li><strong>Protects the hardware.</strong> Overcurrent, overvoltage and undervoltage trips in the fast
+  loop, hardware-callback errors, external faults; outputs off within the same period.</li>
+<li><strong>Reduces the current at standstill.</strong> Hold current after a configurable delay.</li>
 </ul>
 <h2 id="what-the-library-does-not-do">What the library does not do<a class="headerlink" href="#what-the-library-does-not-do" title="Permanent link">&para;</a></h2>
 <table>
@@ -1492,28 +1418,38 @@
 </thead>
 <tbody>
 <tr>
-<td>Drivers (UART, CAN, USB…)</td>
-<td>Hardware- and OS-specific; you pass bytes in and provide a write function.</td>
+<td>Timer, PWM and ADC drivers</td>
+<td>Hardware-specific; you start the conversions and pass raw ADC counts in, and write the compare values out in a callback.</td>
 </tr>
 <tr>
-<td>Threads, queues, interrupts, locking</td>
-<td>Every system has its own; see the <a href="../integration/">integration guide</a>.</td>
+<td>Interrupt and task setup</td>
+<td>Every system has its own; the library only defines which function runs at which rate. See the <a href="../integration/">integration guide</a>.</td>
 </tr>
 <tr>
-<td>Device models / application data</td>
-<td>TODO</td>
+<td>Position feedback (encoder) and stall detection</td>
+<td>The library is an open-loop positioner with closed-loop current; the rotor position is not measured.</td>
 </tr>
 <tr>
-<td>Timeouts and retries</td>
-<td>The library has no clock.</td>
+<td>Homing, limit switches, G-code, multi-axis coordination</td>
+<td>Application logic on top of <code>sstep_move_to()</code>, <code>sstep_set_position()</code> and the status.</td>
+</tr>
+<tr>
+<td>Motor parameter identification</td>
+<td>R, L and Kt come from the datasheet or a measurement.</td>
+</tr>
+<tr>
+<td>Communication (UART, CAN, Modbus…)</td>
+<td>Out of scope; call the API from your protocol handler.</td>
 </tr>
 </tbody>
 </table>
 <h2 id="who-it-is-for">Who it is for<a class="headerlink" href="#who-it-is-for" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Device firmware.</strong> TODO</li>
-<li><strong>Controller firmware.</strong> TODO</li>
-<li><strong>Host tools.</strong> TODO</li>
+<li><strong>Firmware for stepper drives</strong> on a general-purpose MCU with gate drivers, for example
+  STMicroelectronics B-G431B-ESC1 or a custom board with two H-bridges.</li>
+<li><strong>Machines with several axes,</strong> one driver instance per motor, no shared state.</li>
+<li><strong>Projects that must be reviewed or certified:</strong> MISRA C:2012, 100 % coverage, no heap,
+  bounded execution time.</li>
 </ul>
 <h2 id="key-properties">Key properties<a class="headerlink" href="#key-properties" title="Permanent link">&para;</a></h2>
 <table>
@@ -1530,31 +1466,39 @@
 </tr>
 <tr>
 <td>Dependencies</td>
-<td><code>&lt;stddef.h&gt;</code>, <code>&lt;stdint.h&gt;</code>, <code>&lt;stdbool.h&gt;</code>, <code>&lt;string.h&gt;</code> only</td>
+<td><code>&lt;stddef.h&gt;</code>, <code>&lt;stdint.h&gt;</code>, <code>&lt;stdbool.h&gt;</code> only</td>
+</tr>
+<tr>
+<td>Numeric backends</td>
+<td>Fixed point Q15/Q31 (integer only) or single-precision float, chosen at build time</td>
 </tr>
 <tr>
 <td>Memory</td>
-<td>No heap; caller-owned structures; sizes fixed by <code>SSTEP_MAX_…</code></td>
+<td>No heap, no global or static mutable data (<code>.data</code> and <code>.bss</code> are empty)</td>
 </tr>
 <tr>
 <td>RAM per instance</td>
-<td>TODO measured</td>
+<td>360 B fixed point, 384 B float (<a href="../configuration/#memory-footprint">details</a>)</td>
+</tr>
+<tr>
+<td>Flash</td>
+<td>6.6 KiB fixed point, 7.0 KiB float (Cortex-M4, <code>-Os</code>, both topologies)</td>
 </tr>
 <tr>
 <td>Stack</td>
-<td>TODO measured (<a href="../configuration/#stack-usage">details</a>)</td>
+<td><code>sstep_fast_loop()</code> 184 B, <code>sstep_slow_loop()</code> 140 B worst case (Cortex-M4 <code>-Os</code>, <a href="../configuration/#stack-usage">details</a>)</td>
 </tr>
 <tr>
 <td>Coding standard</td>
-<td>MISRA C:2012, 0 Cppcheck addon violations, <a href="../misra/">TODO deviations</a></td>
+<td>MISRA C:2012, 0 Cppcheck addon violations, <a href="../misra/">1 deviation</a></td>
 </tr>
 <tr>
 <td>Tests</td>
-<td>100 % line and branch coverage; C/Python cross-check; specification reference frames</td>
+<td>100 % line and branch coverage of <code>src/</code> in both backends; closed-loop tests on a motor model</td>
 </tr>
 <tr>
 <td>Thread safety</td>
-<td>None built in, by design; see <a href="../architecture/#threading-and-reentrancy">Threading and reentrancy</a></td>
+<td>One fast-loop context and one slow-loop context per instance, by design; see <a href="../architecture/#threading-and-reentrancy">Threading</a></td>
 </tr>
 <tr>
 <td>License</td>
@@ -1564,14 +1508,39 @@
 </table>
 <h2 id="terminology">Terminology<a class="headerlink" href="#terminology" title="Permanent link">&para;</a></h2>
 <dl>
-<dt>TODO term</dt>
-<dd>TODO definition (controller, device, frame types, broadcast, escaping…).</dd>
+<dt>Full step</dt>
+<dd>1/200 of a revolution for a 1.8° motor; a quarter of an electrical period.</dd>
+<dt>Microstep</dt>
+<dd>A full step divided by <code>microsteps</code> (power of two, 1 to 256). Positions and
+velocities of the API are in microsteps.</dd>
+<dt>Electrical angle</dt>
+<dd>Angle of the current vector in the two phases; one electrical period is four full
+steps. Held as a 32-bit unsigned number, one turn = <span class="arithmatex">\(2^{32}\)</span>.</dd>
+<dt>Per unit (pu)</dt>
+<dd>Internal signals are relative to a base value: currents to <code>i_full_scale_ma</code>,
+voltages to <code>vbus_nominal_mv</code>. 1.0 pu is the base.</dd>
+<dt>Fast loop</dt>
+<dd><code>sstep_fast_loop()</code>, called from the PWM/ADC interrupt at <code>fast_loop_hz</code>
+(typically 20 kHz): current control and PWM.</dd>
+<dt>Slow loop</dt>
+<dd><code>sstep_slow_loop()</code>, called at <code>slow_loop_hz</code> (typically 1 kHz): trajectory,
+angle, currents, events.</dd>
+<dt>Leg</dt>
+<dd>One half-bridge (high-side and low-side switch) of the power stage, driven by one
+PWM compare value.</dd>
+<dt>Load angle</dt>
+<dd>Electrical angle between the commanded current vector and the rotor; it grows with
+the load torque and the motor loses steps when it exceeds 90° (180° to the next
+stable position).</dd>
 </dl>
 <h2 id="conventions-in-this-documentation">Conventions in this documentation<a class="headerlink" href="#conventions-in-this-documentation" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Hexadecimal bytes without prefix inside frames (<code>AA 55</code>), with <code>0x</code> in text and code.</li>
-<li>Multi-byte fields are TODO endian, as on the wire.</li>
-<li><code>SSTEP_MAX_…</code> is shown with its default value.</li>
+<li>Engineering units in the API are integers with the unit in the field name:
+  <code>_mohm</code>, <code>_uh</code>, <code>_ma</code>, <code>_mv</code>, <code>_hz</code>, <code>_ms</code>, <code>_ns</code>.</li>
+<li>"Fixed point" and "float" name the two numeric backends; numbers are given for both
+  when they differ.</li>
+<li>The example motor is a 17HS19-2004S1 (1.6 Ω, 3.0 mH, 2.0 A, 0.21 N·m/A, 200 steps)
+  on a 24 V supply; the example board is a B-G431B-ESC1 (three half-bridges).</li>
 </ul>
 
 
@@ -1708,6 +1677,12 @@
     
     
       <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

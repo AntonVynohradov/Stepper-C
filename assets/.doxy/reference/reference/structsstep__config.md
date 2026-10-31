@@ -8,7 +8,7 @@
 
 
 
-_Complete configuration given to_ [_**sstep\_init()**_](group__sstep__ctrl.md#function-sstep_init) _._[More...](#detailed-description)
+_Complete configuration given to_ [_**sstep\_init()**_](group__sstep__api.md#function-sstep_init) _._[More...](#detailed-description)
 
 * `#include <sstep_ctrl.h>`
 
@@ -87,7 +87,7 @@ _Complete configuration given to_ [_**sstep\_init()**_](group__sstep__ctrl.md#fu
 ## Detailed Description
 
 
-Copied by [**sstep\_init()**](group__sstep__ctrl.md#function-sstep_init); the structure may be discarded afterwards. 
+Copied by [**sstep\_init()**](group__sstep__api.md#function-sstep_init); the structure may be discarded afterwards. 
 
 
     

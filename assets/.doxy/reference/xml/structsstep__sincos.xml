@@ -17,7 +17,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="206" column="18" bodyfile="inc/sstep_math.h" bodystart="206" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="231" column="18" bodyfile="src/sstep_math.h" bodystart="231" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__sincos_1aa54bee54d2d4c6440510af0303c85ab4" prot="public" static="no" mutable="no">
         <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
@@ -32,7 +32,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_math.h" line="207" column="18" bodyfile="inc/sstep_math.h" bodystart="207" bodyend="-1"/>
+        <location file="src/sstep_math.h" line="232" column="18" bodyfile="src/sstep_math.h" bodystart="232" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -40,7 +40,7 @@
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="inc/sstep_math.h" line="204" column="1" bodyfile="inc/sstep_math.h" bodystart="205" bodyend="208"/>
+    <location file="src/sstep_math.h" line="229" column="1" bodyfile="src/sstep_math.h" bodystart="230" bodyend="233"/>
     <listofallmembers>
       <member refid="structsstep__sincos_1aa54bee54d2d4c6440510af0303c85ab4" prot="public" virt="non-virtual"><scope>sstep_sincos</scope><name>cos</name></member>
       <member refid="structsstep__sincos_1afbc70f01c9e7ae007c74a16e1e51b9a8" prot="public" virt="non-virtual"><scope>sstep_sincos</scope><name>sin</name></member>

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -56,6 +56,8 @@
     
     
       <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -274,13 +276,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../protocol/" class="md-tabs__link">
+      <a href="../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -292,18 +294,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -625,17 +626,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#integration-tests" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Integration tests
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#static-analysis" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -814,14 +804,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../protocol/" class="md-nav__link">
+      <a href="../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -836,58 +826,6 @@
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -900,7 +838,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -909,42 +847,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1489,17 +1391,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#integration-tests" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Integration tests
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#static-analysis" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1579,7 +1470,7 @@ include path.</p>
 <h2 id="prerequisites-for-development">Prerequisites for development<a class="headerlink" href="#prerequisites-for-development" title="Permanent link">&para;</a></h2>
 <ul>
 <li>C11 compiler, CMake 3.20+</li>
-<li>Optional: GoogleTest and gcovr, Python 3 and pytest, Cppcheck, clang-format, MkDocs
+<li>Optional: GoogleTest and gcovr, Python 3, Cppcheck, clang-format, MkDocs
   (requirements-dev.txt), Doxygen, WeasyPrint with Pango</li>
 </ul>
 <h2 id="build-with-presets">Build with presets<a class="headerlink" href="#build-with-presets" title="Permanent link">&para;</a></h2>
@@ -1601,22 +1492,16 @@ include path.</p>
 </tr>
 <tr>
 <td><code>[UnitTests]Stepper Motor Control</code></td>
-<td>GoogleTest executable with coverage; target <code>coverage</code></td>
+<td>GoogleTest suite, fixed-point backend, with coverage; target <code>coverage</code></td>
 </tr>
 <tr>
-<td><code>[IntegrationTests]Stepper Motor Control</code></td>
-<td>pytest suite; target <code>integration_tests</code></td>
-</tr>
-<tr>
-<td><code>[Examples]Stepper Motor Control</code></td>
-<td>Host examples and the bare-metal simulation test</td>
+<td><code>[UnitTestsFloat]Stepper Motor Control</code></td>
+<td>The same suite with the float backend</td>
 </tr>
 </tbody>
 </table>
 <h2 id="unit-tests-and-coverage">Unit tests and coverage<a class="headerlink" href="#unit-tests-and-coverage" title="Permanent link">&para;</a></h2>
 <p>The <code>coverage</code> target fails below <code>SSTEP_COVERAGE_MIN</code> (100 %) line or branch coverage.</p>
-<h2 id="integration-tests">Integration tests<a class="headerlink" href="#integration-tests" title="Permanent link">&para;</a></h2>
-<p>TODO the Python twin and the C/Python cross-check.</p>
 <h2 id="static-analysis">Static analysis<a class="headerlink" href="#static-analysis" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1641,10 +1526,16 @@ include path.</p>
 </tbody>
 </table>
 <h2 id="formatting">Formatting<a class="headerlink" href="#formatting" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>clang-format<span class="w"> </span>-i<span class="w"> </span>src/*.c<span class="w"> </span>inc/*.h<span class="w"> </span>sstep.h<span class="w"> </span>tests/unit/*.cpp<span class="w"> </span>examples/*/*.<span class="o">[</span>ch<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>clang-format<span class="w"> </span>-i<span class="w"> </span>src/*.c<span class="w"> </span>src/*.h<span class="w"> </span>inc/*.h<span class="w"> </span>sstep.h<span class="w"> </span>tests/unit/*.cpp<span class="w"> </span>tests/unit/*.hpp
 </code></pre></div>
 <h2 id="versioning-and-releases">Versioning and releases<a class="headerlink" href="#versioning-and-releases" title="Permanent link">&para;</a></h2>
-<p>TODO (see the skill's repository.md → Release).</p>
+<p>Stepper-C follows <a href="https://semver.org">Semantic Versioning</a>: the public API (<code>sstep.h</code> and
+<code>inc/</code>) is stable within a major version. The version comes from the latest <code>vX.Y.Z</code> Git
+tag (<code>cmake/version.cmake</code>), with <code>SSTEP_VERSION</code> in <code>sstep.h</code> as the fallback for builds
+without CMake; every change is recorded under <code>[Unreleased]</code> in <code>CHANGELOG.md</code>.</p>
+<p>A release tag runs <code>release.yml</code>: version check, unit tests with the coverage gate, MISRA
+gate, release build, and a GitHub Release with the static library, the headers, the MISRA
+report and the PDF manual.</p>
 <h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1812,6 +1703,12 @@ include path.</p>
     
     
       <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

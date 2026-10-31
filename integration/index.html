@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -15,10 +15,10 @@
         <link rel="canonical" href="https://antonvynohradov.github.io/Stepper-C/integration/">
       
       
-        <link rel="prev" href="../protocol/">
+        <link rel="prev" href="../motor-control/">
       
       
-        <link rel="next" href="../examples/">
+        <link rel="next" href="../api/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>Integration Guide - Stepper-C</title>
+        <title>Integration - Stepper-C</title>
       
     
     
@@ -56,6 +56,8 @@
     
     
       <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -115,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Integration Guide
+              Integration
             
           </span>
         </div>
@@ -272,13 +274,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../protocol/" class="md-tabs__link">
+      <a href="../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -292,18 +294,17 @@
     
   
   
-    
-    
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="./" class="md-tabs__link">
-          
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -652,14 +653,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../protocol/" class="md-nav__link">
+      <a href="../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -674,63 +675,6 @@
     
       
       
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-      
-        
-        
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
     
@@ -752,7 +696,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -770,7 +714,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -796,10 +740,54 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#rtos-interrupt-queue-and-rx-thread" class="md-nav__link">
+  <a href="#pwm" class="md-nav__link">
     <span class="md-ellipsis">
       
-        RTOS: interrupt, queue and RX thread
+        PWM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#current-and-voltage-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current and voltage measurement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bare-metal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bare metal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rtos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RTOS
       
     </span>
   </a>
@@ -818,21 +806,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bare-metal-and-host" class="md-nav__link">
+  <a href="#bring-up-checklist" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bare metal and host
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#notes-from-hardware-bring-up" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Notes from hardware bring-up
+        Bring-up checklist
       
     </span>
   </a>
@@ -842,42 +819,6 @@
     </ul>
   
 </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
       
     </li>
   
@@ -1368,10 +1309,54 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#rtos-interrupt-queue-and-rx-thread" class="md-nav__link">
+  <a href="#pwm" class="md-nav__link">
     <span class="md-ellipsis">
       
-        RTOS: interrupt, queue and RX thread
+        PWM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#current-and-voltage-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current and voltage measurement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bare-metal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bare metal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rtos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RTOS
       
     </span>
   </a>
@@ -1390,21 +1375,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bare-metal-and-host" class="md-nav__link">
+  <a href="#bring-up-checklist" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bare metal and host
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#notes-from-hardware-bring-up" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Notes from hardware bring-up
+        Bring-up checklist
       
     </span>
   </a>
@@ -1429,23 +1403,142 @@
 
 
 <h1 id="integration-guide">Integration Guide<a class="headerlink" href="#integration-guide" title="Permanent link">&para;</a></h1>
-<p>The library does not touch hardware. An integration has three parts:</p>
+<p>Stepper-C does not touch hardware. An integration has four parts:</p>
 <ol>
-<li><strong>Receive:</strong> move bytes from the transport into <code>sstep_link_receive()</code> from a thread
-   or the main loop, not from an interrupt handler.</li>
-<li><strong>Transmit:</strong> a write function that sends a complete frame; serialize it if several
-   threads send.</li>
-<li><strong>Application:</strong> a handler that interprets frames and answers.</li>
+<li><strong>PWM:</strong> a timer with one compare channel per leg, loaded by <code>pwm_write()</code>.</li>
+<li><strong>Measurement:</strong> ADC conversions of the two phase currents and the bus voltage,
+   synchronized to the PWM, passed to <code>sstep_fast_loop()</code> as raw counts.</li>
+<li><strong>Fast loop interrupt:</strong> at the end of each conversion sequence, call
+   <code>sstep_fast_loop()</code>.</li>
+<li><strong>Slow loop:</strong> call <code>sstep_slow_loop()</code> and the commands from one task or the main
+   loop at <code>slow_loop_hz</code>.</li>
 </ol>
-<p>Complete, buildable programs for each pattern are described in <a href="../examples/">Examples</a>.</p>
-<h2 id="rtos-interrupt-queue-and-rx-thread">RTOS: interrupt, queue and RX thread<a class="headerlink" href="#rtos-interrupt-queue-and-rx-thread" title="Permanent link">&para;</a></h2>
-<h2 id="adding-the-library-to-a-cmake-build">Adding the library to a CMake build<a class="headerlink" href="#adding-the-library-to-a-cmake-build" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">include</span><span class="p">(</span><span class="s">path/to/Stepper-C/sstep.cmake</span><span class="p">)</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">app</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">sstep</span><span class="p">)</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">sstep</span><span class="w"> </span><span class="s">PUBLIC</span><span class="w"> </span><span class="s">zephyr_interface</span><span class="p">)</span><span class="w">   </span><span class="c"># Zephyr applications only</span>
+<p><img alt="Integration on a microcontroller" src="../assets/images/integration.svg" /></p>
+<h2 id="pwm">PWM<a class="headerlink" href="#pwm" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Use <strong>center-aligned</strong> PWM with the period <code>pwm_period_ticks</code>; one compare value per
+  leg, in the order of the topology: full bridge <code>[A+ A− B+ B−]</code>, shared leg <code>[U V W]</code>.
+  A compare value of <code>pwm_period_ticks</code> means the high-side switch is on for the whole
+  period.</li>
+<li>Load the compare values with <strong>preload</strong> (shadow registers) so that <code>pwm_write()</code>
+  takes effect at the next period boundary, not in the middle of a period.</li>
+<li>Dead time is inserted by the timer or the gate driver; the library does not
+  compensate it in this version.</li>
+<li><code>output_enable(false)</code> must put <strong>every</strong> leg in high impedance (for example the
+  timer's main output enable bit and the gate drivers' enable pins), not only set
+  50 % duty.</li>
+</ul>
+<h2 id="current-and-voltage-measurement">Current and voltage measurement<a class="headerlink" href="#current-and-voltage-measurement" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Trigger the ADC from the PWM timer at the <strong>center of the period</strong>, where the low-side
+  switches conduct and the switching noise is furthest away; with low-side shunts this is
+  the only point where the current is visible.</li>
+<li>Convert phase A, phase B and the bus voltage in one sequence, and call
+  <code>sstep_fast_loop()</code> from its end-of-conversion interrupt.</li>
+<li>In the shared-leg topology the two measured currents are the phase currents A and B;
+  the shared leg carries their sum.</li>
+<li>Measure <code>adc_i_zero</code> with the outputs off after power-up; the library uses the value
+  from the configuration, so re-initialize with the measured value if it differs from the
+  default.</li>
+</ul>
+<h2 id="timing">Timing<a class="headerlink" href="#timing" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fast_loop_hz</code></td>
+<td>The real rate of the end-of-conversion interrupt; usually the PWM frequency or a fraction of it (every second period at 40 kHz PWM)</td>
+</tr>
+<tr>
+<td><code>slow_loop_hz</code></td>
+<td>The real rate of <code>sstep_slow_loop()</code>; <code>fast_loop_hz</code> must be a multiple of it</td>
+</tr>
+<tr>
+<td>Jitter of the slow loop</td>
+<td>Tolerated: the fast loop holds the angle if the slow loop is late, and catches up with the next setpoint</td>
+</tr>
+<tr>
+<td>Priority</td>
+<td>The fast-loop interrupt preempts the slow-loop context, never the other way round</td>
+</tr>
+<tr>
+<td>Execution time of the fast loop</td>
+<td>Must end well before the next conversion; measure it on your MCU (toggle a pin or read the cycle counter)</td>
+</tr>
+</tbody>
+</table>
+<p>The library measures nothing about time: if the configured rates do not match the real
+ones, the velocities, the accelerations and the hold delay scale accordingly.</p>
+<h2 id="bare-metal">Bare metal<a class="headerlink" href="#bare-metal" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">board_init</span><span class="p">();</span><span class="w"> </span><span class="cm">/* clocks, PWM timer, ADC triggered by the timer, interrupts */</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">sstep_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">motor_config</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">SSTEP_OK</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">(</span><span class="n">sstep_enable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">SSTEP_OK</span><span class="p">))</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">board_tick_1ms</span><span class="p">())</span><span class="w"> </span><span class="cm">/* set by SysTick or a timer */</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">            </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">sstep_slow_loop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">);</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">            </span><span class="cm">/* commands and the application's state machine here */</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p">}</span>
 </code></pre></div>
-<h2 id="bare-metal-and-host">Bare metal and host<a class="headerlink" href="#bare-metal-and-host" title="Permanent link">&para;</a></h2>
-<h2 id="notes-from-hardware-bring-up">Notes from hardware bring-up<a class="headerlink" href="#notes-from-hardware-bring-up" title="Permanent link">&para;</a></h2>
+<h2 id="rtos">RTOS<a class="headerlink" href="#rtos" title="Permanent link">&para;</a></h2>
+<p>Run the slow loop in a periodic task with a fixed period (not a delay after the work),
+and call every command from that task, or from another task through a queue:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">"FreeRTOS.h"</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">"task.h"</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">motor_task</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">{</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="n">TickType_t</span><span class="w"> </span><span class="n">wake</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xTaskGetTickCount</span><span class="p">();</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">arg</span><span class="p">;</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">        </span><span class="n">vTaskDelayUntil</span><span class="p">(</span><span class="o">&amp;</span><span class="n">wake</span><span class="p">,</span><span class="w"> </span><span class="n">pdMS_TO_TICKS</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">        </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">sstep_slow_loop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">);</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">        </span><span class="cm">/* take commands from a queue and call sstep_move_to() etc. here */</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="p">}</span>
+</code></pre></div>
+<p>The fast loop stays in the ADC interrupt; give it a priority above the RTOS kernel's
+interrupt priority limit only if it calls no RTOS function (the library calls none; check
+your callbacks).</p>
+<h2 id="adding-the-library-to-a-cmake-build">Adding the library to a CMake build<a class="headerlink" href="#adding-the-library-to-a-cmake-build" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">set</span><span class="p">(</span><span class="s">SSTEP_MATH_BACKEND</span><span class="w"> </span><span class="s">FLOAT</span><span class="p">)</span><span class="w">                         </span><span class="c"># MCU with FPU; default FIXED</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">include</span><span class="p">(</span><span class="s">path/to/Stepper-C/sstep.cmake</span><span class="p">)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">app</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">sstep</span><span class="p">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">sstep</span><span class="w"> </span><span class="s">PUBLIC</span><span class="w"> </span><span class="s">zephyr_interface</span><span class="p">)</span><span class="w">  </span><span class="c"># Zephyr applications only</span>
+</code></pre></div>
+<p>The backend and the other build-time options are compile definitions of the <code>sstep</code>
+target, so the application sees the same values as the library.</p>
+<p><strong>Without CMake:</strong> compile <code>src/*.c</code>, add the repository root and <code>inc/</code> to the include
+path, and pass the same <code>-DSSTEP_CFG_…</code> definitions to the library and the application.</p>
+<h2 id="bring-up-checklist">Bring-up checklist<a class="headerlink" href="#bring-up-checklist" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Outputs off:</strong> read the ADC and check <code>adc_i_zero</code> and the bus voltage reading
+   against a multimeter (<code>sstep_get_status()</code> shows <code>vbus_mv</code> after a fast loop).</li>
+<li><strong>Polarity:</strong> start with <code>drive_mode = SSTEP_DRIVE_VOLTAGE</code> and a small <code>i_run_ma</code>;
+   after <code>sstep_enable()</code>, the measured current of phase A must be positive and close to
+   the reference. If it is negative, negate <code>adc_i_span</code>.</li>
+<li><strong>Current loop:</strong> switch to <code>SSTEP_DRIVE_CURRENT</code> with a low run current; look at the
+   phase current with a current probe or the status: it must settle at <code>i_run_ma</code>.</li>
+<li><strong>Motion:</strong> run slowly (<code>sstep_run()</code> with a few hundred microsteps/s), then raise the
+   speed and the acceleration to the application's values.</li>
+<li><strong>Protection:</strong> check the trips with a lowered <code>i_trip_ma</code> and <code>vbus_max_mv</code>, and the
+   external fault input with <code>sstep_report_fault()</code>.</li>
+</ol>
 
 
 
@@ -1481,7 +1574,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../protocol/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Protocol">
+          <a href="../motor-control/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Motor Control">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1491,20 +1584,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Protocol
+                Motor Control
               </div>
             </div>
           </a>
         
         
           
-          <a href="../examples/" class="md-footer__link md-footer__link--next" aria-label="Next: Examples">
+          <a href="../api/" class="md-footer__link md-footer__link--next" aria-label="Next: API Reference">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Examples
+                API Reference
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1581,6 +1674,12 @@
     
     
       <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

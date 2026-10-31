@@ -18,42 +18,6 @@ Here is a list of all modules:
 
 
 
-* [**Control API**](group__sstep__ctrl.md) _Initialise a driver, run its loops and command motion._ 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 * [**Definitions**](group__sstep__defs.md) _Constants shared by the public API._ 
     
 
@@ -110,6 +74,28 @@ Here is a list of all modules:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* [**Stepper-C API**](group__sstep__api.md) _Initialise a driver, run its loops and command motion._ 
+    
 
 
 

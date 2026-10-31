@@ -114,5 +114,5 @@ sstep_real_t sstep_sincos::sin;
 <hr>
 
 ------------------------------
-The documentation for this class was generated from the following file `inc/sstep_math.h`
+The documentation for this class was generated from the following file `src/sstep_math.h`
 

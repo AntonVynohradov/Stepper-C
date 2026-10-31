@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -52,6 +52,8 @@
     
     
       <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -268,13 +270,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../protocol/" class="md-tabs__link">
+      <a href="../../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -286,18 +288,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -646,14 +647,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../protocol/" class="md-nav__link">
+      <a href="../../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -668,58 +669,6 @@
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -732,7 +681,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -741,42 +690,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1552,7 +1465,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-sstep_fault_external"><strong>SSTEP_FAULT_EXTERNAL</strong></a>  <code>0x0010U</code><br><em>Reported by the application through</em> <a href="../group__sstep__ctrl/#function-sstep_report_fault"><em><strong>sstep_report_fault()</strong></em></a> <em>(driver fault pin, over-temperature...).</em></td>
+<td style="text-align: left;"><a href="./#define-sstep_fault_external"><strong>SSTEP_FAULT_EXTERNAL</strong></a>  <code>0x0010U</code><br><em>Reported by the application through</em> <a href="../group__sstep__api/#function-sstep_report_fault"><em><strong>sstep_report_fault()</strong></em></a> <em>(driver fault pin, over-temperature...).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
@@ -1560,7 +1473,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-sstep_fault_none"><strong>SSTEP_FAULT_NONE</strong></a>  <code>0x0000U</code><br><em>Fault flags reported by</em> <a href="../group__sstep__ctrl/#function-sstep_get_status"><em><strong>sstep_get_status()</strong></em></a> <em>and the fault callback.</em></td>
+<td style="text-align: left;"><a href="./#define-sstep_fault_none"><strong>SSTEP_FAULT_NONE</strong></a>  <code>0x0000U</code><br><em>Fault flags reported by</em> <a href="../group__sstep__api/#function-sstep_get_status"><em><strong>sstep_get_status()</strong></em></a> <em>and the fault callback.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
@@ -1585,7 +1498,7 @@
 </tbody>
 </table>
 <h2 id="detailed-description">Detailed Description<a class="headerlink" href="#detailed-description" title="Permanent link">&para;</a></h2>
-<p><strong>Units.</strong> Configuration values are integers in engineering units (milliohm, microhenry, milliampere, millivolt, hertz, nanosecond) so that <a href="../group__sstep__ctrl/#function-sstep_init"><strong>sstep_init()</strong></a> needs no floating point with the fixed point backend. The unit is part of every field name (<code>r_mohm</code>, <code>l_uh</code>...). Positions are in microsteps, velocities in microsteps per second.</p>
+<p><strong>Units.</strong> Configuration values are integers in engineering units (milliohm, microhenry, milliampere, millivolt, hertz, nanosecond) so that <a href="../group__sstep__api/#function-sstep_init"><strong>sstep_init()</strong></a> needs no floating point with the fixed point backend. The unit is part of every field name (<code>r_mohm</code>, <code>l_uh</code>...). Positions are in microsteps, velocities in microsteps per second.</p>
 <p><strong>Sign convention.</strong> A positive phase voltage drives a positive phase current; positive velocity increases the position. Phase A leads phase B by 90 electrical degrees for positive motion. </p>
 <h2 id="public-types-documentation">Public Types Documentation<a class="headerlink" href="#public-types-documentation" title="Permanent link">&para;</a></h2>
 <h3 id="enum-sstep_state">enum sstep_state<a class="headerlink" href="#enum-sstep_state" title="Permanent link">&para;</a></h3>
@@ -1633,7 +1546,7 @@
 <hr>
 
 <h3 id="define-sstep_fault_external">define SSTEP_FAULT_EXTERNAL<a class="headerlink" href="#define-sstep_fault_external" title="Permanent link">&para;</a></h3>
-<p><em>Reported by the application through</em> <a href="../group__sstep__ctrl/#function-sstep_report_fault"><em><strong>sstep_report_fault()</strong></em></a> <em>(driver fault pin, over-temperature...).</em>
+<p><em>Reported by the application through</em> <a href="../group__sstep__api/#function-sstep_report_fault"><em><strong>sstep_report_fault()</strong></em></a> <em>(driver fault pin, over-temperature...).</em>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>#define SSTEP_FAULT_EXTERNAL `0x0010U`
 </code></pre></div></p>
 <hr>
@@ -1645,10 +1558,10 @@
 <hr>
 
 <h3 id="define-sstep_fault_none">define SSTEP_FAULT_NONE<a class="headerlink" href="#define-sstep_fault_none" title="Permanent link">&para;</a></h3>
-<p><em>Fault flags reported by</em> <a href="../group__sstep__ctrl/#function-sstep_get_status"><em><strong>sstep_get_status()</strong></em></a> <em>and the fault callback.</em>
+<p><em>Fault flags reported by</em> <a href="../group__sstep__api/#function-sstep_get_status"><em><strong>sstep_get_status()</strong></em></a> <em>and the fault callback.</em>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>#define SSTEP_FAULT_NONE `0x0000U`
 </code></pre></div></p>
-<p>A fault switches the outputs off; <a href="../group__sstep__ctrl/#function-sstep_clear_faults"><strong>sstep_clear_faults()</strong></a> re-arms the driver. </p>
+<p>A fault switches the outputs off; <a href="../group__sstep__api/#function-sstep_clear_faults"><strong>sstep_clear_faults()</strong></a> re-arms the driver. </p>
 <hr>
 
 <h3 id="define-sstep_fault_overcurrent">define SSTEP_FAULT_OVERCURRENT<a class="headerlink" href="#define-sstep_fault_overcurrent" title="Permanent link">&para;</a></h3>
@@ -1779,6 +1692,12 @@
     
     
       <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

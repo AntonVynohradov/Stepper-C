@@ -37,10 +37,10 @@ _Hardware callbacks._ [More...](#detailed-description)
 | Type | Name |
 | ---: | :--- |
 |  void \* | [**context**](#variable-context)  <br>_Passed unchanged to every callback._  |
-|  [**sstep\_event\_fn**](group__sstep__ctrl.md#typedef-sstep_event_fn) | [**on\_event**](#variable-on_event)  <br>_Optional, NULL if unused._  |
-|  [**sstep\_fault\_fn**](group__sstep__ctrl.md#typedef-sstep_fault_fn) | [**on\_fault**](#variable-on_fault)  <br>_Optional, NULL if unused._  |
-|  [**sstep\_output\_enable\_fn**](group__sstep__ctrl.md#typedef-sstep_output_enable_fn) | [**output\_enable**](#variable-output_enable)  <br>_Required._  |
-|  [**sstep\_pwm\_write\_fn**](group__sstep__ctrl.md#typedef-sstep_pwm_write_fn) | [**pwm\_write**](#variable-pwm_write)  <br>_Required._  |
+|  sstep\_event\_fn | [**on\_event**](#variable-on_event)  <br>_Optional, NULL if unused._  |
+|  sstep\_fault\_fn | [**on\_fault**](#variable-on_fault)  <br>_Optional, NULL if unused._  |
+|  sstep\_output\_enable\_fn | [**output\_enable**](#variable-output_enable)  <br>_Required._  |
+|  sstep\_pwm\_write\_fn | [**pwm\_write**](#variable-pwm_write)  <br>_Required._  |
 
 
 

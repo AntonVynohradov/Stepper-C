@@ -41,7 +41,7 @@
  * INCLUDES
  * =============================================================================*/
 
-#include "sstep_ctrl.h"
+#include "sstep.h"
 
 #include <stddef.h>
 
@@ -58,9 +58,32 @@
 
 #define VALUE_MAX 10000000U
 
-#define Q16_LIMIT ((int64_t)1 << 30)
+#define Q16_LIMIT ((int64_t)0x40000000)
 
 #define VBUS_PU_MAX SSTEP_ACC_SCALE_MAX
+
+/* ==============================================================================
+ * PRIVATE TYPE DEFINITIONS
+ * =============================================================================*/
+
+/* Alignment probes: the offset of x is the alignment of its type (no _Alignof, Rule 1.4) */
+struct align_ctx
+{
+    char c;
+    struct sstep_ctx x;
+};
+
+struct align_pub
+{
+    char c;
+    struct sstep x;
+};
+
+/* The opaque public instance must hold the private driver state */
+_Static_assert(sizeof(struct sstep_ctx) <= sizeof(struct sstep),
+               "SSTEP_STATE_BYTES in sstep_ctrl.h is too small");
+_Static_assert(offsetof(struct align_ctx, x) <= offsetof(struct align_pub, x),
+               "struct sstep is not aligned for struct sstep_ctx");
 
 /* ==============================================================================
  * PRIVATE FUNCTION DECLARATIONS
@@ -71,17 +94,18 @@ static uint8_t log2_u32(uint32_t v);
 static bool mul_ok(uint64_t a, uint64_t b, uint64_t* out);
 static int ratio(uint64_t n1, uint64_t n2, uint64_t d1, uint64_t d2, struct sstep_gain* g);
 static int64_t div_round(int64_t num, int64_t den);
+static int64_t pow2_i64(uint32_t n);
 static sstep_real_t gain_apply_i32(const struct sstep_gain* g, int32_t v);
-static sstep_angle_t raw_angle(const struct sstep* m, int64_t pos);
+static sstep_angle_t raw_angle(const struct sstep_ctx* m, int64_t pos);
 static int check_config(const struct sstep_config* cfg);
-static int set_currents(struct sstep* m, uint32_t run_ma, uint32_t hold_ma);
-static int set_limits(struct sstep* m, uint32_t v_max, uint32_t accel, uint32_t decel);
-static int derive(struct sstep* m);
-static void shutdown(struct sstep* m, uint16_t faults);
-static void publish(struct sstep* m, const struct sstep_setpoint* sp);
+static int set_currents(struct sstep_ctx* m, uint32_t run_ma, uint32_t hold_ma);
+static int set_limits(struct sstep_ctx* m, uint32_t v_max, uint32_t accel, uint32_t decel);
+static int derive(struct sstep_ctx* m);
+static void shutdown(struct sstep_ctx* m, uint16_t faults);
+static void publish(struct sstep_ctx* m, const struct sstep_setpoint* sp);
 static bool is_active(enum sstep_state s);
-static bool is_moving(const struct sstep* m);
-static void control(struct sstep* m);
+static bool is_moving(const struct sstep_ctx* m);
+static void control(struct sstep_ctx* m);
 
 /* ==============================================================================
  * PRIVATE FUNCTION IMPLEMENTATIONS
@@ -130,18 +154,26 @@ static int64_t div_round(int64_t num, int64_t den)
     return (num >= 0) ? ((num + (den / 2)) / den) : -((-num + (den / 2)) / den);
 }
 
+static int64_t pow2_i64(uint32_t n)
+{
+    uint64_t p = (uint64_t)1U << n;
+    return (int64_t)p;
+}
+
 static sstep_real_t gain_apply_i32(const struct sstep_gain* g, int32_t v)
 {
 #if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
     int64_t p = (int64_t)v * (int64_t)g->mant; /* value * 2^15 = p * 2^exp */
+    int32_t e = (int32_t)g->exp;
     int64_t q;
-    if (g->exp >= 0)
+    if (e >= 0)
     {
-        q = p * ((int64_t)1 << (uint32_t)g->exp); /* |p| < 2^46, exp <= 15 */
+        q = p * pow2_i64((uint32_t)e); /* |p| < 2^46, exp <= 15 */
     }
     else
     {
-        q = div_round(p, (int64_t)1 << (uint32_t)(-g->exp));
+        e = -e;
+        q = div_round(p, pow2_i64((uint32_t)e));
     }
     if (q > (int64_t)INT16_MAX)
     {
@@ -161,7 +193,7 @@ static sstep_real_t gain_apply_i32(const struct sstep_gain* g, int32_t v)
 #endif
 }
 
-static sstep_angle_t raw_angle(const struct sstep* m, int64_t pos)
+static sstep_angle_t raw_angle(const struct sstep_ctx* m, int64_t pos)
 {
     return (sstep_angle_t)(((uint64_t)pos) << m->angle_shift); /* modulo one turn */
 }
@@ -222,7 +254,7 @@ static int check_config(const struct sstep_config* cfg)
     return result;
 }
 
-static int set_currents(struct sstep* m, uint32_t run_ma, uint32_t hold_ma)
+static int set_currents(struct sstep_ctx* m, uint32_t run_ma, uint32_t hold_ma)
 {
     int result = SSTEP_OK;
     sstep_real_t run;
@@ -250,7 +282,7 @@ static int set_currents(struct sstep* m, uint32_t run_ma, uint32_t hold_ma)
     return result;
 }
 
-static int set_limits(struct sstep* m, uint32_t v_max, uint32_t accel, uint32_t decel)
+static int set_limits(struct sstep_ctx* m, uint32_t v_max, uint32_t accel, uint32_t decel)
 {
     int result = SSTEP_OK;
     int64_t f = (int64_t)m->cfg.ctrl.slow_loop_hz;
@@ -277,7 +309,7 @@ static int set_limits(struct sstep* m, uint32_t v_max, uint32_t accel, uint32_t 
     return result;
 }
 
-static int derive(struct sstep* m)
+static int derive(struct sstep_ctx* m)
 {
     const struct sstep_motor_cfg* mo = &m->cfg.motor;
     const struct sstep_stage_cfg* st = &m->cfg.stage;
@@ -356,7 +388,7 @@ static int derive(struct sstep* m)
     return result;
 }
 
-static void shutdown(struct sstep* m, uint16_t faults)
+static void shutdown(struct sstep_ctx* m, uint16_t faults)
 {
     m->faults = (uint16_t)(m->faults | faults);
     m->state = SSTEP_STATE_FAULT;
@@ -367,7 +399,7 @@ static void shutdown(struct sstep* m, uint16_t faults)
     }
 }
 
-static void publish(struct sstep* m, const struct sstep_setpoint* sp)
+static void publish(struct sstep_ctx* m, const struct sstep_setpoint* sp)
 {
     uint8_t w;
     m->sp_pending = 0U;
@@ -381,12 +413,12 @@ static bool is_active(enum sstep_state s)
     return (s == SSTEP_STATE_HOLDING) || (s == SSTEP_STATE_MOVING);
 }
 
-static bool is_moving(const struct sstep* m)
+static bool is_moving(const struct sstep_ctx* m)
 {
     return (m->mo.mode != SSTEP_MODE_HOLD);
 }
 
-static void control(struct sstep* m)
+static void control(struct sstep_ctx* m)
 {
     struct sstep_sincos sc;
     sstep_real_t iref[2];
@@ -428,7 +460,7 @@ static void control(struct sstep* m)
         }
     }
 
-    vbus = sstep_acc_clamp(sstep_gain_mul_int(&m->adc_v, (int32_t)m->vbus_raw), SSTEP_ACC_C(0.0),
+    vbus = sstep_acc_clamp(sstep_gain_mul_int(&m->adc_v, (int32_t)m->vbus_raw), SSTEP_ACC_ZERO,
                            VBUS_PU_MAX);
     sstep_bridge_map(m->cfg.stage.topology, vu[0], vu[1], &m->cur.inv_vbus, vbus,
                      m->cfg.stage.pwm_period_ticks, &out);
@@ -470,8 +502,9 @@ static void control(struct sstep* m)
  * PUBLIC FUNCTION IMPLEMENTATIONS
  * =============================================================================*/
 
-int sstep_init(struct sstep* m, const struct sstep_config* cfg)
+int sstep_init(struct sstep* drv, const struct sstep_config* cfg)
 {
+    struct sstep_ctx* m = sstep_ctx_of(drv);
     int result;
 
     if ((m == NULL) || (cfg == NULL))
@@ -483,7 +516,7 @@ int sstep_init(struct sstep* m, const struct sstep_config* cfg)
         result = check_config(cfg);
         if (result == SSTEP_OK)
         {
-            *m = (struct sstep){0}; /* no <string.h> needed */
+            *m = (struct sstep_ctx){0}; /* no <string.h> needed */
             m->cfg = *cfg;
             result = derive(m);
             m->state = SSTEP_STATE_DISABLED;
@@ -492,8 +525,9 @@ int sstep_init(struct sstep* m, const struct sstep_config* cfg)
     return result;
 }
 
-int sstep_enable(struct sstep* m)
+int sstep_enable(struct sstep* drv)
 {
+    struct sstep_ctx* m = sstep_ctx_of(drv);
     int result = SSTEP_OK;
 
     if (m == NULL)
@@ -510,8 +544,8 @@ int sstep_enable(struct sstep* m)
         m->mo.mode = SSTEP_MODE_HOLD;
         m->mo.vel = 0;
         m->mo.target = m->mo.pos;
-        m->integ[0] = SSTEP_ACC_C(0.0);
-        m->integ[1] = SSTEP_ACC_C(0.0);
+        m->integ[0] = SSTEP_ACC_ZERO;
+        m->integ[1] = SSTEP_ACC_ZERO;
         m->still = 0U;
         m->hold_active = false;
         sp.angle = raw_angle(m, m->mo.pos) + m->angle_offset;
@@ -539,8 +573,9 @@ int sstep_enable(struct sstep* m)
     return result;
 }
 
-int sstep_disable(struct sstep* m)
+int sstep_disable(struct sstep* drv)
 {
+    struct sstep_ctx* m = sstep_ctx_of(drv);
     int result = SSTEP_OK;
 
     if (m == NULL)
@@ -564,8 +599,9 @@ int sstep_disable(struct sstep* m)
     return result;
 }
 
-int sstep_fast_loop(struct sstep* m, const struct sstep_sample* sample)
+int sstep_fast_loop(struct sstep* drv, const struct sstep_sample* sample)
 {
+    struct sstep_ctx* m = sstep_ctx_of(drv);
     int result = SSTEP_OK;
 
 #if (SSTEP_CFG_ARG_CHECKS == 1)
@@ -614,8 +650,9 @@ int sstep_fast_loop(struct sstep* m, const struct sstep_sample* sample)
     return result;
 }
 
-int sstep_slow_loop(struct sstep* m)
+int sstep_slow_loop(struct sstep* drv)
 {
+    struct sstep_ctx* m = sstep_ctx_of(drv);
     int result = SSTEP_OK;
 
     if (m == NULL)
@@ -667,7 +704,7 @@ int sstep_slow_loop(struct sstep* m)
         }
 
         sp.angle = raw_angle(m, p0) + m->angle_offset;
-        sp.dangle = (int32_t)((dp * ((int64_t)1 << m->angle_shift)) / (int64_t)m->ratio);
+        sp.dangle = (int32_t)((dp * pow2_i64((uint32_t)m->angle_shift)) / (int64_t)m->ratio);
         sp.i_amp = m->hold_active ? m->i_hold : m->i_run;
         sp.ff = gain_apply_i32(&m->ff_gain,
                                (int32_t)div_round(dp * (int64_t)m->cfg.ctrl.slow_loop_hz,
@@ -706,8 +743,9 @@ int sstep_slow_loop(struct sstep* m)
     return result;
 }
 
-int sstep_move_to(struct sstep* m, int32_t position)
+int sstep_move_to(struct sstep* drv, int32_t position)
 {
+    struct sstep_ctx* m = sstep_ctx_of(drv);
     int result = SSTEP_OK;
 
     if (m == NULL)
@@ -726,8 +764,9 @@ int sstep_move_to(struct sstep* m, int32_t position)
     return result;
 }
 
-int sstep_move_by(struct sstep* m, int32_t delta)
+int sstep_move_by(struct sstep* drv, int32_t delta)
 {
+    struct sstep_ctx* m = sstep_ctx_of(drv);
     int result;
 
     if (m == NULL)
@@ -743,14 +782,15 @@ int sstep_move_by(struct sstep* m, int32_t delta)
         }
         else
         {
-            result = sstep_move_to(m, (int32_t)t);
+            result = sstep_move_to(drv, (int32_t)t);
         }
     }
     return result;
 }
 
-int sstep_run(struct sstep* m, int32_t velocity)
+int sstep_run(struct sstep* drv, int32_t velocity)
 {
+    struct sstep_ctx* m = sstep_ctx_of(drv);
     int result = SSTEP_OK;
 
     if (m == NULL)
@@ -774,8 +814,9 @@ int sstep_run(struct sstep* m, int32_t velocity)
     return result;
 }
 
-int sstep_stop(struct sstep* m)
+int sstep_stop(struct sstep* drv)
 {
+    struct sstep_ctx* m = sstep_ctx_of(drv);
     int result = SSTEP_OK;
 
     if (m == NULL)
@@ -794,8 +835,9 @@ int sstep_stop(struct sstep* m)
     return result;
 }
 
-int sstep_set_position(struct sstep* m, int32_t position)
+int sstep_set_position(struct sstep* drv, int32_t position)
 {
+    struct sstep_ctx* m = sstep_ctx_of(drv);
     int result = SSTEP_OK;
 
     if (m == NULL)
@@ -817,8 +859,9 @@ int sstep_set_position(struct sstep* m, int32_t position)
     return result;
 }
 
-int sstep_set_current(struct sstep* m, uint32_t run_ma, uint32_t hold_ma)
+int sstep_set_current(struct sstep* drv, uint32_t run_ma, uint32_t hold_ma)
 {
+    struct sstep_ctx* m = sstep_ctx_of(drv);
     int result;
 
     if (m == NULL)
@@ -832,8 +875,9 @@ int sstep_set_current(struct sstep* m, uint32_t run_ma, uint32_t hold_ma)
     return result;
 }
 
-int sstep_set_motion_limits(struct sstep* m, uint32_t v_max, uint32_t accel, uint32_t decel)
+int sstep_set_motion_limits(struct sstep* drv, uint32_t v_max, uint32_t accel, uint32_t decel)
 {
+    struct sstep_ctx* m = sstep_ctx_of(drv);
     int result;
 
     if (m == NULL)
@@ -847,8 +891,9 @@ int sstep_set_motion_limits(struct sstep* m, uint32_t v_max, uint32_t accel, uin
     return result;
 }
 
-int sstep_report_fault(struct sstep* m, uint16_t faults)
+int sstep_report_fault(struct sstep* drv, uint16_t faults)
 {
+    struct sstep_ctx* m = sstep_ctx_of(drv);
     int result = SSTEP_OK;
 
     if (m == NULL)
@@ -866,8 +911,9 @@ int sstep_report_fault(struct sstep* m, uint16_t faults)
     return result;
 }
 
-int sstep_clear_faults(struct sstep* m)
+int sstep_clear_faults(struct sstep* drv)
 {
+    struct sstep_ctx* m = sstep_ctx_of(drv);
     int result = SSTEP_OK;
 
     if (m == NULL)
@@ -882,8 +928,9 @@ int sstep_clear_faults(struct sstep* m)
     return result;
 }
 
-int sstep_get_status(const struct sstep* m, struct sstep_status* status)
+int sstep_get_status(const struct sstep* drv, struct sstep_status* status)
 {
+    const struct sstep_ctx* m = sstep_ctx_of_const(drv);
     int result = SSTEP_OK;
 
     if ((m == NULL) || (status == NULL))

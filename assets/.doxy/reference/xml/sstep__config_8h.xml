@@ -3,7 +3,7 @@
   <compounddef id="sstep__config_8h" kind="file" language="C++">
     <compoundname>sstep_config.h</compoundname>
     <includedby refid="sstep__ctrl_8h" local="yes">inc/sstep_ctrl.h</includedby>
-    <includedby refid="sstep__math_8h" local="yes">inc/sstep_math.h</includedby>
+    <includedby refid="sstep__math_8h" local="yes">src/sstep_math.h</includedby>
     <includedby refid="sstep_8h" local="yes">sstep.h</includedby>
     <invincdepgraph>
       <node id="1">
@@ -24,21 +24,17 @@
         <childnode refid="4" relation="include">
         </childnode>
       </node>
+      <node id="3">
+        <label>src/sstep_internal.h</label>
+        <link refid="sstep__internal_8h_source"/>
+      </node>
       <node id="5">
-        <label>inc/sstep_math.h</label>
+        <label>src/sstep_math.h</label>
         <link refid="sstep__math_8h_source"/>
-        <childnode refid="2" relation="include">
-        </childnode>
         <childnode refid="3" relation="include">
         </childnode>
         <childnode refid="6" relation="include">
         </childnode>
-        <childnode refid="4" relation="include">
-        </childnode>
-      </node>
-      <node id="3">
-        <label>src/sstep_internal.h</label>
-        <link refid="sstep__internal_8h_source"/>
       </node>
       <node id="6">
         <label>src/sstep_sin_table.h</label>

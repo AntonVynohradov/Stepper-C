@@ -1,255 +1,17 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
-  <compounddef id="group__sstep__ctrl" kind="group">
-    <compoundname>sstep_ctrl</compoundname>
-    <title>Control API</title>
-    <innerclass refid="structsstep__callbacks" prot="public">sstep_callbacks</innerclass>
-    <innerclass refid="structsstep__motor__cfg" prot="public">sstep_motor_cfg</innerclass>
-    <innerclass refid="structsstep__stage__cfg" prot="public">sstep_stage_cfg</innerclass>
-    <innerclass refid="structsstep__ctrl__cfg" prot="public">sstep_ctrl_cfg</innerclass>
-    <innerclass refid="structsstep__config" prot="public">sstep_config</innerclass>
-    <innerclass refid="structsstep__sample" prot="public">sstep_sample</innerclass>
-    <innerclass refid="structsstep__status" prot="public">sstep_status</innerclass>
-    <innerclass refid="structsstep__setpoint" prot="public">sstep_setpoint</innerclass>
-    <innerclass refid="structsstep__motion" prot="public">sstep_motion</innerclass>
-    <innerclass refid="structsstep" prot="public">sstep</innerclass>
-    <sectiondef kind="enum">
-      <memberdef kind="enum" id="group__sstep__ctrl_1ga9765926896e39cbaf1a643817ed8cb1c" prot="public" static="no" strong="no">
-        <type></type>
-        <name>sstep_event</name>
-        <enumvalue id="group__sstep__ctrl_1gga9765926896e39cbaf1a643817ed8cb1ca724dd2f3716f9027ffc285f1ff20ca66" prot="public">
-          <name>SSTEP_EVENT_MOVE_DONE</name>
-          <initializer>= 0</initializer>
-          <briefdescription>
-<para>Target position reached, velocity zero. </para>
-          </briefdescription>
-          <detaileddescription>
-          </detaileddescription>
-        </enumvalue>
-        <enumvalue id="group__sstep__ctrl_1gga9765926896e39cbaf1a643817ed8cb1ca455ac81133f81866f3546e14006ae896" prot="public">
-          <name>SSTEP_EVENT_HOLD_CURRENT</name>
-          <initializer>= 1</initializer>
-          <briefdescription>
-<para>Current reduced to the hold current after standstill. </para>
-          </briefdescription>
-          <detaileddescription>
-          </detaileddescription>
-        </enumvalue>
-        <briefdescription>
-<para>Events reported through <ref refid="group__sstep__ctrl_1ga1f844e0d5ebd90cbe7e3044802574c7d" kindref="member">sstep_event_fn</ref>. </para>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="104" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="105" bodyend="108"/>
-      </memberdef>
-      <memberdef kind="enum" id="group__sstep__ctrl_1ga4bf2c449cd0d7182351a1e7f2654bc3f" prot="public" static="no" strong="no">
-        <type></type>
-        <name>sstep_drive_mode</name>
-        <enumvalue id="group__sstep__ctrl_1gga4bf2c449cd0d7182351a1e7f2654bc3fa85b15ad052155339018a6bc76f25f468" prot="public">
-          <name>SSTEP_DRIVE_CURRENT</name>
-          <initializer>= 0</initializer>
-          <briefdescription>
-<para>Closed-loop current control (PI per phase, back-EMF feed-forward). </para>
-          </briefdescription>
-          <detaileddescription>
-<para>Requires phase current measurement. </para>
-          </detaileddescription>
-        </enumvalue>
-        <enumvalue id="group__sstep__ctrl_1gga4bf2c449cd0d7182351a1e7f2654bc3fac9139624ce10c97984c9fead23ce3485" prot="public">
-          <name>SSTEP_DRIVE_VOLTAGE</name>
-          <initializer>= 1</initializer>
-          <briefdescription>
-<para>Open-loop voltage control: V = R * I_ref (+ back-EMF feed-forward). </para>
-          </briefdescription>
-          <detaileddescription>
-<para>For boards without current measurement; torque drops at speed. </para>
-          </detaileddescription>
-        </enumvalue>
-        <briefdescription>
-<para>How the phase voltages are obtained. </para>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="165" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="166" bodyend="173"/>
-      </memberdef>
-    </sectiondef>
-    <sectiondef kind="typedef">
-      <memberdef kind="typedef" id="group__sstep__ctrl_1ga20872bd7139bc69948fde3a9d70b74ed" prot="public" static="no">
-        <type>int(*</type>
-        <definition>typedef int(* sstep_pwm_write_fn) (void *context, const uint16_t compare[SSTEP_LEGS_MAX])</definition>
-        <argsstring>)(void *context, const uint16_t compare[SSTEP_LEGS_MAX])</argsstring>
-        <name>sstep_pwm_write_fn</name>
-        <briefdescription>
-<para>Write the PWM compare values of all legs. </para>
-        </briefdescription>
-        <detaileddescription>
-<para>Called from <ref refid="group__sstep__ctrl_1ga9d39aedf45b1e59f71fe94a1dc0df79b" kindref="member">sstep_fast_loop()</ref>. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>context</parametername>
-</parameternamelist>
-<parameterdescription>
-<para><ref refid="structsstep__callbacks_1ac1126f7ecf9d1ba5cace738e6b9ed2ca" kindref="member">sstep_callbacks::context</ref>. </para>
-</parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>compare</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>One compare value per leg, 0 .. <computeroutput>pwm_period_ticks</computeroutput> (0 = low-side on, <computeroutput>pwm_period_ticks</computeroutput> = high-side on). Entries above the leg count of the topology are 0. Valid only during the call. </para>
-</parameterdescription>
-</parameteritem>
-</parameterlist>
-<parameterlist kind="retval"><parameteritem>
-<parameternamelist>
-<parametername>0</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Success. </para>
-</parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>&lt;0</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Error: the driver switches the outputs off with <ref refid="group__sstep__defs_1gab51def6949f6a27cf6c6651c246c8cc7" kindref="member">SSTEP_FAULT_HAL</ref>. </para>
-</parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="84" column="9" bodyfile="inc/sstep_ctrl.h" bodystart="84" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="typedef" id="group__sstep__ctrl_1ga4ce54e97216a52981a4dca1f0e38a2a4" prot="public" static="no">
-        <type>int(*</type>
-        <definition>typedef int(* sstep_output_enable_fn) (void *context, bool enable)</definition>
-        <argsstring>)(void *context, bool enable)</argsstring>
-        <name>sstep_output_enable_fn</name>
-        <briefdescription>
-<para>Enable or disable the power stage outputs (disabled = all legs high impedance). </para>
-        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>context</parametername>
-</parameternamelist>
-<parameterdescription>
-<para><ref refid="structsstep__callbacks_1ac1126f7ecf9d1ba5cace738e6b9ed2ca" kindref="member">sstep_callbacks::context</ref>. </para>
-</parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>enable</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>true to enable the gate drivers, false to switch every leg off. </para>
-</parameterdescription>
-</parameteritem>
-</parameterlist>
-<parameterlist kind="retval"><parameteritem>
-<parameternamelist>
-<parametername>0</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Success. </para>
-</parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>&lt;0</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Error, reported as <ref refid="group__sstep__defs_1gab51def6949f6a27cf6c6651c246c8cc7" kindref="member">SSTEP_FAULT_HAL</ref>. </para>
-</parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="93" column="9" bodyfile="inc/sstep_ctrl.h" bodystart="93" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="typedef" id="group__sstep__ctrl_1ga82d9a26444da72841a7c26547472ae94" prot="public" static="no">
-        <type>void(*</type>
-        <definition>typedef void(* sstep_fault_fn) (void *context, uint16_t faults)</definition>
-        <argsstring>)(void *context, uint16_t faults)</argsstring>
-        <name>sstep_fault_fn</name>
-        <briefdescription>
-<para>Notify the application of new faults (optional). </para>
-        </briefdescription>
-        <detaileddescription>
-<para>Called from the context that detected the fault, which may be <ref refid="group__sstep__ctrl_1ga9d39aedf45b1e59f71fe94a1dc0df79b" kindref="member">sstep_fast_loop()</ref> (interrupt). <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>context</parametername>
-</parameternamelist>
-<parameterdescription>
-<para><ref refid="structsstep__callbacks_1ac1126f7ecf9d1ba5cace738e6b9ed2ca" kindref="member">sstep_callbacks::context</ref>. </para>
-</parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>faults</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>Newly raised <ref refid="group__sstep__defs_1gaa353d481953ff35813c91602f7767914" kindref="member">SSTEP_FAULT_OVERCURRENT</ref> ... flags. </para>
-</parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="101" column="9" bodyfile="inc/sstep_ctrl.h" bodystart="101" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="typedef" id="group__sstep__ctrl_1ga1f844e0d5ebd90cbe7e3044802574c7d" prot="public" static="no">
-        <type>void(*</type>
-        <definition>typedef void(* sstep_event_fn) (void *context, enum sstep_event event)</definition>
-        <argsstring>)(void *context, enum sstep_event event)</argsstring>
-        <name>sstep_event_fn</name>
-        <briefdescription>
-<para>Notify the application of a motion event (optional). </para>
-        </briefdescription>
-        <detaileddescription>
-<para>Called from <ref refid="group__sstep__ctrl_1ga4ab2695d05ff19f5e9ed61018af7d83a" kindref="member">sstep_slow_loop()</ref>. <parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>context</parametername>
-</parameternamelist>
-<parameterdescription>
-<para><ref refid="structsstep__callbacks_1ac1126f7ecf9d1ba5cace738e6b9ed2ca" kindref="member">sstep_callbacks::context</ref>. </para>
-</parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>event</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>The event. </para>
-</parameterdescription>
-</parameteritem>
-</parameterlist>
-</para>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="116" column="9" bodyfile="inc/sstep_ctrl.h" bodystart="116" bodyend="-1"/>
-      </memberdef>
-    </sectiondef>
+  <compounddef id="group__sstep__api" kind="group">
+    <compoundname>sstep_api</compoundname>
+    <title>Stepper-C API</title>
     <sectiondef kind="func">
-      <memberdef kind="function" id="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sstep_init</definition>
-        <argsstring>(struct sstep *m, const struct sstep_config *cfg)</argsstring>
+        <argsstring>(struct sstep *drv, const struct sstep_config *cfg)</argsstring>
         <name>sstep_init</name>
         <param>
           <type>struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
-          <declname>m</declname>
+          <declname>drv</declname>
         </param>
         <param>
           <type>const struct <ref refid="structsstep__config" kindref="compound">sstep_config</ref> *</type>
@@ -261,7 +23,7 @@
         <detaileddescription>
 <para>Outputs stay disabled. Derives the per-unit bases, the PI gains (Kp = L * wc, Ki = R * wc) and the trajectory constants; no floating point is used with the fixed point backend. <parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>m</parametername>
+<parametername>drv</parametername>
 </parameternamelist>
 <parameterdescription>
 <para>Driver instance. </para>
@@ -313,16 +75,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="326" column="5" bodyfile="src/sstep_ctrl.c" bodystart="487" bodyend="507" declfile="inc/sstep_ctrl.h" declline="326" declcolumn="5"/>
+        <location file="sstep.h" line="104" column="5" bodyfile="src/sstep_ctrl.c" bodystart="520" bodyend="541" declfile="sstep.h" declline="104" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="group__sstep__ctrl_1ga2137580fc98132f74adb37aa68e43101" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sstep__api_1ga3f592ef6f7e95b2c4b0792f113eae5ac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sstep_enable</definition>
-        <argsstring>(struct sstep *m)</argsstring>
+        <argsstring>(struct sstep *drv)</argsstring>
         <name>sstep_enable</name>
         <param>
           <type>struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
-          <declname>m</declname>
+          <declname>drv</declname>
         </param>
         <briefdescription>
 <para>Enable the outputs and hold the current position with the hold current. </para>
@@ -330,7 +92,7 @@
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>m</parametername>
+<parametername>drv</parametername>
 </parameternamelist>
 <parameterdescription>
 <para>Driver instance. </para>
@@ -352,16 +114,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="333" column="5" bodyfile="src/sstep_ctrl.c" bodystart="509" bodyend="554" declfile="inc/sstep_ctrl.h" declline="333" declcolumn="5"/>
+        <location file="sstep.h" line="111" column="5" bodyfile="src/sstep_ctrl.c" bodystart="543" bodyend="589" declfile="sstep.h" declline="111" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="group__sstep__ctrl_1ga02b70096cdf1d22d320236519d12370b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sstep__api_1ga296ffb294291431f36e14fc306c20027" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sstep_disable</definition>
-        <argsstring>(struct sstep *m)</argsstring>
+        <argsstring>(struct sstep *drv)</argsstring>
         <name>sstep_disable</name>
         <param>
           <type>struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
-          <declname>m</declname>
+          <declname>drv</declname>
         </param>
         <briefdescription>
 <para>Stop immediately and switch the outputs off (motor coasts, no holding torque). </para>
@@ -369,7 +131,7 @@
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>m</parametername>
+<parametername>drv</parametername>
 </parameternamelist>
 <parameterdescription>
 <para>Driver instance. </para>
@@ -390,16 +152,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="340" column="5" bodyfile="src/sstep_ctrl.c" bodystart="556" bodyend="579" declfile="inc/sstep_ctrl.h" declline="340" declcolumn="5"/>
+        <location file="sstep.h" line="118" column="5" bodyfile="src/sstep_ctrl.c" bodystart="591" bodyend="615" declfile="sstep.h" declline="118" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="group__sstep__ctrl_1ga9d39aedf45b1e59f71fe94a1dc0df79b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sstep__api_1ga8c3b6798f83c32337a21d4ccdd61239b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sstep_fast_loop</definition>
-        <argsstring>(struct sstep *m, const struct sstep_sample *sample)</argsstring>
+        <argsstring>(struct sstep *drv, const struct sstep_sample *sample)</argsstring>
         <name>sstep_fast_loop</name>
         <param>
           <type>struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
-          <declname>m</declname>
+          <declname>drv</declname>
         </param>
         <param>
           <type>const struct <ref refid="structsstep__sample" kindref="compound">sstep_sample</ref> *</type>
@@ -411,7 +173,7 @@
         <detaileddescription>
 <para>Call from the PWM/ADC interrupt at <computeroutput>fast_loop_hz</computeroutput>. Bounded execution time, no loops over data. <parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>m</parametername>
+<parametername>drv</parametername>
 </parameternamelist>
 <parameterdescription>
 <para>Driver instance. </para>
@@ -440,16 +202,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="351" column="5" bodyfile="src/sstep_ctrl.c" bodystart="581" bodyend="629" declfile="inc/sstep_ctrl.h" declline="351" declcolumn="5"/>
+        <location file="sstep.h" line="129" column="5" bodyfile="src/sstep_ctrl.c" bodystart="617" bodyend="666" declfile="sstep.h" declline="129" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="group__sstep__ctrl_1ga4ab2695d05ff19f5e9ed61018af7d83a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sstep_slow_loop</definition>
-        <argsstring>(struct sstep *m)</argsstring>
+        <argsstring>(struct sstep *drv)</argsstring>
         <name>sstep_slow_loop</name>
         <param>
           <type>struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
-          <declname>m</declname>
+          <declname>drv</declname>
         </param>
         <briefdescription>
 <para>Slow loop: advance the trajectory, update the angle and current references, handle the hold current and report events. </para>
@@ -457,7 +219,7 @@
         <detaileddescription>
 <para>Call at <computeroutput>slow_loop_hz</computeroutput>. <parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>m</parametername>
+<parametername>drv</parametername>
 </parameternamelist>
 <parameterdescription>
 <para>Driver instance. </para>
@@ -478,16 +240,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="359" column="5" bodyfile="src/sstep_ctrl.c" bodystart="631" bodyend="721" declfile="inc/sstep_ctrl.h" declline="359" declcolumn="5"/>
+        <location file="sstep.h" line="137" column="5" bodyfile="src/sstep_ctrl.c" bodystart="668" bodyend="759" declfile="sstep.h" declline="137" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="group__sstep__ctrl_1ga6e1233931109cb8b8cbfc878e5f40f19" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sstep__api_1gab5ac3f4056af2b982b8131016df0541e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sstep_move_to</definition>
-        <argsstring>(struct sstep *m, int32_t position)</argsstring>
+        <argsstring>(struct sstep *drv, int32_t position)</argsstring>
         <name>sstep_move_to</name>
         <param>
           <type>struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
-          <declname>m</declname>
+          <declname>drv</declname>
         </param>
         <param>
           <type>int32_t</type>
@@ -499,7 +261,7 @@
         <detaileddescription>
 <para>Replaces the current move; the change is smooth (no velocity step). <parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>m</parametername>
+<parametername>drv</parametername>
 </parameternamelist>
 <parameterdescription>
 <para>Driver instance. </para>
@@ -529,16 +291,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="368" column="5" bodyfile="src/sstep_ctrl.c" bodystart="723" bodyend="741" declfile="inc/sstep_ctrl.h" declline="368" declcolumn="5"/>
+        <location file="sstep.h" line="146" column="5" bodyfile="src/sstep_ctrl.c" bodystart="761" bodyend="780" declfile="sstep.h" declline="146" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="group__sstep__ctrl_1ga36f9bbbff003e82fe6844c5d049ebe1c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sstep__api_1gacc99b6a8006f7c7f950133873a5a8fce" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sstep_move_by</definition>
-        <argsstring>(struct sstep *m, int32_t delta)</argsstring>
+        <argsstring>(struct sstep *drv, int32_t delta)</argsstring>
         <name>sstep_move_by</name>
         <param>
           <type>struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
-          <declname>m</declname>
+          <declname>drv</declname>
         </param>
         <param>
           <type>int32_t</type>
@@ -550,7 +312,7 @@
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>m</parametername>
+<parametername>drv</parametername>
 </parameternamelist>
 <parameterdescription>
 <para>Driver instance. </para>
@@ -579,16 +341,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="376" column="5" bodyfile="src/sstep_ctrl.c" bodystart="743" bodyend="764" declfile="inc/sstep_ctrl.h" declline="376" declcolumn="5"/>
+        <location file="sstep.h" line="154" column="5" bodyfile="src/sstep_ctrl.c" bodystart="782" bodyend="804" declfile="sstep.h" declline="154" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="group__sstep__ctrl_1ga31e75aa1193a151a7fb3b0831e8c530b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sstep__api_1gaa21dff174e881ddaddd22b9bf334f3f8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sstep_run</definition>
-        <argsstring>(struct sstep *m, int32_t velocity)</argsstring>
+        <argsstring>(struct sstep *drv, int32_t velocity)</argsstring>
         <name>sstep_run</name>
         <param>
           <type>struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
-          <declname>m</declname>
+          <declname>drv</declname>
         </param>
         <param>
           <type>int32_t</type>
@@ -600,7 +362,7 @@
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>m</parametername>
+<parametername>drv</parametername>
 </parameternamelist>
 <parameterdescription>
 <para>Driver instance. </para>
@@ -630,16 +392,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="385" column="5" bodyfile="src/sstep_ctrl.c" bodystart="766" bodyend="789" declfile="inc/sstep_ctrl.h" declline="385" declcolumn="5"/>
+        <location file="sstep.h" line="163" column="5" bodyfile="src/sstep_ctrl.c" bodystart="806" bodyend="830" declfile="sstep.h" declline="163" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="group__sstep__ctrl_1ga364a4cd8cc079f56138fc124032757e0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sstep__api_1ga41ae3f6b6cc322b50c3e3884d48dd7a1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sstep_stop</definition>
-        <argsstring>(struct sstep *m)</argsstring>
+        <argsstring>(struct sstep *drv)</argsstring>
         <name>sstep_stop</name>
         <param>
           <type>struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
-          <declname>m</declname>
+          <declname>drv</declname>
         </param>
         <briefdescription>
 <para>Decelerate to standstill with the configured deceleration and hold. </para>
@@ -647,7 +409,7 @@
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>m</parametername>
+<parametername>drv</parametername>
 </parameternamelist>
 <parameterdescription>
 <para>Driver instance. </para>
@@ -668,16 +430,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="392" column="5" bodyfile="src/sstep_ctrl.c" bodystart="791" bodyend="809" declfile="inc/sstep_ctrl.h" declline="392" declcolumn="5"/>
+        <location file="sstep.h" line="170" column="5" bodyfile="src/sstep_ctrl.c" bodystart="832" bodyend="851" declfile="sstep.h" declline="170" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="group__sstep__ctrl_1gaed90e750a1d179c79e7cd4610eb1c4fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sstep__api_1ga17aff99dbb74c27b0eb1995024c28e71" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sstep_set_position</definition>
-        <argsstring>(struct sstep *m, int32_t position)</argsstring>
+        <argsstring>(struct sstep *drv, int32_t position)</argsstring>
         <name>sstep_set_position</name>
         <param>
           <type>struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
-          <declname>m</declname>
+          <declname>drv</declname>
         </param>
         <param>
           <type>int32_t</type>
@@ -689,7 +451,7 @@
         <detaileddescription>
 <para>Only at standstill. <parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>m</parametername>
+<parametername>drv</parametername>
 </parameternamelist>
 <parameterdescription>
 <para>Driver instance. </para>
@@ -719,16 +481,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="400" column="5" bodyfile="src/sstep_ctrl.c" bodystart="811" bodyend="832" declfile="inc/sstep_ctrl.h" declline="400" declcolumn="5"/>
+        <location file="sstep.h" line="178" column="5" bodyfile="src/sstep_ctrl.c" bodystart="853" bodyend="875" declfile="sstep.h" declline="178" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="group__sstep__ctrl_1ga66f834a5478abb9bf5575de900ed4569" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sstep__api_1ga75cb79da6deda7b271d7a01d70f5d718" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sstep_set_current</definition>
-        <argsstring>(struct sstep *m, uint32_t run_ma, uint32_t hold_ma)</argsstring>
+        <argsstring>(struct sstep *drv, uint32_t run_ma, uint32_t hold_ma)</argsstring>
         <name>sstep_set_current</name>
         <param>
           <type>struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
-          <declname>m</declname>
+          <declname>drv</declname>
         </param>
         <param>
           <type>uint32_t</type>
@@ -744,7 +506,7 @@
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>m</parametername>
+<parametername>drv</parametername>
 </parameternamelist>
 <parameterdescription>
 <para>Driver instance. </para>
@@ -782,16 +544,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="409" column="5" bodyfile="src/sstep_ctrl.c" bodystart="834" bodyend="847" declfile="inc/sstep_ctrl.h" declline="409" declcolumn="5"/>
+        <location file="sstep.h" line="187" column="5" bodyfile="src/sstep_ctrl.c" bodystart="877" bodyend="891" declfile="sstep.h" declline="187" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="group__sstep__ctrl_1ga3636c6db7fcb51655b8ca63f6156f578" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sstep__api_1gae9224e0f9e8f1822529ef015bb88f382" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sstep_set_motion_limits</definition>
-        <argsstring>(struct sstep *m, uint32_t v_max, uint32_t accel, uint32_t decel)</argsstring>
+        <argsstring>(struct sstep *drv, uint32_t v_max, uint32_t accel, uint32_t decel)</argsstring>
         <name>sstep_set_motion_limits</name>
         <param>
           <type>struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
-          <declname>m</declname>
+          <declname>drv</declname>
         </param>
         <param>
           <type>uint32_t</type>
@@ -806,12 +568,12 @@
           <declname>decel</declname>
         </param>
         <briefdescription>
-<para>Change the motion limits; applies to the next command. </para>
+<para>Change the motion limits; they apply from the next <ref refid="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" kindref="member">sstep_slow_loop()</ref>, also to a running command. </para>
         </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>m</parametername>
+<parametername>drv</parametername>
 </parameternamelist>
 <parameterdescription>
 <para>Driver instance. </para>
@@ -856,16 +618,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="419" column="5" bodyfile="src/sstep_ctrl.c" bodystart="849" bodyend="862" declfile="inc/sstep_ctrl.h" declline="419" declcolumn="5"/>
+        <location file="sstep.h" line="198" column="5" bodyfile="src/sstep_ctrl.c" bodystart="893" bodyend="907" declfile="sstep.h" declline="198" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="group__sstep__ctrl_1gadb944552719e659be1da950534631023" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sstep__api_1gaafe3bb709aaa93b20884f9e7f6e31498" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sstep_report_fault</definition>
-        <argsstring>(struct sstep *m, uint16_t faults)</argsstring>
+        <argsstring>(struct sstep *drv, uint16_t faults)</argsstring>
         <name>sstep_report_fault</name>
         <param>
           <type>struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
-          <declname>m</declname>
+          <declname>drv</declname>
         </param>
         <param>
           <type>uint16_t</type>
@@ -877,7 +639,7 @@
         <detaileddescription>
 <para>Switches the outputs off. May be called from an interrupt. <parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>m</parametername>
+<parametername>drv</parametername>
 </parameternamelist>
 <parameterdescription>
 <para>Driver instance. </para>
@@ -906,16 +668,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="428" column="5" bodyfile="src/sstep_ctrl.c" bodystart="864" bodyend="881" declfile="inc/sstep_ctrl.h" declline="428" declcolumn="5"/>
+        <location file="sstep.h" line="207" column="5" bodyfile="src/sstep_ctrl.c" bodystart="909" bodyend="927" declfile="sstep.h" declline="207" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="group__sstep__ctrl_1ga7f4318600b1b000315230db98dd426cb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sstep__api_1gafff498925b2f3c0de622702a2f181b9b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sstep_clear_faults</definition>
-        <argsstring>(struct sstep *m)</argsstring>
+        <argsstring>(struct sstep *drv)</argsstring>
         <name>sstep_clear_faults</name>
         <param>
           <type>struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
-          <declname>m</declname>
+          <declname>drv</declname>
         </param>
         <briefdescription>
 <para>Clear all faults; the driver goes to <ref refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0eaba01894d51e56a80832a7e110412cb96" kindref="member">SSTEP_STATE_DISABLED</ref>. </para>
@@ -923,7 +685,7 @@
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>m</parametername>
+<parametername>drv</parametername>
 </parameternamelist>
 <parameterdescription>
 <para>Driver instance. </para>
@@ -944,16 +706,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="435" column="5" bodyfile="src/sstep_ctrl.c" bodystart="883" bodyend="897" declfile="inc/sstep_ctrl.h" declline="435" declcolumn="5"/>
+        <location file="sstep.h" line="214" column="5" bodyfile="src/sstep_ctrl.c" bodystart="929" bodyend="944" declfile="sstep.h" declline="214" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="group__sstep__ctrl_1gafda7fec931ffa0ac11e671c75cd39300" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sstep__api_1ga1568aad455503ed6e062cf7048bf01ba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sstep_get_status</definition>
-        <argsstring>(const struct sstep *m, struct sstep_status *status)</argsstring>
+        <argsstring>(const struct sstep *drv, struct sstep_status *status)</argsstring>
         <name>sstep_get_status</name>
         <param>
           <type>const struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
-          <declname>m</declname>
+          <declname>drv</declname>
         </param>
         <param>
           <type>struct <ref refid="structsstep__status" kindref="compound">sstep_status</ref> *</type>
@@ -965,7 +727,7 @@
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
-<parametername>m</parametername>
+<parametername>drv</parametername>
 </parameternamelist>
 <parameterdescription>
 <para>Driver instance. </para>
@@ -994,7 +756,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="443" column="5" bodyfile="src/sstep_ctrl.c" bodystart="899" bodyend="923" declfile="inc/sstep_ctrl.h" declline="443" declcolumn="5"/>
+        <location file="sstep.h" line="222" column="5" bodyfile="src/sstep_ctrl.c" bodystart="946" bodyend="971" declfile="sstep.h" declline="222" declcolumn="5"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -1009,21 +771,21 @@
 </entry><entry thead="yes"><para>Work    </para>
 </entry></row>
 <row>
-<entry thead="no"><para><ref refid="group__sstep__ctrl_1ga9d39aedf45b1e59f71fe94a1dc0df79b" kindref="member">sstep_fast_loop()</ref>   </para>
+<entry thead="no"><para><ref refid="group__sstep__api_1ga8c3b6798f83c32337a21d4ccdd61239b" kindref="member">sstep_fast_loop()</ref>   </para>
 </entry><entry thead="no"><para><computeroutput>fast_loop_hz</computeroutput> (PWM rate or an integer fraction of it)   </para>
 </entry><entry thead="no"><para>PWM / ADC interrupt   </para>
 </entry><entry thead="no"><para>current control, voltage limit, topology mapping, PWM write    </para>
 </entry></row>
 <row>
-<entry thead="no"><para><ref refid="group__sstep__ctrl_1ga4ab2695d05ff19f5e9ed61018af7d83a" kindref="member">sstep_slow_loop()</ref>   </para>
+<entry thead="no"><para><ref refid="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" kindref="member">sstep_slow_loop()</ref>   </para>
 </entry><entry thead="no"><para><computeroutput>slow_loop_hz</computeroutput> (typically 1 kHz)   </para>
 </entry><entry thead="no"><para>main loop or a timer task   </para>
 </entry><entry thead="no"><para>trajectory, microstep angle, hold current, fault handling   </para>
 </entry></row>
 </table>
 </para>
-<para>All other functions are called from the same context as <ref refid="group__sstep__ctrl_1ga4ab2695d05ff19f5e9ed61018af7d83a" kindref="member">sstep_slow_loop()</ref>. The library never reads a clock, never blocks, allocates no memory and has no global state: time is given by the configured loop rates.</para>
-<para><bold>Hardware access</bold> is done only through the callbacks in <ref refid="structsstep__callbacks" kindref="compound">sstep_callbacks</ref>, given once to <ref refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kindref="member">sstep_init()</ref>. Measurements are passed to <ref refid="group__sstep__ctrl_1ga9d39aedf45b1e59f71fe94a1dc0df79b" kindref="member">sstep_fast_loop()</ref> as raw ADC counts. </para>
+<para>All other functions are called from the same context as <ref refid="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" kindref="member">sstep_slow_loop()</ref>. The library never reads a clock, never blocks, allocates no memory and has no global state: time is given by the configured loop rates.</para>
+<para><bold>Hardware access</bold> is done only through the callbacks in <ref refid="structsstep__callbacks" kindref="compound">sstep_callbacks</ref>, given once to <ref refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kindref="member">sstep_init()</ref>. Measurements are passed to <ref refid="group__sstep__api_1ga8c3b6798f83c32337a21d4ccdd61239b" kindref="member">sstep_fast_loop()</ref> as raw ADC counts. </para>
     </detaileddescription>
   </compounddef>
 </doxygen>

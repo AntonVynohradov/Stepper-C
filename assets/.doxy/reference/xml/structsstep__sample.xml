@@ -14,11 +14,11 @@
 <para>Phase A current [ADC counts]. </para>
         </briefdescription>
         <detaileddescription>
-<para>Ignored in <ref refid="group__sstep__ctrl_1gga4bf2c449cd0d7182351a1e7f2654bc3fac9139624ce10c97984c9fead23ce3485" kindref="member">SSTEP_DRIVE_VOLTAGE</ref>. </para>
+<para>Ignored in SSTEP_DRIVE_VOLTAGE. </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="211" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="211" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="189" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="189" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__sample_1a2a5852ca2dc92a9de72414c7f3d9c493" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -30,11 +30,11 @@
 <para>Phase B current [ADC counts]. </para>
         </briefdescription>
         <detaileddescription>
-<para>Ignored in <ref refid="group__sstep__ctrl_1gga4bf2c449cd0d7182351a1e7f2654bc3fac9139624ce10c97984c9fead23ce3485" kindref="member">SSTEP_DRIVE_VOLTAGE</ref>. </para>
+<para>Ignored in SSTEP_DRIVE_VOLTAGE. </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="212" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="212" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="190" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="190" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__sample_1a622ee6849365e05230e297c7c3c03561" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -49,7 +49,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="213" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="213" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="191" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="191" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -57,7 +57,7 @@
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="inc/sstep_ctrl.h" line="209" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="210" bodyend="214"/>
+    <location file="inc/sstep_ctrl.h" line="187" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="188" bodyend="192"/>
     <listofallmembers>
       <member refid="structsstep__sample_1a7e050a4725ec6b73627ffb6246ddfa6c" prot="public" virt="non-virtual"><scope>sstep_sample</scope><name>i_a</name></member>
       <member refid="structsstep__sample_1a2a5852ca2dc92a9de72414c7f3d9c493" prot="public" virt="non-virtual"><scope>sstep_sample</scope><name>i_b</name></member>

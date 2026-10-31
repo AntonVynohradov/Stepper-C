@@ -57,6 +57,7 @@
 
 ## p
 
+* **pow2\_i64** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 * **publish** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 
 
@@ -79,6 +80,8 @@
 * **set\_currents** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 * **set\_limits** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 * **shutdown** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
+* **sstep\_ctx\_of** ([**sstep\_internal.h**](sstep__internal_8h.md))
+* **sstep\_ctx\_of\_const** ([**sstep\_internal.h**](sstep__internal_8h.md))
 * **sstep\_isqrt64** ([**sstep\_internal.h**](sstep__internal_8h.md), [**sstep\_motion.c**](sstep__motion_8c.md))
 * **sstep\_motion\_step** ([**sstep\_internal.h**](sstep__internal_8h.md), [**sstep\_motion.c**](sstep__motion_8c.md))
 

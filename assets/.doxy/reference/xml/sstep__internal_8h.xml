@@ -27,21 +27,11 @@
         </childnode>
         <childnode refid="7" relation="include">
         </childnode>
-        <childnode refid="8" relation="include">
-        </childnode>
       </node>
       <node id="7">
         <label>sstep_defs.h</label>
         <link refid="sstep__defs_8h_source"/>
         <childnode refid="3" relation="include">
-        </childnode>
-      </node>
-      <node id="8">
-        <label>sstep_math.h</label>
-        <link refid="sstep__math_8h_source"/>
-        <childnode refid="3" relation="include">
-        </childnode>
-        <childnode refid="6" relation="include">
         </childnode>
       </node>
       <node id="1">
@@ -56,6 +46,14 @@
         <childnode refid="8" relation="include">
         </childnode>
       </node>
+      <node id="8">
+        <label>sstep_math.h</label>
+        <link refid="sstep__math_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
       <node id="2">
         <label>stdbool.h</label>
       </node>
@@ -67,6 +65,9 @@
       </node>
     </incdepgraph>
     <innerclass refid="structsstep__bridge__out" prot="public">sstep_bridge_out</innerclass>
+    <innerclass refid="structsstep__setpoint" prot="public">sstep_setpoint</innerclass>
+    <innerclass refid="structsstep__motion" prot="public">sstep_motion</innerclass>
+    <innerclass refid="structsstep__ctx" prot="public">sstep_ctx</innerclass>
     <sectiondef kind="define">
       <memberdef kind="define" id="sstep__internal_8h_1a2e51989a1e049a9de727cfe086579022" prot="public" static="no">
         <name>SSTEP_MODE_HOLD</name>
@@ -140,6 +141,56 @@
       </memberdef>
     </sectiondef>
     <sectiondef kind="func">
+      <memberdef kind="function" id="sstep__internal_8h_1ae305d555b363553b0fa27fc09937a780" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>struct <ref refid="structsstep__ctx" kindref="compound">sstep_ctx</ref> *</type>
+        <definition>static struct sstep_ctx * sstep_ctx_of</definition>
+        <argsstring>(struct sstep *drv)</argsstring>
+        <name>sstep_ctx_of</name>
+        <param>
+          <type>struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
+          <declname>drv</declname>
+        </param>
+        <briefdescription>
+<para>Driver state of an instance. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>MISRA C:2012 Rule 11.3, deviation DEV-01 (docs/misra.md): <ref refid="structsstep" kindref="compound">sstep</ref> is the opaque storage of <ref refid="structsstep__ctx" kindref="compound">sstep_ctx</ref>; size and alignment are checked in sstep_ctrl.c. </para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>drv</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Driver instance, may be NULL. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Driver state, NULL if drv is NULL. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="163" column="31" bodyfile="src/sstep_internal.h" bodystart="163" bodyend="167"/>
+      </memberdef>
+      <memberdef kind="function" id="sstep__internal_8h_1ae3072da3090d284396a49652702be4d6" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>const struct <ref refid="structsstep__ctx" kindref="compound">sstep_ctx</ref> *</type>
+        <definition>static const struct sstep_ctx * sstep_ctx_of_const</definition>
+        <argsstring>(const struct sstep *drv)</argsstring>
+        <name>sstep_ctx_of_const</name>
+        <param>
+          <type>const struct <ref refid="structsstep" kindref="compound">sstep</ref> *</type>
+          <declname>drv</declname>
+        </param>
+        <briefdescription>
+<para>Read-only variant of sstep_ctx_of(). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="170" column="37" bodyfile="src/sstep_internal.h" bodystart="170" bodyend="174"/>
+      </memberdef>
       <memberdef kind="function" id="sstep__internal_8h_1a0461923af61066b8d47e2ccbd491eec2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void sstep_bridge_map</definition>
@@ -231,7 +282,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="94" column="6" bodyfile="src/sstep_bridge.c" bodystart="136" bodyend="201" declfile="src/sstep_internal.h" declline="94" declcolumn="6"/>
+        <location file="src/sstep_internal.h" line="192" column="6" bodyfile="src/sstep_bridge.c" bodystart="136" bodyend="201" declfile="src/sstep_internal.h" declline="192" declcolumn="6"/>
       </memberdef>
       <memberdef kind="function" id="sstep__internal_8h_1a6972dea5b1b230e9affdf5678071d270" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>uint8_t</type>
@@ -261,7 +312,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="104" column="9" bodyfile="src/sstep_motion.c" bodystart="175" bodyend="204" declfile="src/sstep_internal.h" declline="104" declcolumn="9"/>
+        <location file="src/sstep_internal.h" line="202" column="9" bodyfile="src/sstep_motion.c" bodystart="175" bodyend="204" declfile="src/sstep_internal.h" declline="202" declcolumn="9"/>
       </memberdef>
       <memberdef kind="function" id="sstep__internal_8h_1ab255367c0431d4183dc752ba1c4f1779" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>uint32_t</type>
@@ -291,7 +342,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="111" column="10" bodyfile="src/sstep_motion.c" bodystart="149" bodyend="173" declfile="src/sstep_internal.h" declline="111" declcolumn="10"/>
+        <location file="src/sstep_internal.h" line="209" column="10" bodyfile="src/sstep_motion.c" bodystart="149" bodyend="173" declfile="src/sstep_internal.h" declline="209" declcolumn="10"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -371,22 +422,100 @@
 <codeline lineno="76"><highlight class="normal">};</highlight></codeline>
 <codeline lineno="77"><highlight class="normal"></highlight></codeline>
 <codeline lineno="78"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
-<codeline lineno="79"><highlight class="comment"><sp/>*<sp/>PUBLIC<sp/>FUNCTION<sp/>DECLARATIONS<sp/>(library<sp/>internal)</highlight></codeline>
+<codeline lineno="79"><highlight class="comment"><sp/>*<sp/>DRIVER<sp/>INSTANCE</highlight></codeline>
 <codeline lineno="80"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="81"><highlight class="normal"></highlight></codeline>
-<codeline lineno="94"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>sstep_bridge_map(</highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__sstep__defs_1gabd2c373f4d8a7502c78952555c8cb23c" kindref="member">sstep_topology</ref><sp/>topology,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>va,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>vb,</highlight></codeline>
-<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__gain" kindref="compound">sstep_gain</ref>*<sp/>inv_vbus,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>vbus,<sp/>uint16_t<sp/>period,</highlight></codeline>
-<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__bridge__out" kindref="compound">sstep_bridge_out</ref>*<sp/>out);</highlight></codeline>
-<codeline lineno="97"><highlight class="normal"></highlight></codeline>
-<codeline lineno="104"><highlight class="normal">uint8_t<sp/>sstep_motion_step(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__motion" kindref="compound">sstep_motion</ref>*<sp/>mo);</highlight></codeline>
-<codeline lineno="105"><highlight class="normal"></highlight></codeline>
-<codeline lineno="111"><highlight class="normal">uint32_t<sp/>sstep_isqrt64(uint64_t<sp/>x);</highlight></codeline>
-<codeline lineno="112"><highlight class="normal"></highlight></codeline>
-<codeline lineno="113"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="114"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="115"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="116"><highlight class="normal"></highlight></codeline>
-<codeline lineno="117"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_INTERNAL_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+<codeline lineno="83" refid="structsstep__setpoint" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__setpoint" kindref="compound">sstep_setpoint</ref></highlight></codeline>
+<codeline lineno="84"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="85" refid="structsstep__setpoint_1a2d98ab41b79ba24fc3ef36d72e50ae5e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga2d9b6ce2135a467c6d227cde4dd9c12b" kindref="member">sstep_angle_t</ref><sp/><ref refid="structsstep__setpoint_1a2d98ab41b79ba24fc3ef36d72e50ae5e" kindref="member">angle</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="86" refid="structsstep__setpoint_1a033b976b3514e30ae66c6cb827008353" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int32_t<sp/><ref refid="structsstep__setpoint_1a033b976b3514e30ae66c6cb827008353" kindref="member">dangle</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="87" refid="structsstep__setpoint_1acb0b9757faf6ab920c8a201016d27f3d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref><sp/><ref refid="structsstep__setpoint_1acb0b9757faf6ab920c8a201016d27f3d" kindref="member">i_amp</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="88" refid="structsstep__setpoint_1ac3354caca384888d3cc300b62fb56765" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref><sp/><ref refid="structsstep__setpoint_1ac3354caca384888d3cc300b62fb56765" kindref="member">ff</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="89" refid="structsstep__setpoint_1a85330e98c092c46275560e02049227d0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__gain" kindref="compound">sstep_gain</ref><sp/><ref refid="structsstep__setpoint_1a85330e98c092c46275560e02049227d0" kindref="member">inv_vbus</ref>;<sp/></highlight></codeline>
+<codeline lineno="90"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97" refid="structsstep__motion" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__motion" kindref="compound">sstep_motion</ref></highlight></codeline>
+<codeline lineno="98"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="99" refid="structsstep__motion_1a5f3b8423d663b53c658827a1eeee452c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int64_t<sp/><ref refid="structsstep__motion_1a5f3b8423d663b53c658827a1eeee452c" kindref="member">pos</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="100" refid="structsstep__motion_1a9e35faa4a313421abbf760d2b389972e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int64_t<sp/><ref refid="structsstep__motion_1a9e35faa4a313421abbf760d2b389972e" kindref="member">target</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="101" refid="structsstep__motion_1a7e15ecf405b0ef185fe2fc08d4f01ef7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int64_t<sp/><ref refid="structsstep__motion_1a7e15ecf405b0ef185fe2fc08d4f01ef7" kindref="member">brake_vmax</ref>;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="102" refid="structsstep__motion_1afd2d45ef1ee12f9d8b312d21d840c9c8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int32_t<sp/><ref refid="structsstep__motion_1afd2d45ef1ee12f9d8b312d21d840c9c8" kindref="member">vel</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="103" refid="structsstep__motion_1a24bb69ad2f83448850a0b45c95276652" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int32_t<sp/><ref refid="structsstep__motion_1a24bb69ad2f83448850a0b45c95276652" kindref="member">v_run</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="104" refid="structsstep__motion_1a163d612c0b64339a6f348f95f2706b94" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int32_t<sp/><ref refid="structsstep__motion_1a163d612c0b64339a6f348f95f2706b94" kindref="member">v_max</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="105" refid="structsstep__motion_1a8d5d720546d6e3d0e219793332f400da" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int32_t<sp/><ref refid="structsstep__motion_1a8d5d720546d6e3d0e219793332f400da" kindref="member">acc</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="106" refid="structsstep__motion_1aff922b2e1792271b223eb86c635868a7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int32_t<sp/><ref refid="structsstep__motion_1aff922b2e1792271b223eb86c635868a7" kindref="member">dec</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="107" refid="structsstep__motion_1aca067a6e3bc90e3f291d16aa80c3f5c7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><ref refid="structsstep__motion_1aca067a6e3bc90e3f291d16aa80c3f5c7" kindref="member">mode</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="108"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111" refid="structsstep__ctx" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__ctx" kindref="compound">sstep_ctx</ref></highlight></codeline>
+<codeline lineno="112"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="113" refid="structsstep__ctx_1a95044f0e3e149efbdef19cf5023add21" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__config" kindref="compound">sstep_config</ref><sp/><ref refid="structsstep__ctx_1a95044f0e3e149efbdef19cf5023add21" kindref="member">cfg</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Constants<sp/>derived<sp/>by<sp/>sstep_init()<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116" refid="structsstep__ctx_1a1e67c4340162d418cc5d5e9f3bc3e95b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__gain" kindref="compound">sstep_gain</ref><sp/><ref refid="structsstep__ctx_1a1e67c4340162d418cc5d5e9f3bc3e95b" kindref="member">kp</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="117" refid="structsstep__ctx_1a46b595654e2f1e01563b1a2d8cf9aaa9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__gain" kindref="compound">sstep_gain</ref><sp/><ref refid="structsstep__ctx_1a46b595654e2f1e01563b1a2d8cf9aaa9" kindref="member">ki</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="118" refid="structsstep__ctx_1abfdd76cdb0afb54c2c51505114092405" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__gain" kindref="compound">sstep_gain</ref><sp/><ref refid="structsstep__ctx_1abfdd76cdb0afb54c2c51505114092405" kindref="member">kb</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="119" refid="structsstep__ctx_1a3d086e65b6a2ad860e427c36f27e56ec" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__gain" kindref="compound">sstep_gain</ref><sp/><ref refid="structsstep__ctx_1a3d086e65b6a2ad860e427c36f27e56ec" kindref="member">r_pu</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="120" refid="structsstep__ctx_1a48ede8aad4c742c12faa8dc92b22df8b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__gain" kindref="compound">sstep_gain</ref><sp/><ref refid="structsstep__ctx_1a48ede8aad4c742c12faa8dc92b22df8b" kindref="member">adc_i</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="121" refid="structsstep__ctx_1af6d85c1fd40cd00ebcc402bc6b1d5c19" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__gain" kindref="compound">sstep_gain</ref><sp/><ref refid="structsstep__ctx_1af6d85c1fd40cd00ebcc402bc6b1d5c19" kindref="member">adc_v</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="122" refid="structsstep__ctx_1a8be09d137512077d21285ac8e0886db7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__gain" kindref="compound">sstep_gain</ref><sp/><ref refid="structsstep__ctx_1a8be09d137512077d21285ac8e0886db7" kindref="member">ff_gain</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="123" refid="structsstep__ctx_1a23be414f6e03d7d3d45b80929eeabe4c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref><sp/><ref refid="structsstep__ctx_1a23be414f6e03d7d3d45b80929eeabe4c" kindref="member">i_run</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="124" refid="structsstep__ctx_1a332c6bbffbe5d21901e7741e05264261" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref><sp/><ref refid="structsstep__ctx_1a332c6bbffbe5d21901e7741e05264261" kindref="member">i_hold</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="125" refid="structsstep__ctx_1a8fd6a548bab8493551c729472a1ec5b8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structsstep__ctx_1a8fd6a548bab8493551c729472a1ec5b8" kindref="member">i_trip_counts</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="126" refid="structsstep__ctx_1addb60a18b6f3a27bc6c70b0ecb81738a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structsstep__ctx_1addb60a18b6f3a27bc6c70b0ecb81738a" kindref="member">vbus_min_raw</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="127" refid="structsstep__ctx_1a3da3a12210a404943e9d2e236a63ea0b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structsstep__ctx_1a3da3a12210a404943e9d2e236a63ea0b" kindref="member">vbus_max_raw</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="128" refid="structsstep__ctx_1a82d7b9f7d886bb1943ba901e336e0d8b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structsstep__ctx_1a82d7b9f7d886bb1943ba901e336e0d8b" kindref="member">ratio</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="129" refid="structsstep__ctx_1ae64fcf3425b2598936138ba299cf6b4d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><ref refid="structsstep__ctx_1ae64fcf3425b2598936138ba299cf6b4d" kindref="member">hold_ticks</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="130" refid="structsstep__ctx_1a810f186b003933d53d8554a10541f92d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><ref refid="structsstep__ctx_1a810f186b003933d53d8554a10541f92d" kindref="member">angle_shift</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Slow<sp/>loop<sp/>-&gt;<sp/>fast<sp/>loop<sp/>hand-off<sp/>(double<sp/>buffer)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133" refid="structsstep__ctx_1a9b6ace7a3294a768d244e4a00d428b15" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__setpoint" kindref="compound">sstep_setpoint</ref><sp/><ref refid="structsstep__ctx_1a9b6ace7a3294a768d244e4a00d428b15" kindref="member">sp</ref>[2];<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="134" refid="structsstep__ctx_1aac285fd52795b36c9e83f80427f82eab" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/>uint8_t<sp/><ref refid="structsstep__ctx_1aac285fd52795b36c9e83f80427f82eab" kindref="member">sp_active</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="135" refid="structsstep__ctx_1ab258c071b68ef99090b0b7255f42e3cb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/>uint8_t<sp/><ref refid="structsstep__ctx_1ab258c071b68ef99090b0b7255f42e3cb" kindref="member">sp_pending</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Fast<sp/>loop<sp/>state<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138" refid="structsstep__ctx_1adb272b220e797957556b8b3e37253a98" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__setpoint" kindref="compound">sstep_setpoint</ref><sp/><ref refid="structsstep__ctx_1adb272b220e797957556b8b3e37253a98" kindref="member">cur</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="139" refid="structsstep__ctx_1a01ff4c75981ac1ac5e216372bd4cd965" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structsstep__ctx_1a01ff4c75981ac1ac5e216372bd4cd965" kindref="member">adv</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="140" refid="structsstep__ctx_1a17668c85b69646377aa7c84cac353b3d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga9e868b8abdb662b36b33ac870301e70e" kindref="member">sstep_integ_t</ref><sp/><ref refid="structsstep__ctx_1a17668c85b69646377aa7c84cac353b3d" kindref="member">integ</ref>[2];<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="141" refid="structsstep__ctx_1a012c6e0d1edfaeba7a920f3f5a78b6f7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref><sp/><ref refid="structsstep__ctx_1a012c6e0d1edfaeba7a920f3f5a78b6f7" kindref="member">i_meas</ref>[2];<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="142" refid="structsstep__ctx_1a396559c5cf7e80f8284a758090e4c9fa" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/>uint16_t<sp/><ref refid="structsstep__ctx_1a396559c5cf7e80f8284a758090e4c9fa" kindref="member">vbus_raw</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="143" refid="structsstep__ctx_1a3eb1be70191acef8e88f3479fae8e0e9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structsstep__ctx_1a3eb1be70191acef8e88f3479fae8e0e9" kindref="member">compare</ref>[<ref refid="group__sstep__defs_1ga1322a183e22d7a74f48144c279a90fe7" kindref="member">SSTEP_LEGS_MAX</ref>];<sp/></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Slow<sp/>loop<sp/>state<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146" refid="structsstep__ctx_1a2e1ad5b7ce1ec2becb6891b47e153811" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__motion" kindref="compound">sstep_motion</ref><sp/><ref refid="structsstep__ctx_1a2e1ad5b7ce1ec2becb6891b47e153811" kindref="member">mo</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="147" refid="structsstep__ctx_1abec952592f81b9471eebd6e308761ad6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__math_1ga2d9b6ce2135a467c6d227cde4dd9c12b" kindref="member">sstep_angle_t</ref><sp/><ref refid="structsstep__ctx_1abec952592f81b9471eebd6e308761ad6" kindref="member">angle_offset</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="148" refid="structsstep__ctx_1a60464f27495ad8b58110fcf1b479937e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><ref refid="structsstep__ctx_1a60464f27495ad8b58110fcf1b479937e" kindref="member">still</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="149" refid="structsstep__ctx_1aa5dbd43a4ab41881800819204db9071c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="structsstep__ctx_1aa5dbd43a4ab41881800819204db9071c" kindref="member">hold_active</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="150" refid="structsstep__ctx_1a2faf30dd7bf5a3afcae0aa32f8377a38" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__gain" kindref="compound">sstep_gain</ref><sp/><ref refid="structsstep__ctx_1a2faf30dd7bf5a3afcae0aa32f8377a38" kindref="member">inv_vbus</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="152" refid="structsstep__ctx_1aea889ec3ad563cb14a4e9203b6624175" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/>uint16_t<sp/><ref refid="structsstep__ctx_1aea889ec3ad563cb14a4e9203b6624175" kindref="member">faults</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="153" refid="structsstep__ctx_1a49e7de50e5440d9aa544c0c9038fc968" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" kindref="member">sstep_state</ref><sp/><ref refid="structsstep__ctx_1a49e7de50e5440d9aa544c0c9038fc968" kindref="member">state</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="154"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__ctx" kindref="compound">sstep_ctx</ref>*<sp/>sstep_ctx_of(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv)</highlight></codeline>
+<codeline lineno="164"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>cppcheck-suppress<sp/>misra-c2012-11.3<sp/>;<sp/>DEV-01<sp/>opaque<sp/>instance<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__ctx" kindref="compound">sstep_ctx</ref>*)drv;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__ctx" kindref="compound">sstep_ctx</ref>*<sp/>sstep_ctx_of_const(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv)</highlight></codeline>
+<codeline lineno="171"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>cppcheck-suppress<sp/>misra-c2012-11.3<sp/>;<sp/>DEV-01<sp/>opaque<sp/>instance<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__ctx" kindref="compound">sstep_ctx</ref>*)drv;</highlight></codeline>
+<codeline lineno="174"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="177"><highlight class="comment"><sp/>*<sp/>PUBLIC<sp/>FUNCTION<sp/>DECLARATIONS<sp/>(library<sp/>internal)</highlight></codeline>
+<codeline lineno="178"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>sstep_bridge_map(</highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__sstep__defs_1gabd2c373f4d8a7502c78952555c8cb23c" kindref="member">sstep_topology</ref><sp/>topology,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>va,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>vb,</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__gain" kindref="compound">sstep_gain</ref>*<sp/><ref refid="structsstep__ctx_1a2faf30dd7bf5a3afcae0aa32f8377a38" kindref="member">inv_vbus</ref>,<sp/><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref><sp/>vbus,<sp/>uint16_t<sp/>period,</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__bridge__out" kindref="compound">sstep_bridge_out</ref>*<sp/>out);</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal">uint8_t<sp/>sstep_motion_step(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__motion" kindref="compound">sstep_motion</ref>*<sp/><ref refid="structsstep__ctx_1a2e1ad5b7ce1ec2becb6891b47e153811" kindref="member">mo</ref>);</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal">uint32_t<sp/>sstep_isqrt64(uint64_t<sp/>x);</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"></highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight></codeline>
+<codeline lineno="215"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_INTERNAL_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
     <location file="src/sstep_internal.h"/>
   </compounddef>

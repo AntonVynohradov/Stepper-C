@@ -34,6 +34,9 @@
 | Type | Name |
 | ---: | :--- |
 | struct | [**sstep\_bridge\_out**](structsstep__bridge__out.md) <br>_Result of the power stage mapping._  |
+| struct | [**sstep\_ctx**](structsstep__ctx.md) <br>_Driver state behind the opaque_ [_**sstep**_](structsstep.md) _._ |
+| struct | [**sstep\_motion**](structsstep__motion.md) <br>_Motion generator state._  |
+| struct | [**sstep\_setpoint**](structsstep__setpoint.md) <br>_Setpoint handed from the slow loop to the fast loop._  |
 
 
 
@@ -65,6 +68,12 @@
 |  uint8\_t | [**sstep\_motion\_step**](#function-sstep_motion_step) (struct [**sstep\_motion**](structsstep__motion.md) \* mo) <br>_One slow loop period of the motion generator: trapezoidal velocity profile with one-period look-ahead braking for moves, exact stop on the target._  |
 
 
+## Public Static Functions
+
+| Type | Name |
+| ---: | :--- |
+|  struct [**sstep\_ctx**](structsstep__ctx.md) \* | [**sstep\_ctx\_of**](#function-sstep_ctx_of) (struct [**sstep**](structsstep.md) \* drv) <br>_Driver state of an instance._  |
+|  const struct [**sstep\_ctx**](structsstep__ctx.md) \* | [**sstep\_ctx\_of\_const**](#function-sstep_ctx_of_const) (const struct [**sstep**](structsstep.md) \* drv) <br>_Read-only variant of sstep\_ctx\_of()._  |
 
 
 
@@ -207,6 +216,65 @@ SSTEP\_MOTION\_DONE when a move reached its target in this period, else 0.
 
 
         
+
+<hr>
+## Public Static Functions Documentation
+
+
+
+
+### function sstep\_ctx\_of 
+
+_Driver state of an instance._ 
+```C++
+static inline struct sstep_ctx * sstep_ctx_of (
+    struct sstep * drv
+) 
+```
+
+
+
+
+
+**Note:**
+
+MISRA C:2012 Rule 11.3, deviation DEV-01 (docs/misra.md): [**sstep**](structsstep.md) is the opaque storage of [**sstep\_ctx**](structsstep__ctx.md); size and alignment are checked in sstep\_ctrl.c. 
+
+
+
+
+**Parameters:**
+
+
+* `drv` Driver instance, may be NULL. 
+
+
+
+**Returns:**
+
+Driver state, NULL if drv is NULL. 
+
+
+
+
+
+        
+
+<hr>
+
+
+
+### function sstep\_ctx\_of\_const 
+
+_Read-only variant of sstep\_ctx\_of()._ 
+```C++
+static inline const struct sstep_ctx * sstep_ctx_of_const (
+    const struct sstep * drv
+) 
+```
+
+
+
 
 <hr>
 ## Macro Definition Documentation

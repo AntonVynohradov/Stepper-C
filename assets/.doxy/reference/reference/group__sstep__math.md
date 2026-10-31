@@ -131,11 +131,13 @@ _Types and operations that hide whether the library computes in fixed point or i
 | Type | Name |
 | ---: | :--- |
 | define  | [**SSTEP\_ACC\_C**](group__sstep__math.md#define-sstep_acc_c) (x) `(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))((x) \* 32768.0))`<br>_Accumulator constant from a floating literal (initializers only)._  |
-| define  | [**SSTEP\_ACC\_IN\_MAX**](group__sstep__math.md#define-sstep_acc_in_max)  `[**SSTEP\_ACC\_C**](group__sstep__math.md#define-sstep_acc_c)(3.999969482421875)`<br>_Largest magnitude accepted by_ [_**sstep\_gain\_mul\_acc()**_](group__sstep__math.md#function-sstep_gain_mul_acc) _and the integrator updates from accumulators (4 pu - 2^-15); larger inputs are saturated._ |
+| define  | [**SSTEP\_ACC\_HALF**](group__sstep__math.md#define-sstep_acc_half)  `(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))16384)`<br>_0.5 as an accumulator._  |
+| define  | [**SSTEP\_ACC\_IN\_MAX**](group__sstep__math.md#define-sstep_acc_in_max)  `(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))131071)`<br>_Largest magnitude accepted by_ [_**sstep\_gain\_mul\_acc()**_](group__sstep__math.md#function-sstep_gain_mul_acc) _and the integrator updates from accumulators (4 pu - 2^-15); larger inputs are saturated._ |
 | define  | [**SSTEP\_ACC\_MAX**](group__sstep__math.md#define-sstep_acc_max)  `(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))INT32\_MAX)`<br>_Largest_ [_**sstep\_acc\_t**_](group__sstep__math.md#typedef-sstep_acc_t) _(+65536 - 2^-15)._ |
 | define  | [**SSTEP\_ACC\_MIN**](group__sstep__math.md#define-sstep_acc_min)  `(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))INT32\_MIN)`<br>_Smallest_ [_**sstep\_acc\_t**_](group__sstep__math.md#typedef-sstep_acc_t) _(-65536)._ |
-| define  | [**SSTEP\_ACC\_ONE**](group__sstep__math.md#define-sstep_acc_one)  `[**SSTEP\_ACC\_C**](group__sstep__math.md#define-sstep_acc_c)(1.0)`<br>_1.0 as an accumulator (exactly representable in both backends)._  |
-| define  | [**SSTEP\_ACC\_SCALE\_MAX**](group__sstep__math.md#define-sstep_acc_scale_max)  `[**SSTEP\_ACC\_C**](group__sstep__math.md#define-sstep_acc_c)(1.999969482421875)`<br>_Largest magnitude accepted by_ [_**sstep\_acc\_scale()**_](group__sstep__math.md#function-sstep_acc_scale) _(2 pu - 2^-15)._ |
+| define  | [**SSTEP\_ACC\_ONE**](group__sstep__math.md#define-sstep_acc_one)  `(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))32768)`<br>_1.0 as an accumulator._  |
+| define  | [**SSTEP\_ACC\_SCALE\_MAX**](group__sstep__math.md#define-sstep_acc_scale_max)  `(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))65535)`<br>_Largest magnitude accepted by_ [_**sstep\_acc\_scale()**_](group__sstep__math.md#function-sstep_acc_scale) _(2 pu - 2^-15)._ |
+| define  | [**SSTEP\_ACC\_ZERO**](group__sstep__math.md#define-sstep_acc_zero)  `(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))0)`<br>_Zero as an accumulator._  |
 | define  | [**SSTEP\_GAIN\_EXP\_MAX**](group__sstep__math.md#define-sstep_gain_exp_max)  `15`<br>_Largest gain exponent (gains up to 32767)._  |
 | define  | [**SSTEP\_GAIN\_EXP\_MIN**](group__sstep__math.md#define-sstep_gain_exp_min)  `(-16)`<br>_Smallest gain exponent._  |
 | define  | [**SSTEP\_INTEG\_FRAC\_BITS**](group__sstep__math.md#define-sstep_integ_frac_bits)  `27`<br>_Fractional bits of_ [_**sstep\_integ\_t**_](group__sstep__math.md#typedef-sstep_integ_t) _._ |
@@ -143,7 +145,7 @@ _Types and operations that hide whether the library computes in fixed point or i
 | define  | [**SSTEP\_REAL\_FRAC\_BITS**](group__sstep__math.md#define-sstep_real_frac_bits)  `15`<br>_Number of fractional bits of_ [_**sstep\_real\_t**_](group__sstep__math.md#typedef-sstep_real_t) _and_[_**sstep\_acc\_t**_](group__sstep__math.md#typedef-sstep_acc_t) _._ |
 | define  | [**SSTEP\_REAL\_MAX**](group__sstep__math.md#define-sstep_real_max)  `(([**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t))INT16\_MAX)`<br>_Largest_ [_**sstep\_real\_t**_](group__sstep__math.md#typedef-sstep_real_t) _(+0.99997)._ |
 | define  | [**SSTEP\_REAL\_MIN**](group__sstep__math.md#define-sstep_real_min)  `(([**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t))INT16\_MIN)`<br>_Smallest_ [_**sstep\_real\_t**_](group__sstep__math.md#typedef-sstep_real_t) _(-1.0)._ |
-| define  | [**SSTEP\_REAL\_ZERO**](group__sstep__math.md#define-sstep_real_zero)  `[**SSTEP\_REAL\_C**](group__sstep__math.md#define-sstep_real_c)(0.0)`<br>_Zero._  |
+| define  | [**SSTEP\_REAL\_ZERO**](group__sstep__math.md#define-sstep_real_zero)  `(([**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t))0)`<br>_Zero as a signal._  |
 
 ## Detailed Description
 
@@ -151,7 +153,7 @@ _Types and operations that hide whether the library computes in fixed point or i
 The control code is written once against these types and operations; the backend is selected at build time with [**SSTEP\_CFG\_MATH\_BACKEND**](group__sstep__config.md#define-sstep_cfg_math_backend).
 
 
-**Per-unit signals.** Inside the control loops every electrical signal is normalised to a base value computed by [**sstep\_init()**](group__sstep__ctrl.md#function-sstep_init):
+**Per-unit signals.** Inside the control loops every electrical signal is normalised to a base value computed by [**sstep\_init()**](group__sstep__api.md#function-sstep_init):
 * current: 1.0 = power stage current full scale (`i_full_scale_ma`),
 * voltage: 1.0 = nominal bus voltage (`vbus_nominal_mv`),
 * duty cycle: 1.0 = 100 %.
@@ -996,11 +998,25 @@ _Accumulator constant from a floating literal (initializers only)._
 
 
 
+### define SSTEP\_ACC\_HALF 
+
+_0.5 as an accumulator._ 
+```
+#define SSTEP_ACC_HALF `(( sstep_acc_t )16384)`
+```
+
+
+
+
+<hr>
+
+
+
 ### define SSTEP\_ACC\_IN\_MAX 
 
 _Largest magnitude accepted by_ [_**sstep\_gain\_mul\_acc()**_](group__sstep__math.md#function-sstep_gain_mul_acc) _and the integrator updates from accumulators (4 pu - 2^-15); larger inputs are saturated._
 ```
-#define SSTEP_ACC_IN_MAX `SSTEP_ACC_C (3.999969482421875)`
+#define SSTEP_ACC_IN_MAX `(( sstep_acc_t )131071)`
 ```
 
 
@@ -1040,9 +1056,9 @@ _Smallest_ [_**sstep\_acc\_t**_](group__sstep__math.md#typedef-sstep_acc_t) _(-6
 
 ### define SSTEP\_ACC\_ONE 
 
-_1.0 as an accumulator (exactly representable in both backends)._ 
+_1.0 as an accumulator._ 
 ```
-#define SSTEP_ACC_ONE `SSTEP_ACC_C (1.0)`
+#define SSTEP_ACC_ONE `(( sstep_acc_t )32768)`
 ```
 
 
@@ -1056,7 +1072,21 @@ _1.0 as an accumulator (exactly representable in both backends)._
 
 _Largest magnitude accepted by_ [_**sstep\_acc\_scale()**_](group__sstep__math.md#function-sstep_acc_scale) _(2 pu - 2^-15)._
 ```
-#define SSTEP_ACC_SCALE_MAX `SSTEP_ACC_C (1.999969482421875)`
+#define SSTEP_ACC_SCALE_MAX `(( sstep_acc_t )65535)`
+```
+
+
+
+
+<hr>
+
+
+
+### define SSTEP\_ACC\_ZERO 
+
+_Zero as an accumulator._ 
+```
+#define SSTEP_ACC_ZERO `(( sstep_acc_t )0)`
 ```
 
 
@@ -1172,9 +1202,9 @@ _Smallest_ [_**sstep\_real\_t**_](group__sstep__math.md#typedef-sstep_real_t) _(
 
 ### define SSTEP\_REAL\_ZERO 
 
-_Zero._ 
+_Zero as a signal._ 
 ```
-#define SSTEP_REAL_ZERO `SSTEP_REAL_C (0.0)`
+#define SSTEP_REAL_ZERO `(( sstep_real_t )0)`
 ```
 
 

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -52,6 +52,8 @@
     
     
       <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -268,13 +270,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../protocol/" class="md-tabs__link">
+      <a href="../../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -286,18 +288,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -646,14 +647,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../protocol/" class="md-nav__link">
+      <a href="../../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -668,58 +669,6 @@
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -732,7 +681,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -741,42 +690,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1780,6 +1693,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#define-sstep_acc_half" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_ACC_HALF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#define-sstep_acc_in_max" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1828,6 +1752,17 @@
     <span class="md-ellipsis">
       
         define SSTEP_ACC_SCALE_MAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-sstep_acc_zero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_ACC_ZERO
       
     </span>
   </a>
@@ -2150,7 +2085,11 @@
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-sstep_acc_in_max"><strong>SSTEP_ACC_IN_MAX</strong></a>  <code>[**SSTEP\_ACC\_C**](group__sstep__math.md#define-sstep_acc_c)(3.999969482421875)</code><br><em>Largest magnitude accepted by</em> <a href="./#function-sstep_gain_mul_acc"><em><strong>sstep_gain_mul_acc()</strong></em></a> <em>and the integrator updates from accumulators (4 pu - 2^-15); larger inputs are saturated.</em></td>
+<td style="text-align: left;"><a href="./#define-sstep_acc_half"><strong>SSTEP_ACC_HALF</strong></a>  <code>(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))16384)</code><br><em>0.5 as an accumulator.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_acc_in_max"><strong>SSTEP_ACC_IN_MAX</strong></a>  <code>(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))131071)</code><br><em>Largest magnitude accepted by</em> <a href="./#function-sstep_gain_mul_acc"><em><strong>sstep_gain_mul_acc()</strong></em></a> <em>and the integrator updates from accumulators (4 pu - 2^-15); larger inputs are saturated.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
@@ -2162,11 +2101,15 @@
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-sstep_acc_one"><strong>SSTEP_ACC_ONE</strong></a>  <code>[**SSTEP\_ACC\_C**](group__sstep__math.md#define-sstep_acc_c)(1.0)</code><br><em>1.0 as an accumulator (exactly representable in both backends).</em></td>
+<td style="text-align: left;"><a href="./#define-sstep_acc_one"><strong>SSTEP_ACC_ONE</strong></a>  <code>(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))32768)</code><br><em>1.0 as an accumulator.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-sstep_acc_scale_max"><strong>SSTEP_ACC_SCALE_MAX</strong></a>  <code>[**SSTEP\_ACC\_C**](group__sstep__math.md#define-sstep_acc_c)(1.999969482421875)</code><br><em>Largest magnitude accepted by</em> <a href="./#function-sstep_acc_scale"><em><strong>sstep_acc_scale()</strong></em></a> <em>(2 pu - 2^-15).</em></td>
+<td style="text-align: left;"><a href="./#define-sstep_acc_scale_max"><strong>SSTEP_ACC_SCALE_MAX</strong></a>  <code>(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))65535)</code><br><em>Largest magnitude accepted by</em> <a href="./#function-sstep_acc_scale"><em><strong>sstep_acc_scale()</strong></em></a> <em>(2 pu - 2^-15).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_acc_zero"><strong>SSTEP_ACC_ZERO</strong></a>  <code>(([**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t))0)</code><br><em>Zero as an accumulator.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
@@ -2198,13 +2141,13 @@
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-sstep_real_zero"><strong>SSTEP_REAL_ZERO</strong></a>  <code>[**SSTEP\_REAL\_C**](group__sstep__math.md#define-sstep_real_c)(0.0)</code><br><em>Zero.</em></td>
+<td style="text-align: left;"><a href="./#define-sstep_real_zero"><strong>SSTEP_REAL_ZERO</strong></a>  <code>(([**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t))0)</code><br><em>Zero as a signal.</em></td>
 </tr>
 </tbody>
 </table>
 <h2 id="detailed-description">Detailed Description<a class="headerlink" href="#detailed-description" title="Permanent link">&para;</a></h2>
 <p>The control code is written once against these types and operations; the backend is selected at build time with <a href="../group__sstep__config/#define-sstep_cfg_math_backend"><strong>SSTEP_CFG_MATH_BACKEND</strong></a>.</p>
-<p><strong>Per-unit signals.</strong> Inside the control loops every electrical signal is normalised to a base value computed by <a href="../group__sstep__ctrl/#function-sstep_init"><strong>sstep_init()</strong></a>:
+<p><strong>Per-unit signals.</strong> Inside the control loops every electrical signal is normalised to a base value computed by <a href="../group__sstep__api/#function-sstep_init"><strong>sstep_init()</strong></a>:
 * current: 1.0 = power stage current full scale (<code>i_full_scale_ma</code>),
 * voltage: 1.0 = nominal bus voltage (<code>vbus_nominal_mv</code>),
 * duty cycle: 1.0 = 100 %.</p>
@@ -2634,84 +2577,96 @@
 </code></pre></div></p>
 <hr>
 
+<h3 id="define-sstep_acc_half">define SSTEP_ACC_HALF<a class="headerlink" href="#define-sstep_acc_half" title="Permanent link">&para;</a></h3>
+<p><em>0.5 as an accumulator.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>#define SSTEP_ACC_HALF `(( sstep_acc_t )16384)`
+</code></pre></div></p>
+<hr>
+
 <h3 id="define-sstep_acc_in_max">define SSTEP_ACC_IN_MAX<a class="headerlink" href="#define-sstep_acc_in_max" title="Permanent link">&para;</a></h3>
 <p><em>Largest magnitude accepted by</em> <a href="./#function-sstep_gain_mul_acc"><em><strong>sstep_gain_mul_acc()</strong></em></a> <em>and the integrator updates from accumulators (4 pu - 2^-15); larger inputs are saturated.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>#define SSTEP_ACC_IN_MAX `SSTEP_ACC_C (3.999969482421875)`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>#define SSTEP_ACC_IN_MAX `(( sstep_acc_t )131071)`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_acc_max">define SSTEP_ACC_MAX<a class="headerlink" href="#define-sstep_acc_max" title="Permanent link">&para;</a></h3>
 <p><em>Largest</em> <a href="./#typedef-sstep_acc_t"><em><strong>sstep_acc_t</strong></em></a> <em>(+65536 - 2^-15).</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>#define SSTEP_ACC_MAX `(( sstep_acc_t )INT32_MAX)`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>#define SSTEP_ACC_MAX `(( sstep_acc_t )INT32_MAX)`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_acc_min">define SSTEP_ACC_MIN<a class="headerlink" href="#define-sstep_acc_min" title="Permanent link">&para;</a></h3>
 <p><em>Smallest</em> <a href="./#typedef-sstep_acc_t"><em><strong>sstep_acc_t</strong></em></a> <em>(-65536).</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>#define SSTEP_ACC_MIN `(( sstep_acc_t )INT32_MIN)`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>#define SSTEP_ACC_MIN `(( sstep_acc_t )INT32_MIN)`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_acc_one">define SSTEP_ACC_ONE<a class="headerlink" href="#define-sstep_acc_one" title="Permanent link">&para;</a></h3>
-<p><em>1.0 as an accumulator (exactly representable in both backends).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>#define SSTEP_ACC_ONE `SSTEP_ACC_C (1.0)`
+<p><em>1.0 as an accumulator.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>#define SSTEP_ACC_ONE `(( sstep_acc_t )32768)`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_acc_scale_max">define SSTEP_ACC_SCALE_MAX<a class="headerlink" href="#define-sstep_acc_scale_max" title="Permanent link">&para;</a></h3>
 <p><em>Largest magnitude accepted by</em> <a href="./#function-sstep_acc_scale"><em><strong>sstep_acc_scale()</strong></em></a> <em>(2 pu - 2^-15).</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>#define SSTEP_ACC_SCALE_MAX `SSTEP_ACC_C (1.999969482421875)`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>#define SSTEP_ACC_SCALE_MAX `(( sstep_acc_t )65535)`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-sstep_acc_zero">define SSTEP_ACC_ZERO<a class="headerlink" href="#define-sstep_acc_zero" title="Permanent link">&para;</a></h3>
+<p><em>Zero as an accumulator.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>#define SSTEP_ACC_ZERO `(( sstep_acc_t )0)`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_gain_exp_max">define SSTEP_GAIN_EXP_MAX<a class="headerlink" href="#define-sstep_gain_exp_max" title="Permanent link">&para;</a></h3>
 <p><em>Largest gain exponent (gains up to 32767).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>#define SSTEP_GAIN_EXP_MAX `15`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>#define SSTEP_GAIN_EXP_MAX `15`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_gain_exp_min">define SSTEP_GAIN_EXP_MIN<a class="headerlink" href="#define-sstep_gain_exp_min" title="Permanent link">&para;</a></h3>
 <p><em>Smallest gain exponent.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>#define SSTEP_GAIN_EXP_MIN `(-16)`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>#define SSTEP_GAIN_EXP_MIN `(-16)`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_integ_frac_bits">define SSTEP_INTEG_FRAC_BITS<a class="headerlink" href="#define-sstep_integ_frac_bits" title="Permanent link">&para;</a></h3>
 <p><em>Fractional bits of</em> <a href="./#typedef-sstep_integ_t"><em><strong>sstep_integ_t</strong></em></a> <em>.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>#define SSTEP_INTEG_FRAC_BITS `27`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>#define SSTEP_INTEG_FRAC_BITS `27`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_real_c">define SSTEP_REAL_C<a class="headerlink" href="#define-sstep_real_c" title="Permanent link">&para;</a></h3>
 <p><em>Constant from a floating literal, saturated to -1.0 .</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>#define SSTEP_REAL_C (
-<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>    x
-<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>) `/* multi line expression */`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>#define SSTEP_REAL_C (
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>    x
+<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>) `/* multi line expression */`
 </code></pre></div></p>
 <p>. +0.99997. An arithmetic constant expression: use it in initializers of static or <code>const</code> objects, where the compiler evaluates it and no floating point code is generated. It is not an integer constant expression (C11 6.6), so it cannot be used in <code>#if</code>, <code>case</code> or <code>static_assert</code>. </p>
 <hr>
 
 <h3 id="define-sstep_real_frac_bits">define SSTEP_REAL_FRAC_BITS<a class="headerlink" href="#define-sstep_real_frac_bits" title="Permanent link">&para;</a></h3>
 <p><em>Number of fractional bits of</em> <a href="./#typedef-sstep_real_t"><em><strong>sstep_real_t</strong></em></a> <em>and</em><a href="./#typedef-sstep_acc_t"><em><strong>sstep_acc_t</strong></em></a> <em>.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>#define SSTEP_REAL_FRAC_BITS `15`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>#define SSTEP_REAL_FRAC_BITS `15`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_real_max">define SSTEP_REAL_MAX<a class="headerlink" href="#define-sstep_real_max" title="Permanent link">&para;</a></h3>
 <p><em>Largest</em> <a href="./#typedef-sstep_real_t"><em><strong>sstep_real_t</strong></em></a> <em>(+0.99997).</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>#define SSTEP_REAL_MAX `(( sstep_real_t )INT16_MAX)`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>#define SSTEP_REAL_MAX `(( sstep_real_t )INT16_MAX)`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_real_min">define SSTEP_REAL_MIN<a class="headerlink" href="#define-sstep_real_min" title="Permanent link">&para;</a></h3>
 <p><em>Smallest</em> <a href="./#typedef-sstep_real_t"><em><strong>sstep_real_t</strong></em></a> <em>(-1.0).</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>#define SSTEP_REAL_MIN `(( sstep_real_t )INT16_MIN)`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>#define SSTEP_REAL_MIN `(( sstep_real_t )INT16_MIN)`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_real_zero">define SSTEP_REAL_ZERO<a class="headerlink" href="#define-sstep_real_zero" title="Permanent link">&para;</a></h3>
-<p><em>Zero.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>#define SSTEP_REAL_ZERO `SSTEP_REAL_C (0.0)`
+<p><em>Zero as a signal.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>#define SSTEP_REAL_ZERO `(( sstep_real_t )0)`
 </code></pre></div></p>
 <hr>
 
@@ -2813,6 +2768,12 @@
     
     
       <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

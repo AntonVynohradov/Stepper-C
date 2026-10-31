@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -56,6 +56,8 @@
     
     
       <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -274,13 +276,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../protocol/" class="md-tabs__link">
+      <a href="../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -292,18 +294,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -626,10 +627,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#setting-up-a-link" class="md-nav__link">
+  <a href="#setting-up-a-driver" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Setting up a link
+        Setting up a driver
       
     </span>
   </a>
@@ -637,60 +638,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#writing-a-device" class="md-nav__link">
+  <a href="#commanding-motion" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Writing a device
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Writing a device">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#reading-parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reading parameters
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#answering" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Answering
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rules-a-well-behaved-device-follows" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Rules a well-behaved device follows
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#writing-a-controller" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Writing a controller
+        Commanding motion
       
     </span>
   </a>
@@ -698,10 +649,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-the-codec-without-a-link" class="md-nav__link">
+  <a href="#reading-the-status" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using the codec without a link
+        Reading the status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-faults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handling faults
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#several-motors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Several motors
       
     </span>
   </a>
@@ -713,17 +686,6 @@
     <span class="md-ellipsis">
       
         Return values
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#diagnostics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Diagnostics
       
     </span>
   </a>
@@ -820,14 +782,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../protocol/" class="md-nav__link">
+      <a href="../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -842,58 +804,6 @@
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -906,7 +816,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -915,42 +825,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1440,10 +1314,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#setting-up-a-link" class="md-nav__link">
+  <a href="#setting-up-a-driver" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Setting up a link
+        Setting up a driver
       
     </span>
   </a>
@@ -1451,60 +1325,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#writing-a-device" class="md-nav__link">
+  <a href="#commanding-motion" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Writing a device
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Writing a device">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#reading-parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reading parameters
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#answering" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Answering
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rules-a-well-behaved-device-follows" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Rules a well-behaved device follows
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#writing-a-controller" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Writing a controller
+        Commanding motion
       
     </span>
   </a>
@@ -1512,10 +1336,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-the-codec-without-a-link" class="md-nav__link">
+  <a href="#reading-the-status" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using the codec without a link
+        Reading the status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-faults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handling faults
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#several-motors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Several motors
       
     </span>
   </a>
@@ -1527,17 +1373,6 @@
     <span class="md-ellipsis">
       
         Return values
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#diagnostics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Diagnostics
       
     </span>
   </a>
@@ -1573,32 +1408,256 @@
 
 
 <h1 id="using-the-library">Using the Library<a class="headerlink" href="#using-the-library" title="Permanent link">&para;</a></h1>
-<p>TODO one paragraph: device, controller and codec-only roles.</p>
-<h2 id="setting-up-a-link">Setting up a link<a class="headerlink" href="#setting-up-a-link" title="Permanent link">&para;</a></h2>
-<h2 id="writing-a-device">Writing a device<a class="headerlink" href="#writing-a-device" title="Permanent link">&para;</a></h2>
-<h3 id="reading-parameters">Reading parameters<a class="headerlink" href="#reading-parameters" title="Permanent link">&para;</a></h3>
-<h3 id="answering">Answering<a class="headerlink" href="#answering" title="Permanent link">&para;</a></h3>
-<h3 id="rules-a-well-behaved-device-follows">Rules a well-behaved device follows<a class="headerlink" href="#rules-a-well-behaved-device-follows" title="Permanent link">&para;</a></h3>
-<h2 id="writing-a-controller">Writing a controller<a class="headerlink" href="#writing-a-controller" title="Permanent link">&para;</a></h2>
-<h2 id="using-the-codec-without-a-link">Using the codec without a link<a class="headerlink" href="#using-the-codec-without-a-link" title="Permanent link">&para;</a></h2>
-<h2 id="return-values">Return values<a class="headerlink" href="#return-values" title="Permanent link">&para;</a></h2>
+<p>This chapter shows how to bring a motor up with Stepper-C: fill the configuration, start
+the driver, command motion, read the status and handle faults. The hardware side (timer,
+ADC, interrupts) is in the <a href="../integration/">Integration Guide</a>; the meaning of every
+configuration field is in <a href="../configuration/#run-time-configuration">Configuration</a>.</p>
+<h2 id="setting-up-a-driver">Setting up a driver<a class="headerlink" href="#setting-up-a-driver" title="Permanent link">&para;</a></h2>
+<p>One <code>struct sstep</code> controls one motor. Allocate it statically (or in any memory that
+lives as long as the motor runs), fill a <code>struct sstep_config</code> and call <code>sstep_init()</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="n">motor</span><span class="p">;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">motor_start</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_config</span><span class="o">*</span><span class="w"> </span><span class="n">cfg</span><span class="p">)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sstep_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">,</span><span class="w"> </span><span class="n">cfg</span><span class="p">);</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SSTEP_OK</span><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">        </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sstep_enable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">);</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>sstep_init()</code> checks every field, derives the controller gains, the ADC scaling, the
+trip levels and the motion constants, and leaves the outputs off
+(<code>SSTEP_STATE_DISABLED</code>). It does not call any callback. Start the PWM timer and the ADC
+before <code>sstep_enable()</code>: the fast loop must already run when the outputs are switched on.</p>
+<p><code>sstep_enable()</code> calls <code>output_enable(true)</code> and holds the current position with the run
+current (the hold current follows after <code>hold_delay_ms</code>). The rotor jumps to the nearest
+position of the commanded electrical angle when the current appears: up to two full
+steps on the first enable after power-up.</p>
+<h2 id="commanding-motion">Commanding motion<a class="headerlink" href="#commanding-motion" title="Permanent link">&para;</a></h2>
+<p>All motion commands take positions in microsteps and return immediately; the slow loop
+executes them. They are accepted in <code>SSTEP_STATE_HOLDING</code> and <code>SSTEP_STATE_MOVING</code>.</p>
 <table>
 <thead>
 <tr>
-<th>Function</th>
-<th>Success</th>
-<th>Failure</th>
+<th>Command</th>
+<th>Effect</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>TODO</td>
-<td>TODO</td>
-<td>TODO</td>
+<td><code>sstep_move_to(&amp;motor, 3200)</code></td>
+<td>Move to the absolute position 3200 with the trapezoidal profile</td>
+</tr>
+<tr>
+<td><code>sstep_move_by(&amp;motor, -800)</code></td>
+<td>Move 800 microsteps back from the current <em>target</em></td>
+</tr>
+<tr>
+<td><code>sstep_run(&amp;motor, 6400)</code></td>
+<td>Accelerate to 6400 microsteps/s and keep running (negative: other direction)</td>
+</tr>
+<tr>
+<td><code>sstep_stop(&amp;motor)</code></td>
+<td>Decelerate to standstill and hold</td>
+</tr>
+<tr>
+<td><code>sstep_set_position(&amp;motor, 0)</code></td>
+<td>Call the current position 0 (homing); only at standstill, the rotor does not move</td>
+</tr>
+<tr>
+<td><code>sstep_set_motion_limits(&amp;motor, v_max, accel, decel)</code></td>
+<td>New limits, used from the next slow period</td>
+</tr>
+<tr>
+<td><code>sstep_set_current(&amp;motor, run_ma, hold_ma)</code></td>
+<td>New run and hold currents</td>
 </tr>
 </tbody>
 </table>
-<h2 id="diagnostics">Diagnostics<a class="headerlink" href="#diagnostics" title="Permanent link">&para;</a></h2>
+<p>A command replaces the running one without a velocity step: a new target during a move,
+a run during a move, a reversal during a run. <code>sstep_move_by()</code> adds to the target, so
+several relative moves given in a row add up.</p>
+<p>Wait for a move with the event callback or by polling the status:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">static</span><span class="w"> </span><span class="k">volatile</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">move_done</span><span class="p">;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">on_event</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">sstep_event</span><span class="w"> </span><span class="n">event</span><span class="p">)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="p">{</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">context</span><span class="p">;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">event</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SSTEP_EVENT_MOVE_DONE</span><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">        </span><span class="n">move_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">}</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="kt">bool</span><span class="w"> </span><span class="nf">motor_is_idle</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="p">{</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_status</span><span class="w"> </span><span class="n">st</span><span class="p">;</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">sstep_get_status</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">st</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SSTEP_OK</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">st</span><span class="p">.</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SSTEP_STATE_HOLDING</span><span class="p">);</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="p">}</span>
+</code></pre></div>
+<h2 id="reading-the-status">Reading the status<a class="headerlink" href="#reading-the-status" title="Permanent link">&para;</a></h2>
+<p><code>sstep_get_status()</code> fills a snapshot in engineering units:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Unit</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>state</code></td>
+<td>–</td>
+<td><code>SSTEP_STATE_DISABLED</code>, <code>…_HOLDING</code>, <code>…_MOVING</code>, <code>…_FAULT</code></td>
+</tr>
+<tr>
+<td><code>faults</code></td>
+<td>flags</td>
+<td>Active <code>SSTEP_FAULT_…</code> flags</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td>microsteps</td>
+<td>Commanded position (rounded)</td>
+</tr>
+<tr>
+<td><code>target</code></td>
+<td>microsteps</td>
+<td>Target of the current move</td>
+</tr>
+<tr>
+<td><code>velocity</code></td>
+<td>microsteps/s</td>
+<td>Commanded velocity</td>
+</tr>
+<tr>
+<td><code>i_a_ma</code>, <code>i_b_ma</code></td>
+<td>mA</td>
+<td>Last measured phase currents</td>
+</tr>
+<tr>
+<td><code>vbus_mv</code></td>
+<td>mV</td>
+<td>Last measured bus voltage</td>
+</tr>
+</tbody>
+</table>
+<p>Position and velocity are <em>commanded</em> values. Without an encoder the library cannot see
+a lost step; keep the load angle reserve with enough current and a sensible acceleration
+(<a href="../motor-control/#motor-model">Motor Control</a>).</p>
+<h2 id="handling-faults">Handling faults<a class="headerlink" href="#handling-faults" title="Permanent link">&para;</a></h2>
+<p>A fault switches the outputs off at once, sets <code>SSTEP_STATE_FAULT</code> and calls
+<code>on_fault()</code> with the new flags. Commands then return <code>SSTEP_ERR_STATE</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Raised by</th>
+<th>Typical cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SSTEP_FAULT_OVERCURRENT</code></td>
+<td>Fast loop, current drive only</td>
+<td>Short circuit, wrong <code>adc_i_span</code> sign, gains far too high</td>
+</tr>
+<tr>
+<td><code>SSTEP_FAULT_OVERVOLTAGE</code></td>
+<td>Fast loop</td>
+<td>Regenerated energy when braking a load; supply too high</td>
+</tr>
+<tr>
+<td><code>SSTEP_FAULT_UNDERVOLTAGE</code></td>
+<td>Fast loop</td>
+<td>Supply off or sagging; <code>vbus_min_mv</code> too close to nominal</td>
+</tr>
+<tr>
+<td><code>SSTEP_FAULT_HAL</code></td>
+<td>Any function that calls a callback</td>
+<td><code>pwm_write()</code> or <code>output_enable()</code> returned a negative value</td>
+</tr>
+<tr>
+<td><code>SSTEP_FAULT_EXTERNAL</code> (or any flag you choose)</td>
+<td><code>sstep_report_fault()</code></td>
+<td>Gate driver fault pin, over-temperature</td>
+</tr>
+</tbody>
+</table>
+<p>Report a gate driver fault from its interrupt:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">EXTI15_10_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kt">void</span><span class="w"> </span><span class="nf">EXTI15_10_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="p">{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">board_driver_fault</span><span class="p">())</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">        </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">sstep_report_fault</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">,</span><span class="w"> </span><span class="n">SSTEP_FAULT_EXTERNAL</span><span class="p">);</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">}</span>
+</code></pre></div>
+<p>To recover, remove the cause, then:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">sstep_clear_faults</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SSTEP_OK</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">sstep_enable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SSTEP_OK</span><span class="p">))</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">{</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">board_led</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>sstep_clear_faults()</code> returns to <code>SSTEP_STATE_DISABLED</code>; the position is kept, so the
+motor continues from where it was commanded (it may have been moved by hand meanwhile).</p>
+<h2 id="several-motors">Several motors<a class="headerlink" href="#several-motors" title="Permanent link">&para;</a></h2>
+<p>Each motor has its own instance and its own callbacks; use <code>context</code> to tell the
+callbacks which hardware they drive:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">axis_ids</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0U</span><span class="p">,</span><span class="w"> </span><span class="mi">1U</span><span class="p">};</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">axis_pwm_write</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">compare</span><span class="p">[</span><span class="n">SSTEP_LEGS_MAX</span><span class="p">])</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">{</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="n">board_pwm_set_axis</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">compare</span><span class="p">);</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">}</span>
+</code></pre></div>
+<p>with <code>.hal.context = (void*)&amp;axis_ids[k]</code> in the configuration of axis <code>k</code>. The fast loops
+of several axes may run in one interrupt one after the other, or in separate interrupts.</p>
+<h2 id="return-values">Return values<a class="headerlink" href="#return-values" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Value</th>
+<th>Returned when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SSTEP_OK</code></td>
+<td>0</td>
+<td>Success</td>
+</tr>
+<tr>
+<td><code>SSTEP_ERR_PARAM</code></td>
+<td>−1</td>
+<td><code>NULL</code> pointer, a value outside its range, <code>|velocity| &gt; v_max</code>, a relative move that overflows</td>
+</tr>
+<tr>
+<td><code>SSTEP_ERR_CONFIG</code></td>
+<td>−2</td>
+<td>Configuration fields that do not fit together, currents above the trip or rated current</td>
+</tr>
+<tr>
+<td><code>SSTEP_ERR_STATE</code></td>
+<td>−3</td>
+<td>A motion command while disabled or faulted, <code>sstep_set_position()</code> while moving, <code>sstep_enable()</code> while faulted</td>
+</tr>
+<tr>
+<td><code>SSTEP_ERR_UNSUPPORTED</code></td>
+<td>−4</td>
+<td>A topology that is not compiled in</td>
+</tr>
+</tbody>
+</table>
+<p><code>sstep_fast_loop()</code> returns <code>SSTEP_ERR_PARAM</code> only for <code>NULL</code> arguments and only with
+<code>SSTEP_CFG_ARG_CHECKS = 1</code>; its faults are reported through the state and <code>on_fault()</code>.</p>
 <h2 id="common-mistakes">Common mistakes<a class="headerlink" href="#common-mistakes" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1609,8 +1668,36 @@
 </thead>
 <tbody>
 <tr>
-<td>TODO</td>
-<td>TODO</td>
+<td><code>SSTEP_FAULT_OVERCURRENT</code> right after <code>sstep_enable()</code></td>
+<td><code>adc_i_span</code> has the wrong sign (inverting amplifier) or <code>adc_i_zero</code> is wrong: the controller sees the current in the wrong direction and drives it up</td>
+</tr>
+<tr>
+<td><code>SSTEP_FAULT_UNDERVOLTAGE</code> right after <code>sstep_enable()</code></td>
+<td>The fast loop ran before the first ADC conversion (<code>vbus</code> = 0), or <code>adc_vbus_mv_full</code> is wrong</td>
+</tr>
+<tr>
+<td>The motor hums but does not turn</td>
+<td>Phases swapped or one phase reversed; <code>current_bw_hz</code> too low; <code>v_max</code> above what the supply can drive</td>
+</tr>
+<tr>
+<td>The motor turns the wrong way</td>
+<td>Swap the two wires of one phase, or negate positions in the application</td>
+</tr>
+<tr>
+<td>Loses steps at speed</td>
+<td>Not enough voltage for the speed (<a href="../motor-control/#voltage-limits">Voltage limits</a>); shared-leg stage at its limit; acceleration too high for the load</td>
+</tr>
+<tr>
+<td>Moves are jerky, about once per millisecond</td>
+<td><code>sstep_slow_loop()</code> is not called at <code>slow_loop_hz</code>, or <code>fast_loop_hz</code> does not match the real interrupt rate</td>
+</tr>
+<tr>
+<td>Current settles at the wrong value</td>
+<td><code>i_full_scale_ma</code> / <code>adc_i_span</code> do not match the shunt and amplifier</td>
+</tr>
+<tr>
+<td><code>sstep_init()</code> returns <code>SSTEP_ERR_CONFIG</code></td>
+<td>Check the combinations: trip ≤ full scale, run current ≤ trip and rated, bandwidth ≤ <code>fast_loop_hz / 4</code>, <code>fast_loop_hz</code> a multiple of <code>slow_loop_hz</code></td>
 </tr>
 </tbody>
 </table>
@@ -1749,6 +1836,12 @@
     
     
       <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

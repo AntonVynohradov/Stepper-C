@@ -70,7 +70,7 @@
         <name>SSTEP_CFG_MICROSTEPS_MAX</name>
         <initializer>256U</initializer>
         <briefdescription>
-<para>Largest microstep division accepted by <ref refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kindref="member">sstep_init()</ref> (power of two, 1..256). </para>
+<para>Largest microstep division accepted by <ref refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kindref="member">sstep_init()</ref> (power of two, 1..256). </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
@@ -98,7 +98,7 @@
 <para>1: every public function validates its pointer arguments (MISRA Dir 4.11). </para>
         </briefdescription>
         <detaileddescription>
-<para>0 removes the checks from <ref refid="group__sstep__ctrl_1ga9d39aedf45b1e59f71fe94a1dc0df79b" kindref="member">sstep_fast_loop()</ref> only, the function called from the PWM interrupt; all other functions always check. </para>
+<para>0 removes the checks from <ref refid="group__sstep__api_1ga8c3b6798f83c32337a21d4ccdd61239b" kindref="member">sstep_fast_loop()</ref> only, the function called from the PWM interrupt; all other functions always check. </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
@@ -114,7 +114,7 @@
 </listitem><listitem><para>in a user header <computeroutput>sstep_user_config.h</computeroutput>, included when the macro <computeroutput>SSTEP_USER_CONFIG</computeroutput> is defined (CMake: set <computeroutput>SSTEP_CONFIG_DIR</computeroutput> to its folder).</para>
 </listitem></itemizedlist>
 </para>
-<para>Values that cannot change at run time (code size, table sizes, which code paths exist) live here. Motor and board parameters are run-time values passed to <ref refid="group__sstep__ctrl_1gaad3cb5d94db720dfae52c623978b1598" kindref="member">sstep_init()</ref>. </para>
+<para>Values that cannot change at run time (code size, table sizes, which code paths exist) live here. Motor and board parameters are run-time values passed to <ref refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kindref="member">sstep_init()</ref>. </para>
     </detaileddescription>
   </compounddef>
 </doxygen>

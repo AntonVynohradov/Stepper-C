@@ -12,7 +12,7 @@
  * Stepper-C: Stepper Motor Control Implementation
  *
  * Project:     Stepper-C - Hardware-Agnostic Stepper Motor Control Library
- * Description: Umbrella header: includes the public API and defines the version.
+ * Description: Public API: library version, public types and all public functions.
  *
  * Author:      Anton Vynohradov
  * Email:       avynohradov@systemfromscratch.com
@@ -69,8 +69,49 @@
 
 #include "sstep_config.h"
 #include "sstep_defs.h"
-#include "sstep_math.h"
 #include "sstep_ctrl.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* ==============================================================================
+ * PUBLIC FUNCTION DECLARATIONS
+ * =============================================================================*/
+
+int sstep_init(struct sstep* drv, const struct sstep_config* cfg);
+
+int sstep_enable(struct sstep* drv);
+
+int sstep_disable(struct sstep* drv);
+
+int sstep_fast_loop(struct sstep* drv, const struct sstep_sample* sample);
+
+int sstep_slow_loop(struct sstep* drv);
+
+int sstep_move_to(struct sstep* drv, int32_t position);
+
+int sstep_move_by(struct sstep* drv, int32_t delta);
+
+int sstep_run(struct sstep* drv, int32_t velocity);
+
+int sstep_stop(struct sstep* drv);
+
+int sstep_set_position(struct sstep* drv, int32_t position);
+
+int sstep_set_current(struct sstep* drv, uint32_t run_ma, uint32_t hold_ma);
+
+int sstep_set_motion_limits(struct sstep* drv, uint32_t v_max, uint32_t accel, uint32_t decel);
+
+int sstep_report_fault(struct sstep* drv, uint16_t faults);
+
+int sstep_clear_faults(struct sstep* drv);
+
+int sstep_get_status(const struct sstep* drv, struct sstep_status* status);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SSTEP_H */
 ```

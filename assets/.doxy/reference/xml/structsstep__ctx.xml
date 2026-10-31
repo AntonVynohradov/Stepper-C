@@ -1,0 +1,603 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structsstep__ctx" kind="struct" language="C++" prot="public">
+    <compoundname>sstep_ctx</compoundname>
+    <includes refid="sstep__internal_8h" local="no">sstep_internal.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsstep__ctx_1a95044f0e3e149efbdef19cf5023add21" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__config" kindref="compound">sstep_config</ref></type>
+        <definition>struct sstep_config sstep_ctx::cfg</definition>
+        <argsstring></argsstring>
+        <name>cfg</name>
+        <qualifiedname>sstep_ctx::cfg</qualifiedname>
+        <briefdescription>
+<para>Copy of the configuration. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="113" column="23" bodyfile="src/sstep_internal.h" bodystart="113" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a1e67c4340162d418cc5d5e9f3bc3e95b" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
+        <definition>struct sstep_gain sstep_ctx::kp</definition>
+        <argsstring></argsstring>
+        <name>kp</name>
+        <qualifiedname>sstep_ctx::kp</qualifiedname>
+        <briefdescription>
+<para>Proportional gain [pu V / pu A]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="116" column="21" bodyfile="src/sstep_internal.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a46b595654e2f1e01563b1a2d8cf9aaa9" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
+        <definition>struct sstep_gain sstep_ctx::ki</definition>
+        <argsstring></argsstring>
+        <name>ki</name>
+        <qualifiedname>sstep_ctx::ki</qualifiedname>
+        <briefdescription>
+<para>Integral gain per fast loop period. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="117" column="21" bodyfile="src/sstep_internal.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1abfdd76cdb0afb54c2c51505114092405" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
+        <definition>struct sstep_gain sstep_ctx::kb</definition>
+        <argsstring></argsstring>
+        <name>kb</name>
+        <qualifiedname>sstep_ctx::kb</qualifiedname>
+        <briefdescription>
+<para>Anti-windup gain Ts / Tt. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="118" column="21" bodyfile="src/sstep_internal.h" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a3d086e65b6a2ad860e427c36f27e56ec" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
+        <definition>struct sstep_gain sstep_ctx::r_pu</definition>
+        <argsstring></argsstring>
+        <name>r_pu</name>
+        <qualifiedname>sstep_ctx::r_pu</qualifiedname>
+        <briefdescription>
+<para>Phase resistance [pu] (voltage drive). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="119" column="21" bodyfile="src/sstep_internal.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a48ede8aad4c742c12faa8dc92b22df8b" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
+        <definition>struct sstep_gain sstep_ctx::adc_i</definition>
+        <argsstring></argsstring>
+        <name>adc_i</name>
+        <qualifiedname>sstep_ctx::adc_i</qualifiedname>
+        <briefdescription>
+<para>Current per ADC count [pu]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="120" column="21" bodyfile="src/sstep_internal.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1af6d85c1fd40cd00ebcc402bc6b1d5c19" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
+        <definition>struct sstep_gain sstep_ctx::adc_v</definition>
+        <argsstring></argsstring>
+        <name>adc_v</name>
+        <qualifiedname>sstep_ctx::adc_v</qualifiedname>
+        <briefdescription>
+<para>Bus voltage per ADC count [pu]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="121" column="21" bodyfile="src/sstep_internal.h" bodystart="121" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a8be09d137512077d21285ac8e0886db7" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
+        <definition>struct sstep_gain sstep_ctx::ff_gain</definition>
+        <argsstring></argsstring>
+        <name>ff_gain</name>
+        <qualifiedname>sstep_ctx::ff_gain</qualifiedname>
+        <briefdescription>
+<para>Feed-forward per microstep/s [pu]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="122" column="21" bodyfile="src/sstep_internal.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a23be414f6e03d7d3d45b80929eeabe4c" prot="public" static="no" mutable="no">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>sstep_real_t sstep_ctx::i_run</definition>
+        <argsstring></argsstring>
+        <name>i_run</name>
+        <qualifiedname>sstep_ctx::i_run</qualifiedname>
+        <briefdescription>
+<para>Run current [pu]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="123" column="18" bodyfile="src/sstep_internal.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a332c6bbffbe5d21901e7741e05264261" prot="public" static="no" mutable="no">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>sstep_real_t sstep_ctx::i_hold</definition>
+        <argsstring></argsstring>
+        <name>i_hold</name>
+        <qualifiedname>sstep_ctx::i_hold</qualifiedname>
+        <briefdescription>
+<para>Hold current [pu]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="124" column="18" bodyfile="src/sstep_internal.h" bodystart="124" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a8fd6a548bab8493551c729472a1ec5b8" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_ctx::i_trip_counts</definition>
+        <argsstring></argsstring>
+        <name>i_trip_counts</name>
+        <qualifiedname>sstep_ctx::i_trip_counts</qualifiedname>
+        <briefdescription>
+<para>Overcurrent trip [ADC counts from zero]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="125" column="14" bodyfile="src/sstep_internal.h" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1addb60a18b6f3a27bc6c70b0ecb81738a" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_ctx::vbus_min_raw</definition>
+        <argsstring></argsstring>
+        <name>vbus_min_raw</name>
+        <qualifiedname>sstep_ctx::vbus_min_raw</qualifiedname>
+        <briefdescription>
+<para>Undervoltage trip [ADC counts], 0 = off. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="126" column="14" bodyfile="src/sstep_internal.h" bodystart="126" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a3da3a12210a404943e9d2e236a63ea0b" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_ctx::vbus_max_raw</definition>
+        <argsstring></argsstring>
+        <name>vbus_max_raw</name>
+        <qualifiedname>sstep_ctx::vbus_max_raw</qualifiedname>
+        <briefdescription>
+<para>Overvoltage trip [ADC counts], 0 = off. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="127" column="14" bodyfile="src/sstep_internal.h" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a82d7b9f7d886bb1943ba901e336e0d8b" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_ctx::ratio</definition>
+        <argsstring></argsstring>
+        <name>ratio</name>
+        <qualifiedname>sstep_ctx::ratio</qualifiedname>
+        <briefdescription>
+<para>Fast loop periods per slow loop period. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="128" column="14" bodyfile="src/sstep_internal.h" bodystart="128" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1ae64fcf3425b2598936138ba299cf6b4d" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_ctx::hold_ticks</definition>
+        <argsstring></argsstring>
+        <name>hold_ticks</name>
+        <qualifiedname>sstep_ctx::hold_ticks</qualifiedname>
+        <briefdescription>
+<para>Slow periods at standstill before hold. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="129" column="14" bodyfile="src/sstep_internal.h" bodystart="129" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a810f186b003933d53d8554a10541f92d" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t sstep_ctx::angle_shift</definition>
+        <argsstring></argsstring>
+        <name>angle_shift</name>
+        <qualifiedname>sstep_ctx::angle_shift</qualifiedname>
+        <briefdescription>
+<para>14 - log2(microsteps). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="130" column="13" bodyfile="src/sstep_internal.h" bodystart="130" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a9b6ace7a3294a768d244e4a00d428b15" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__setpoint" kindref="compound">sstep_setpoint</ref></type>
+        <definition>struct sstep_setpoint sstep_ctx::sp[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>sp</name>
+        <qualifiedname>sstep_ctx::sp</qualifiedname>
+        <briefdescription>
+<para>Setpoints; the fast loop owns sp[sp_active]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="133" column="25" bodyfile="src/sstep_internal.h" bodystart="133" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1aac285fd52795b36c9e83f80427f82eab" prot="public" static="no" mutable="no">
+        <type>volatile uint8_t</type>
+        <definition>volatile uint8_t sstep_ctx::sp_active</definition>
+        <argsstring></argsstring>
+        <name>sp_active</name>
+        <qualifiedname>sstep_ctx::sp_active</qualifiedname>
+        <briefdescription>
+<para>Buffer in use by the fast loop. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="134" column="22" bodyfile="src/sstep_internal.h" bodystart="134" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1ab258c071b68ef99090b0b7255f42e3cb" prot="public" static="no" mutable="no">
+        <type>volatile uint8_t</type>
+        <definition>volatile uint8_t sstep_ctx::sp_pending</definition>
+        <argsstring></argsstring>
+        <name>sp_pending</name>
+        <qualifiedname>sstep_ctx::sp_pending</qualifiedname>
+        <briefdescription>
+<para>1: sp[1 - sp_active] is complete and new. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="135" column="22" bodyfile="src/sstep_internal.h" bodystart="135" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1adb272b220e797957556b8b3e37253a98" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__setpoint" kindref="compound">sstep_setpoint</ref></type>
+        <definition>struct sstep_setpoint sstep_ctx::cur</definition>
+        <argsstring></argsstring>
+        <name>cur</name>
+        <qualifiedname>sstep_ctx::cur</qualifiedname>
+        <briefdescription>
+<para>Setpoint in use. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="138" column="25" bodyfile="src/sstep_internal.h" bodystart="138" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a01ff4c75981ac1ac5e216372bd4cd965" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_ctx::adv</definition>
+        <argsstring></argsstring>
+        <name>adv</name>
+        <qualifiedname>sstep_ctx::adv</qualifiedname>
+        <briefdescription>
+<para>Angle increments applied since the hand-off. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="139" column="14" bodyfile="src/sstep_internal.h" bodystart="139" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a17668c85b69646377aa7c84cac353b3d" prot="public" static="no" mutable="no">
+        <type><ref refid="group__sstep__math_1ga9e868b8abdb662b36b33ac870301e70e" kindref="member">sstep_integ_t</ref></type>
+        <definition>sstep_integ_t sstep_ctx::integ[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>integ</name>
+        <qualifiedname>sstep_ctx::integ</qualifiedname>
+        <briefdescription>
+<para>PI integrators [pu V]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="140" column="19" bodyfile="src/sstep_internal.h" bodystart="140" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a012c6e0d1edfaeba7a920f3f5a78b6f7" prot="public" static="no" mutable="no">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>sstep_real_t sstep_ctx::i_meas[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>i_meas</name>
+        <qualifiedname>sstep_ctx::i_meas</qualifiedname>
+        <briefdescription>
+<para>Last measured phase currents [pu]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="141" column="18" bodyfile="src/sstep_internal.h" bodystart="141" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a396559c5cf7e80f8284a758090e4c9fa" prot="public" static="no" mutable="no">
+        <type>volatile uint16_t</type>
+        <definition>volatile uint16_t sstep_ctx::vbus_raw</definition>
+        <argsstring></argsstring>
+        <name>vbus_raw</name>
+        <qualifiedname>sstep_ctx::vbus_raw</qualifiedname>
+        <briefdescription>
+<para>Last bus voltage [ADC counts]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="142" column="23" bodyfile="src/sstep_internal.h" bodystart="142" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a3eb1be70191acef8e88f3479fae8e0e9" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_ctx::compare[SSTEP_LEGS_MAX]</definition>
+        <argsstring>[SSTEP_LEGS_MAX]</argsstring>
+        <name>compare</name>
+        <qualifiedname>sstep_ctx::compare</qualifiedname>
+        <briefdescription>
+<para>Last compare values. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="143" column="14" bodyfile="src/sstep_internal.h" bodystart="143" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a2e1ad5b7ce1ec2becb6891b47e153811" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__motion" kindref="compound">sstep_motion</ref></type>
+        <definition>struct sstep_motion sstep_ctx::mo</definition>
+        <argsstring></argsstring>
+        <name>mo</name>
+        <qualifiedname>sstep_ctx::mo</qualifiedname>
+        <briefdescription>
+<para>Motion generator. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="146" column="23" bodyfile="src/sstep_internal.h" bodystart="146" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1abec952592f81b9471eebd6e308761ad6" prot="public" static="no" mutable="no">
+        <type><ref refid="group__sstep__math_1ga2d9b6ce2135a467c6d227cde4dd9c12b" kindref="member">sstep_angle_t</ref></type>
+        <definition>sstep_angle_t sstep_ctx::angle_offset</definition>
+        <argsstring></argsstring>
+        <name>angle_offset</name>
+        <qualifiedname>sstep_ctx::angle_offset</qualifiedname>
+        <briefdescription>
+<para>Electrical angle of position 0. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="147" column="19" bodyfile="src/sstep_internal.h" bodystart="147" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a60464f27495ad8b58110fcf1b479937e" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_ctx::still</definition>
+        <argsstring></argsstring>
+        <name>still</name>
+        <qualifiedname>sstep_ctx::still</qualifiedname>
+        <briefdescription>
+<para>Slow periods at standstill. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="148" column="14" bodyfile="src/sstep_internal.h" bodystart="148" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1aa5dbd43a4ab41881800819204db9071c" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool sstep_ctx::hold_active</definition>
+        <argsstring></argsstring>
+        <name>hold_active</name>
+        <qualifiedname>sstep_ctx::hold_active</qualifiedname>
+        <briefdescription>
+<para>Hold current applied. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="149" column="10" bodyfile="src/sstep_internal.h" bodystart="149" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a2faf30dd7bf5a3afcae0aa32f8377a38" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
+        <definition>struct sstep_gain sstep_ctx::inv_vbus</definition>
+        <argsstring></argsstring>
+        <name>inv_vbus</name>
+        <qualifiedname>sstep_ctx::inv_vbus</qualifiedname>
+        <briefdescription>
+<para>Last V_base / bus voltage. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="150" column="21" bodyfile="src/sstep_internal.h" bodystart="150" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1aea889ec3ad563cb14a4e9203b6624175" prot="public" static="no" mutable="no">
+        <type>volatile uint16_t</type>
+        <definition>volatile uint16_t sstep_ctx::faults</definition>
+        <argsstring></argsstring>
+        <name>faults</name>
+        <qualifiedname>sstep_ctx::faults</qualifiedname>
+        <briefdescription>
+<para>Active faults. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="152" column="23" bodyfile="src/sstep_internal.h" bodystart="152" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a49e7de50e5440d9aa544c0c9038fc968" prot="public" static="no" mutable="no">
+        <type>enum <ref refid="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" kindref="member">sstep_state</ref></type>
+        <definition>enum sstep_state sstep_ctx::state</definition>
+        <argsstring></argsstring>
+        <name>state</name>
+        <qualifiedname>sstep_ctx::state</qualifiedname>
+        <briefdescription>
+<para>Driver state. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="153" column="30" bodyfile="src/sstep_internal.h" bodystart="153" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Driver state behind the opaque <ref refid="structsstep" kindref="compound">sstep</ref>. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Its layout may change in any release. </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="6">
+        <label>sstep_callbacks</label>
+        <link refid="structsstep__callbacks"/>
+      </node>
+      <node id="2">
+        <label>sstep_config</label>
+        <link refid="structsstep__config"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>motor</edgelabel>
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>stage</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>ctrl</edgelabel>
+        </childnode>
+        <childnode refid="6" relation="usage">
+          <edgelabel>hal</edgelabel>
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sstep_ctrl_cfg</label>
+        <link refid="structsstep__ctrl__cfg"/>
+      </node>
+      <node id="1">
+        <label>sstep_ctx</label>
+        <link refid="structsstep__ctx"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>cfg</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>adc_i</edgelabel>
+          <edgelabel>adc_v</edgelabel>
+          <edgelabel>ff_gain</edgelabel>
+          <edgelabel>inv_vbus</edgelabel>
+          <edgelabel>kb</edgelabel>
+          <edgelabel>ki</edgelabel>
+          <edgelabel>kp</edgelabel>
+          <edgelabel>r_pu</edgelabel>
+        </childnode>
+        <childnode refid="8" relation="usage">
+          <edgelabel>cur</edgelabel>
+          <edgelabel>sp</edgelabel>
+        </childnode>
+        <childnode refid="9" relation="usage">
+          <edgelabel>mo</edgelabel>
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sstep_gain</label>
+        <link refid="structsstep__gain"/>
+      </node>
+      <node id="9">
+        <label>sstep_motion</label>
+        <link refid="structsstep__motion"/>
+      </node>
+      <node id="3">
+        <label>sstep_motor_cfg</label>
+        <link refid="structsstep__motor__cfg"/>
+      </node>
+      <node id="8">
+        <label>sstep_setpoint</label>
+        <link refid="structsstep__setpoint"/>
+        <childnode refid="7" relation="usage">
+          <edgelabel>inv_vbus</edgelabel>
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sstep_stage_cfg</label>
+        <link refid="structsstep__stage__cfg"/>
+      </node>
+    </collaborationgraph>
+    <location file="src/sstep_internal.h" line="111" column="1" bodyfile="src/sstep_internal.h" bodystart="112" bodyend="154"/>
+    <listofallmembers>
+      <member refid="structsstep__ctx_1a48ede8aad4c742c12faa8dc92b22df8b" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>adc_i</name></member>
+      <member refid="structsstep__ctx_1af6d85c1fd40cd00ebcc402bc6b1d5c19" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>adc_v</name></member>
+      <member refid="structsstep__ctx_1a01ff4c75981ac1ac5e216372bd4cd965" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>adv</name></member>
+      <member refid="structsstep__ctx_1abec952592f81b9471eebd6e308761ad6" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>angle_offset</name></member>
+      <member refid="structsstep__ctx_1a810f186b003933d53d8554a10541f92d" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>angle_shift</name></member>
+      <member refid="structsstep__ctx_1a95044f0e3e149efbdef19cf5023add21" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>cfg</name></member>
+      <member refid="structsstep__ctx_1a3eb1be70191acef8e88f3479fae8e0e9" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>compare</name></member>
+      <member refid="structsstep__ctx_1adb272b220e797957556b8b3e37253a98" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>cur</name></member>
+      <member refid="structsstep__ctx_1aea889ec3ad563cb14a4e9203b6624175" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>faults</name></member>
+      <member refid="structsstep__ctx_1a8be09d137512077d21285ac8e0886db7" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>ff_gain</name></member>
+      <member refid="structsstep__ctx_1aa5dbd43a4ab41881800819204db9071c" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>hold_active</name></member>
+      <member refid="structsstep__ctx_1ae64fcf3425b2598936138ba299cf6b4d" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>hold_ticks</name></member>
+      <member refid="structsstep__ctx_1a332c6bbffbe5d21901e7741e05264261" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>i_hold</name></member>
+      <member refid="structsstep__ctx_1a012c6e0d1edfaeba7a920f3f5a78b6f7" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>i_meas</name></member>
+      <member refid="structsstep__ctx_1a23be414f6e03d7d3d45b80929eeabe4c" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>i_run</name></member>
+      <member refid="structsstep__ctx_1a8fd6a548bab8493551c729472a1ec5b8" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>i_trip_counts</name></member>
+      <member refid="structsstep__ctx_1a17668c85b69646377aa7c84cac353b3d" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>integ</name></member>
+      <member refid="structsstep__ctx_1a2faf30dd7bf5a3afcae0aa32f8377a38" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>inv_vbus</name></member>
+      <member refid="structsstep__ctx_1abfdd76cdb0afb54c2c51505114092405" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>kb</name></member>
+      <member refid="structsstep__ctx_1a46b595654e2f1e01563b1a2d8cf9aaa9" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>ki</name></member>
+      <member refid="structsstep__ctx_1a1e67c4340162d418cc5d5e9f3bc3e95b" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>kp</name></member>
+      <member refid="structsstep__ctx_1a2e1ad5b7ce1ec2becb6891b47e153811" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>mo</name></member>
+      <member refid="structsstep__ctx_1a3d086e65b6a2ad860e427c36f27e56ec" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>r_pu</name></member>
+      <member refid="structsstep__ctx_1a82d7b9f7d886bb1943ba901e336e0d8b" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>ratio</name></member>
+      <member refid="structsstep__ctx_1a9b6ace7a3294a768d244e4a00d428b15" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>sp</name></member>
+      <member refid="structsstep__ctx_1aac285fd52795b36c9e83f80427f82eab" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>sp_active</name></member>
+      <member refid="structsstep__ctx_1ab258c071b68ef99090b0b7255f42e3cb" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>sp_pending</name></member>
+      <member refid="structsstep__ctx_1a49e7de50e5440d9aa544c0c9038fc968" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>state</name></member>
+      <member refid="structsstep__ctx_1a60464f27495ad8b58110fcf1b479937e" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>still</name></member>
+      <member refid="structsstep__ctx_1a3da3a12210a404943e9d2e236a63ea0b" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>vbus_max_raw</name></member>
+      <member refid="structsstep__ctx_1addb60a18b6f3a27bc6c70b0ecb81738a" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>vbus_min_raw</name></member>
+      <member refid="structsstep__ctx_1a396559c5cf7e80f8284a758090e4c9fa" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>vbus_raw</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

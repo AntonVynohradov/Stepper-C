@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="TODO one sentence: hardware-agnostic Stepper Motor Control library in C for embedded systems: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Closed-loop microstepping current control for two-phase stepper motors in portable C11 for any MCU: no heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -52,6 +52,8 @@
     
     
       <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -268,13 +270,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../protocol/" class="md-tabs__link">
+      <a href="../../motor-control/" class="md-tabs__link">
         
   
   
     
   
-  Protocol
+  Motor Control
 
       </a>
     </li>
@@ -286,18 +288,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../integration/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../../integration/" class="md-tabs__link">
+        
   
+  
+    
   
   Integration
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -646,14 +647,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../protocol/" class="md-nav__link">
+      <a href="../../motor-control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Protocol
+    Motor Control
   
 
     
@@ -668,58 +669,6 @@
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Integration
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Integration
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -732,7 +681,7 @@
   <span class="md-ellipsis">
     
   
-    Integration Guide
+    Integration
   
 
     
@@ -741,42 +690,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Examples
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1277,11 +1190,14 @@
 <h1 id="class-hierarchy">Class Hierarchy<a class="headerlink" href="#class-hierarchy" title="Permanent link">&para;</a></h1>
 <p>This inheritance list is sorted roughly, but not completely, alphabetically:</p>
 <ul>
+<li><strong>struct</strong> <a href="../structalign__ctx/"><strong>align_ctx</strong></a> </li>
+<li><strong>struct</strong> <a href="../structalign__pub/"><strong>align_pub</strong></a> </li>
 <li><strong>struct</strong> <a href="../structsstep/"><strong>sstep</strong></a> <em>Driver instance.</em> </li>
 <li><strong>struct</strong> <a href="../structsstep__bridge__out/"><strong>sstep_bridge_out</strong></a> <em>Result of the power stage mapping.</em> </li>
 <li><strong>struct</strong> <a href="../structsstep__callbacks/"><strong>sstep_callbacks</strong></a> <em>Hardware callbacks.</em> </li>
-<li><strong>struct</strong> <a href="../structsstep__config/"><strong>sstep_config</strong></a> <em>Complete configuration given to</em> <a href="../group__sstep__ctrl/#function-sstep_init"><em><strong>sstep_init()</strong></em></a> <em>.</em></li>
+<li><strong>struct</strong> <a href="../structsstep__config/"><strong>sstep_config</strong></a> <em>Complete configuration given to</em> <a href="../group__sstep__api/#function-sstep_init"><em><strong>sstep_init()</strong></em></a> <em>.</em></li>
 <li><strong>struct</strong> <a href="../structsstep__ctrl__cfg/"><strong>sstep_ctrl_cfg</strong></a> <em>Control and motion parameters.</em> </li>
+<li><strong>struct</strong> <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> <em>Driver state behind the opaque</em> <a href="../structsstep/"><em><strong>sstep</strong></em></a> <em>.</em></li>
 <li><strong>struct</strong> <a href="../structsstep__gain/"><strong>sstep_gain</strong></a> <em>Gain of any magnitude: value = mant / 2^15 * 2^exp.</em> </li>
 <li><strong>struct</strong> <a href="../structsstep__motion/"><strong>sstep_motion</strong></a> <em>Motion generator state.</em> </li>
 <li><strong>struct</strong> <a href="../structsstep__motor__cfg/"><strong>sstep_motor_cfg</strong></a> <em>Motor parameters, from the datasheet or measured.</em> </li>
@@ -1289,7 +1205,7 @@
 <li><strong>struct</strong> <a href="../structsstep__setpoint/"><strong>sstep_setpoint</strong></a> <em>Setpoint handed from the slow loop to the fast loop.</em> </li>
 <li><strong>struct</strong> <a href="../structsstep__sincos/"><strong>sstep_sincos</strong></a> <em>Sine and cosine of one angle, see</em> <a href="../group__sstep__math/#function-sstep_sin_cos"><em><strong>sstep_sin_cos()</strong></em></a> <em>.</em></li>
 <li><strong>struct</strong> <a href="../structsstep__stage__cfg/"><strong>sstep_stage_cfg</strong></a> <em>Power stage and measurement parameters.</em> </li>
-<li><strong>struct</strong> <a href="../structsstep__status/"><strong>sstep_status</strong></a> <em>Snapshot returned by</em> <a href="../group__sstep__ctrl/#function-sstep_get_status"><em><strong>sstep_get_status()</strong></em></a> <em>, in engineering units.</em></li>
+<li><strong>struct</strong> <a href="../structsstep__status/"><strong>sstep_status</strong></a> <em>Snapshot returned by</em> <a href="../group__sstep__api/#function-sstep_get_status"><em><strong>sstep_get_status()</strong></em></a> <em>, in engineering units.</em></li>
 </ul>
 
 
@@ -1388,6 +1304,12 @@
     
     
       <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

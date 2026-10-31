@@ -90,7 +90,7 @@
 
 | Type | Name |
 | ---: | :--- |
-| define  | [**ACC\_HALF**](sstep__bridge_8c.md#define-acc_half)  `[**SSTEP\_ACC\_C**](group__sstep__math.md#define-sstep_acc_c)(0.5)`<br>_0.5 (50 % duty cycle)._  |
+| define  | [**ACC\_HALF**](sstep__bridge_8c.md#define-acc_half)  `[**SSTEP\_ACC\_HALF**](group__sstep__math.md#define-sstep_acc_half)`<br>_0.5 (50 % duty cycle)._  |
 
 ## Public Functions Documentation
 
@@ -178,7 +178,7 @@ static sstep_acc_t scale_to_unit (
 
 _0.5 (50 % duty cycle)._ 
 ```C++
-#define ACC_HALF `SSTEP_ACC_C (0.5)`
+#define ACC_HALF `SSTEP_ACC_HALF`
 ```
 
 
