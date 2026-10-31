@@ -99,13 +99,14 @@ Measured with `arm-none-eabi-gcc` 15.2.1 for Cortex-M4 (`-mthumb`, float backend
 
 | Object | Fixed point | Float |
 | --- | --- | --- |
-| `struct sstep` (RAM per motor) | 360 B | 384 B |
+| `struct sstep` (RAM per motor) | 336 B | 360 B |
 | Code and constants, `-Os` (flash) | 6756 B | 7214 B |
 | of which the sine table | 514 B | 1028 B |
 | `.data` + `.bss` | 0 B | 0 B |
 
-`struct sstep` is the configuration copy (136 B on Cortex-M4, 160 B on 64-bit hosts)
-plus the private state (`SSTEP_STATE_BYTES`: 200 B fixed point, 224 B float).
+`struct sstep` is the configuration copy (`SSTEP_CONFIG_BYTES`: 136 B on Cortex-M4,
+160 B on 64-bit hosts) plus the private state (`SSTEP_STATE_BYTES`: 200 B fixed point,
+224 B float); on a 64-bit host it is 360 B and 384 B.
 
 ## Stack usage
 

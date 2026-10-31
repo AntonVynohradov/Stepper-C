@@ -219,8 +219,19 @@ struct sstep_status
 #define SSTEP_STATE_BYTES 224U
 #endif
 
+/**
+ * @brief Bytes of the configuration copy at the start of the instance: 136 with 32-bit
+ *        pointers (Cortex-M), 160 with 64-bit pointers. A plain constant, so that the
+ *        instance size needs no sizeof (static analysis); sstep_ctrl.c checks it.
+ */
+#if defined(UINTPTR_MAX) && (UINTPTR_MAX > 0xFFFFFFFFU)
+#define SSTEP_CONFIG_BYTES 160U
+#else
+#define SSTEP_CONFIG_BYTES 136U
+#endif
+
 /** @brief Size of ::sstep in 64-bit words. */
-#define SSTEP_INSTANCE_WORDS ((sizeof(struct sstep_config) + SSTEP_STATE_BYTES + 7U) / 8U)
+#define SSTEP_INSTANCE_WORDS ((SSTEP_CONFIG_BYTES + SSTEP_STATE_BYTES + 7U) / 8U)
 
 /**
  * @brief Driver instance. Allocated by the application (static, stack or pool) and

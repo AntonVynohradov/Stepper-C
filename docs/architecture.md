@@ -68,7 +68,7 @@ detects them.
 
 | Object | Owner | Size | Lifetime |
 | --- | --- | --- | --- |
-| `struct sstep` (driver instance) | Application (static, stack or pool) | 360 B fixed point, 384 B float | From `sstep_init()` as long as the motor runs |
+| `struct sstep` (driver instance) | Application (static, stack or pool) | 336 B fixed point, 360 B float on Cortex-M4 | From `sstep_init()` as long as the motor runs |
 | `struct sstep_config` | Application; copied by `sstep_init()` | 136 B on Cortex-M4 | Only during `sstep_init()` |
 | `struct sstep_sample` | Application | 6 B | Only during `sstep_fast_loop()` |
 | `struct sstep_status` | Application | 32 B on Cortex-M4 | Filled by `sstep_get_status()` |
@@ -79,7 +79,8 @@ the library writes is in the instance or in the caller's structures. Several ins
 (axes) are independent.
 
 The instance size is fixed at compile time by `SSTEP_INSTANCE_WORDS` in `sstep_ctrl.h`
-and checked against the private state by `_Static_assert`.
+(from `SSTEP_CONFIG_BYTES` and `SSTEP_STATE_BYTES`, plain constants so that static
+analysis can evaluate them) and checked against the private state by `_Static_assert`.
 
 ## Error handling
 

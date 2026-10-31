@@ -121,9 +121,11 @@ Units, ranges and examples of every member: [Run-time configuration](configurati
 
 ### Driver instance
 
-`struct sstep` is an opaque array of `SSTEP_INSTANCE_WORDS` 64-bit words (360 B fixed
-point, 384 B float). Allocate it, pass its address, never read or write its content.
-`SSTEP_STATE_BYTES` is the size of the private state behind the configuration copy.
+`struct sstep` is an opaque array of `SSTEP_INSTANCE_WORDS` 64-bit words (on Cortex-M4
+336 B fixed point, 360 B float; on 64-bit hosts 360 B and 384 B). Allocate it, pass its
+address, never read or write its content. `SSTEP_CONFIG_BYTES` is the size of the
+configuration copy (136 B with 32-bit pointers, 160 B with 64-bit pointers) and
+`SSTEP_STATE_BYTES` the size of the private state behind it.
 
 ## Functions — `sstep.h`
 

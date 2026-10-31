@@ -46,7 +46,7 @@ Measured on Cortex-M4 (GCC 15.2, `-Os`):
 
 | | Fixed point | Float |
 | --- | --- | --- |
-| RAM per motor | 360 B | 384 B |
+| RAM per motor | 336 B | 360 B |
 | Flash | 6756 B | 7214 B |
 | Worst-case stack, fast loop / slow loop | 184 B / 140 B | 128 B / 132 B |
 
@@ -73,7 +73,7 @@ The public API may still change before 1.0.0.
 ```c
 #include "sstep.h"
 
-static struct sstep motor;               /* 360 B, owned by the application */
+static struct sstep motor;               /* 336 B on Cortex-M4, owned by the application */
 
 void ADC1_2_IRQHandler(void)             /* PWM/ADC interrupt, 20 kHz */
 {

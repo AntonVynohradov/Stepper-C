@@ -70,4 +70,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   37.21 deg (prototype 37.21 deg).
 - Code size (clang -Os, both topologies, sine table included): Cortex-M0+ fixed point
   8.5 kB, Cortex-M4F fixed point 8.2 kB, Cortex-M4F float 9.0 kB.
+- `misra-analyze` reports 0 violations with Cppcheck 2.13 (Ubuntu 24.04, as in CI) and
+  2.16, in both backends: no `UL` constants (64-bit on LP64 hosts, Rule 10.3), shifts
+  of `(uint32_t)1U` (Rule 12.2), instance size from the plain constants
+  `SSTEP_CONFIG_BYTES` and `SSTEP_STATE_BYTES` (no `sizeof`/`offsetof` in the array
+  size and the checks).
 

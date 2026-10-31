@@ -61,7 +61,8 @@
  * PRIVATE TYPE DEFINITIONS
  * =============================================================================*/
 
-/* Alignment probes: the offset of x is the alignment of its type (no _Alignof, Rule 1.4) */
+/* Alignment probes: sizeof(probe) - sizeof(x) is the alignment of the type of x
+   (no _Alignof, Rule 1.4; no offsetof, which the static analysis cannot resolve) */
 struct align_ctx
 {
     char c;
@@ -75,9 +76,12 @@ struct align_pub
 };
 
 /* The opaque public instance must hold the private driver state */
+_Static_assert(sizeof(struct sstep_config) <= SSTEP_CONFIG_BYTES,
+               "SSTEP_CONFIG_BYTES in sstep_ctrl.h is too small for this ABI");
 _Static_assert(sizeof(struct sstep_ctx) <= sizeof(struct sstep),
                "SSTEP_STATE_BYTES in sstep_ctrl.h is too small");
-_Static_assert(offsetof(struct align_ctx, x) <= offsetof(struct align_pub, x),
+_Static_assert((sizeof(struct align_ctx) - sizeof(struct sstep_ctx)) <=
+                   (sizeof(struct align_pub) - sizeof(struct sstep)),
                "struct sstep is not aligned for struct sstep_ctx");
 
 /* ==============================================================================
@@ -140,11 +144,10 @@ static int ratio(uint64_t n1, uint64_t n2, uint64_t d1, uint64_t d2, struct sste
     int result = SSTEP_ERR_CONFIG;
     uint64_t n;
     uint64_t d;
-    if (mul_ok(n1, n2, &n) && mul_ok(d1, d2, &d))
+    if (mul_ok(n1, n2, &n) && mul_ok(d1, d2, &d) &&
+        (sstep_gain_from_ratio64((int64_t)n, (int64_t)d, g) == SSTEP_OK))
     {
-        result = (sstep_gain_from_ratio64((int64_t)n, (int64_t)d, g) == SSTEP_OK)
-                     ? SSTEP_OK
-                     : SSTEP_ERR_CONFIG;
+        result = SSTEP_OK;
     }
     return result;
 }

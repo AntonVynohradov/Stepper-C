@@ -50,7 +50,7 @@ point (no FPU needed) or single-precision float.
 | Dependencies | `<stddef.h>`, `<stdint.h>`, `<stdbool.h>` only |
 | Numeric backends | Fixed point Q15/Q31 (integer only) or single-precision float, chosen at build time |
 | Memory | No heap, no global or static mutable data (`.data` and `.bss` are empty) |
-| RAM per instance | 360 B fixed point, 384 B float ([details](configuration.md#memory-footprint)) |
+| RAM per instance | 336 B fixed point, 360 B float on Cortex-M4 ([details](configuration.md#memory-footprint)) |
 | Flash | 6.6 KiB fixed point, 7.0 KiB float (Cortex-M4, `-Os`, both topologies) |
 | Stack | `sstep_fast_loop()` 184 B, `sstep_slow_loop()` 140 B worst case (Cortex-M4 `-Os`, [details](configuration.md#stack-usage)) |
 | Coding standard | MISRA C:2012, 0 Cppcheck addon violations, [1 deviation](misra.md) |

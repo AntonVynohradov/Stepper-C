@@ -141,7 +141,7 @@ extra:
         - icon: memory
           title: Tight embedded budgets
           text: >-
-            360 B of RAM per motor, 184 B worst-case stack in the PWM interrupt, 6.6 KiB
+            336 B of RAM per motor, 184 B worst-case stack in the PWM interrupt, 6.6 KiB
             of flash on Cortex-M4. A fixed-point backend for cores without FPU; no
             allocation, no globals, no OS.
           tags: [Q15 or float, Static memory, Bare metal & RTOS]
@@ -168,7 +168,7 @@ extra:
         - {icon: check, title: Quality gates in CI, text: "Unit and closed-loop tests in both backends with a 100 % coverage gate, MISRA C:2012 gate, Cppcheck and CodeQL.", tags: [GoogleTest, Coverage, MISRA C], link: misra/}
     stats:                                   # measured values only
       - {value: "15", label: public functions}
-      - {value: "360 B", label: RAM per motor}
+      - {value: "336 B", label: RAM per motor}
       - {value: "184 B", label: stack in the PWM interrupt}
       - {value: "0", label: MISRA C:2012 violations}
     portfolio:
