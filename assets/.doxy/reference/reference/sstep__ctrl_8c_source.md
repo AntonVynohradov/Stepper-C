@@ -208,24 +208,22 @@ static int check_config(const struct sstep_config* cfg)
     const struct sstep_ctrl_cfg* c = &cfg->ctrl;
     int result = SSTEP_OK;
 
-    if ((cfg->hal.pwm_write == NULL) || (cfg->hal.output_enable == NULL) ||
-        (mo->r_mohm == 0U) || (mo->r_mohm > VALUE_MAX) || (mo->l_uh == 0U) ||
-        (mo->l_uh > VALUE_MAX) || (mo->i_rated_ma == 0U) || (mo->i_rated_ma > VALUE_MAX) ||
+    if ((cfg->hal.pwm_write == NULL) || (cfg->hal.output_enable == NULL) || (mo->r_mohm == 0U) ||
+        (mo->r_mohm > VALUE_MAX) || (mo->l_uh == 0U) || (mo->l_uh > VALUE_MAX) ||
+        (mo->i_rated_ma == 0U) || (mo->i_rated_ma > VALUE_MAX) ||
         (mo->ke_uv_s_per_rad > VALUE_MAX) || (mo->full_steps_per_rev == 0U) ||
         ((st->topology != SSTEP_TOPOLOGY_FULL_BRIDGE) &&
          (st->topology != SSTEP_TOPOLOGY_SHARED_LEG)) ||
         (st->vbus_nominal_mv == 0U) || (st->vbus_nominal_mv > VALUE_MAX) ||
         (st->vbus_min_mv > VALUE_MAX) || (st->vbus_max_mv > VALUE_MAX) ||
-        (st->i_full_scale_ma == 0U) || (st->i_full_scale_ma > VALUE_MAX) ||
-        (st->i_trip_ma == 0U) || (st->pwm_period_ticks < 2U) || (st->adc_i_span == 0) ||
-        (st->adc_i_span > 65535) || (st->adc_i_span < -65535) || (st->adc_full == 0U) ||
-        (st->adc_i_zero > st->adc_full) || (st->adc_vbus_mv_full == 0U) ||
-        (st->adc_vbus_mv_full > VALUE_MAX) ||
+        (st->i_full_scale_ma == 0U) || (st->i_full_scale_ma > VALUE_MAX) || (st->i_trip_ma == 0U) ||
+        (st->pwm_period_ticks < 2U) || (st->adc_i_span == 0) || (st->adc_i_span > 65535) ||
+        (st->adc_i_span < -65535) || (st->adc_full == 0U) || (st->adc_i_zero > st->adc_full) ||
+        (st->adc_vbus_mv_full == 0U) || (st->adc_vbus_mv_full > VALUE_MAX) ||
         ((c->drive_mode != SSTEP_DRIVE_CURRENT) && (c->drive_mode != SSTEP_DRIVE_VOLTAGE)) ||
         (c->fast_loop_hz == 0U) || (c->slow_loop_hz == 0U) || (c->fast_loop_hz > VALUE_MAX) ||
         (!is_pow2(c->microsteps)) || (c->microsteps > SSTEP_CFG_MICROSTEPS_MAX) ||
-        (c->current_bw_hz == 0U) || (c->i_run_ma == 0U) || (c->v_max == 0U) ||
-        (c->accel == 0U))
+        (c->current_bw_hz == 0U) || (c->i_run_ma == 0U) || (c->v_max == 0U) || (c->accel == 0U))
     {
         result = SSTEP_ERR_PARAM;
     }
@@ -241,8 +239,7 @@ static int check_config(const struct sstep_config* cfg)
         result = SSTEP_ERR_UNSUPPORTED;
     }
 #endif
-    else if ((st->i_trip_ma > st->i_full_scale_ma) ||
-             ((c->fast_loop_hz % c->slow_loop_hz) != 0U) ||
+    else if ((st->i_trip_ma > st->i_full_scale_ma) || ((c->fast_loop_hz % c->slow_loop_hz) != 0U) ||
              ((c->fast_loop_hz / c->slow_loop_hz) > 65535U) ||
              (c->current_bw_hz > (c->fast_loop_hz / 4U)) ||
              ((st->vbus_min_mv != 0U) && (st->vbus_min_mv >= st->vbus_nominal_mv)) ||
@@ -275,7 +272,7 @@ static int set_currents(struct sstep_ctx* m, uint32_t run_ma, uint32_t hold_ma)
     else
     {
         int32_t base = (int32_t)m->cfg.stage.i_full_scale_ma;
-        (void)sstep_real_from_ratio((int32_t)run_ma, base, &run);  /* base > 0 */
+        (void)sstep_real_from_ratio((int32_t)run_ma, base, &run); /* base > 0 */
         (void)sstep_real_from_ratio((int32_t)hold_ma, base, &hold);
         m->i_run = run;
         m->i_hold = hold;
@@ -327,8 +324,8 @@ static int derive(struct sstep_ctx* m)
     int result;
 
     /* Kp = L wc I_base / V_base, Ki Ts = R wc Ts I_base / V_base, Kb = Ts R / L */
-    result = ratio((uint64_t)mo->l_uh * st->i_full_scale_ma, bw2pi,
-                   (uint64_t)TWO_PI_DEN * 1000000U, vmv, &m->kp);
+    result = ratio((uint64_t)mo->l_uh * st->i_full_scale_ma, bw2pi, (uint64_t)TWO_PI_DEN * 1000000U,
+                   vmv, &m->kp);
     if (result == SSTEP_OK)
     {
         result = ratio((uint64_t)mo->r_mohm * st->i_full_scale_ma, bw2pi,
@@ -362,8 +359,8 @@ static int derive(struct sstep_ctx* m)
     {
         /* back-EMF per microstep/s: Kt 2 pi / (Ns M) / V_base */
         result = ratio(mo->ke_uv_s_per_rad, TWO_PI_NUM,
-                       (uint64_t)TWO_PI_DEN * mo->full_steps_per_rev * c->microsteps,
-                       vmv * 1000U, &m->ff_gain);
+                       (uint64_t)TWO_PI_DEN * mo->full_steps_per_rev * c->microsteps, vmv * 1000U,
+                       &m->ff_gain);
     }
     /* trip <= span <= 65535 because i_trip_ma <= i_full_scale_ma (check_config) */
     if ((result == SSTEP_OK) && (trip == 0U))
@@ -450,9 +447,9 @@ static void control(struct sstep_ctx* m)
         for (uint32_t k = 0U; k < 2U; k++)
         {
             e[k] = sstep_sub(iref[k], m->i_meas[k]);
-            vu[k] = sstep_acc_add(sstep_acc_add(sstep_gain_mul(&m->kp, e[k]),
-                                                sstep_integ_to_acc(m->integ[k])),
-                                  ff[k]);
+            vu[k] = sstep_acc_add(
+                sstep_acc_add(sstep_gain_mul(&m->kp, e[k]), sstep_integ_to_acc(m->integ[k])),
+                ff[k]);
         }
     }
     else
@@ -476,8 +473,8 @@ static void control(struct sstep_ctx* m)
             m->integ[k] = sstep_integ_add(m->integ[k], &m->ki, e[k]);
             if (out.limited)
             {
-                m->integ[k] = sstep_integ_add_acc(m->integ[k], &m->kb,
-                                                  sstep_acc_add(out.v[k], -vu[k]));
+                m->integ[k] =
+                    sstep_integ_add_acc(m->integ[k], &m->kb, sstep_acc_add(out.v[k], -vu[k]));
             }
         }
     }
@@ -523,6 +520,10 @@ int sstep_init(struct sstep* drv, const struct sstep_config* cfg)
             m->cfg = *cfg;
             result = derive(m);
             m->state = SSTEP_STATE_DISABLED;
+            if (result == SSTEP_OK)
+            {
+                m->ready = SSTEP_READY;
+            }
         }
     }
     return result;
@@ -536,6 +537,10 @@ int sstep_enable(struct sstep* drv)
     if (m == NULL)
     {
         result = SSTEP_ERR_PARAM;
+    }
+    else if (m->ready != SSTEP_READY)
+    {
+        result = SSTEP_ERR_STATE;
     }
     else if (m->state == SSTEP_STATE_FAULT)
     {
@@ -585,6 +590,10 @@ int sstep_disable(struct sstep* drv)
     {
         result = SSTEP_ERR_PARAM;
     }
+    else if (m->ready != SSTEP_READY)
+    {
+        result = SSTEP_ERR_STATE;
+    }
     else
     {
         if (m->state != SSTEP_STATE_FAULT)
@@ -611,6 +620,10 @@ int sstep_fast_loop(struct sstep* drv, const struct sstep_sample* sample)
     if ((m == NULL) || (sample == NULL))
     {
         result = SSTEP_ERR_PARAM;
+    }
+    else if (m->ready != SSTEP_READY)
+    {
+        result = SSTEP_ERR_STATE;
     }
     else
 #endif
@@ -662,6 +675,10 @@ int sstep_slow_loop(struct sstep* drv)
     {
         result = SSTEP_ERR_PARAM;
     }
+    else if (m->ready != SSTEP_READY)
+    {
+        result = SSTEP_ERR_STATE;
+    }
     else if (is_active(m->state))
     {
         struct sstep_setpoint sp;
@@ -697,10 +714,9 @@ int sstep_slow_loop(struct sstep* drv)
         if (raw != 0U)
         {
             struct sstep_gain inv;
-            if (sstep_gain_from_ratio64((int64_t)m->cfg.stage.adc_full *
-                                            (int64_t)m->cfg.stage.vbus_nominal_mv,
-                                        (int64_t)raw * (int64_t)m->cfg.stage.adc_vbus_mv_full,
-                                        &inv) == SSTEP_OK)
+            if (sstep_gain_from_ratio64(
+                    (int64_t)m->cfg.stage.adc_full * (int64_t)m->cfg.stage.vbus_nominal_mv,
+                    (int64_t)raw * (int64_t)m->cfg.stage.adc_vbus_mv_full, &inv) == SSTEP_OK)
             {
                 m->inv_vbus = inv;
             }
@@ -709,9 +725,8 @@ int sstep_slow_loop(struct sstep* drv)
         sp.angle = raw_angle(m, p0) + m->angle_offset;
         sp.dangle = (int32_t)((dp * pow2_i64((uint32_t)m->angle_shift)) / (int64_t)m->ratio);
         sp.i_amp = m->hold_active ? m->i_hold : m->i_run;
-        sp.ff = gain_apply_i32(&m->ff_gain,
-                               (int32_t)div_round(dp * (int64_t)m->cfg.ctrl.slow_loop_hz,
-                                                  SSTEP_POS_ONE));
+        sp.ff = gain_apply_i32(
+            &m->ff_gain, (int32_t)div_round(dp * (int64_t)m->cfg.ctrl.slow_loop_hz, SSTEP_POS_ONE));
         sp.inv_vbus = m->inv_vbus;
         publish(m, &sp);
 
@@ -755,6 +770,10 @@ int sstep_move_to(struct sstep* drv, int32_t position)
     {
         result = SSTEP_ERR_PARAM;
     }
+    else if (m->ready != SSTEP_READY)
+    {
+        result = SSTEP_ERR_STATE;
+    }
     else if (!is_active(m->state))
     {
         result = SSTEP_ERR_STATE;
@@ -775,6 +794,10 @@ int sstep_move_by(struct sstep* drv, int32_t delta)
     if (m == NULL)
     {
         result = SSTEP_ERR_PARAM;
+    }
+    else if (m->ready != SSTEP_READY)
+    {
+        result = SSTEP_ERR_STATE;
     }
     else
     {
@@ -799,6 +822,10 @@ int sstep_run(struct sstep* drv, int32_t velocity)
     if (m == NULL)
     {
         result = SSTEP_ERR_PARAM;
+    }
+    else if (m->ready != SSTEP_READY)
+    {
+        result = SSTEP_ERR_STATE;
     }
     else if ((velocity > (int32_t)m->cfg.ctrl.v_max) || (velocity < -(int32_t)m->cfg.ctrl.v_max))
     {
@@ -826,6 +853,10 @@ int sstep_stop(struct sstep* drv)
     {
         result = SSTEP_ERR_PARAM;
     }
+    else if (m->ready != SSTEP_READY)
+    {
+        result = SSTEP_ERR_STATE;
+    }
     else if (is_active(m->state) && is_moving(m))
     {
         m->mo.v_run = 0;
@@ -846,6 +877,10 @@ int sstep_set_position(struct sstep* drv, int32_t position)
     if (m == NULL)
     {
         result = SSTEP_ERR_PARAM;
+    }
+    else if (m->ready != SSTEP_READY)
+    {
+        result = SSTEP_ERR_STATE;
     }
     else if (is_moving(m))
     {
@@ -871,6 +906,10 @@ int sstep_set_current(struct sstep* drv, uint32_t run_ma, uint32_t hold_ma)
     {
         result = SSTEP_ERR_PARAM;
     }
+    else if (m->ready != SSTEP_READY)
+    {
+        result = SSTEP_ERR_STATE;
+    }
     else
     {
         result = set_currents(m, run_ma, hold_ma);
@@ -887,6 +926,10 @@ int sstep_set_motion_limits(struct sstep* drv, uint32_t v_max, uint32_t accel, u
     {
         result = SSTEP_ERR_PARAM;
     }
+    else if (m->ready != SSTEP_READY)
+    {
+        result = SSTEP_ERR_STATE;
+    }
     else
     {
         result = set_limits(m, v_max, accel, decel);
@@ -902,6 +945,10 @@ int sstep_report_fault(struct sstep* drv, uint16_t faults)
     if (m == NULL)
     {
         result = SSTEP_ERR_PARAM;
+    }
+    else if (m->ready != SSTEP_READY)
+    {
+        result = SSTEP_ERR_STATE;
     }
     else if (faults != SSTEP_FAULT_NONE)
     {
@@ -923,6 +970,10 @@ int sstep_clear_faults(struct sstep* drv)
     {
         result = SSTEP_ERR_PARAM;
     }
+    else if (m->ready != SSTEP_READY)
+    {
+        result = SSTEP_ERR_STATE;
+    }
     else
     {
         m->faults = SSTEP_FAULT_NONE;
@@ -940,6 +991,10 @@ int sstep_get_status(const struct sstep* drv, struct sstep_status* status)
     {
         result = SSTEP_ERR_PARAM;
     }
+    else if (m->ready != SSTEP_READY)
+    {
+        result = SSTEP_ERR_STATE;
+    }
     else
     {
         int32_t base = (int32_t)m->cfg.stage.i_full_scale_ma;
@@ -947,9 +1002,8 @@ int sstep_get_status(const struct sstep* drv, struct sstep_status* status)
         status->faults = m->faults;
         status->position = (int32_t)div_round(m->mo.pos, SSTEP_POS_ONE);
         status->target = (int32_t)div_round(m->mo.target, SSTEP_POS_ONE);
-        status->velocity = (int32_t)div_round((int64_t)m->mo.vel *
-                                                  (int64_t)m->cfg.ctrl.slow_loop_hz,
-                                              SSTEP_POS_ONE);
+        status->velocity = (int32_t)div_round(
+            (int64_t)m->mo.vel * (int64_t)m->cfg.ctrl.slow_loop_hz, SSTEP_POS_ONE);
         status->i_a_ma = sstep_real_to_units(sstep_acc_from_real(m->i_meas[0]), base);
         status->i_b_ma = sstep_real_to_units(sstep_acc_from_real(m->i_meas[1]), base);
         status->vbus_mv = (uint32_t)(((uint64_t)m->vbus_raw * m->cfg.stage.adc_vbus_mv_full) /

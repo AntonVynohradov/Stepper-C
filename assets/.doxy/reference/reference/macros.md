@@ -37,6 +37,7 @@
 * **SSTEP\_MOTION\_DONE** ([**sstep\_internal.h**](sstep__internal_8h.md))
 * **SSTEP\_POS\_ONE** ([**sstep\_internal.h**](sstep__internal_8h.md))
 * **SSTEP\_POS\_SNAP** ([**sstep\_internal.h**](sstep__internal_8h.md))
+* **SSTEP\_READY** ([**sstep\_internal.h**](sstep__internal_8h.md))
 * **SSTEP\_SIN\_TABLE\_N** ([**sstep\_sin\_table.h**](sstep__sin__table_8h.md))
 * **SSTEP\_SIN\_TABLE\_SIZE** ([**sstep\_sin\_table.h**](sstep__sin__table_8h.md))
 * **SSTEP\_VERSION** ([**sstep.h**](sstep_8h.md))

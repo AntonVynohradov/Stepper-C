@@ -174,8 +174,8 @@ uint8_t sstep_motion_step(struct sstep_motion* mo)
     uint8_t result = 0U;
     int32_t vt = target_velocity(mo);
     /* speeding up: larger magnitude in the same direction (or from standstill) */
-    bool speeding_up = (abs_i32(vt) > abs_i32(mo->vel)) &&
-                       ((mo->vel == 0) || ((vt > 0) == (mo->vel > 0)));
+    bool speeding_up =
+        (abs_i32(vt) > abs_i32(mo->vel)) && ((mo->vel == 0) || ((vt > 0) == (mo->vel > 0)));
     int32_t a = speeding_up ? mo->acc : mo->dec;
     int32_t v_new = mo->vel + clamp_i32(vt - mo->vel, -a, a);
     int64_t p_new = mo->pos + half_floor((int64_t)mo->vel + (int64_t)v_new);

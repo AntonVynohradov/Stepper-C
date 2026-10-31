@@ -1477,6 +1477,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#variable-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable ready
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#variable-sp" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1698,6 +1709,10 @@
 <td style="text-align: left;"><a href="#variable-ratio"><strong>ratio</strong></a>  <br><em>Fast loop periods per slow loop period.</em></td>
 </tr>
 <tr>
+<td style="text-align: right;">uint32_t</td>
+<td style="text-align: left;"><a href="#variable-ready"><strong>ready</strong></a>  <br><em>SSTEP_READY after a successful</em> <a href="../group__sstep__api/#function-sstep_init"><em><strong>sstep_init()</strong></em></a> <em>.</em></td>
+</tr>
+<tr>
 <td style="text-align: right;">struct <a href="../structsstep__setpoint/"><strong>sstep_setpoint</strong></a></td>
 <td style="text-align: left;"><a href="#variable-sp"><strong>sp</strong></a>  <br><em>Setpoints; the fast loop owns sp[sp_active].</em></td>
 </tr>
@@ -1878,51 +1893,57 @@
 </code></pre></div></p>
 <hr>
 
+<h3 id="variable-ready">variable ready<a class="headerlink" href="#variable-ready" title="Permanent link">&para;</a></h3>
+<p><em>SSTEP_READY after a successful</em> <a href="../group__sstep__api/#function-sstep_init"><em><strong>sstep_init()</strong></em></a> <em>.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">ready</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
 <h3 id="variable-sp">variable sp<a class="headerlink" href="#variable-sp" title="Permanent link">&para;</a></h3>
 <p><em>Setpoints; the fast loop owns sp[sp_active].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_setpoint</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">sp</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_setpoint</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">sp</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-sp_active">variable sp_active<a class="headerlink" href="#variable-sp_active" title="Permanent link">&para;</a></h3>
 <p><em>Buffer in use by the fast loop.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">sp_active</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">sp_active</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-sp_pending">variable sp_pending<a class="headerlink" href="#variable-sp_pending" title="Permanent link">&para;</a></h3>
 <p><em>1: sp[1 - sp_active] is complete and new.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">sp_pending</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">sp_pending</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-state">variable state<a class="headerlink" href="#variable-state" title="Permanent link">&para;</a></h3>
 <p><em>Driver state.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">sstep_state</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">state</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">sstep_state</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">state</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-still">variable still<a class="headerlink" href="#variable-still" title="Permanent link">&para;</a></h3>
 <p><em>Slow periods at standstill.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">still</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">still</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-vbus_max_raw">variable vbus_max_raw<a class="headerlink" href="#variable-vbus_max_raw" title="Permanent link">&para;</a></h3>
 <p><em>Overvoltage trip [ADC counts], 0 = off.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_max_raw</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_max_raw</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-vbus_min_raw">variable vbus_min_raw<a class="headerlink" href="#variable-vbus_min_raw" title="Permanent link">&para;</a></h3>
 <p><em>Undervoltage trip [ADC counts], 0 = off.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_min_raw</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_min_raw</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-vbus_raw">variable vbus_raw<a class="headerlink" href="#variable-vbus_raw" title="Permanent link">&para;</a></h3>
 <p><em>Last bus voltage [ADC counts].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_raw</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_raw</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 

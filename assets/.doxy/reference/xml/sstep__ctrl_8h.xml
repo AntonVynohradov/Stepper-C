@@ -71,31 +71,29 @@
     <innerclass refid="structsstep__status" prot="public">sstep_status</innerclass>
     <innerclass refid="structsstep" prot="public">sstep</innerclass>
     <sectiondef kind="define">
-      <memberdef kind="define" id="sstep__ctrl_8h_1a9af422d11c76726b25e77f5c71412614" prot="public" static="no">
-        <name>SSTEP_STATE_BYTES</name>
-        <initializer>200U</initializer>
-        <briefdescription>
-<para>Bytes of the private driver state that follow the configuration copy. </para>
-        </briefdescription>
-        <detaileddescription>
-<para>Covers both numeric backends on 32-bit (Cortex-M) and 64-bit hosts; sstep_ctrl.c checks it at compile time. </para>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="217" column="9" bodyfile="inc/sstep_ctrl.h" bodystart="217" bodyend="-1"/>
-      </memberdef>
       <memberdef kind="define" id="sstep__ctrl_8h_1a0b0c940da818fa0e4d9b902a5b33008a" prot="public" static="no">
         <name>SSTEP_CONFIG_BYTES</name>
         <initializer>136U</initializer>
         <briefdescription>
-<para>Bytes of the configuration copy at the start of the instance: 136 with 32-bit pointers (Cortex-M), 160 with 64-bit pointers. </para>
+<para>Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers. </para>
         </briefdescription>
         <detaileddescription>
-<para>A plain constant, so that the instance size needs no sizeof (static analysis); sstep_ctrl.c checks it. </para>
+<para>Plain constants, so that the instance size needs no sizeof (static analysis); sstep_ctrl.c checks both at compile time. </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="230" column="10" bodyfile="inc/sstep_ctrl.h" bodystart="230" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="225" column="10" bodyfile="inc/sstep_ctrl.h" bodystart="225" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sstep__ctrl_8h_1a9af422d11c76726b25e77f5c71412614" prot="public" static="no">
+        <name>SSTEP_STATE_BYTES</name>
+        <initializer>200U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="227" column="9" bodyfile="inc/sstep_ctrl.h" bodystart="227" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="sstep__ctrl_8h_1a5c53f1fde1dc641be449a4e57e4848d9" prot="public" static="no">
         <name>SSTEP_INSTANCE_WORDS</name>
@@ -470,10 +468,10 @@
 <codeline lineno="171"><highlight class="normal"></highlight></codeline>
 <codeline lineno="174" refid="structsstep__config" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__config" kindref="compound">sstep_config</ref></highlight></codeline>
 <codeline lineno="175"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="176" refid="structsstep__config_1a6825b54dd8047cf98812253b4d376144" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__motor__cfg" kindref="compound">sstep_motor_cfg</ref><sp/><ref refid="structsstep__config_1a6825b54dd8047cf98812253b4d376144" kindref="member">motor</ref>;<sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="177" refid="structsstep__config_1a2b8a71c5384cc46b3b2f14b26c85e3ee" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__stage__cfg" kindref="compound">sstep_stage_cfg</ref><sp/><ref refid="structsstep__config_1a2b8a71c5384cc46b3b2f14b26c85e3ee" kindref="member">stage</ref>;<sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="178" refid="structsstep__config_1aa3d8f72548a27c3853bd503d2bc86467" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__ctrl__cfg" kindref="compound">sstep_ctrl_cfg</ref><sp/><ref refid="structsstep__config_1aa3d8f72548a27c3853bd503d2bc86467" kindref="member">ctrl</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="179" refid="structsstep__config_1a9861b9347f5bbb71123b041927f42edb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__callbacks" kindref="compound">sstep_callbacks</ref><sp/><ref refid="structsstep__config_1a9861b9347f5bbb71123b041927f42edb" kindref="member">hal</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="176" refid="structsstep__config_1a6825b54dd8047cf98812253b4d376144" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__motor__cfg" kindref="compound">sstep_motor_cfg</ref><sp/><ref refid="structsstep__config_1a6825b54dd8047cf98812253b4d376144" kindref="member">motor</ref>;<sp/></highlight></codeline>
+<codeline lineno="177" refid="structsstep__config_1a2b8a71c5384cc46b3b2f14b26c85e3ee" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__stage__cfg" kindref="compound">sstep_stage_cfg</ref><sp/><ref refid="structsstep__config_1a2b8a71c5384cc46b3b2f14b26c85e3ee" kindref="member">stage</ref>;<sp/></highlight></codeline>
+<codeline lineno="178" refid="structsstep__config_1aa3d8f72548a27c3853bd503d2bc86467" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__ctrl__cfg" kindref="compound">sstep_ctrl_cfg</ref><sp/><ref refid="structsstep__config_1aa3d8f72548a27c3853bd503d2bc86467" kindref="member">ctrl</ref>;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="179" refid="structsstep__config_1a9861b9347f5bbb71123b041927f42edb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__callbacks" kindref="compound">sstep_callbacks</ref><sp/><ref refid="structsstep__config_1a9861b9347f5bbb71123b041927f42edb" kindref="member">hal</ref>;<sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="180"><highlight class="normal">};</highlight></codeline>
 <codeline lineno="181"><highlight class="normal"></highlight></codeline>
 <codeline lineno="182"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
@@ -482,8 +480,8 @@
 <codeline lineno="185"><highlight class="normal"></highlight></codeline>
 <codeline lineno="187" refid="structsstep__sample" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep__sample" kindref="compound">sstep_sample</ref></highlight></codeline>
 <codeline lineno="188"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="189" refid="structsstep__sample_1a7e050a4725ec6b73627ffb6246ddfa6c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structsstep__sample_1a7e050a4725ec6b73627ffb6246ddfa6c" kindref="member">i_a</ref>;<sp/></highlight></codeline>
-<codeline lineno="190" refid="structsstep__sample_1a2a5852ca2dc92a9de72414c7f3d9c493" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structsstep__sample_1a2a5852ca2dc92a9de72414c7f3d9c493" kindref="member">i_b</ref>;<sp/></highlight></codeline>
+<codeline lineno="189" refid="structsstep__sample_1a7e050a4725ec6b73627ffb6246ddfa6c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structsstep__sample_1a7e050a4725ec6b73627ffb6246ddfa6c" kindref="member">i_a</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="190" refid="structsstep__sample_1a2a5852ca2dc92a9de72414c7f3d9c493" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structsstep__sample_1a2a5852ca2dc92a9de72414c7f3d9c493" kindref="member">i_b</ref>;<sp/><sp/></highlight></codeline>
 <codeline lineno="191" refid="structsstep__sample_1a622ee6849365e05230e297c7c3c03561" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structsstep__sample_1a622ee6849365e05230e297c7c3c03561" kindref="member">vbus</ref>;<sp/></highlight></codeline>
 <codeline lineno="192"><highlight class="normal">};</highlight></codeline>
 <codeline lineno="193"><highlight class="normal"></highlight></codeline>
@@ -503,16 +501,20 @@
 <codeline lineno="208"><highlight class="comment"><sp/>*<sp/>DRIVER<sp/>INSTANCE</highlight></codeline>
 <codeline lineno="209"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="210"><highlight class="normal"></highlight></codeline>
-<codeline lineno="216"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_MATH_BACKEND<sp/>==<sp/>SSTEP_MATH_BACKEND_FIXED)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="217"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_STATE_BYTES<sp/>200U</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="218"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="219"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_STATE_BYTES<sp/>224U</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="220"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="221"><highlight class="normal"></highlight></codeline>
-<codeline lineno="227"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(UINTPTR_MAX)<sp/>&amp;&amp;<sp/>(UINTPTR_MAX<sp/>&gt;<sp/>0xFFFFFFFFU)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="228"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CONFIG_BYTES<sp/>160U</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="229"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="230"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CONFIG_BYTES<sp/>136U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="217"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(UINTPTR_MAX)<sp/>&amp;&amp;<sp/>(UINTPTR_MAX<sp/>&gt;<sp/>0xFFFFFFFFU)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="218"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CONFIG_BYTES<sp/>160U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_MATH_BACKEND<sp/>==<sp/>SSTEP_MATH_BACKEND_FIXED)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="220"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_STATE_BYTES<sp/>200U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_STATE_BYTES<sp/>232U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="224"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="225"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CONFIG_BYTES<sp/>136U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_MATH_BACKEND<sp/>==<sp/>SSTEP_MATH_BACKEND_FIXED)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_STATE_BYTES<sp/>200U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_STATE_BYTES<sp/>224U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="231"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="232"><highlight class="normal"></highlight></codeline>
 <codeline lineno="234"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_INSTANCE_WORDS<sp/>((SSTEP_CONFIG_BYTES<sp/>+<sp/>SSTEP_STATE_BYTES<sp/>+<sp/>7U)<sp/>/<sp/>8U)</highlight><highlight class="normal"></highlight></codeline>

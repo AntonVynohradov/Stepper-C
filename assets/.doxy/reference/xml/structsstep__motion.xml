@@ -17,7 +17,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="99" column="13" bodyfile="src/sstep_internal.h" bodystart="99" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="104" column="13" bodyfile="src/sstep_internal.h" bodystart="104" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__motion_1a9e35faa4a313421abbf760d2b389972e" prot="public" static="no" mutable="no">
         <type>int64_t</type>
@@ -32,7 +32,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="100" column="13" bodyfile="src/sstep_internal.h" bodystart="100" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="105" column="13" bodyfile="src/sstep_internal.h" bodystart="105" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__motion_1a7e15ecf405b0ef185fe2fc08d4f01ef7" prot="public" static="no" mutable="no">
         <type>int64_t</type>
@@ -47,7 +47,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="101" column="13" bodyfile="src/sstep_internal.h" bodystart="101" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="106" column="13" bodyfile="src/sstep_internal.h" bodystart="106" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__motion_1afd2d45ef1ee12f9d8b312d21d840c9c8" prot="public" static="no" mutable="no">
         <type>int32_t</type>
@@ -62,7 +62,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="102" column="13" bodyfile="src/sstep_internal.h" bodystart="102" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="107" column="13" bodyfile="src/sstep_internal.h" bodystart="107" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__motion_1a24bb69ad2f83448850a0b45c95276652" prot="public" static="no" mutable="no">
         <type>int32_t</type>
@@ -77,7 +77,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="103" column="13" bodyfile="src/sstep_internal.h" bodystart="103" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="108" column="13" bodyfile="src/sstep_internal.h" bodystart="108" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__motion_1a163d612c0b64339a6f348f95f2706b94" prot="public" static="no" mutable="no">
         <type>int32_t</type>
@@ -92,7 +92,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="104" column="13" bodyfile="src/sstep_internal.h" bodystart="104" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="109" column="13" bodyfile="src/sstep_internal.h" bodystart="109" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__motion_1a8d5d720546d6e3d0e219793332f400da" prot="public" static="no" mutable="no">
         <type>int32_t</type>
@@ -107,7 +107,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="105" column="13" bodyfile="src/sstep_internal.h" bodystart="105" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="110" column="13" bodyfile="src/sstep_internal.h" bodystart="110" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__motion_1aff922b2e1792271b223eb86c635868a7" prot="public" static="no" mutable="no">
         <type>int32_t</type>
@@ -122,7 +122,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="106" column="13" bodyfile="src/sstep_internal.h" bodystart="106" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="111" column="13" bodyfile="src/sstep_internal.h" bodystart="111" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__motion_1aca067a6e3bc90e3f291d16aa80c3f5c7" prot="public" static="no" mutable="no">
         <type>uint8_t</type>
@@ -137,7 +137,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="107" column="13" bodyfile="src/sstep_internal.h" bodystart="107" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="112" column="13" bodyfile="src/sstep_internal.h" bodystart="112" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -146,7 +146,7 @@
     <detaileddescription>
 <para>Integer arithmetic in both numeric backends: positions in 1/65536 microstep, velocities in 1/65536 microstep per slow loop period, accelerations in 1/65536 microstep per period squared. </para>
     </detaileddescription>
-    <location file="src/sstep_internal.h" line="97" column="1" bodyfile="src/sstep_internal.h" bodystart="98" bodyend="108"/>
+    <location file="src/sstep_internal.h" line="102" column="1" bodyfile="src/sstep_internal.h" bodystart="103" bodyend="113"/>
     <listofallmembers>
       <member refid="structsstep__motion_1a8d5d720546d6e3d0e219793332f400da" prot="public" virt="non-virtual"><scope>sstep_motion</scope><name>acc</name></member>
       <member refid="structsstep__motion_1a7e15ecf405b0ef185fe2fc08d4f01ef7" prot="public" virt="non-virtual"><scope>sstep_motion</scope><name>brake_vmax</name></member>

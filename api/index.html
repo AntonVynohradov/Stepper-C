@@ -1974,12 +1974,12 @@ header; it declares every function and includes the public type headers:</p>
 <tbody>
 <tr>
 <td><code>SSTEP_VERSION_MAJOR</code>, <code>…_MINOR</code>, <code>…_PATCH</code></td>
-<td><code>0</code>, <code>1</code>, <code>0</code></td>
+<td><code>1</code>, <code>0</code>, <code>0</code></td>
 <td>Version numbers; set by CMake from the latest <code>vX.Y.Z</code> tag, these are the fallbacks</td>
 </tr>
 <tr>
 <td><code>SSTEP_VERSION</code></td>
-<td><code>"0.1.0"</code></td>
+<td><code>"1.0.0"</code></td>
 <td>Version string</td>
 </tr>
 </tbody>
@@ -2284,13 +2284,16 @@ standstill).</p>
 </table>
 <h3 id="driver-instance">Driver instance<a class="headerlink" href="#driver-instance" title="Permanent link">&para;</a></h3>
 <p><code>struct sstep</code> is an opaque array of <code>SSTEP_INSTANCE_WORDS</code> 64-bit words (on Cortex-M4
-336 B fixed point, 360 B float; on 64-bit hosts 360 B and 384 B). Allocate it, pass its
+336 B fixed point, 360 B float; on 64-bit hosts 360 B and 392 B). Allocate it, pass its
 address, never read or write its content. <code>SSTEP_CONFIG_BYTES</code> is the size of the
 configuration copy (136 B with 32-bit pointers, 160 B with 64-bit pointers) and
 <code>SSTEP_STATE_BYTES</code> the size of the private state behind it.</p>
 <h2 id="functions-ssteph">Functions — <code>sstep.h</code><a class="headerlink" href="#functions-ssteph" title="Permanent link">&para;</a></h2>
 <p>All functions return a status code. Positions are in microsteps, velocities in
-microsteps/s, currents in mA.</p>
+microsteps/s, currents in mA. Every function except <code>sstep_init()</code> returns
+<code>SSTEP_ERR_STATE</code> for an instance without a successful <code>sstep_init()</code> and then calls
+no callback (<code>sstep_fast_loop()</code> only with <code>SSTEP_CFG_ARG_CHECKS = 1</code>); the tables
+below list the other cases.</p>
 <h3 id="sstep_init">sstep_init<a class="headerlink" href="#sstep_init" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">sstep_init</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="o">*</span><span class="w"> </span><span class="n">drv</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_config</span><span class="o">*</span><span class="w"> </span><span class="n">cfg</span><span class="p">);</span>
 </code></pre></div>
@@ -2758,7 +2761,7 @@ engineering units.</p>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">✓¹</td>
 <td style="text-align: center;"></td>
 </tr>
 <tr>
@@ -2766,7 +2769,7 @@ engineering units.</p>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">✓¹</td>
 <td style="text-align: center;"></td>
 </tr>
 <tr>
@@ -2774,7 +2777,7 @@ engineering units.</p>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">✓¹</td>
 <td style="text-align: center;"></td>
 </tr>
 <tr>
@@ -2790,7 +2793,7 @@ engineering units.</p>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">✓¹</td>
 <td style="text-align: center;"></td>
 </tr>
 <tr>
@@ -2806,7 +2809,7 @@ engineering units.</p>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">✓¹</td>
 <td style="text-align: center;"></td>
 </tr>
 <tr>
@@ -2814,7 +2817,7 @@ engineering units.</p>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">✓¹</td>
 <td style="text-align: center;"></td>
 </tr>
 <tr>
@@ -2822,11 +2825,12 @@ engineering units.</p>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">✓¹</td>
 <td style="text-align: center;"></td>
 </tr>
 </tbody>
 </table>
+<p>¹ Only for an instance without a successful <code>sstep_init()</code>.</p>
 
 
 

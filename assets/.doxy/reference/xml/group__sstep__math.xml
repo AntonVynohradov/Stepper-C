@@ -1121,8 +1121,8 @@
       <memberdef kind="define" id="group__sstep__math_1gae0c7646e62896d744b49d47b83483d61" prot="public" static="no">
         <name>SSTEP_REAL_C</name>
         <param><defname>x</defname></param>
-        <initializer>    (((x) &gt;= 1.0) ? <ref refid="group__sstep__math_1ga43cd75513da21713b316fd7d6df854e1" kindref="member">SSTEP_REAL_MAX</ref> : (((x) &lt;= -1.0) ? <ref refid="group__sstep__math_1ga1cd53fc2bce98f290420c03ef74bfe5a" kindref="member">SSTEP_REAL_MIN</ref>                     \
-                                                    : (<ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref>)((x) * 32768.0)))</initializer>
+        <initializer>    (((x) &gt;= 1.0) ? <ref refid="group__sstep__math_1ga43cd75513da21713b316fd7d6df854e1" kindref="member">SSTEP_REAL_MAX</ref> : \
+                    (((x) &lt;= -1.0) ? <ref refid="group__sstep__math_1ga1cd53fc2bce98f290420c03ef74bfe5a" kindref="member">SSTEP_REAL_MIN</ref> : (<ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref>)((x) * 32768.0)))</initializer>
         <briefdescription>
 <para>Constant from a floating literal, saturated to -1.0 . </para>
         </briefdescription>

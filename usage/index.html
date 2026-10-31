@@ -1647,7 +1647,7 @@ of several axes may run in one interrupt one after the other, or in separate int
 <tr>
 <td><code>SSTEP_ERR_STATE</code></td>
 <td>−3</td>
-<td>A motion command while disabled or faulted, <code>sstep_set_position()</code> while moving, <code>sstep_enable()</code> while faulted</td>
+<td>Any function but <code>sstep_init()</code> on an instance without a successful <code>sstep_init()</code>; a motion command while disabled or faulted; <code>sstep_set_position()</code> while moving; <code>sstep_enable()</code> while faulted</td>
 </tr>
 <tr>
 <td><code>SSTEP_ERR_UNSUPPORTED</code></td>

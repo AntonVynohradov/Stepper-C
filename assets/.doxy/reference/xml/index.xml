@@ -75,6 +75,7 @@
     <member refid="structsstep__ctx_1a2faf30dd7bf5a3afcae0aa32f8377a38" kind="variable"><name>inv_vbus</name></member>
     <member refid="structsstep__ctx_1aea889ec3ad563cb14a4e9203b6624175" kind="variable"><name>faults</name></member>
     <member refid="structsstep__ctx_1a49e7de50e5440d9aa544c0c9038fc968" kind="variable"><name>state</name></member>
+    <member refid="structsstep__ctx_1a8ac92a1cae8a0bffe1de31791bf05d0c" kind="variable"><name>ready</name></member>
   </compound>
   <compound refid="structsstep__gain" kind="struct"><name>sstep_gain</name>
     <member refid="structsstep__gain_1a24f22986696b88f390cd5a47fed49ac0" kind="variable"><name>mant</name></member>
@@ -150,8 +151,8 @@
     <member refid="group__sstep__config_1ga61a368eeac97ae6ab0f43c70a2acc423" kind="define"><name>SSTEP_CFG_ARG_CHECKS</name></member>
   </compound>
   <compound refid="sstep__ctrl_8h" kind="file"><name>sstep_ctrl.h</name>
-    <member refid="sstep__ctrl_8h_1a9af422d11c76726b25e77f5c71412614" kind="define"><name>SSTEP_STATE_BYTES</name></member>
     <member refid="sstep__ctrl_8h_1a0b0c940da818fa0e4d9b902a5b33008a" kind="define"><name>SSTEP_CONFIG_BYTES</name></member>
+    <member refid="sstep__ctrl_8h_1a9af422d11c76726b25e77f5c71412614" kind="define"><name>SSTEP_STATE_BYTES</name></member>
     <member refid="sstep__ctrl_8h_1a5c53f1fde1dc641be449a4e57e4848d9" kind="define"><name>SSTEP_INSTANCE_WORDS</name></member>
     <member refid="sstep__ctrl_8h_1a9765926896e39cbaf1a643817ed8cb1c" kind="enum"><name>sstep_event</name></member>
     <member refid="sstep__ctrl_8h_1a9765926896e39cbaf1a643817ed8cb1ca724dd2f3716f9027ffc285f1ff20ca66" kind="enumvalue"><name>SSTEP_EVENT_MOVE_DONE</name></member>
@@ -233,6 +234,7 @@
     <member refid="sstep__internal_8h_1ac3a3403e1053f6f8970b375a56652fba" kind="define"><name>SSTEP_MOTION_DONE</name></member>
     <member refid="sstep__internal_8h_1a7abcc94f6af80c76c498c708a18e5e2b" kind="define"><name>SSTEP_POS_ONE</name></member>
     <member refid="sstep__internal_8h_1ae76a8a3215f734efc5d88f524a24e8bd" kind="define"><name>SSTEP_POS_SNAP</name></member>
+    <member refid="sstep__internal_8h_1a112fc4583f440c9b056626c221047f38" kind="define"><name>SSTEP_READY</name></member>
     <member refid="sstep__internal_8h_1ae305d555b363553b0fa27fc09937a780" kind="function"><name>sstep_ctx_of</name></member>
     <member refid="sstep__internal_8h_1ae3072da3090d284396a49652702be4d6" kind="function"><name>sstep_ctx_of_const</name></member>
     <member refid="sstep__internal_8h_1a0461923af61066b8d47e2ccbd491eec2" kind="function"><name>sstep_bridge_map</name></member>

@@ -131,6 +131,7 @@
 
 * **r\_pu** ([**sstep\_ctx**](structsstep__ctx.md))
 * **ratio** ([**sstep\_ctx**](structsstep__ctx.md))
+* **ready** ([**sstep\_ctx**](structsstep__ctx.md))
 * **r\_mohm** ([**sstep\_motor\_cfg**](structsstep__motor__cfg.md))
 
 

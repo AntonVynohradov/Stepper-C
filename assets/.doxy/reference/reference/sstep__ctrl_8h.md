@@ -105,9 +105,9 @@
 
 | Type | Name |
 | ---: | :--- |
-| define  | [**SSTEP\_CONFIG\_BYTES**](sstep__ctrl_8h.md#define-sstep_config_bytes)  `136U`<br>_Bytes of the configuration copy at the start of the instance: 136 with 32-bit pointers (Cortex-M), 160 with 64-bit pointers._  |
+| define  | [**SSTEP\_CONFIG\_BYTES**](sstep__ctrl_8h.md#define-sstep_config_bytes)  `136U`<br>_Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers._  |
 | define  | [**SSTEP\_INSTANCE\_WORDS**](sstep__ctrl_8h.md#define-sstep_instance_words)  `((SSTEP\_CONFIG\_BYTES + SSTEP\_STATE\_BYTES + 7U) / 8U)`<br>_Size of_ [_**sstep**_](structsstep.md) _in 64-bit words._ |
-| define  | [**SSTEP\_STATE\_BYTES**](sstep__ctrl_8h.md#define-sstep_state_bytes)  `200U`<br>_Bytes of the private driver state that follow the configuration copy._  |
+| define  | [**SSTEP\_STATE\_BYTES**](sstep__ctrl_8h.md#define-sstep_state_bytes)  `200U`<br> |
 
 ## Public Types Documentation
 
@@ -273,14 +273,14 @@ Called from [**sstep\_fast\_loop()**](group__sstep__api.md#function-sstep_fast_l
 
 ### define SSTEP\_CONFIG\_BYTES 
 
-_Bytes of the configuration copy at the start of the instance: 136 with 32-bit pointers (Cortex-M), 160 with 64-bit pointers._ 
+_Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers._ 
 ```C++
 #define SSTEP_CONFIG_BYTES `136U`
 ```
 
 
 
-A plain constant, so that the instance size needs no sizeof (static analysis); sstep\_ctrl.c checks it. 
+Plain constants, so that the instance size needs no sizeof (static analysis); sstep\_ctrl.c checks both at compile time. 
 
 
         
@@ -305,17 +305,12 @@ _Size of_ [_**sstep**_](structsstep.md) _in 64-bit words._
 
 ### define SSTEP\_STATE\_BYTES 
 
-_Bytes of the private driver state that follow the configuration copy._ 
 ```C++
 #define SSTEP_STATE_BYTES `200U`
 ```
 
 
 
-Covers both numeric backends on 32-bit (Cortex-M) and 64-bit hosts; sstep\_ctrl.c checks it at compile time. 
-
-
-        
 
 <hr>
 

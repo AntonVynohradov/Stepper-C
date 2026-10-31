@@ -98,9 +98,9 @@ typedef int32_t sstep_integ_t;
 
 #define SSTEP_INTEG_FRAC_BITS 27
 
-#define SSTEP_REAL_C(x)                                                                 \
-    (((x) >= 1.0) ? SSTEP_REAL_MAX : (((x) <= -1.0) ? SSTEP_REAL_MIN                     \
-                                                    : (sstep_real_t)((x) * 32768.0)))
+#define SSTEP_REAL_C(x)              \
+    (((x) >= 1.0) ? SSTEP_REAL_MAX : \
+                    (((x) <= -1.0) ? SSTEP_REAL_MIN : (sstep_real_t)((x) * 32768.0)))
 
 #else /* SSTEP_MATH_BACKEND_FLOAT */
 
@@ -137,7 +137,7 @@ struct sstep_gain
 
 typedef float sstep_integ_t;
 
-#define SSTEP_REAL_C(x)                                                                 \
+#define SSTEP_REAL_C(x) \
     (((x) >= 1.0) ? SSTEP_REAL_MAX : (((x) <= -1.0) ? SSTEP_REAL_MIN : (sstep_real_t)(x)))
 
 #endif /* SSTEP_CFG_MATH_BACKEND */
@@ -267,8 +267,8 @@ static inline sstep_acc_t sstep_acc_clamp(sstep_acc_t x, sstep_acc_t lo, sstep_a
 
 static inline sstep_acc_t sstep_gain_mul(const struct sstep_gain* g, sstep_real_t x)
 {
-    int32_t p = (int32_t)x * (int32_t)g->mant;                 /* Q30, |p| <= 2^30 */
-    int32_t s = 15 - (int32_t)g->exp;                          /* 0 .. 31 */
+    int32_t p = (int32_t)x * (int32_t)g->mant; /* Q30, |p| <= 2^30 */
+    int32_t s = 15 - (int32_t)g->exp;          /* 0 .. 31 */
     uint32_t sh = (uint32_t)s;
     int32_t r;
     if (sh == 0U)

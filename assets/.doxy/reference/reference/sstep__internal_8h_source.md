@@ -68,6 +68,8 @@ extern "C" {
 
 #define SSTEP_POS_SNAP ((int64_t)64)
 
+#define SSTEP_READY 0x53545043U
+
 /* ==============================================================================
  * TYPE DEFINITIONS
  * =============================================================================*/
@@ -94,40 +96,40 @@ struct sstep_setpoint
 
 struct sstep_motion
 {
-    int64_t pos;          
-    int64_t target;       
-    int64_t brake_vmax;   
-    int32_t vel;          
-    int32_t v_run;        
-    int32_t v_max;        
-    int32_t acc;          
-    int32_t dec;          
-    uint8_t mode;         
+    int64_t pos;        
+    int64_t target;     
+    int64_t brake_vmax; 
+    int32_t vel;        
+    int32_t v_run;      
+    int32_t v_max;      
+    int32_t acc;        
+    int32_t dec;        
+    uint8_t mode;       
 };
 
 struct sstep_ctx
 {
-    struct sstep_config cfg;          
+    struct sstep_config cfg; 
     /* Constants derived by sstep_init() */
-    struct sstep_gain kp;             
-    struct sstep_gain ki;             
-    struct sstep_gain kb;             
-    struct sstep_gain r_pu;           
-    struct sstep_gain adc_i;          
-    struct sstep_gain adc_v;          
-    struct sstep_gain ff_gain;        
-    sstep_real_t i_run;               
-    sstep_real_t i_hold;              
-    uint16_t i_trip_counts;           
-    uint16_t vbus_min_raw;            
-    uint16_t vbus_max_raw;            
-    uint16_t ratio;                   
-    uint32_t hold_ticks;              
-    uint8_t angle_shift;              
+    struct sstep_gain kp;      
+    struct sstep_gain ki;      
+    struct sstep_gain kb;      
+    struct sstep_gain r_pu;    
+    struct sstep_gain adc_i;   
+    struct sstep_gain adc_v;   
+    struct sstep_gain ff_gain; 
+    sstep_real_t i_run;        
+    sstep_real_t i_hold;       
+    uint16_t i_trip_counts;    
+    uint16_t vbus_min_raw;     
+    uint16_t vbus_max_raw;     
+    uint16_t ratio;            
+    uint32_t hold_ticks;       
+    uint8_t angle_shift;       
     /* Slow loop -> fast loop hand-off (double buffer) */
-    struct sstep_setpoint sp[2];      
-    volatile uint8_t sp_active;       
-    volatile uint8_t sp_pending;      
+    struct sstep_setpoint sp[2]; 
+    volatile uint8_t sp_active;  
+    volatile uint8_t sp_pending; 
     /* Fast loop state */
     struct sstep_setpoint cur;        
     uint16_t adv;                     
@@ -136,13 +138,14 @@ struct sstep_ctx
     volatile uint16_t vbus_raw;       
     uint16_t compare[SSTEP_LEGS_MAX]; 
     /* Slow loop state */
-    struct sstep_motion mo;           
-    sstep_angle_t angle_offset;       
-    uint32_t still;                   
-    bool hold_active;                 
-    struct sstep_gain inv_vbus;       
-    volatile uint16_t faults;         
-    volatile enum sstep_state state;  
+    struct sstep_motion mo;     
+    sstep_angle_t angle_offset; 
+    uint32_t still;             
+    bool hold_active;           
+    struct sstep_gain inv_vbus; 
+    volatile uint16_t faults;        
+    volatile enum sstep_state state; 
+    uint32_t ready;                  
 };
 
 static inline struct sstep_ctx* sstep_ctx_of(struct sstep* drv)

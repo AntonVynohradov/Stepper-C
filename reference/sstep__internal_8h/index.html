@@ -1389,6 +1389,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#define-sstep_ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_READY
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1522,6 +1533,10 @@
 <td style="text-align: right;">define</td>
 <td style="text-align: left;"><a href="./#define-sstep_pos_snap"><strong>SSTEP_POS_SNAP</strong></a>  <code>((int64\_t)64)</code><br><em>A move ends when it is closer than this to the target and slow enough (1/1024 microstep).</em></td>
 </tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_ready"><strong>SSTEP_READY</strong></a>  <code>0x53545043U</code><br><em>Value of</em> <a href="../structsstep__ctx/#variable-ready"><em><strong>sstep_ctx::ready</strong></em></a> <em>after a successful</em><a href="../group__sstep__api/#function-sstep_init"><em><strong>sstep_init()</strong></em></a> <em>("STPC").</em></td>
+</tr>
 </tbody>
 </table>
 <h2 id="public-functions-documentation">Public Functions Documentation<a class="headerlink" href="#public-functions-documentation" title="Permanent link">&para;</a></h2>
@@ -1633,6 +1648,13 @@
 <p><em>A move ends when it is closer than this to the target and slow enough (1/1024 microstep).</em> 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="cp">#define SSTEP_POS_SNAP `((int64_t)64)`</span>
 </code></pre></div></p>
+<hr>
+
+<h3 id="define-sstep_ready">define SSTEP_READY<a class="headerlink" href="#define-sstep_ready" title="Permanent link">&para;</a></h3>
+<p><em>Value of</em> <a href="../structsstep__ctx/#variable-ready"><em><strong>sstep_ctx::ready</strong></em></a> <em>after a successful</em><a href="../group__sstep__api/#function-sstep_init"><em><strong>sstep_init()</strong></em></a> <em>("STPC").</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="cp">#define SSTEP_READY `0x53545043U`</span>
+</code></pre></div></p>
+<p>A zeroed or never initialized instance holds another value: every function but <a href="../group__sstep__api/#function-sstep_init"><strong>sstep_init()</strong></a> then returns <a href="../group__sstep__defs/#define-sstep_err_state"><strong>SSTEP_ERR_STATE</strong></a> instead of using an empty configuration. </p>
 <hr>
 
 <hr />

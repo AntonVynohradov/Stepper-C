@@ -47,6 +47,9 @@
  * PRIVATE VARIABLES
  * =============================================================================*/
 
+/* Generated layout: regenerate the tables instead of formatting them */
+/* clang-format off */
+
 #if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
 
 #if (SSTEP_CFG_SINE_TABLE_BITS == 6U)
@@ -614,6 +617,8 @@ const sstep_real_t sstep_sin_table[SSTEP_SIN_TABLE_SIZE] = {
 #endif /* SSTEP_CFG_SINE_TABLE_BITS */
 
 #endif /* SSTEP_MATH_BACKEND_FLOAT */
+
+/* clang-format on */
 ```
 
 

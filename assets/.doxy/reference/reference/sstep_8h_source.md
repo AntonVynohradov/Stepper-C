@@ -48,11 +48,11 @@
  * with SSTEP_DEFAULT_VERSION and CHANGELOG.md. */
 
 #ifndef SSTEP_VERSION_MAJOR
-#define SSTEP_VERSION_MAJOR 0
+#define SSTEP_VERSION_MAJOR 1
 #endif
 
 #ifndef SSTEP_VERSION_MINOR
-#define SSTEP_VERSION_MINOR 1
+#define SSTEP_VERSION_MINOR 0
 #endif
 
 #ifndef SSTEP_VERSION_PATCH
@@ -60,7 +60,7 @@
 #endif
 
 #ifndef SSTEP_VERSION
-#define SSTEP_VERSION "0.1.0"
+#define SSTEP_VERSION "1.0.0"
 #endif
 
 /* ==============================================================================

@@ -109,6 +109,7 @@
 | define  | [**SSTEP\_MOTION\_DONE**](sstep__internal_8h.md#define-sstep_motion_done)  `0x01U`<br>_Result flags of sstep\_motion\_step()._  |
 | define  | [**SSTEP\_POS\_ONE**](sstep__internal_8h.md#define-sstep_pos_one)  `((int64\_t)65536)`<br>_Fixed point position: 1 microstep = 2^16._  |
 | define  | [**SSTEP\_POS\_SNAP**](sstep__internal_8h.md#define-sstep_pos_snap)  `((int64\_t)64)`<br>_A move ends when it is closer than this to the target and slow enough (1/1024 microstep)._  |
+| define  | [**SSTEP\_READY**](sstep__internal_8h.md#define-sstep_ready)  `0x53545043U`<br>_Value of_ [_**sstep\_ctx::ready**_](structsstep__ctx.md#variable-ready) _after a successful_[_**sstep\_init()**_](group__sstep__api.md#function-sstep_init) _("STPC")._ |
 
 ## Public Functions Documentation
 
@@ -360,6 +361,24 @@ _A move ends when it is closer than this to the target and slow enough (1/1024 m
 
 
 
+
+<hr>
+
+
+
+### define SSTEP\_READY 
+
+_Value of_ [_**sstep\_ctx::ready**_](structsstep__ctx.md#variable-ready) _after a successful_[_**sstep\_init()**_](group__sstep__api.md#function-sstep_init) _("STPC")._
+```C++
+#define SSTEP_READY `0x53545043U`
+```
+
+
+
+A zeroed or never initialized instance holds another value: every function but [**sstep\_init()**](group__sstep__api.md#function-sstep_init) then returns [**SSTEP\_ERR\_STATE**](group__sstep__defs.md#define-sstep_err_state) instead of using an empty configuration. 
+
+
+        
 
 <hr>
 

@@ -54,7 +54,7 @@
     <sectiondef kind="define">
       <memberdef kind="define" id="sstep_8h_1acedf2fb3f7c0cac207b210fb614948f0" prot="public" static="no">
         <name>SSTEP_VERSION_MAJOR</name>
-        <initializer>0</initializer>
+        <initializer>1</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -65,7 +65,7 @@
       </memberdef>
       <memberdef kind="define" id="sstep_8h_1ae008ca8f66df44cfbad1b81ee50a0ee2" prot="public" static="no">
         <name>SSTEP_VERSION_MINOR</name>
-        <initializer>1</initializer>
+        <initializer>0</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -87,7 +87,7 @@
       </memberdef>
       <memberdef kind="define" id="sstep_8h_1adbcb80b18f3cf65751c3591180c8cfae" prot="public" static="no">
         <name>SSTEP_VERSION</name>
-        <initializer>&quot;0.1.0&quot;</initializer>
+        <initializer>&quot;1.0.0&quot;</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -159,11 +159,11 @@
 <codeline lineno="38"><highlight class="comment"><sp/>*<sp/>with<sp/>SSTEP_DEFAULT_VERSION<sp/>and<sp/>CHANGELOG.md.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="39"><highlight class="normal"></highlight></codeline>
 <codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_VERSION_MAJOR</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_VERSION_MAJOR<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_VERSION_MAJOR<sp/>1</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="43"><highlight class="normal"></highlight></codeline>
 <codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_VERSION_MINOR</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_VERSION_MINOR<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_VERSION_MINOR<sp/>0</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="47"><highlight class="normal"></highlight></codeline>
 <codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_VERSION_PATCH</highlight><highlight class="normal"></highlight></codeline>
@@ -171,7 +171,7 @@
 <codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="51"><highlight class="normal"></highlight></codeline>
 <codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_VERSION</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_VERSION<sp/>&quot;0.1.0&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_VERSION<sp/>&quot;1.0.0&quot;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="55"><highlight class="normal"></highlight></codeline>
 <codeline lineno="56"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
@@ -186,45 +186,45 @@
 <codeline lineno="65"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
 <codeline lineno="66"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="67"><highlight class="normal"></highlight></codeline>
-<codeline lineno="89"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
-<codeline lineno="90"><highlight class="comment"><sp/>*<sp/>PUBLIC<sp/>FUNCTION<sp/>DECLARATIONS</highlight></codeline>
-<codeline lineno="91"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="92"><highlight class="normal"></highlight></codeline>
-<codeline lineno="104"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kindref="member">sstep_init</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__config" kindref="compound">sstep_config</ref>*<sp/>cfg);</highlight></codeline>
-<codeline lineno="105"><highlight class="normal"></highlight></codeline>
-<codeline lineno="111"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga3f592ef6f7e95b2c4b0792f113eae5ac" kindref="member">sstep_enable</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv);</highlight></codeline>
-<codeline lineno="112"><highlight class="normal"></highlight></codeline>
-<codeline lineno="118"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga296ffb294291431f36e14fc306c20027" kindref="member">sstep_disable</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv);</highlight></codeline>
-<codeline lineno="119"><highlight class="normal"></highlight></codeline>
-<codeline lineno="129"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga8c3b6798f83c32337a21d4ccdd61239b" kindref="member">sstep_fast_loop</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__sample" kindref="compound">sstep_sample</ref>*<sp/>sample);</highlight></codeline>
-<codeline lineno="130"><highlight class="normal"></highlight></codeline>
-<codeline lineno="137"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" kindref="member">sstep_slow_loop</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv);</highlight></codeline>
-<codeline lineno="138"><highlight class="normal"></highlight></codeline>
-<codeline lineno="146"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gab5ac3f4056af2b982b8131016df0541e" kindref="member">sstep_move_to</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>int32_t<sp/>position);</highlight></codeline>
-<codeline lineno="147"><highlight class="normal"></highlight></codeline>
-<codeline lineno="154"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gacc99b6a8006f7c7f950133873a5a8fce" kindref="member">sstep_move_by</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>int32_t<sp/>delta);</highlight></codeline>
-<codeline lineno="155"><highlight class="normal"></highlight></codeline>
-<codeline lineno="163"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gaa21dff174e881ddaddd22b9bf334f3f8" kindref="member">sstep_run</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>int32_t<sp/>velocity);</highlight></codeline>
-<codeline lineno="164"><highlight class="normal"></highlight></codeline>
-<codeline lineno="170"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga41ae3f6b6cc322b50c3e3884d48dd7a1" kindref="member">sstep_stop</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv);</highlight></codeline>
-<codeline lineno="171"><highlight class="normal"></highlight></codeline>
-<codeline lineno="178"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga17aff99dbb74c27b0eb1995024c28e71" kindref="member">sstep_set_position</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>int32_t<sp/>position);</highlight></codeline>
-<codeline lineno="179"><highlight class="normal"></highlight></codeline>
-<codeline lineno="187"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga75cb79da6deda7b271d7a01d70f5d718" kindref="member">sstep_set_current</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>uint32_t<sp/>run_ma,<sp/>uint32_t<sp/>hold_ma);</highlight></codeline>
-<codeline lineno="188"><highlight class="normal"></highlight></codeline>
-<codeline lineno="198"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gae9224e0f9e8f1822529ef015bb88f382" kindref="member">sstep_set_motion_limits</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>uint32_t<sp/>v_max,<sp/>uint32_t<sp/>accel,<sp/>uint32_t<sp/>decel);</highlight></codeline>
-<codeline lineno="199"><highlight class="normal"></highlight></codeline>
-<codeline lineno="207"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gaafe3bb709aaa93b20884f9e7f6e31498" kindref="member">sstep_report_fault</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>uint16_t<sp/>faults);</highlight></codeline>
-<codeline lineno="208"><highlight class="normal"></highlight></codeline>
-<codeline lineno="214"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gafff498925b2f3c0de622702a2f181b9b" kindref="member">sstep_clear_faults</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv);</highlight></codeline>
-<codeline lineno="215"><highlight class="normal"></highlight></codeline>
-<codeline lineno="222"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga1568aad455503ed6e062cf7048bf01ba" kindref="member">sstep_get_status</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__status" kindref="compound">sstep_status</ref>*<sp/>status);</highlight></codeline>
-<codeline lineno="223"><highlight class="normal"></highlight></codeline>
-<codeline lineno="226"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="227"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="228"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="229"><highlight class="normal"></highlight></codeline>
-<codeline lineno="230"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="95"><highlight class="comment"><sp/>*<sp/>PUBLIC<sp/>FUNCTION<sp/>DECLARATIONS</highlight></codeline>
+<codeline lineno="96"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kindref="member">sstep_init</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__config" kindref="compound">sstep_config</ref>*<sp/>cfg);</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga3f592ef6f7e95b2c4b0792f113eae5ac" kindref="member">sstep_enable</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv);</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga296ffb294291431f36e14fc306c20027" kindref="member">sstep_disable</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv);</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga8c3b6798f83c32337a21d4ccdd61239b" kindref="member">sstep_fast_loop</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__sample" kindref="compound">sstep_sample</ref>*<sp/>sample);</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" kindref="member">sstep_slow_loop</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv);</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gab5ac3f4056af2b982b8131016df0541e" kindref="member">sstep_move_to</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>int32_t<sp/>position);</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gacc99b6a8006f7c7f950133873a5a8fce" kindref="member">sstep_move_by</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>int32_t<sp/>delta);</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gaa21dff174e881ddaddd22b9bf334f3f8" kindref="member">sstep_run</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>int32_t<sp/>velocity);</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight></codeline>
+<codeline lineno="175"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga41ae3f6b6cc322b50c3e3884d48dd7a1" kindref="member">sstep_stop</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv);</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga17aff99dbb74c27b0eb1995024c28e71" kindref="member">sstep_set_position</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>int32_t<sp/>position);</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga75cb79da6deda7b271d7a01d70f5d718" kindref="member">sstep_set_current</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>uint32_t<sp/>run_ma,<sp/>uint32_t<sp/>hold_ma);</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"></highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gae9224e0f9e8f1822529ef015bb88f382" kindref="member">sstep_set_motion_limits</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>uint32_t<sp/>v_max,<sp/>uint32_t<sp/>accel,<sp/>uint32_t<sp/>decel);</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gaafe3bb709aaa93b20884f9e7f6e31498" kindref="member">sstep_report_fault</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/>uint16_t<sp/>faults);</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1gafff498925b2f3c0de622702a2f181b9b" kindref="member">sstep_clear_faults</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv);</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sstep__api_1ga1568aad455503ed6e062cf7048bf01ba" kindref="member">sstep_get_status</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep" kindref="compound">sstep</ref>*<sp/>drv,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsstep__status" kindref="compound">sstep_status</ref>*<sp/>status);</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight></codeline>
+<codeline lineno="231"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="233"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="234"><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
     <location file="sstep.h"/>
   </compounddef>

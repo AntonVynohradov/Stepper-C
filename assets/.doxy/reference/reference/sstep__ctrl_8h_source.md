@@ -135,10 +135,10 @@ struct sstep_ctrl_cfg
 
 struct sstep_config
 {
-    struct sstep_motor_cfg motor;   
-    struct sstep_stage_cfg stage;   
-    struct sstep_ctrl_cfg ctrl;     
-    struct sstep_callbacks hal;     
+    struct sstep_motor_cfg motor; 
+    struct sstep_stage_cfg stage; 
+    struct sstep_ctrl_cfg ctrl;   
+    struct sstep_callbacks hal;   
 };
 
 /* ==============================================================================
@@ -147,8 +147,8 @@ struct sstep_config
 
 struct sstep_sample
 {
-    uint16_t i_a; 
-    uint16_t i_b; 
+    uint16_t i_a;  
+    uint16_t i_b;  
     uint16_t vbus; 
 };
 
@@ -168,16 +168,20 @@ struct sstep_status
  * DRIVER INSTANCE
  * =============================================================================*/
 
+#if defined(UINTPTR_MAX) && (UINTPTR_MAX > 0xFFFFFFFFU)
+#define SSTEP_CONFIG_BYTES 160U
+#if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
+#define SSTEP_STATE_BYTES 200U
+#else
+#define SSTEP_STATE_BYTES 232U
+#endif
+#else
+#define SSTEP_CONFIG_BYTES 136U
 #if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
 #define SSTEP_STATE_BYTES 200U
 #else
 #define SSTEP_STATE_BYTES 224U
 #endif
-
-#if defined(UINTPTR_MAX) && (UINTPTR_MAX > 0xFFFFFFFFU)
-#define SSTEP_CONFIG_BYTES 160U
-#else
-#define SSTEP_CONFIG_BYTES 136U
 #endif
 
 #define SSTEP_INSTANCE_WORDS ((SSTEP_CONFIG_BYTES + SSTEP_STATE_BYTES + 7U) / 8U)

@@ -114,7 +114,10 @@ _Initialise a driver, run its loops and command motion._ [More...](#detailed-des
 All other functions are called from the same context as [**sstep\_slow\_loop()**](group__sstep__api.md#function-sstep_slow_loop). The library never reads a clock, never blocks, allocates no memory and has no global state: time is given by the configured loop rates.
 
 
-**Hardware access** is done only through the callbacks in [**sstep\_callbacks**](structsstep__callbacks.md), given once to [**sstep\_init()**](group__sstep__api.md#function-sstep_init). Measurements are passed to [**sstep\_fast\_loop()**](group__sstep__api.md#function-sstep_fast_loop) as raw ADC counts. 
+**Hardware access** is done only through the callbacks in [**sstep\_callbacks**](structsstep__callbacks.md), given once to [**sstep\_init()**](group__sstep__api.md#function-sstep_init). Measurements are passed to [**sstep\_fast\_loop()**](group__sstep__api.md#function-sstep_fast_loop) as raw ADC counts.
+
+
+**Initialization.** Every function except [**sstep\_init()**](group__sstep__api.md#function-sstep_init) returns [**SSTEP\_ERR\_STATE**](group__sstep__defs.md#define-sstep_err_state) for an instance without a successful [**sstep\_init()**](group__sstep__api.md#function-sstep_init) (a zeroed instance, or one whose last [**sstep\_init()**](group__sstep__api.md#function-sstep_init) failed in the derivation of the constants), and touches no hardware. [**sstep\_fast\_loop()**](group__sstep__api.md#function-sstep_fast_loop) checks this only when [**SSTEP\_CFG\_ARG\_CHECKS**](group__sstep__config.md#define-sstep_cfg_arg_checks) is 1. 
 
 
     
