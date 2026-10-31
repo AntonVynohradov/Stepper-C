@@ -1406,6 +1406,11 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   37.21 deg (prototype 37.21 deg).</li>
 <li>Code size (clang -Os, both topologies, sine table included): Cortex-M0+ fixed point
   8.5 kB, Cortex-M4F fixed point 8.2 kB, Cortex-M4F float 9.0 kB.</li>
+<li><code>misra-analyze</code> reports 0 violations with Cppcheck 2.13 (Ubuntu 24.04, as in CI) and
+  2.16, in both backends: no <code>UL</code> constants (64-bit on LP64 hosts, Rule 10.3), shifts
+  of <code>(uint32_t)1U</code> (Rule 12.2), instance size from the plain constants
+  <code>SSTEP_CONFIG_BYTES</code> and <code>SSTEP_STATE_BYTES</code> (no <code>sizeof</code>/<code>offsetof</code> in the array
+  size and the checks).</li>
 </ul>
 
 

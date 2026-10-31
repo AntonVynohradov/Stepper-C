@@ -174,7 +174,13 @@ struct sstep_status
 #define SSTEP_STATE_BYTES 224U
 #endif
 
-#define SSTEP_INSTANCE_WORDS ((sizeof(struct sstep_config) + SSTEP_STATE_BYTES + 7U) / 8U)
+#if defined(UINTPTR_MAX) && (UINTPTR_MAX > 0xFFFFFFFFU)
+#define SSTEP_CONFIG_BYTES 160U
+#else
+#define SSTEP_CONFIG_BYTES 136U
+#endif
+
+#define SSTEP_INSTANCE_WORDS ((SSTEP_CONFIG_BYTES + SSTEP_STATE_BYTES + 7U) / 8U)
 
 struct sstep
 {

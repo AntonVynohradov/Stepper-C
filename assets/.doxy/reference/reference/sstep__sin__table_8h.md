@@ -84,8 +84,8 @@
 
 | Type | Name |
 | ---: | :--- |
-| define  | [**SSTEP\_SIN\_TABLE\_N**](sstep__sin__table_8h.md#define-sstep_sin_table_n)  `(1UL &lt;&lt; [**SSTEP\_CFG\_SINE\_TABLE\_BITS**](group__sstep__config.md#define-sstep_cfg_sine_table_bits))`<br>_Number of table intervals per quarter turn._  |
-| define  | [**SSTEP\_SIN\_TABLE\_SIZE**](sstep__sin__table_8h.md#define-sstep_sin_table_size)  `(SSTEP\_SIN\_TABLE\_N + 1UL)`<br>_Number of table entries: sin(0) ._  |
+| define  | [**SSTEP\_SIN\_TABLE\_N**](sstep__sin__table_8h.md#define-sstep_sin_table_n)  `((uint32\_t)1U &lt;&lt; [**SSTEP\_CFG\_SINE\_TABLE\_BITS**](group__sstep__config.md#define-sstep_cfg_sine_table_bits))`<br>_Number of table intervals per quarter turn._  |
+| define  | [**SSTEP\_SIN\_TABLE\_SIZE**](sstep__sin__table_8h.md#define-sstep_sin_table_size)  `(SSTEP\_SIN\_TABLE\_N + 1U)`<br>_Number of table entries: sin(0) ._  |
 
 ## Public Attributes Documentation
 
@@ -117,7 +117,7 @@ const sstep_real_t sstep_sin_table[SSTEP_SIN_TABLE_SIZE];
 
 _Number of table intervals per quarter turn._ 
 ```C++
-#define SSTEP_SIN_TABLE_N `(1UL << SSTEP_CFG_SINE_TABLE_BITS )`
+#define SSTEP_SIN_TABLE_N `((uint32_t)1U << SSTEP_CFG_SINE_TABLE_BITS )`
 ```
 
 
@@ -131,7 +131,7 @@ _Number of table intervals per quarter turn._
 
 _Number of table entries: sin(0) ._ 
 ```C++
-#define SSTEP_SIN_TABLE_SIZE `(SSTEP_SIN_TABLE_N + 1UL)`
+#define SSTEP_SIN_TABLE_SIZE `(SSTEP_SIN_TABLE_N + 1U)`
 ```
 
 

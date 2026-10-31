@@ -31,7 +31,7 @@
     <sectiondef kind="define">
       <memberdef kind="define" id="sstep__sin__table_8h_1a9276f143abafc3f97bd251238285b821" prot="public" static="no">
         <name>SSTEP_SIN_TABLE_N</name>
-        <initializer>(1UL &lt;&lt; <ref refid="group__sstep__config_1ga50ab8d5098e6740dbcd9dbc6f4200d70" kindref="member">SSTEP_CFG_SINE_TABLE_BITS</ref>)</initializer>
+        <initializer>((uint32_t)1U &lt;&lt; <ref refid="group__sstep__config_1ga50ab8d5098e6740dbcd9dbc6f4200d70" kindref="member">SSTEP_CFG_SINE_TABLE_BITS</ref>)</initializer>
         <briefdescription>
 <para>Number of table intervals per quarter turn. </para>
         </briefdescription>
@@ -43,7 +43,7 @@
       </memberdef>
       <memberdef kind="define" id="sstep__sin__table_8h_1a40a3ae2a2ac0d0f9bb3e095a9697fd4c" prot="public" static="no">
         <name>SSTEP_SIN_TABLE_SIZE</name>
-        <initializer>(SSTEP_SIN_TABLE_N + 1UL)</initializer>
+        <initializer>(SSTEP_SIN_TABLE_N + 1U)</initializer>
         <briefdescription>
 <para>Number of table entries: sin(0) . </para>
         </briefdescription>
@@ -119,9 +119,9 @@
 <codeline lineno="40"><highlight class="comment"><sp/>*<sp/>DEFINES<sp/>&amp;<sp/>MACROS</highlight></codeline>
 <codeline lineno="41"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="42"><highlight class="normal"></highlight></codeline>
-<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_SIN_TABLE_N<sp/>(1UL<sp/>&lt;&lt;<sp/>SSTEP_CFG_SINE_TABLE_BITS)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_SIN_TABLE_N<sp/>((uint32_t)1U<sp/>&lt;&lt;<sp/>SSTEP_CFG_SINE_TABLE_BITS)</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="45"><highlight class="normal"></highlight></codeline>
-<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_SIN_TABLE_SIZE<sp/>(SSTEP_SIN_TABLE_N<sp/>+<sp/>1UL)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_SIN_TABLE_SIZE<sp/>(SSTEP_SIN_TABLE_N<sp/>+<sp/>1U)</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="48"><highlight class="normal"></highlight></codeline>
 <codeline lineno="49"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
 <codeline lineno="50"><highlight class="comment"><sp/>*<sp/>GLOBAL<sp/>VARIABLES<sp/>(extern<sp/>declarations)</highlight></codeline>

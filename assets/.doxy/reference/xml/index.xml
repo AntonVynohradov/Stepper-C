@@ -151,6 +151,7 @@
   </compound>
   <compound refid="sstep__ctrl_8h" kind="file"><name>sstep_ctrl.h</name>
     <member refid="sstep__ctrl_8h_1a9af422d11c76726b25e77f5c71412614" kind="define"><name>SSTEP_STATE_BYTES</name></member>
+    <member refid="sstep__ctrl_8h_1a0b0c940da818fa0e4d9b902a5b33008a" kind="define"><name>SSTEP_CONFIG_BYTES</name></member>
     <member refid="sstep__ctrl_8h_1a5c53f1fde1dc641be449a4e57e4848d9" kind="define"><name>SSTEP_INSTANCE_WORDS</name></member>
     <member refid="sstep__ctrl_8h_1a9765926896e39cbaf1a643817ed8cb1c" kind="enum"><name>sstep_event</name></member>
     <member refid="sstep__ctrl_8h_1a9765926896e39cbaf1a643817ed8cb1ca724dd2f3716f9027ffc285f1ff20ca66" kind="enumvalue"><name>SSTEP_EVENT_MOVE_DONE</name></member>

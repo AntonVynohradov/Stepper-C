@@ -28,6 +28,7 @@
 
 ## s
 
+* **SSTEP\_CONFIG\_BYTES** ([**sstep\_ctrl.h**](sstep__ctrl_8h.md))
 * **SSTEP\_INSTANCE\_WORDS** ([**sstep\_ctrl.h**](sstep__ctrl_8h.md))
 * **SSTEP\_STATE\_BYTES** ([**sstep\_ctrl.h**](sstep__ctrl_8h.md))
 * **SSTEP\_MODE\_HOLD** ([**sstep\_internal.h**](sstep__internal_8h.md))

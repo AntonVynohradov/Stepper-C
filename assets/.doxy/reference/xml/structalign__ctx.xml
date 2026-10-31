@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_ctrl.c" line="67" column="10" bodyfile="src/sstep_ctrl.c" bodystart="67" bodyend="-1"/>
+        <location file="src/sstep_ctrl.c" line="68" column="10" bodyfile="src/sstep_ctrl.c" bodystart="68" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structalign__ctx_1ad7c4135b1d6f23ebc1a2eaf2391b9937" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__ctx" kindref="compound">sstep_ctx</ref></type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_ctrl.c" line="68" column="20" bodyfile="src/sstep_ctrl.c" bodystart="68" bodyend="-1"/>
+        <location file="src/sstep_ctrl.c" line="69" column="20" bodyfile="src/sstep_ctrl.c" bodystart="69" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -116,7 +116,7 @@
         <link refid="structsstep__stage__cfg"/>
       </node>
     </collaborationgraph>
-    <location file="src/sstep_ctrl.c" line="65" column="1" bodyfile="src/sstep_ctrl.c" bodystart="66" bodyend="69"/>
+    <location file="src/sstep_ctrl.c" line="66" column="1" bodyfile="src/sstep_ctrl.c" bodystart="67" bodyend="70"/>
     <listofallmembers>
       <member refid="structalign__ctx_1a5ad44bd2ec97e5289e03d91d4c63bc8b" prot="public" virt="non-virtual"><scope>align_ctx</scope><name>c</name></member>
       <member refid="structalign__ctx_1ad7c4135b1d6f23ebc1a2eaf2391b9937" prot="public" virt="non-virtual"><scope>align_ctx</scope><name>x</name></member>

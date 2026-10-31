@@ -71,7 +71,7 @@
       </memberdef>
       <memberdef kind="define" id="sstep__math_8c_1ab0e2ca3994106ff82e4b19de1c8e9972" prot="public" static="no">
         <name>QUADRANT_MASK</name>
-        <initializer>0x3FFFFFFFUL</initializer>
+        <initializer>0x3FFFFFFFU</initializer>
         <briefdescription>
 <para>Mask of the angle inside one quadrant. </para>
         </briefdescription>
@@ -228,7 +228,7 @@
 <codeline lineno="45"><highlight class="normal"></highlight></codeline>
 <codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>QUADRANT_BITS<sp/>30U</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="48"><highlight class="normal"></highlight></codeline>
-<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>QUADRANT_MASK<sp/>0x3FFFFFFFUL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>QUADRANT_MASK<sp/>0x3FFFFFFFU</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="51"><highlight class="normal"></highlight></codeline>
 <codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FRAC_BITS<sp/>(QUADRANT_BITS<sp/>-<sp/>SSTEP_CFG_SINE_TABLE_BITS)</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="54"><highlight class="normal"></highlight></codeline>
@@ -277,7 +277,7 @@
 <codeline lineno="104"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/>idx<sp/>=<sp/>pos<sp/>&gt;&gt;<sp/>FRAC_BITS;</highlight></codeline>
 <codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>the<sp/>15<sp/>most<sp/>significant<sp/>bits<sp/>of<sp/>the<sp/>fraction<sp/>(FRAC_BITS<sp/>&gt;=<sp/>20)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/>frac_u<sp/>=<sp/>(pos<sp/>&gt;&gt;<sp/>(FRAC_BITS<sp/>-<sp/>15U))<sp/>&amp;<sp/>0x7FFFUL;</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/>frac_u<sp/>=<sp/>(pos<sp/>&gt;&gt;<sp/>(FRAC_BITS<sp/>-<sp/>15U))<sp/>&amp;<sp/>0x7FFFU;</highlight></codeline>
 <codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>int32_t<sp/>frac<sp/>=<sp/>(int32_t)frac_u;</highlight></codeline>
 <codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/>int32_t<sp/>y0<sp/>=<sp/>(int32_t)sstep_sin_table[idx];</highlight></codeline>
 <codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/>int32_t<sp/>dy<sp/>=<sp/>(int32_t)sstep_sin_table[idx<sp/>+<sp/>1U]<sp/>-<sp/>y0;<sp/></highlight><highlight class="comment">/*<sp/>|dy|<sp/>&lt;<sp/>2^10<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
@@ -286,12 +286,12 @@
 <codeline lineno="113"><highlight class="normal"></highlight></codeline>
 <codeline lineno="114"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_MATH_BACKEND_FLOAT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="115"><highlight class="normal"></highlight></codeline>
-<codeline lineno="117"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FRAC_SCALE<sp/>(1.0f<sp/>/<sp/>(float)(1UL<sp/>&lt;&lt;<sp/>FRAC_BITS))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FRAC_SCALE<sp/>(1.0f<sp/>/<sp/>(float)((uint32_t)1U<sp/>&lt;&lt;<sp/>FRAC_BITS))</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="118"><highlight class="normal"></highlight></codeline>
 <codeline lineno="120"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref><sp/>quarter_sin(uint32_t<sp/>pos)</highlight></codeline>
 <codeline lineno="121"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/>idx<sp/>=<sp/>pos<sp/>&gt;&gt;<sp/>FRAC_BITS;</highlight></codeline>
-<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>frac<sp/>=<sp/>(float)(pos<sp/>&amp;<sp/>((1UL<sp/>&lt;&lt;<sp/>FRAC_BITS)<sp/>-<sp/>1UL))<sp/>*<sp/>FRAC_SCALE;</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>frac<sp/>=<sp/>(float)(pos<sp/>&amp;<sp/>(((uint32_t)1U<sp/>&lt;&lt;<sp/>FRAC_BITS)<sp/>-<sp/>1U))<sp/>*<sp/>FRAC_SCALE;</highlight></codeline>
 <codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>y0<sp/>=<sp/>sstep_sin_table[idx];</highlight></codeline>
 <codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>y0<sp/>+<sp/>((sstep_sin_table[idx<sp/>+<sp/>1U]<sp/>-<sp/>y0)<sp/>*<sp/>frac);</highlight></codeline>
 <codeline lineno="126"><highlight class="normal">}</highlight></codeline>

@@ -1836,8 +1836,8 @@ below 16 384 000 microsteps/s, <code>accel</code> and <code>decel</code> from 8 
 <tbody>
 <tr>
 <td><code>struct sstep</code> (RAM per motor)</td>
+<td>336 B</td>
 <td>360 B</td>
-<td>384 B</td>
 </tr>
 <tr>
 <td>Code and constants, <code>-Os</code> (flash)</td>
@@ -1856,8 +1856,9 @@ below 16 384 000 microsteps/s, <code>accel</code> and <code>decel</code> from 8 
 </tr>
 </tbody>
 </table>
-<p><code>struct sstep</code> is the configuration copy (136 B on Cortex-M4, 160 B on 64-bit hosts)
-plus the private state (<code>SSTEP_STATE_BYTES</code>: 200 B fixed point, 224 B float).</p>
+<p><code>struct sstep</code> is the configuration copy (<code>SSTEP_CONFIG_BYTES</code>: 136 B on Cortex-M4,
+160 B on 64-bit hosts) plus the private state (<code>SSTEP_STATE_BYTES</code>: 200 B fixed point,
+224 B float); on a 64-bit host it is 360 B and 384 B.</p>
 <h2 id="stack-usage">Stack usage<a class="headerlink" href="#stack-usage" title="Permanent link">&para;</a></h2>
 <p>Worst-case stack of each public function including the library functions it calls,
 measured with <code>-fstack-usage -fcallgraph-info=su</code> and <code>tools/docs/stack_usage.py</code>

@@ -92,7 +92,7 @@
 | ---: | :--- |
 | define  | [**FRAC\_BITS**](sstep__math_8c.md#define-frac_bits)  `(QUADRANT\_BITS - [**SSTEP\_CFG\_SINE\_TABLE\_BITS**](group__sstep__config.md#define-sstep_cfg_sine_table_bits))`<br>_Bits of the angle below the table index (interpolation fraction)._  |
 | define  | [**QUADRANT\_BITS**](sstep__math_8c.md#define-quadrant_bits)  `30U`<br>_Bits of an angle inside one quadrant._  |
-| define  | [**QUADRANT\_MASK**](sstep__math_8c.md#define-quadrant_mask)  `0x3FFFFFFFUL`<br>_Mask of the angle inside one quadrant._  |
+| define  | [**QUADRANT\_MASK**](sstep__math_8c.md#define-quadrant_mask)  `0x3FFFFFFFU`<br>_Mask of the angle inside one quadrant._  |
 | define  | [**RATIO64\_LIMIT**](sstep__math_8c.md#define-ratio64_limit)  `((int64\_t)0x4000000000000000)`<br>_Operand limit of_ [_**sstep\_gain\_from\_ratio64()**_](group__sstep__math.md#function-sstep_gain_from_ratio64) _: 2^62._ |
 
 ## Public Static Functions Documentation
@@ -189,7 +189,7 @@ _Bits of an angle inside one quadrant._
 
 _Mask of the angle inside one quadrant._ 
 ```C++
-#define QUADRANT_MASK `0x3FFFFFFFUL`
+#define QUADRANT_MASK `0x3FFFFFFFU`
 ```
 
 

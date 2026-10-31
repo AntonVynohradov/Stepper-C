@@ -1563,7 +1563,7 @@ detects them.</p>
 <tr>
 <td><code>struct sstep</code> (driver instance)</td>
 <td>Application (static, stack or pool)</td>
-<td>360 B fixed point, 384 B float</td>
+<td>336 B fixed point, 360 B float on Cortex-M4</td>
 <td>From <code>sstep_init()</code> as long as the motor runs</td>
 </tr>
 <tr>
@@ -1596,7 +1596,8 @@ detects them.</p>
 the library writes is in the instance or in the caller's structures. Several instances
 (axes) are independent.</p>
 <p>The instance size is fixed at compile time by <code>SSTEP_INSTANCE_WORDS</code> in <code>sstep_ctrl.h</code>
-and checked against the private state by <code>_Static_assert</code>.</p>
+(from <code>SSTEP_CONFIG_BYTES</code> and <code>SSTEP_STATE_BYTES</code>, plain constants so that static
+analysis can evaluate them) and checked against the private state by <code>_Static_assert</code>.</p>
 <h2 id="error-handling">Error handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

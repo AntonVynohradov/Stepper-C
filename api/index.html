@@ -2283,9 +2283,11 @@ standstill).</p>
 </tbody>
 </table>
 <h3 id="driver-instance">Driver instance<a class="headerlink" href="#driver-instance" title="Permanent link">&para;</a></h3>
-<p><code>struct sstep</code> is an opaque array of <code>SSTEP_INSTANCE_WORDS</code> 64-bit words (360 B fixed
-point, 384 B float). Allocate it, pass its address, never read or write its content.
-<code>SSTEP_STATE_BYTES</code> is the size of the private state behind the configuration copy.</p>
+<p><code>struct sstep</code> is an opaque array of <code>SSTEP_INSTANCE_WORDS</code> 64-bit words (on Cortex-M4
+336 B fixed point, 360 B float; on 64-bit hosts 360 B and 384 B). Allocate it, pass its
+address, never read or write its content. <code>SSTEP_CONFIG_BYTES</code> is the size of the
+configuration copy (136 B with 32-bit pointers, 160 B with 64-bit pointers) and
+<code>SSTEP_STATE_BYTES</code> the size of the private state behind it.</p>
 <h2 id="functions-ssteph">Functions — <code>sstep.h</code><a class="headerlink" href="#functions-ssteph" title="Permanent link">&para;</a></h2>
 <p>All functions return a status code. Positions are in microsteps, velocities in
 microsteps/s, currents in mA.</p>

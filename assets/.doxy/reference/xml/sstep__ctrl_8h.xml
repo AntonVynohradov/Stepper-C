@@ -84,9 +84,22 @@
         </inbodydescription>
         <location file="inc/sstep_ctrl.h" line="217" column="9" bodyfile="inc/sstep_ctrl.h" bodystart="217" bodyend="-1"/>
       </memberdef>
+      <memberdef kind="define" id="sstep__ctrl_8h_1a0b0c940da818fa0e4d9b902a5b33008a" prot="public" static="no">
+        <name>SSTEP_CONFIG_BYTES</name>
+        <initializer>136U</initializer>
+        <briefdescription>
+<para>Bytes of the configuration copy at the start of the instance: 136 with 32-bit pointers (Cortex-M), 160 with 64-bit pointers. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>A plain constant, so that the instance size needs no sizeof (static analysis); sstep_ctrl.c checks it. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="230" column="10" bodyfile="inc/sstep_ctrl.h" bodystart="230" bodyend="-1"/>
+      </memberdef>
       <memberdef kind="define" id="sstep__ctrl_8h_1a5c53f1fde1dc641be449a4e57e4848d9" prot="public" static="no">
         <name>SSTEP_INSTANCE_WORDS</name>
-        <initializer>((sizeof(struct <ref refid="structsstep__config" kindref="compound">sstep_config</ref>) + SSTEP_STATE_BYTES + 7U) / 8U)</initializer>
+        <initializer>((SSTEP_CONFIG_BYTES + SSTEP_STATE_BYTES + 7U) / 8U)</initializer>
         <briefdescription>
 <para>Size of <ref refid="structsstep" kindref="compound">sstep</ref> in 64-bit words. </para>
         </briefdescription>
@@ -94,7 +107,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="223" column="9" bodyfile="inc/sstep_ctrl.h" bodystart="223" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="234" column="9" bodyfile="inc/sstep_ctrl.h" bodystart="234" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="enum">
@@ -496,18 +509,24 @@
 <codeline lineno="219"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_STATE_BYTES<sp/>224U</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="220"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="221"><highlight class="normal"></highlight></codeline>
-<codeline lineno="223"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_INSTANCE_WORDS<sp/>((sizeof(struct<sp/>sstep_config)<sp/>+<sp/>SSTEP_STATE_BYTES<sp/>+<sp/>7U)<sp/>/<sp/>8U)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="224"><highlight class="normal"></highlight></codeline>
-<codeline lineno="230" refid="structsstep" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep" kindref="compound">sstep</ref></highlight></codeline>
-<codeline lineno="231"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="232" refid="structsstep_1ae0006c41c8870dbea132e771ad935889" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint64_t<sp/><ref refid="structsstep_1ae0006c41c8870dbea132e771ad935889" kindref="member">opaque</ref>[SSTEP_INSTANCE_WORDS];<sp/></highlight></codeline>
-<codeline lineno="233"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="234"><highlight class="normal"></highlight></codeline>
-<codeline lineno="235"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="236"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="237"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="238"><highlight class="normal"></highlight></codeline>
-<codeline lineno="239"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_CTRL_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(UINTPTR_MAX)<sp/>&amp;&amp;<sp/>(UINTPTR_MAX<sp/>&gt;<sp/>0xFFFFFFFFU)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CONFIG_BYTES<sp/>160U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CONFIG_BYTES<sp/>136U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="231"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal"></highlight></codeline>
+<codeline lineno="234"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_INSTANCE_WORDS<sp/>((SSTEP_CONFIG_BYTES<sp/>+<sp/>SSTEP_STATE_BYTES<sp/>+<sp/>7U)<sp/>/<sp/>8U)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"></highlight></codeline>
+<codeline lineno="241" refid="structsstep" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsstep" kindref="compound">sstep</ref></highlight></codeline>
+<codeline lineno="242"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="243" refid="structsstep_1ae0006c41c8870dbea132e771ad935889" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint64_t<sp/><ref refid="structsstep_1ae0006c41c8870dbea132e771ad935889" kindref="member">opaque</ref>[SSTEP_INSTANCE_WORDS];<sp/></highlight></codeline>
+<codeline lineno="244"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="246"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="247"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="249"><highlight class="normal"></highlight></codeline>
+<codeline lineno="250"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_CTRL_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
     <location file="inc/sstep_ctrl.h"/>
   </compounddef>

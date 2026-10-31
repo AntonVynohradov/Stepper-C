@@ -55,7 +55,7 @@
 
 #define QUADRANT_BITS 30U
 
-#define QUADRANT_MASK 0x3FFFFFFFUL
+#define QUADRANT_MASK 0x3FFFFFFFU
 
 #define FRAC_BITS (QUADRANT_BITS - SSTEP_CFG_SINE_TABLE_BITS)
 
@@ -104,7 +104,7 @@ static sstep_real_t quarter_sin(uint32_t pos)
 {
     uint32_t idx = pos >> FRAC_BITS;
     /* the 15 most significant bits of the fraction (FRAC_BITS >= 20) */
-    uint32_t frac_u = (pos >> (FRAC_BITS - 15U)) & 0x7FFFUL;
+    uint32_t frac_u = (pos >> (FRAC_BITS - 15U)) & 0x7FFFU;
     int32_t frac = (int32_t)frac_u;
     int32_t y0 = (int32_t)sstep_sin_table[idx];
     int32_t dy = (int32_t)sstep_sin_table[idx + 1U] - y0; /* |dy| < 2^10 */
@@ -113,12 +113,12 @@ static sstep_real_t quarter_sin(uint32_t pos)
 
 #else /* SSTEP_MATH_BACKEND_FLOAT */
 
-#define FRAC_SCALE (1.0f / (float)(1UL << FRAC_BITS))
+#define FRAC_SCALE (1.0f / (float)((uint32_t)1U << FRAC_BITS))
 
 static sstep_real_t quarter_sin(uint32_t pos)
 {
     uint32_t idx = pos >> FRAC_BITS;
-    float frac = (float)(pos & ((1UL << FRAC_BITS) - 1UL)) * FRAC_SCALE;
+    float frac = (float)(pos & (((uint32_t)1U << FRAC_BITS) - 1U)) * FRAC_SCALE;
     float y0 = sstep_sin_table[idx];
     return y0 + ((sstep_sin_table[idx + 1U] - y0) * frac);
 }

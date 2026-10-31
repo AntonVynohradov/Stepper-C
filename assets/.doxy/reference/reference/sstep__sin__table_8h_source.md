@@ -50,9 +50,9 @@
  * DEFINES & MACROS
  * =============================================================================*/
 
-#define SSTEP_SIN_TABLE_N (1UL << SSTEP_CFG_SINE_TABLE_BITS)
+#define SSTEP_SIN_TABLE_N ((uint32_t)1U << SSTEP_CFG_SINE_TABLE_BITS)
 
-#define SSTEP_SIN_TABLE_SIZE (SSTEP_SIN_TABLE_N + 1UL)
+#define SSTEP_SIN_TABLE_SIZE (SSTEP_SIN_TABLE_N + 1U)
 
 /* ==============================================================================
  * GLOBAL VARIABLES (extern declarations)
