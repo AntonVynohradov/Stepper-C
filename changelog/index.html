@@ -1094,15 +1094,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#100-2026-10-31" class="md-nav__link">
+  <a href="#110-2026-11-01" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1.0.0 - 2026-10-31
+        1.1.0 - 2026-11-01
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="1.0.0 - 2026-10-31">
+    <nav class="md-nav" aria-label="1.1.0 - 2026-11-01">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1117,7 +1117,57 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quality
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#100-2026-10-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.0 - 2026-10-31
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.0 - 2026-10-31">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quality_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Quality
@@ -1301,15 +1351,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#100-2026-10-31" class="md-nav__link">
+  <a href="#110-2026-11-01" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1.0.0 - 2026-10-31
+        1.1.0 - 2026-11-01
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="1.0.0 - 2026-10-31">
+    <nav class="md-nav" aria-label="1.1.0 - 2026-11-01">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1324,7 +1374,57 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quality
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#100-2026-10-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.0 - 2026-10-31
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.0 - 2026-10-31">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quality_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Quality
@@ -1360,11 +1460,63 @@
 <p>All notable changes to this project are documented in this file.
 The format is based on <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
-<h2 id="unreleased"><a href="https://github.com/AntonVynohradov/Stepper-C/compare/v1.0.0...HEAD">Unreleased</a><a class="headerlink" href="#unreleased" title="Permanent link">&para;</a></h2>
+<h2 id="unreleased"><a href="https://github.com/AntonVynohradov/Stepper-C/compare/v1.1.0...HEAD">Unreleased</a><a class="headerlink" href="#unreleased" title="Permanent link">&para;</a></h2>
+<h2 id="110-2026-11-01"><a href="https://github.com/AntonVynohradov/Stepper-C/compare/v1.0.0...v1.1.0">1.1.0</a> - 2026-11-01<a class="headerlink" href="#110-2026-11-01" title="Permanent link">&para;</a></h2>
+<p>Sensorless stall detection. Compatible with 1.0.0: the new configuration fields are
+zero in existing initializers, which keeps stall detection off and the behaviour
+unchanged; rebuild the application with the new headers (the instance size changed).</p>
+<h3 id="added">Added<a class="headerlink" href="#added" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Stall detection</strong> (<code>src/sstep_stall.c</code>): a back-EMF observer in the fast loop
+  (e = v − R·i − L·di/dt from the applied voltage, the measured currents and the
+  commanded angle, filtered in the commanded current frame) and a decision in the slow
+  loop. In motion it checks that the back-EMF along the commanded motion stays above
+  <code>stall_sync_pct</code> of Ke·ω; at rest and at low speed it checks that the rotor does
+  not turn faster than the command by more than <code>stall_speed</code>, with the observer offset
+  (resistance, dead time) learned while the rotor follows. An up/down counter raises the
+  new fault <code>SSTEP_FAULT_STALL</code> (<code>0x0020U</code>) after <code>stall_time_ms</code>, with the usual fault
+  behaviour (outputs off, <code>SSTEP_STATE_FAULT</code>, <code>on_fault()</code>, cleared by
+  <code>sstep_clear_faults()</code>).</li>
+<li><strong>Configuration</strong> (<code>struct sstep_ctrl_cfg</code>): <code>stall_time_ms</code> (0 = off, the default),
+  <code>stall_filter_us</code>, <code>stall_speed</code>, <code>stall_sync_pct</code>. <code>sstep_init()</code> returns
+  <code>SSTEP_ERR_CONFIG</code> for stall detection with voltage drive or without
+  <code>ke_uv_s_per_rad</code>.</li>
+<li><strong>Status</strong> (<code>struct sstep_status</code>): <code>emf_d_mv</code>, <code>emf_q_mv</code>, <code>rotor_velocity</code>,
+  <code>load_angle_cdeg</code>, <code>stall_level_pct</code>.</li>
+<li><strong>Documentation:</strong> the stall detection section of Motor Control (principle, the exact
+  equations for a model, design decisions, parameter choice, measured results, cost,
+  limits), configuration, usage, integration and API updates. New hero illustrations
+  (<code>docs/assets/images/hero-dark.png</code> for the website and the PDF cover,
+  <code>hero-light.png</code> for the README).</li>
+</ul>
+<h3 id="changed">Changed<a class="headerlink" href="#changed" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>struct sstep</code> grows by 96 B (432 B fixed point, 456 B float on Cortex-M4):
+  <code>SSTEP_CONFIG_BYTES</code> 152 / 176 B, <code>SSTEP_STATE_BYTES</code> 280 / 304 B.
+  <code>struct sstep_status</code> grows from 32 B to 48 B.</li>
+<li>Flash on Cortex-M4 (<code>-Os</code>): 9040 B fixed point, 9718 B float. Worst-case stack of
+  <code>sstep_fast_loop()</code> 216 B fixed point (128 B float), of <code>sstep_get_status()</code> 92 B.</li>
+<li>With stall detection on, the fast loop executes about 240 more instructions per
+  period (<code>-O2</code>, both backends; 475 fixed point and 213 float with <code>-Os</code>).</li>
+</ul>
+<h3 id="quality">Quality<a class="headerlink" href="#quality" title="Permanent link">&para;</a></h3>
+<ul>
+<li>93 GoogleTest tests (fixed point) and 92 (float), 100 % line, branch and function
+  coverage of <code>src/</code> in both backends. The motor model of the tests gained a detent
+  torque, a dead-time voltage error, a configurable current quantization and an imposed
+  rotor motion for synthetic tests.</li>
+<li>Stall detection on the motor model: the reference case (17HS19-2004S1, three-leg stage,
+  24 V, 0.12 N·m held at 1.5 A but not at the 0.5 A hold current) reports
+  <code>SSTEP_FAULT_STALL</code> 48 ms after the load angle passes 90°; a hard stop at 3 rev/s after
+  50 ms. No fault through enable, run → hold, moves, reversal and runs from 0.125 to
+  11 rev/s, also with R +30 %, L −20 %, 70 mV dead time per leg, 29 mA current
+  quantization and detent torque (largest detector level 32 %).</li>
+<li>MISRA C:2012: 0 violations, no new deviation.</li>
+</ul>
 <h2 id="100-2026-10-31"><a href="https://github.com/AntonVynohradov/Stepper-C/releases/tag/v1.0.0">1.0.0</a> - 2026-10-31<a class="headerlink" href="#100-2026-10-31" title="Permanent link">&para;</a></h2>
 <p>First release: closed-loop microstepping current control for two-phase hybrid stepper
 motors in portable C11.</p>
-<h3 id="added">Added<a class="headerlink" href="#added" title="Permanent link">&para;</a></h3>
+<h3 id="added_1">Added<a class="headerlink" href="#added_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Public API</strong> (<code>sstep.h</code>, 15 functions): <code>sstep_init()</code>, <code>sstep_enable()</code>,
   <code>sstep_disable()</code>, <code>sstep_fast_loop()</code>, <code>sstep_slow_loop()</code>, <code>sstep_move_to()</code>,
@@ -1410,7 +1562,7 @@ motors in portable C11.</p>
   footprint, motor control theory with measured results, integration guide, API
   reference, MISRA compliance.</li>
 </ul>
-<h3 id="quality">Quality<a class="headerlink" href="#quality" title="Permanent link">&para;</a></h3>
+<h3 id="quality_1">Quality<a class="headerlink" href="#quality_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li>78 GoogleTest tests (fixed point) and 77 (float): numeric backend, power stage,
   motion planner, API and closed loop on a motor model (<code>tests/unit/sstep_test_plant.hpp</code>);

@@ -1538,6 +1538,11 @@ path, and pass the same <code>-DSSTEP_CFG_…</code> definitions to the library 
    speed and the acceleration to the application's values.</li>
 <li><strong>Protection:</strong> check the trips with a lowered <code>i_trip_ma</code> and <code>vbus_max_mv</code>, and the
    external fault input with <code>sstep_report_fault()</code>.</li>
+<li><strong>Stall detection (optional):</strong> enable it with the example values, log
+   <code>stall_level_pct</code>, <code>emf_d_mv</code> and <code>load_angle_cdeg</code> through every operating point
+   (enable, hold, the fastest move, the heaviest load), then block the shaft by hand at
+   speed and at standstill to see <code>SSTEP_FAULT_STALL</code>
+   (<a href="../motor-control/#choosing-the-parameters">choosing the parameters</a>).</li>
 </ol>
 
 

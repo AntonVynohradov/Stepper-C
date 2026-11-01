@@ -1460,7 +1460,7 @@
 <tbody>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-sstep_config_bytes"><strong>SSTEP_CONFIG_BYTES</strong></a>  <code>136U</code><br><em>Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers.</em></td>
+<td style="text-align: left;"><a href="./#define-sstep_config_bytes"><strong>SSTEP_CONFIG_BYTES</strong></a>  <code>152U</code><br><em>Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
@@ -1468,7 +1468,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-sstep_state_bytes"><strong>SSTEP_STATE_BYTES</strong></a>  <code>200U</code><br></td>
+<td style="text-align: left;"><a href="./#define-sstep_state_bytes"><strong>SSTEP_STATE_BYTES</strong></a>  <code>280U</code><br></td>
 </tr>
 </tbody>
 </table>
@@ -1550,7 +1550,7 @@
 <h2 id="macro-definition-documentation">Macro Definition Documentation<a class="headerlink" href="#macro-definition-documentation" title="Permanent link">&para;</a></h2>
 <h3 id="define-sstep_config_bytes">define SSTEP_CONFIG_BYTES<a class="headerlink" href="#define-sstep_config_bytes" title="Permanent link">&para;</a></h3>
 <p><em>Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="cp">#define SSTEP_CONFIG_BYTES `136U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="cp">#define SSTEP_CONFIG_BYTES `152U`</span>
 </code></pre></div></p>
 <p>Plain constants, so that the instance size needs no sizeof (static analysis); sstep_ctrl.c checks both at compile time. </p>
 <hr>
@@ -1562,7 +1562,7 @@
 <hr>
 
 <h3 id="define-sstep_state_bytes">define SSTEP_STATE_BYTES<a class="headerlink" href="#define-sstep_state_bytes" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">#define SSTEP_STATE_BYTES `200U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">#define SSTEP_STATE_BYTES `280U`</span>
 </code></pre></div>
 <hr>
 

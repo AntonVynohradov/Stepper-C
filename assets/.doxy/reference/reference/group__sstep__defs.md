@@ -93,6 +93,7 @@ _Constants shared by the public API._ [More...](#detailed-description)
 | define  | [**SSTEP\_FAULT\_NONE**](group__sstep__defs.md#define-sstep_fault_none)  `0x0000U`<br>_Fault flags reported by_ [_**sstep\_get\_status()**_](group__sstep__api.md#function-sstep_get_status) _and the fault callback._ |
 | define  | [**SSTEP\_FAULT\_OVERCURRENT**](group__sstep__defs.md#define-sstep_fault_overcurrent)  `0x0001U`<br>_Measured phase current above the configured trip level._  |
 | define  | [**SSTEP\_FAULT\_OVERVOLTAGE**](group__sstep__defs.md#define-sstep_fault_overvoltage)  `0x0002U`<br>_Bus voltage above the configured maximum._  |
+| define  | [**SSTEP\_FAULT\_STALL**](group__sstep__defs.md#define-sstep_fault_stall)  `0x0020U`<br>_The rotor does not follow the commanded electrical angle: lost synchronism in motion, or rotor motion while the command is at rest (sensorless back-EMF observer, enabled with_ [_**sstep\_ctrl\_cfg::stall\_time\_ms**_](structsstep__ctrl__cfg.md#variable-stall_time_ms) _)._ |
 | define  | [**SSTEP\_FAULT\_UNDERVOLTAGE**](group__sstep__defs.md#define-sstep_fault_undervoltage)  `0x0004U`<br>_Bus voltage below the configured minimum._  |
 | define  | [**SSTEP\_LEGS\_MAX**](group__sstep__defs.md#define-sstep_legs_max)  `4U`<br>_Number of half-bridge legs of the largest supported topology._  |
 | define  | [**SSTEP\_OK**](group__sstep__defs.md#define-sstep_ok)  `0`<br>_Success._  |
@@ -272,6 +273,20 @@ _Measured phase current above the configured trip level._
 _Bus voltage above the configured maximum._ 
 ```
 #define SSTEP_FAULT_OVERVOLTAGE `0x0002U`
+```
+
+
+
+
+<hr>
+
+
+
+### define SSTEP\_FAULT\_STALL 
+
+_The rotor does not follow the commanded electrical angle: lost synchronism in motion, or rotor motion while the command is at rest (sensorless back-EMF observer, enabled with_ [_**sstep\_ctrl\_cfg::stall\_time\_ms**_](structsstep__ctrl__cfg.md#variable-stall_time_ms) _)._
+```
+#define SSTEP_FAULT_STALL `0x0020U`
 ```
 
 

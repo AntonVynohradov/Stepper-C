@@ -1406,6 +1406,8 @@ point (no FPU needed) or single-precision float.</p>
   the measured bus voltage can deliver, keeping its direction.</li>
 <li><strong>Protects the hardware.</strong> Overcurrent, overvoltage and undervoltage trips in the fast
   loop, hardware-callback errors, external faults; outputs off within the same period.</li>
+<li><strong>Detects a stall without a sensor.</strong> A back-EMF observer reports a rotor that stops,
+  falls out of synchronism or slips at standstill (<code>SSTEP_FAULT_STALL</code>, optional).</li>
 <li><strong>Reduces the current at standstill.</strong> Hold current after a configurable delay.</li>
 </ul>
 <h2 id="what-the-library-does-not-do">What the library does not do<a class="headerlink" href="#what-the-library-does-not-do" title="Permanent link">&para;</a></h2>
@@ -1426,8 +1428,8 @@ point (no FPU needed) or single-precision float.</p>
 <td>Every system has its own; the library only defines which function runs at which rate. See the <a href="../integration/">integration guide</a>.</td>
 </tr>
 <tr>
-<td>Position feedback (encoder) and stall detection</td>
-<td>The library is an open-loop positioner with closed-loop current; the rotor position is not measured.</td>
+<td>Position feedback (encoder)</td>
+<td>The library is an open-loop positioner with closed-loop current; the rotor position is not measured. Sensorless stall detection reports a lost synchronism but does not correct the position.</td>
 </tr>
 <tr>
 <td>Homing, limit switches, G-code, multi-axis coordination</td>
@@ -1478,15 +1480,15 @@ point (no FPU needed) or single-precision float.</p>
 </tr>
 <tr>
 <td>RAM per instance</td>
-<td>336 B fixed point, 360 B float on Cortex-M4 (<a href="../configuration/#memory-footprint">details</a>)</td>
+<td>432 B fixed point, 456 B float on Cortex-M4 (<a href="../configuration/#memory-footprint">details</a>)</td>
 </tr>
 <tr>
 <td>Flash</td>
-<td>6.8 KiB fixed point, 7.3 KiB float (Cortex-M4, <code>-Os</code>, both topologies)</td>
+<td>8.8 KiB fixed point, 9.5 KiB float (Cortex-M4, <code>-Os</code>, both topologies)</td>
 </tr>
 <tr>
 <td>Stack</td>
-<td><code>sstep_fast_loop()</code> 184 B, <code>sstep_slow_loop()</code> 140 B worst case (Cortex-M4 <code>-Os</code>, <a href="../configuration/#stack-usage">details</a>)</td>
+<td><code>sstep_fast_loop()</code> 216 B, <code>sstep_slow_loop()</code> 140 B worst case (Cortex-M4 <code>-Os</code>, <a href="../configuration/#stack-usage">details</a>)</td>
 </tr>
 <tr>
 <td>Coding standard</td>

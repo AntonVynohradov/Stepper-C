@@ -41,6 +41,10 @@
     <member refid="structsstep__ctrl__cfg_1afb1d36d1a16777c4de7424713c978145" kind="variable"><name>v_max</name></member>
     <member refid="structsstep__ctrl__cfg_1aba43930ef8fb8e0f915a1afad82b38be" kind="variable"><name>accel</name></member>
     <member refid="structsstep__ctrl__cfg_1afcad15a338d34337026c2b2960f4fa7a" kind="variable"><name>decel</name></member>
+    <member refid="structsstep__ctrl__cfg_1aef6458a978393e13733abe2ef5492375" kind="variable"><name>stall_time_ms</name></member>
+    <member refid="structsstep__ctrl__cfg_1a0fc0aadb0ad001e1d73d6421cb22edad" kind="variable"><name>stall_filter_us</name></member>
+    <member refid="structsstep__ctrl__cfg_1a649f2601b89e78bd1ba76357bd270e27" kind="variable"><name>stall_speed</name></member>
+    <member refid="structsstep__ctrl__cfg_1a5837fdad9f800d8155c3a3c8ba2ea616" kind="variable"><name>stall_sync_pct</name></member>
   </compound>
   <compound refid="structsstep__ctx" kind="struct"><name>sstep_ctx</name>
     <member refid="structsstep__ctx_1a95044f0e3e149efbdef19cf5023add21" kind="variable"><name>cfg</name></member>
@@ -59,6 +63,11 @@
     <member refid="structsstep__ctx_1a82d7b9f7d886bb1943ba901e336e0d8b" kind="variable"><name>ratio</name></member>
     <member refid="structsstep__ctx_1ae64fcf3425b2598936138ba299cf6b4d" kind="variable"><name>hold_ticks</name></member>
     <member refid="structsstep__ctx_1a810f186b003933d53d8554a10541f92d" kind="variable"><name>angle_shift</name></member>
+    <member refid="structsstep__ctx_1af6d7e055bebdb470e8c6cb5a870c2794" kind="variable"><name>emf_a</name></member>
+    <member refid="structsstep__ctx_1a08330a63c8b869e1494a30574dc01d7c" kind="variable"><name>emf_b</name></member>
+    <member refid="structsstep__ctx_1ab66255e02ad17f32b54a0b91f64e4218" kind="variable"><name>emf_alpha</name></member>
+    <member refid="structsstep__ctx_1a4e4f505a34ae70c469b1e6b23505e5ab" kind="variable"><name>stall_ticks</name></member>
+    <member refid="structsstep__ctx_1a1d7f9712100b09592ddd9e07c9c43875" kind="variable"><name>stall_emf_mv</name></member>
     <member refid="structsstep__ctx_1a9b6ace7a3294a768d244e4a00d428b15" kind="variable"><name>sp</name></member>
     <member refid="structsstep__ctx_1aac285fd52795b36c9e83f80427f82eab" kind="variable"><name>sp_active</name></member>
     <member refid="structsstep__ctx_1ab258c071b68ef99090b0b7255f42e3cb" kind="variable"><name>sp_pending</name></member>
@@ -68,11 +77,18 @@
     <member refid="structsstep__ctx_1a012c6e0d1edfaeba7a920f3f5a78b6f7" kind="variable"><name>i_meas</name></member>
     <member refid="structsstep__ctx_1a396559c5cf7e80f8284a758090e4c9fa" kind="variable"><name>vbus_raw</name></member>
     <member refid="structsstep__ctx_1a3eb1be70191acef8e88f3479fae8e0e9" kind="variable"><name>compare</name></member>
+    <member refid="structsstep__ctx_1ab44b90278a45c1455c8c1c5b78cbad10" kind="variable"><name>i_prev</name></member>
+    <member refid="structsstep__ctx_1a3c500091375d0a65ab22cf4204adfb83" kind="variable"><name>v_hist</name></member>
+    <member refid="structsstep__ctx_1a688ff04355950a77f4f42f6a36ed095c" kind="variable"><name>emf</name></member>
     <member refid="structsstep__ctx_1a2e1ad5b7ce1ec2becb6891b47e153811" kind="variable"><name>mo</name></member>
     <member refid="structsstep__ctx_1abec952592f81b9471eebd6e308761ad6" kind="variable"><name>angle_offset</name></member>
     <member refid="structsstep__ctx_1a60464f27495ad8b58110fcf1b479937e" kind="variable"><name>still</name></member>
     <member refid="structsstep__ctx_1aa5dbd43a4ab41881800819204db9071c" kind="variable"><name>hold_active</name></member>
     <member refid="structsstep__ctx_1a2faf30dd7bf5a3afcae0aa32f8377a38" kind="variable"><name>inv_vbus</name></member>
+    <member refid="structsstep__ctx_1af715f0ffdd36047e827fe27a00f706d0" kind="variable"><name>vel_cmd</name></member>
+    <member refid="structsstep__ctx_1ae17e0568420ef8e69d6aaeeced941484" kind="variable"><name>ff_cmd</name></member>
+    <member refid="structsstep__ctx_1a09f5093ccb2343ff809423c4029c3824" kind="variable"><name>emf_off</name></member>
+    <member refid="structsstep__ctx_1a4a0445c885013aceb85e186974379a78" kind="variable"><name>stall_count</name></member>
     <member refid="structsstep__ctx_1aea889ec3ad563cb14a4e9203b6624175" kind="variable"><name>faults</name></member>
     <member refid="structsstep__ctx_1a49e7de50e5440d9aa544c0c9038fc968" kind="variable"><name>state</name></member>
     <member refid="structsstep__ctx_1a8ac92a1cae8a0bffe1de31791bf05d0c" kind="variable"><name>ready</name></member>
@@ -139,6 +155,11 @@
     <member refid="structsstep__status_1aa5d3e619afa9c158f9d12fab523542e3" kind="variable"><name>i_a_ma</name></member>
     <member refid="structsstep__status_1a3558ee758854d46ef02a0198167d5655" kind="variable"><name>i_b_ma</name></member>
     <member refid="structsstep__status_1a7f918e03de222e8cc0d7cf58ae050b06" kind="variable"><name>vbus_mv</name></member>
+    <member refid="structsstep__status_1afbaa38339e5d70619758294590decd92" kind="variable"><name>emf_d_mv</name></member>
+    <member refid="structsstep__status_1a9233c2f69219c654063874b1978ec6b1" kind="variable"><name>emf_q_mv</name></member>
+    <member refid="structsstep__status_1a46c1cf99e6fa5179cd07cd1632fd404f" kind="variable"><name>rotor_velocity</name></member>
+    <member refid="structsstep__status_1a19a0d9a6bc712097fb08fe3071190102" kind="variable"><name>load_angle_cdeg</name></member>
+    <member refid="structsstep__status_1a3621f02fcc4b6e6b6a8881c22968b962" kind="variable"><name>stall_level_pct</name></member>
   </compound>
   <compound refid="sstep__config_8h" kind="file"><name>sstep_config.h</name>
     <member refid="group__sstep__config_1gaabdd28b396cb602508fecd7d015ecbf9" kind="define"><name>SSTEP_MATH_BACKEND_FIXED</name></member>
@@ -178,6 +199,7 @@
     <member refid="group__sstep__defs_1gadf817747c1ca590152b756f4d5cf88ed" kind="define"><name>SSTEP_FAULT_UNDERVOLTAGE</name></member>
     <member refid="group__sstep__defs_1gab51def6949f6a27cf6c6651c246c8cc7" kind="define"><name>SSTEP_FAULT_HAL</name></member>
     <member refid="group__sstep__defs_1ga6160f6093576feb828e106ab46dc7269" kind="define"><name>SSTEP_FAULT_EXTERNAL</name></member>
+    <member refid="group__sstep__defs_1ga88d60a46d72e1ead7ce8e2b62feb417d" kind="define"><name>SSTEP_FAULT_STALL</name></member>
     <member refid="group__sstep__defs_1gabd2c373f4d8a7502c78952555c8cb23c" kind="enum"><name>sstep_topology</name></member>
     <member refid="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" kind="enum"><name>sstep_state</name></member>
   </compound>
@@ -203,6 +225,8 @@
     <member refid="sstep__ctrl_8c_1a2bcdd0a307bf3d4c06c9a2e9a7fd380d" kind="function"><name>gain_apply_i32</name></member>
     <member refid="sstep__ctrl_8c_1a6ea967f43c250969cf8118a7bf90a4cf" kind="function"><name>raw_angle</name></member>
     <member refid="sstep__ctrl_8c_1ada3ddd09b297fe3df6d29fea7a1cece7" kind="function"><name>check_config</name></member>
+    <member refid="sstep__ctrl_8c_1a6fc92cc82b3294cf0acd42412393b356" kind="function"><name>check_stall</name></member>
+    <member refid="sstep__ctrl_8c_1a02814bd14b7aab442b857f1939f586c0" kind="function"><name>derive_stall</name></member>
     <member refid="sstep__ctrl_8c_1a5fc0414477f649ed79976c9f47c30fbd" kind="function"><name>set_currents</name></member>
     <member refid="sstep__ctrl_8c_1ab537c97201fa367e9086185c6cbd712e" kind="function"><name>set_limits</name></member>
     <member refid="sstep__ctrl_8c_1a77a5b6ec2576e97859a08cb2b9228ed7" kind="function"><name>derive</name></member>
@@ -240,6 +264,10 @@
     <member refid="sstep__internal_8h_1a0461923af61066b8d47e2ccbd491eec2" kind="function"><name>sstep_bridge_map</name></member>
     <member refid="sstep__internal_8h_1a6972dea5b1b230e9affdf5678071d270" kind="function"><name>sstep_motion_step</name></member>
     <member refid="sstep__internal_8h_1ab255367c0431d4183dc752ba1c4f1779" kind="function"><name>sstep_isqrt64</name></member>
+    <member refid="sstep__internal_8h_1afc75df41216a7a0b8c58ef991a1b8c3a" kind="function"><name>sstep_stall_reset</name></member>
+    <member refid="sstep__internal_8h_1ad0aec17c0c2046b9215e69657cb1d316" kind="function"><name>sstep_stall_observe</name></member>
+    <member refid="sstep__internal_8h_1a1e1cdc2b825465416f2b0d4a949bbba9" kind="function"><name>sstep_stall_check</name></member>
+    <member refid="sstep__internal_8h_1a9ef04f1384fd950ee798bad25c53c243" kind="function"><name>sstep_stall_status</name></member>
   </compound>
   <compound refid="sstep__math_8c" kind="file"><name>sstep_math.c</name>
     <member refid="sstep__math_8c_1aa2765cdce7ddb768248c1e90d5c2898b" kind="define"><name>QUADRANT_BITS</name></member>
@@ -323,6 +351,24 @@
     <member refid="sstep__sin__table_8h_1a40a3ae2a2ac0d0f9bb3e095a9697fd4c" kind="define"><name>SSTEP_SIN_TABLE_SIZE</name></member>
     <member refid="sstep__sin__table_8h_1a0e3473aedac13e69a20003ee90839aad" kind="variable"><name>sstep_sin_table</name></member>
   </compound>
+  <compound refid="sstep__stall_8c" kind="file"><name>sstep_stall.c</name>
+    <member refid="sstep__stall_8c_1abe87adb13c67378e75be142a6305e5e4" kind="define"><name>TWO_PI_NUM</name></member>
+    <member refid="sstep__stall_8c_1aa059cff969f0def5e941bf574cc5838d" kind="define"><name>TWO_PI_DEN</name></member>
+    <member refid="sstep__stall_8c_1a4b9ade4e64fbd3af7ff963b9284fda1c" kind="define"><name>CORDIC_STEPS</name></member>
+    <member refid="sstep__stall_8c_1add1f2b7889e8ec7316aa9ba18b51f70f" kind="define"><name>CORDIC_NORM</name></member>
+    <member refid="sstep__stall_8c_1ab41f717cb18443228ad514c1cdbf74cc" kind="define"><name>HALF_TURN</name></member>
+    <member refid="sstep__stall_8c_1ae646250fd59311356c7e5722a81c3a96" kind="define"><name>TURN</name></member>
+    <member refid="sstep__stall_8c_1a4a19d35cb7f223f1037554ab61466a66" kind="define"><name>OFF_ONE</name></member>
+    <member refid="sstep__stall_8c_1ad81bfa8143a741d73015d21e498ed81d" kind="define"><name>CDEG_PER_TURN</name></member>
+    <member refid="sstep__stall_8c_1ae61aca5ed86f5423d9c138d7abe4025a" kind="function"><name>emf_mv</name></member>
+    <member refid="sstep__stall_8c_1a3a0f7b97977598a29b7d864e1c757b53" kind="function"><name>abs_i64</name></member>
+    <member refid="sstep__stall_8c_1ab5395b006b2f5071ec2213807e0eb21a" kind="function"><name>muldiv_u64</name></member>
+    <member refid="sstep__stall_8c_1a1c93645981428a945f1e692953099d63" kind="function"><name>atan2_turn</name></member>
+    <member refid="sstep__stall_8c_1afc75df41216a7a0b8c58ef991a1b8c3a" kind="function"><name>sstep_stall_reset</name></member>
+    <member refid="sstep__stall_8c_1ad0aec17c0c2046b9215e69657cb1d316" kind="function"><name>sstep_stall_observe</name></member>
+    <member refid="sstep__stall_8c_1a1e1cdc2b825465416f2b0d4a949bbba9" kind="function"><name>sstep_stall_check</name></member>
+    <member refid="sstep__stall_8c_1a9ef04f1384fd950ee798bad25c53c243" kind="function"><name>sstep_stall_status</name></member>
+  </compound>
   <compound refid="sstep_8h" kind="file"><name>sstep.h</name>
     <member refid="sstep_8h_1acedf2fb3f7c0cac207b210fb614948f0" kind="define"><name>SSTEP_VERSION_MAJOR</name></member>
     <member refid="sstep_8h_1ae008ca8f66df44cfbad1b81ee50a0ee2" kind="define"><name>SSTEP_VERSION_MINOR</name></member>
@@ -392,6 +438,7 @@
     <member refid="group__sstep__defs_1gadf817747c1ca590152b756f4d5cf88ed" kind="define"><name>SSTEP_FAULT_UNDERVOLTAGE</name></member>
     <member refid="group__sstep__defs_1gab51def6949f6a27cf6c6651c246c8cc7" kind="define"><name>SSTEP_FAULT_HAL</name></member>
     <member refid="group__sstep__defs_1ga6160f6093576feb828e106ab46dc7269" kind="define"><name>SSTEP_FAULT_EXTERNAL</name></member>
+    <member refid="group__sstep__defs_1ga88d60a46d72e1ead7ce8e2b62feb417d" kind="define"><name>SSTEP_FAULT_STALL</name></member>
   </compound>
   <compound refid="group__sstep__math" kind="group"><name>sstep_math</name>
     <member refid="group__sstep__math_1ga2d9b6ce2135a467c6d227cde4dd9c12b" kind="typedef"><name>sstep_angle_t</name></member>

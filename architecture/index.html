@@ -1434,6 +1434,11 @@ microstepping, trajectory, voltage limits) are described in <a href="../motor-co
 <td>Configuration check, derived constants, fast loop (current control, protection, PWM), slow loop (setpoints, hold current, events), commands, state machine</td>
 </tr>
 <tr>
+<td>Stall detection</td>
+<td><code>src/sstep_stall.c</code></td>
+<td>Back-EMF observer (fast loop), stall decision (slow loop), estimates of the status</td>
+</tr>
+<tr>
 <td>Motion</td>
 <td><code>src/sstep_motion.c</code></td>
 <td>Trapezoidal trajectory in integer arithmetic (both backends)</td>
@@ -1482,8 +1487,8 @@ in any release.</p>
 </tr>
 <tr>
 <td>Work</td>
-<td>Convert the measurements, check the trip levels, interpolate the electrical angle, current references, PI controllers, voltage limit, leg duty cycles</td>
-<td>Advance the trajectory one step, compute the setpoint of the next slow period, hold current, bus voltage compensation, state, events</td>
+<td>Convert the measurements, check the trip levels, interpolate the electrical angle, current references, PI controllers, voltage limit, leg duty cycles; back-EMF observer (stall detection)</td>
+<td>Advance the trajectory one step, compute the setpoint of the next slow period, hold current, bus voltage compensation, state, events, stall decision</td>
 </tr>
 <tr>
 <td>Output</td>
@@ -1563,13 +1568,13 @@ detects them.</p>
 <tr>
 <td><code>struct sstep</code> (driver instance)</td>
 <td>Application (static, stack or pool)</td>
-<td>336 B fixed point, 360 B float on Cortex-M4</td>
+<td>432 B fixed point, 456 B float on Cortex-M4</td>
 <td>From <code>sstep_init()</code> as long as the motor runs</td>
 </tr>
 <tr>
 <td><code>struct sstep_config</code></td>
 <td>Application; copied by <code>sstep_init()</code></td>
-<td>136 B on Cortex-M4</td>
+<td>152 B on Cortex-M4</td>
 <td>Only during <code>sstep_init()</code></td>
 </tr>
 <tr>
@@ -1581,7 +1586,7 @@ detects them.</p>
 <tr>
 <td><code>struct sstep_status</code></td>
 <td>Application</td>
-<td>32 B on Cortex-M4</td>
+<td>48 B on Cortex-M4</td>
 <td>Filled by <code>sstep_get_status()</code></td>
 </tr>
 <tr>
@@ -1642,6 +1647,10 @@ analysis can evaluate them) and checked against the private state by <code>_Stat
 <tr>
 <td><code>pwm_write()</code> or <code>output_enable()</code> returns a negative value</td>
 <td><code>SSTEP_FAULT_HAL</code>, outputs off</td>
+</tr>
+<tr>
+<td>The rotor does not follow the commanded angle for <code>stall_time_ms</code> (stall detection on)</td>
+<td><code>SSTEP_FAULT_STALL</code>, outputs off in the slow loop</td>
 </tr>
 <tr>
 <td><code>sstep_report_fault()</code></td>

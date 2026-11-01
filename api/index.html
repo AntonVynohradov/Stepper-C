@@ -1974,12 +1974,12 @@ header; it declares every function and includes the public type headers:</p>
 <tbody>
 <tr>
 <td><code>SSTEP_VERSION_MAJOR</code>, <code>…_MINOR</code>, <code>…_PATCH</code></td>
-<td><code>1</code>, <code>0</code>, <code>0</code></td>
+<td><code>1</code>, <code>1</code>, <code>0</code></td>
 <td>Version numbers; set by CMake from the latest <code>vX.Y.Z</code> tag, these are the fallbacks</td>
 </tr>
 <tr>
 <td><code>SSTEP_VERSION</code></td>
-<td><code>"1.0.0"</code></td>
+<td><code>"1.1.0"</code></td>
 <td>Version string</td>
 </tr>
 </tbody>
@@ -2133,6 +2133,11 @@ header; it declares every function and includes the public type headers:</p>
 <td><code>0x0010U</code></td>
 <td>Reported by the application with <code>sstep_report_fault()</code></td>
 </tr>
+<tr>
+<td><code>SSTEP_FAULT_STALL</code></td>
+<td><code>0x0020U</code></td>
+<td>The rotor does not follow the commanded angle (stall detection, <code>stall_time_ms</code> &gt; 0); since 1.1.0</td>
+</tr>
 </tbody>
 </table>
 <h3 id="driver-states-enum-sstep_state">Driver states — <code>enum sstep_state</code><a class="headerlink" href="#driver-states-enum-sstep_state" title="Permanent link">&para;</a></h3>
@@ -2222,7 +2227,7 @@ standstill).</p>
 </tr>
 <tr>
 <td><code>struct sstep_ctrl_cfg</code></td>
-<td><code>drive_mode</code>, <code>fast_loop_hz</code>, <code>slow_loop_hz</code>, <code>microsteps</code>, <code>current_bw_hz</code>, <code>i_run_ma</code>, <code>i_hold_ma</code>, <code>hold_delay_ms</code>, <code>v_max</code>, <code>accel</code>, <code>decel</code></td>
+<td><code>drive_mode</code>, <code>fast_loop_hz</code>, <code>slow_loop_hz</code>, <code>microsteps</code>, <code>current_bw_hz</code>, <code>i_run_ma</code>, <code>i_hold_ma</code>, <code>hold_delay_ms</code>, <code>v_max</code>, <code>accel</code>, <code>decel</code>, <code>stall_time_ms</code>, <code>stall_filter_us</code>, <code>stall_speed</code>, <code>stall_sync_pct</code> (since 1.1.0)</td>
 </tr>
 <tr>
 <td><code>struct sstep_callbacks</code></td>
@@ -2280,13 +2285,35 @@ standstill).</p>
 <td><code>vbus_mv</code></td>
 <td>mV (last measured)</td>
 </tr>
+<tr>
+<td></td>
+<td><code>emf_d_mv</code>, <code>emf_q_mv</code></td>
+<td>mV, filtered back-EMF estimate along and 90° ahead of the commanded current (since 1.1.0)</td>
+</tr>
+<tr>
+<td></td>
+<td><code>rotor_velocity</code></td>
+<td>microsteps/s, estimated from the back-EMF (since 1.1.0)</td>
+</tr>
+<tr>
+<td></td>
+<td><code>load_angle_cdeg</code></td>
+<td>0.01°, estimated load angle, commanded minus rotor electrical angle (since 1.1.0)</td>
+</tr>
+<tr>
+<td></td>
+<td><code>stall_level_pct</code></td>
+<td>%, stall detector level, 100 = trip (since 1.1.0)</td>
+</tr>
 </tbody>
 </table>
+<p>The five estimates are 0 while stall detection is off; their equations are in
+<a href="../motor-control/#stall-detection">Stall detection</a>.</p>
 <h3 id="driver-instance">Driver instance<a class="headerlink" href="#driver-instance" title="Permanent link">&para;</a></h3>
 <p><code>struct sstep</code> is an opaque array of <code>SSTEP_INSTANCE_WORDS</code> 64-bit words (on Cortex-M4
-336 B fixed point, 360 B float; on 64-bit hosts 360 B and 392 B). Allocate it, pass its
+432 B fixed point, 456 B float; on 64-bit hosts 456 B and 480 B). Allocate it, pass its
 address, never read or write its content. <code>SSTEP_CONFIG_BYTES</code> is the size of the
-configuration copy (136 B with 32-bit pointers, 160 B with 64-bit pointers) and
+configuration copy (152 B with 32-bit pointers, 176 B with 64-bit pointers) and
 <code>SSTEP_STATE_BYTES</code> the size of the private state behind it.</p>
 <h2 id="functions-ssteph">Functions — <code>sstep.h</code><a class="headerlink" href="#functions-ssteph" title="Permanent link">&para;</a></h2>
 <p>All functions return a status code. Positions are in microsteps, velocities in
@@ -2298,8 +2325,9 @@ below list the other cases.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">sstep_init</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="o">*</span><span class="w"> </span><span class="n">drv</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_config</span><span class="o">*</span><span class="w"> </span><span class="n">cfg</span><span class="p">);</span>
 </code></pre></div>
 <p>Validate a configuration and initialize a driver; the outputs stay off. Derives the
-per-unit bases, the PI gains (<span class="arithmatex">\(K_p = L\,\omega_c\)</span>, <span class="arithmatex">\(K_i = R\,\omega_c\)</span>) and the trajectory constants
-without floating point. Calls no callback.</p>
+per-unit bases, the PI gains (<span class="arithmatex">\(K_p = L\,\omega_c\)</span>, <span class="arithmatex">\(K_i = R\,\omega_c\)</span>), the trajectory constants and,
+with <code>stall_time_ms</code> &gt; 0, the stall detector constants without floating point. Calls no
+callback.</p>
 <table>
 <thead>
 <tr>
@@ -2336,7 +2364,7 @@ without floating point. Calls no callback.</p>
 </tr>
 <tr>
 <td><code>SSTEP_ERR_CONFIG</code></td>
-<td>Inconsistent fields (for example <code>i_run_ma &gt; i_trip_ma</code>) or a gain that does not fit</td>
+<td>Inconsistent fields (for example <code>i_run_ma &gt; i_trip_ma</code>, stall detection with voltage drive or without <code>ke_uv_s_per_rad</code>) or a gain that does not fit</td>
 </tr>
 <tr>
 <td><code>SSTEP_ERR_UNSUPPORTED</code></td>
@@ -2689,8 +2717,10 @@ outputs go off at once and <code>on_fault()</code> is called. May be called from
 <h3 id="sstep_get_status">sstep_get_status<a class="headerlink" href="#sstep_get_status" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">sstep_get_status</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="o">*</span><span class="w"> </span><span class="n">drv</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_status</span><span class="o">*</span><span class="w"> </span><span class="n">status</span><span class="p">);</span>
 </code></pre></div>
-<p>Read a snapshot of the state, faults, commanded motion and the last measurements in
-engineering units.</p>
+<p>Read a snapshot of the state, faults, commanded motion, the last measurements and the
+stall detector estimates in engineering units. With stall detection on it also converts
+the back-EMF estimate (a square root and a CORDIC arctangent, about 1200 instructions on
+Cortex-M4): call it from the slow-loop context, not from the fast loop.</p>
 <table>
 <thead>
 <tr>

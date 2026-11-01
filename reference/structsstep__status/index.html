@@ -1202,6 +1202,28 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#variable-emf_d_mv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable emf_d_mv
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-emf_q_mv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable emf_q_mv
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#variable-faults" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1235,10 +1257,43 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#variable-load_angle_cdeg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable load_angle_cdeg
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#variable-position" class="md-nav__link">
     <span class="md-ellipsis">
       
         variable position
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-rotor_velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable rotor_velocity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-stall_level_pct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable stall_level_pct
       
     </span>
   </a>
@@ -1327,6 +1382,14 @@
 </thead>
 <tbody>
 <tr>
+<td style="text-align: right;">int32_t</td>
+<td style="text-align: left;"><a href="#variable-emf_d_mv"><strong>emf_d_mv</strong></a>  <br><em>Filtered back-EMF estimate along the commanded current vector [mV]; 0 when stall detection is off.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">int32_t</td>
+<td style="text-align: left;"><a href="#variable-emf_q_mv"><strong>emf_q_mv</strong></a>  <br><em>Filtered back-EMF estimate 90 degrees ahead of the commanded current vector [mV]; 0 when stall detection is off.</em></td>
+</tr>
+<tr>
 <td style="text-align: right;">uint16_t</td>
 <td style="text-align: left;"><a href="#variable-faults"><strong>faults</strong></a>  <br><em>Active</em> <a href="../group__sstep__defs/#define-sstep_fault_overcurrent"><em><strong>SSTEP_FAULT_OVERCURRENT</strong></em></a> <em>... flags.</em></td>
 </tr>
@@ -1340,7 +1403,19 @@
 </tr>
 <tr>
 <td style="text-align: right;">int32_t</td>
+<td style="text-align: left;"><a href="#variable-load_angle_cdeg"><strong>load_angle_cdeg</strong></a>  <br><em>Estimated load angle, commanded minus rotor electrical angle [0.01 deg], same sign as the motor torque.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">int32_t</td>
 <td style="text-align: left;"><a href="#variable-position"><strong>position</strong></a>  <br><em>Commanded position [microsteps].</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">int32_t</td>
+<td style="text-align: left;"><a href="#variable-rotor_velocity"><strong>rotor_velocity</strong></a>  <br><em>Estimated rotor velocity [microsteps/s], from the back-EMF magnitude; 0 when stall detection is off.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint8_t</td>
+<td style="text-align: left;"><a href="#variable-stall_level_pct"><strong>stall_level_pct</strong></a>  <br><em>Stall detector level, 0 .</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">enum <a href="../group__sstep__defs/#enum-sstep_state"><strong>sstep_state</strong></a></td>
@@ -1361,51 +1436,82 @@
 </tbody>
 </table>
 <h2 id="public-attributes-documentation">Public Attributes Documentation<a class="headerlink" href="#public-attributes-documentation" title="Permanent link">&para;</a></h2>
+<h3 id="variable-emf_d_mv">variable emf_d_mv<a class="headerlink" href="#variable-emf_d_mv" title="Permanent link">&para;</a></h3>
+<p><em>Filtered back-EMF estimate along the commanded current vector [mV]; 0 when stall detection is off.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">emf_d_mv</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-emf_q_mv">variable emf_q_mv<a class="headerlink" href="#variable-emf_q_mv" title="Permanent link">&para;</a></h3>
+<p><em>Filtered back-EMF estimate 90 degrees ahead of the commanded current vector [mV]; 0 when stall detection is off.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">emf_q_mv</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
 <h3 id="variable-faults">variable faults<a class="headerlink" href="#variable-faults" title="Permanent link">&para;</a></h3>
 <p><em>Active</em> <a href="../group__sstep__defs/#define-sstep_fault_overcurrent"><em><strong>SSTEP_FAULT_OVERCURRENT</strong></em></a> <em>... flags.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">faults</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">faults</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-i_a_ma">variable i_a_ma<a class="headerlink" href="#variable-i_a_ma" title="Permanent link">&para;</a></h3>
 <p><em>Last measured phase A current [mA].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">i_a_ma</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">i_a_ma</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-i_b_ma">variable i_b_ma<a class="headerlink" href="#variable-i_b_ma" title="Permanent link">&para;</a></h3>
 <p><em>Last measured phase B current [mA].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">i_b_ma</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">i_b_ma</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-load_angle_cdeg">variable load_angle_cdeg<a class="headerlink" href="#variable-load_angle_cdeg" title="Permanent link">&para;</a></h3>
+<p><em>Estimated load angle, commanded minus rotor electrical angle [0.01 deg], same sign as the motor torque.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">load_angle_cdeg</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-position">variable position<a class="headerlink" href="#variable-position" title="Permanent link">&para;</a></h3>
 <p><em>Commanded position [microsteps].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">position</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">position</span><span class="p">;</span>
 </code></pre></div></p>
+<hr>
+
+<h3 id="variable-rotor_velocity">variable rotor_velocity<a class="headerlink" href="#variable-rotor_velocity" title="Permanent link">&para;</a></h3>
+<p><em>Estimated rotor velocity [microsteps/s], from the back-EMF magnitude; 0 when stall detection is off.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">rotor_velocity</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-stall_level_pct">variable stall_level_pct<a class="headerlink" href="#variable-stall_level_pct" title="Permanent link">&para;</a></h3>
+<p><em>Stall detector level, 0 .</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">stall_level_pct</span><span class="p">;</span>
+</code></pre></div></p>
+<p>. 100 % of the trip. </p>
 <hr>
 
 <h3 id="variable-state">variable state<a class="headerlink" href="#variable-state" title="Permanent link">&para;</a></h3>
 <p><em>Driver state.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">sstep_state</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">state</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">sstep_state</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">state</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-target">variable target<a class="headerlink" href="#variable-target" title="Permanent link">&para;</a></h3>
 <p><em>Target of the current move [microsteps].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">target</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">target</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-vbus_mv">variable vbus_mv<a class="headerlink" href="#variable-vbus_mv" title="Permanent link">&para;</a></h3>
 <p><em>Last measured bus voltage [mV].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">vbus_mv</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">vbus_mv</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-velocity">variable velocity<a class="headerlink" href="#variable-velocity" title="Permanent link">&para;</a></h3>
 <p><em>Commanded velocity [microsteps/s].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">velocity</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_status</span><span class="o">::</span><span class="n">velocity</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 

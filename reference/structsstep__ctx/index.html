@@ -1301,10 +1301,76 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#variable-emf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable emf
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-emf_a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable emf_a
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-emf_alpha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable emf_alpha
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-emf_b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable emf_b
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-emf_off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable emf_off
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#variable-faults" class="md-nav__link">
     <span class="md-ellipsis">
       
         variable faults
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-ff_cmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable ff_cmd
       
     </span>
   </a>
@@ -1360,6 +1426,17 @@
     <span class="md-ellipsis">
       
         variable i_meas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-i_prev" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable i_prev
       
     </span>
   </a>
@@ -1521,6 +1598,39 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#variable-stall_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable stall_count
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-stall_emf_mv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable stall_emf_mv
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-stall_ticks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable stall_ticks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#variable-state" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1536,6 +1646,17 @@
     <span class="md-ellipsis">
       
         variable still
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-v_hist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable v_hist
       
     </span>
   </a>
@@ -1569,6 +1690,17 @@
     <span class="md-ellipsis">
       
         variable vbus_raw
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-vel_cmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable vel_cmd
       
     </span>
   </a>
@@ -1645,8 +1777,32 @@
 <td style="text-align: left;"><a href="#variable-cur"><strong>cur</strong></a>  <br><em>Setpoint in use.</em></td>
 </tr>
 <tr>
+<td style="text-align: right;"><a href="../group__sstep__math/#typedef-sstep_integ_t"><strong>sstep_integ_t</strong></a></td>
+<td style="text-align: left;"><a href="#variable-emf"><strong>emf</strong></a>  <br><em>Filtered back-EMF, d and q axis [pu V].</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">struct <a href="../structsstep__gain/"><strong>sstep_gain</strong></a></td>
+<td style="text-align: left;"><a href="#variable-emf_a"><strong>emf_a</strong></a>  <br><em>L / Ts + R / 2 [pu V / pu A].</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">struct <a href="../structsstep__gain/"><strong>sstep_gain</strong></a></td>
+<td style="text-align: left;"><a href="#variable-emf_alpha"><strong>emf_alpha</strong></a>  <br><em>Ts / tau of the back-EMF filter.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">struct <a href="../structsstep__gain/"><strong>sstep_gain</strong></a></td>
+<td style="text-align: left;"><a href="#variable-emf_b"><strong>emf_b</strong></a>  <br><em>L / Ts - R / 2 [pu V / pu A].</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">int64_t</td>
+<td style="text-align: left;"><a href="#variable-emf_off"><strong>emf_off</strong></a>  <br><em>Mean back-EMF at rest, d and q [mV * 2^16].</em></td>
+</tr>
+<tr>
 <td style="text-align: right;">volatile uint16_t</td>
 <td style="text-align: left;"><a href="#variable-faults"><strong>faults</strong></a>  <br><em>Active faults.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="../group__sstep__math/#typedef-sstep_real_t"><strong>sstep_real_t</strong></a></td>
+<td style="text-align: left;"><a href="#variable-ff_cmd"><strong>ff_cmd</strong></a>  <br><em>Back-EMF of vel_cmd [pu V].</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">struct <a href="../structsstep__gain/"><strong>sstep_gain</strong></a></td>
@@ -1667,6 +1823,10 @@
 <tr>
 <td style="text-align: right;"><a href="../group__sstep__math/#typedef-sstep_real_t"><strong>sstep_real_t</strong></a></td>
 <td style="text-align: left;"><a href="#variable-i_meas"><strong>i_meas</strong></a>  <br><em>Last measured phase currents [pu].</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="../group__sstep__math/#typedef-sstep_real_t"><strong>sstep_real_t</strong></a></td>
+<td style="text-align: left;"><a href="#variable-i_prev"><strong>i_prev</strong></a>  <br><em>Phase currents of the previous period [pu].</em></td>
 </tr>
 <tr>
 <td style="text-align: right;"><a href="../group__sstep__math/#typedef-sstep_real_t"><strong>sstep_real_t</strong></a></td>
@@ -1725,12 +1885,28 @@
 <td style="text-align: left;"><a href="#variable-sp_pending"><strong>sp_pending</strong></a>  <br><em>1: sp[1 - sp_active] is complete and new.</em></td>
 </tr>
 <tr>
+<td style="text-align: right;">uint32_t</td>
+<td style="text-align: left;"><a href="#variable-stall_count"><strong>stall_count</strong></a>  <br><em>Stall detector up/down counter.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">int32_t</td>
+<td style="text-align: left;"><a href="#variable-stall_emf_mv"><strong>stall_emf_mv</strong></a>  <br><em>Back-EMF of stall_speed [mV].</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint32_t</td>
+<td style="text-align: left;"><a href="#variable-stall_ticks"><strong>stall_ticks</strong></a>  <br><em>Slow periods of stall to trip; 0 = detection off.</em></td>
+</tr>
+<tr>
 <td style="text-align: right;">enum <a href="../group__sstep__defs/#enum-sstep_state"><strong>sstep_state</strong></a></td>
 <td style="text-align: left;"><a href="#variable-state"><strong>state</strong></a>  <br><em>Driver state.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">uint32_t</td>
 <td style="text-align: left;"><a href="#variable-still"><strong>still</strong></a>  <br><em>Slow periods at standstill.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;"><a href="../group__sstep__math/#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a></td>
+<td style="text-align: left;"><a href="#variable-v_hist"><strong>v_hist</strong></a>  <br><em>Applied phase voltages computed 1 and 2 periods ago [pu V].</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">uint16_t</td>
@@ -1743,6 +1919,10 @@
 <tr>
 <td style="text-align: right;">volatile uint16_t</td>
 <td style="text-align: left;"><a href="#variable-vbus_raw"><strong>vbus_raw</strong></a>  <br><em>Last bus voltage [ADC counts].</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">int32_t</td>
+<td style="text-align: left;"><a href="#variable-vel_cmd"><strong>vel_cmd</strong></a>  <br><em>Commanded velocity of the period in use [microsteps/s].</em></td>
 </tr>
 </tbody>
 </table>
@@ -1797,153 +1977,225 @@
 </code></pre></div></p>
 <hr>
 
+<h3 id="variable-emf">variable emf<a class="headerlink" href="#variable-emf" title="Permanent link">&para;</a></h3>
+<p><em>Filtered back-EMF, d and q axis [pu V].</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">sstep_integ_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">emf</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-emf_a">variable emf_a<a class="headerlink" href="#variable-emf_a" title="Permanent link">&para;</a></h3>
+<p><em>L / Ts + R / 2 [pu V / pu A].</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">emf_a</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-emf_alpha">variable emf_alpha<a class="headerlink" href="#variable-emf_alpha" title="Permanent link">&para;</a></h3>
+<p><em>Ts / tau of the back-EMF filter.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">emf_alpha</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-emf_b">variable emf_b<a class="headerlink" href="#variable-emf_b" title="Permanent link">&para;</a></h3>
+<p><em>L / Ts - R / 2 [pu V / pu A].</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">emf_b</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-emf_off">variable emf_off<a class="headerlink" href="#variable-emf_off" title="Permanent link">&para;</a></h3>
+<p><em>Mean back-EMF at rest, d and q [mV * 2^16].</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">int64_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">emf_off</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+</code></pre></div></p>
+<hr>
+
 <h3 id="variable-faults">variable faults<a class="headerlink" href="#variable-faults" title="Permanent link">&para;</a></h3>
 <p><em>Active faults.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">faults</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">faults</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-ff_cmd">variable ff_cmd<a class="headerlink" href="#variable-ff_cmd" title="Permanent link">&para;</a></h3>
+<p><em>Back-EMF of vel_cmd [pu V].</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">sstep_real_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">ff_cmd</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-ff_gain">variable ff_gain<a class="headerlink" href="#variable-ff_gain" title="Permanent link">&para;</a></h3>
 <p><em>Feed-forward per microstep/s [pu].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">ff_gain</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">ff_gain</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-hold_active">variable hold_active<a class="headerlink" href="#variable-hold_active" title="Permanent link">&para;</a></h3>
 <p><em>Hold current applied.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">bool</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">hold_active</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kt">bool</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">hold_active</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-hold_ticks">variable hold_ticks<a class="headerlink" href="#variable-hold_ticks" title="Permanent link">&para;</a></h3>
 <p><em>Slow periods at standstill before hold.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">hold_ticks</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">hold_ticks</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-i_hold">variable i_hold<a class="headerlink" href="#variable-i_hold" title="Permanent link">&para;</a></h3>
 <p><em>Hold current [pu].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">sstep_real_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">i_hold</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">sstep_real_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">i_hold</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-i_meas">variable i_meas<a class="headerlink" href="#variable-i_meas" title="Permanent link">&para;</a></h3>
 <p><em>Last measured phase currents [pu].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">sstep_real_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">i_meas</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">sstep_real_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">i_meas</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-i_prev">variable i_prev<a class="headerlink" href="#variable-i_prev" title="Permanent link">&para;</a></h3>
+<p><em>Phase currents of the previous period [pu].</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">sstep_real_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">i_prev</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-i_run">variable i_run<a class="headerlink" href="#variable-i_run" title="Permanent link">&para;</a></h3>
 <p><em>Run current [pu].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">sstep_real_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">i_run</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">sstep_real_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">i_run</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-i_trip_counts">variable i_trip_counts<a class="headerlink" href="#variable-i_trip_counts" title="Permanent link">&para;</a></h3>
 <p><em>Overcurrent trip [ADC counts from zero].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">i_trip_counts</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">i_trip_counts</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-integ">variable integ<a class="headerlink" href="#variable-integ" title="Permanent link">&para;</a></h3>
 <p><em>PI integrators [pu V].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">sstep_integ_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">integ</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="n">sstep_integ_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">integ</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-inv_vbus">variable inv_vbus<a class="headerlink" href="#variable-inv_vbus" title="Permanent link">&para;</a></h3>
 <p><em>Last V_base / bus voltage.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">inv_vbus</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">inv_vbus</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-kb">variable kb<a class="headerlink" href="#variable-kb" title="Permanent link">&para;</a></h3>
 <p><em>Anti-windup gain Ts / Tt.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">kb</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">kb</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-ki">variable ki<a class="headerlink" href="#variable-ki" title="Permanent link">&para;</a></h3>
 <p><em>Integral gain per fast loop period.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">ki</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">ki</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-kp">variable kp<a class="headerlink" href="#variable-kp" title="Permanent link">&para;</a></h3>
 <p><em>Proportional gain [pu V / pu A].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">kp</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">kp</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-mo">variable mo<a class="headerlink" href="#variable-mo" title="Permanent link">&para;</a></h3>
 <p><em>Motion generator.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_motion</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">mo</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_motion</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">mo</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-r_pu">variable r_pu<a class="headerlink" href="#variable-r_pu" title="Permanent link">&para;</a></h3>
 <p><em>Phase resistance [pu] (voltage drive).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">r_pu</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_gain</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">r_pu</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-ratio">variable ratio<a class="headerlink" href="#variable-ratio" title="Permanent link">&para;</a></h3>
 <p><em>Fast loop periods per slow loop period.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">ratio</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">ratio</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-ready">variable ready<a class="headerlink" href="#variable-ready" title="Permanent link">&para;</a></h3>
 <p><em>SSTEP_READY after a successful</em> <a href="../group__sstep__api/#function-sstep_init"><em><strong>sstep_init()</strong></em></a> <em>.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">ready</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">ready</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-sp">variable sp<a class="headerlink" href="#variable-sp" title="Permanent link">&para;</a></h3>
 <p><em>Setpoints; the fast loop owns sp[sp_active].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_setpoint</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">sp</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_setpoint</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">sp</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-sp_active">variable sp_active<a class="headerlink" href="#variable-sp_active" title="Permanent link">&para;</a></h3>
 <p><em>Buffer in use by the fast loop.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">sp_active</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">sp_active</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-sp_pending">variable sp_pending<a class="headerlink" href="#variable-sp_pending" title="Permanent link">&para;</a></h3>
 <p><em>1: sp[1 - sp_active] is complete and new.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">sp_pending</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">sp_pending</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-stall_count">variable stall_count<a class="headerlink" href="#variable-stall_count" title="Permanent link">&para;</a></h3>
+<p><em>Stall detector up/down counter.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">stall_count</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-stall_emf_mv">variable stall_emf_mv<a class="headerlink" href="#variable-stall_emf_mv" title="Permanent link">&para;</a></h3>
+<p><em>Back-EMF of stall_speed [mV].</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">stall_emf_mv</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-stall_ticks">variable stall_ticks<a class="headerlink" href="#variable-stall_ticks" title="Permanent link">&para;</a></h3>
+<p><em>Slow periods of stall to trip; 0 = detection off.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">stall_ticks</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-state">variable state<a class="headerlink" href="#variable-state" title="Permanent link">&para;</a></h3>
 <p><em>Driver state.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">sstep_state</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">state</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">sstep_state</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">state</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-still">variable still<a class="headerlink" href="#variable-still" title="Permanent link">&para;</a></h3>
 <p><em>Slow periods at standstill.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">still</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">still</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-v_hist">variable v_hist<a class="headerlink" href="#variable-v_hist" title="Permanent link">&para;</a></h3>
+<p><em>Applied phase voltages computed 1 and 2 periods ago [pu V].</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="n">sstep_acc_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">v_hist</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">];</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-vbus_max_raw">variable vbus_max_raw<a class="headerlink" href="#variable-vbus_max_raw" title="Permanent link">&para;</a></h3>
 <p><em>Overvoltage trip [ADC counts], 0 = off.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_max_raw</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_max_raw</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-vbus_min_raw">variable vbus_min_raw<a class="headerlink" href="#variable-vbus_min_raw" title="Permanent link">&para;</a></h3>
 <p><em>Undervoltage trip [ADC counts], 0 = off.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_min_raw</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_min_raw</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-vbus_raw">variable vbus_raw<a class="headerlink" href="#variable-vbus_raw" title="Permanent link">&para;</a></h3>
 <p><em>Last bus voltage [ADC counts].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_raw</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_raw</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-vel_cmd">variable vel_cmd<a class="headerlink" href="#variable-vel_cmd" title="Permanent link">&para;</a></h3>
+<p><em>Commanded velocity of the period in use [microsteps/s].</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vel_cmd</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 

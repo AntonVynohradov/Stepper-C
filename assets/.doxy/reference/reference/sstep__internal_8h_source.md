@@ -126,6 +126,12 @@ struct sstep_ctx
     uint16_t ratio;            
     uint32_t hold_ticks;       
     uint8_t angle_shift;       
+    /* Stall detection constants, sstep_stall_*() */
+    struct sstep_gain emf_a;     
+    struct sstep_gain emf_b;     
+    struct sstep_gain emf_alpha; 
+    uint32_t stall_ticks;        
+    int32_t stall_emf_mv;        
     /* Slow loop -> fast loop hand-off (double buffer) */
     struct sstep_setpoint sp[2]; 
     volatile uint8_t sp_active;  
@@ -137,12 +143,19 @@ struct sstep_ctx
     sstep_real_t i_meas[2];           
     volatile uint16_t vbus_raw;       
     uint16_t compare[SSTEP_LEGS_MAX]; 
+    sstep_real_t i_prev[2];           
+    sstep_acc_t v_hist[2][2];         
+    sstep_integ_t emf[2];             
     /* Slow loop state */
     struct sstep_motion mo;     
     sstep_angle_t angle_offset; 
     uint32_t still;             
     bool hold_active;           
     struct sstep_gain inv_vbus; 
+    int32_t vel_cmd;            
+    sstep_real_t ff_cmd;        
+    int64_t emf_off[2];         
+    uint32_t stall_count;       
     volatile uint16_t faults;        
     volatile enum sstep_state state; 
     uint32_t ready;                  
@@ -171,6 +184,15 @@ void sstep_bridge_map(enum sstep_topology topology, sstep_acc_t va, sstep_acc_t 
 uint8_t sstep_motion_step(struct sstep_motion* mo);
 
 uint32_t sstep_isqrt64(uint64_t x);
+
+void sstep_stall_reset(struct sstep_ctx* m);
+
+void sstep_stall_observe(struct sstep_ctx* m, const struct sstep_sincos* sc,
+                         const sstep_acc_t v_applied[2]);
+
+bool sstep_stall_check(struct sstep_ctx* m);
+
+void sstep_stall_status(const struct sstep_ctx* m, struct sstep_status* status);
 
 #ifdef __cplusplus
 }

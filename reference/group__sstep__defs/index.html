@@ -1362,6 +1362,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#define-sstep_fault_stall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_FAULT_STALL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#define-sstep_fault_undervoltage" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1485,6 +1496,10 @@
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_fault_stall"><strong>SSTEP_FAULT_STALL</strong></a>  <code>0x0020U</code><br><em>The rotor does not follow the commanded electrical angle: lost synchronism in motion, or rotor motion while the command is at rest (sensorless back-EMF observer, enabled with</em> <a href="../structsstep__ctrl__cfg/#variable-stall_time_ms"><em><strong>sstep_ctrl_cfg::stall_time_ms</strong></em></a> <em>).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
 <td style="text-align: left;"><a href="./#define-sstep_fault_undervoltage"><strong>SSTEP_FAULT_UNDERVOLTAGE</strong></a>  <code>0x0004U</code><br><em>Bus voltage below the configured minimum.</em></td>
 </tr>
 <tr>
@@ -1576,21 +1591,27 @@
 </code></pre></div></p>
 <hr>
 
+<h3 id="define-sstep_fault_stall">define SSTEP_FAULT_STALL<a class="headerlink" href="#define-sstep_fault_stall" title="Permanent link">&para;</a></h3>
+<p><em>The rotor does not follow the commanded electrical angle: lost synchronism in motion, or rotor motion while the command is at rest (sensorless back-EMF observer, enabled with</em> <a href="../structsstep__ctrl__cfg/#variable-stall_time_ms"><em><strong>sstep_ctrl_cfg::stall_time_ms</strong></em></a> <em>).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>#define SSTEP_FAULT_STALL `0x0020U`
+</code></pre></div></p>
+<hr>
+
 <h3 id="define-sstep_fault_undervoltage">define SSTEP_FAULT_UNDERVOLTAGE<a class="headerlink" href="#define-sstep_fault_undervoltage" title="Permanent link">&para;</a></h3>
 <p><em>Bus voltage below the configured minimum.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>#define SSTEP_FAULT_UNDERVOLTAGE `0x0004U`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>#define SSTEP_FAULT_UNDERVOLTAGE `0x0004U`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_legs_max">define SSTEP_LEGS_MAX<a class="headerlink" href="#define-sstep_legs_max" title="Permanent link">&para;</a></h3>
 <p><em>Number of half-bridge legs of the largest supported topology.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>#define SSTEP_LEGS_MAX `4U`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>#define SSTEP_LEGS_MAX `4U`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_ok">define SSTEP_OK<a class="headerlink" href="#define-sstep_ok" title="Permanent link">&para;</a></h3>
 <p><em>Success.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>#define SSTEP_OK `0`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>#define SSTEP_OK `0`
 </code></pre></div></p>
 <hr>
 

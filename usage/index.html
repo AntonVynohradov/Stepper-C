@@ -660,6 +660,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#detecting-a-stall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detecting a stall
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#handling-faults" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1347,6 +1358,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#detecting-a-stall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detecting a stall
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#handling-faults" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1543,11 +1565,64 @@ several relative moves given in a row add up.</p>
 <td>mV</td>
 <td>Last measured bus voltage</td>
 </tr>
+<tr>
+<td><code>emf_d_mv</code>, <code>emf_q_mv</code></td>
+<td>mV</td>
+<td>Back-EMF estimate along and 90° ahead of the commanded current (stall detection)</td>
+</tr>
+<tr>
+<td><code>rotor_velocity</code></td>
+<td>microsteps/s</td>
+<td>Rotor velocity estimated from the back-EMF (stall detection)</td>
+</tr>
+<tr>
+<td><code>load_angle_cdeg</code></td>
+<td>0.01°</td>
+<td>Estimated load angle in motion (stall detection)</td>
+</tr>
+<tr>
+<td><code>stall_level_pct</code></td>
+<td>%</td>
+<td>Stall detector level; the fault comes at 100</td>
+</tr>
 </tbody>
 </table>
-<p>Position and velocity are <em>commanded</em> values. Without an encoder the library cannot see
-a lost step; keep the load angle reserve with enough current and a sensible acceleration
-(<a href="../motor-control/#motor-model">Motor Control</a>).</p>
+<p>Position and velocity are <em>commanded</em> values. There is no encoder: with stall detection
+the library reports a rotor that stops following the command (next section); without it
+a lost step goes unnoticed. Either way, keep the load angle reserve with enough current
+and a sensible acceleration (<a href="../motor-control/#motor-model">Motor Control</a>).</p>
+<h2 id="detecting-a-stall">Detecting a stall<a class="headerlink" href="#detecting-a-stall" title="Permanent link">&para;</a></h2>
+<p>Stall detection estimates the back-EMF of the motor in the fast loop and raises
+<code>SSTEP_FAULT_STALL</code> when the rotor stops in motion, falls out of synchronism, or turns
+while the command is at rest (for example a load that the hold current cannot hold). It
+is off unless <code>stall_time_ms</code> is set, and needs current drive and <code>ke_uv_s_per_rad</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_config</span><span class="w"> </span><span class="n">with_stall_detection</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_config</span><span class="w"> </span><span class="n">cfg</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="p">{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="n">cfg</span><span class="p">.</span><span class="n">ctrl</span><span class="p">.</span><span class="n">stall_time_ms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50U</span><span class="p">;</span><span class="w">     </span><span class="cm">/* report after 50 ms */</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="n">cfg</span><span class="p">.</span><span class="n">ctrl</span><span class="p">.</span><span class="n">stall_filter_us</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000U</span><span class="p">;</span><span class="w"> </span><span class="cm">/* back-EMF filter */</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="n">cfg</span><span class="p">.</span><span class="n">ctrl</span><span class="p">.</span><span class="n">stall_speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1600U</span><span class="p">;</span><span class="w">     </span><span class="cm">/* 0.5 rev/s at 16 microsteps: slip threshold */</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="n">cfg</span><span class="p">.</span><span class="n">ctrl</span><span class="p">.</span><span class="n">stall_sync_pct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50U</span><span class="p">;</span><span class="w">    </span><span class="cm">/* in motion: back-EMF &gt;= 50 % of Ke * speed */</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">cfg</span><span class="p">;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">}</span>
+</code></pre></div>
+<p>The fault is handled like the others (next section): the outputs are off and the
+commanded position no longer matches the rotor, so home the axis again after
+<code>sstep_clear_faults()</code>. Below <code>stall_speed</code> only a rotor faster than the command is
+detected; run homing moves against a hard stop faster than <code>stall_speed</code>.</p>
+<p>While tuning, log the estimates from the slow-loop context and look at the margin:
+<code>stall_level_pct</code> should stay well below 100 in every normal operating point, and
+<code>load_angle_cdeg</code> shows how much torque reserve is left.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">log_stall_margin</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">{</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_status</span><span class="w"> </span><span class="n">st</span><span class="p">;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">sstep_get_status</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">st</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SSTEP_OK</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">        </span><span class="n">board_log_stall</span><span class="p">(</span><span class="n">st</span><span class="p">.</span><span class="n">velocity</span><span class="p">,</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">rotor_velocity</span><span class="p">,</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">load_angle_cdeg</span><span class="p">,</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">stall_level_pct</span><span class="p">);</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="p">}</span>
+</code></pre></div>
+<p>The algorithm, the choice of the four values and the measured results are in
+<a href="../motor-control/#stall-detection">Stall detection</a>.</p>
 <h2 id="handling-faults">Handling faults<a class="headerlink" href="#handling-faults" title="Permanent link">&para;</a></h2>
 <p>A fault switches the outputs off at once, sets <code>SSTEP_STATE_FAULT</code> and calls
 <code>on_fault()</code> with the new flags. Commands then return <code>SSTEP_ERR_STATE</code>.</p>
@@ -1585,37 +1660,42 @@ a lost step; keep the load angle reserve with enough current and a sensible acce
 <td><code>sstep_report_fault()</code></td>
 <td>Gate driver fault pin, over-temperature</td>
 </tr>
+<tr>
+<td><code>SSTEP_FAULT_STALL</code></td>
+<td>Slow loop, stall detection on</td>
+<td>Load above the torque, hard stop, rotor slipping at the hold current</td>
+</tr>
 </tbody>
 </table>
 <p>Report a gate driver fault from its interrupt:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">EXTI15_10_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kt">void</span><span class="w"> </span><span class="nf">EXTI15_10_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="p">{</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">board_driver_fault</span><span class="p">())</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">        </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">sstep_report_fault</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">,</span><span class="w"> </span><span class="n">SSTEP_FAULT_EXTERNAL</span><span class="p">);</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">EXTI15_10_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kt">void</span><span class="w"> </span><span class="nf">EXTI15_10_IRQHandler</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">{</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">board_driver_fault</span><span class="p">())</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">        </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">sstep_report_fault</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">,</span><span class="w"> </span><span class="n">SSTEP_FAULT_EXTERNAL</span><span class="p">);</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">}</span>
 </code></pre></div>
 <p>To recover, remove the cause, then:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">sstep_clear_faults</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SSTEP_OK</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">sstep_enable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SSTEP_OK</span><span class="p">))</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">{</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">board_led</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">sstep_clear_faults</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SSTEP_OK</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">sstep_enable</span><span class="p">(</span><span class="o">&amp;</span><span class="n">motor</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SSTEP_OK</span><span class="p">))</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">{</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="n">board_led</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">}</span>
 </code></pre></div>
 <p><code>sstep_clear_faults()</code> returns to <code>SSTEP_STATE_DISABLED</code>; the position is kept, so the
 motor continues from where it was commanded (it may have been moved by hand meanwhile).</p>
 <h2 id="several-motors">Several motors<a class="headerlink" href="#several-motors" title="Permanent link">&para;</a></h2>
 <p>Each motor has its own instance and its own callbacks; use <code>context</code> to tell the
 callbacks which hardware they drive:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">axis_ids</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0U</span><span class="p">,</span><span class="w"> </span><span class="mi">1U</span><span class="p">};</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">axis_pwm_write</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">compare</span><span class="p">[</span><span class="n">SSTEP_LEGS_MAX</span><span class="p">])</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">{</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="n">board_pwm_set_axis</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">compare</span><span class="p">);</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">axis_ids</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0U</span><span class="p">,</span><span class="w"> </span><span class="mi">1U</span><span class="p">};</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">axis_pwm_write</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">compare</span><span class="p">[</span><span class="n">SSTEP_LEGS_MAX</span><span class="p">])</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">{</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="n">board_pwm_set_axis</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">compare</span><span class="p">);</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">}</span>
 </code></pre></div>
 <p>with <code>.hal.context = (void*)&amp;axis_ids[k]</code> in the configuration of axis <code>k</code>. The fast loops
 of several axes may run in one interrupt one after the other, or in separate interrupts.</p>
@@ -1694,6 +1774,14 @@ of several axes may run in one interrupt one after the other, or in separate int
 <tr>
 <td>Current settles at the wrong value</td>
 <td><code>i_full_scale_ma</code> / <code>adc_i_span</code> do not match the shunt and amplifier</td>
+</tr>
+<tr>
+<td><code>SSTEP_FAULT_STALL</code> at enable or at the run → hold change, rotor at rest</td>
+<td>Observer offset above <span class="arithmatex">\(e\)</span> times the slip threshold (wrong <code>r_mohm</code>, <code>adc_i_zero</code>): check <code>emf_d_mv</code> at rest, raise <code>stall_speed</code></td>
+</tr>
+<tr>
+<td><code>SSTEP_FAULT_STALL</code> at speed although the motor runs</td>
+<td><code>stall_sync_pct</code> above the synchronous ratio at the voltage limit or with heavy load: check <code>load_angle_cdeg</code>, lower <code>stall_sync_pct</code></td>
 </tr>
 <tr>
 <td><code>sstep_init()</code> returns <code>SSTEP_ERR_CONFIG</code></td>

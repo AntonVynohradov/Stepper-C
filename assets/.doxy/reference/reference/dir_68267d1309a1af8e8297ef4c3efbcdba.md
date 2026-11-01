@@ -29,6 +29,7 @@
 | file | [**sstep\_motion.c**](sstep__motion_8c.md) <br> |
 | file | [**sstep\_sin\_table.c**](sstep__sin__table_8c.md) <br> |
 | file | [**sstep\_sin\_table.h**](sstep__sin__table_8h.md) <br> |
+| file | [**sstep\_stall.c**](sstep__stall_8c.md) <br> |
 
 
 

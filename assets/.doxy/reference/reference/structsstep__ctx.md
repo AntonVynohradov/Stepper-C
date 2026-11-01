@@ -44,12 +44,19 @@ _Driver state behind the opaque_ [_**sstep**_](structsstep.md) _._[More...](#det
 |  struct [**sstep\_config**](structsstep__config.md) | [**cfg**](#variable-cfg)  <br>_Copy of the configuration._  |
 |  uint16\_t | [**compare**](#variable-compare)  <br>_Last compare values._  |
 |  struct [**sstep\_setpoint**](structsstep__setpoint.md) | [**cur**](#variable-cur)  <br>_Setpoint in use._  |
+|  [**sstep\_integ\_t**](group__sstep__math.md#typedef-sstep_integ_t) | [**emf**](#variable-emf)  <br>_Filtered back-EMF, d and q axis [pu V]._  |
+|  struct [**sstep\_gain**](structsstep__gain.md) | [**emf\_a**](#variable-emf_a)  <br>_L / Ts + R / 2 [pu V / pu A]._  |
+|  struct [**sstep\_gain**](structsstep__gain.md) | [**emf\_alpha**](#variable-emf_alpha)  <br>_Ts / tau of the back-EMF filter._  |
+|  struct [**sstep\_gain**](structsstep__gain.md) | [**emf\_b**](#variable-emf_b)  <br>_L / Ts - R / 2 [pu V / pu A]._  |
+|  int64\_t | [**emf\_off**](#variable-emf_off)  <br>_Mean back-EMF at rest, d and q [mV \* 2^16]._  |
 |  volatile uint16\_t | [**faults**](#variable-faults)  <br>_Active faults._  |
+|  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**ff\_cmd**](#variable-ff_cmd)  <br>_Back-EMF of vel\_cmd [pu V]._  |
 |  struct [**sstep\_gain**](structsstep__gain.md) | [**ff\_gain**](#variable-ff_gain)  <br>_Feed-forward per microstep/s [pu]._  |
 |  bool | [**hold\_active**](#variable-hold_active)  <br>_Hold current applied._  |
 |  uint32\_t | [**hold\_ticks**](#variable-hold_ticks)  <br>_Slow periods at standstill before hold._  |
 |  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**i\_hold**](#variable-i_hold)  <br>_Hold current [pu]._  |
 |  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**i\_meas**](#variable-i_meas)  <br>_Last measured phase currents [pu]._  |
+|  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**i\_prev**](#variable-i_prev)  <br>_Phase currents of the previous period [pu]._  |
 |  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**i\_run**](#variable-i_run)  <br>_Run current [pu]._  |
 |  uint16\_t | [**i\_trip\_counts**](#variable-i_trip_counts)  <br>_Overcurrent trip [ADC counts from zero]._  |
 |  [**sstep\_integ\_t**](group__sstep__math.md#typedef-sstep_integ_t) | [**integ**](#variable-integ)  <br>_PI integrators [pu V]._  |
@@ -64,11 +71,16 @@ _Driver state behind the opaque_ [_**sstep**_](structsstep.md) _._[More...](#det
 |  struct [**sstep\_setpoint**](structsstep__setpoint.md) | [**sp**](#variable-sp)  <br>_Setpoints; the fast loop owns sp[sp\_active]._  |
 |  volatile uint8\_t | [**sp\_active**](#variable-sp_active)  <br>_Buffer in use by the fast loop._  |
 |  volatile uint8\_t | [**sp\_pending**](#variable-sp_pending)  <br>_1: sp[1 - sp\_active] is complete and new._  |
+|  uint32\_t | [**stall\_count**](#variable-stall_count)  <br>_Stall detector up/down counter._  |
+|  int32\_t | [**stall\_emf\_mv**](#variable-stall_emf_mv)  <br>_Back-EMF of stall\_speed [mV]._  |
+|  uint32\_t | [**stall\_ticks**](#variable-stall_ticks)  <br>_Slow periods of stall to trip; 0 = detection off._  |
 |  enum [**sstep\_state**](group__sstep__defs.md#enum-sstep_state) | [**state**](#variable-state)  <br>_Driver state._  |
 |  uint32\_t | [**still**](#variable-still)  <br>_Slow periods at standstill._  |
+|  [**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t) | [**v\_hist**](#variable-v_hist)  <br>_Applied phase voltages computed 1 and 2 periods ago [pu V]._  |
 |  uint16\_t | [**vbus\_max\_raw**](#variable-vbus_max_raw)  <br>_Overvoltage trip [ADC counts], 0 = off._  |
 |  uint16\_t | [**vbus\_min\_raw**](#variable-vbus_min_raw)  <br>_Undervoltage trip [ADC counts], 0 = off._  |
 |  volatile uint16\_t | [**vbus\_raw**](#variable-vbus_raw)  <br>_Last bus voltage [ADC counts]._  |
+|  int32\_t | [**vel\_cmd**](#variable-vel_cmd)  <br>_Commanded velocity of the period in use [microsteps/s]._  |
 
 
 
@@ -237,11 +249,95 @@ struct sstep_setpoint sstep_ctx::cur;
 
 
 
+### variable emf 
+
+_Filtered back-EMF, d and q axis [pu V]._ 
+```C++
+sstep_integ_t sstep_ctx::emf[2];
+```
+
+
+
+
+<hr>
+
+
+
+### variable emf\_a 
+
+_L / Ts + R / 2 [pu V / pu A]._ 
+```C++
+struct sstep_gain sstep_ctx::emf_a;
+```
+
+
+
+
+<hr>
+
+
+
+### variable emf\_alpha 
+
+_Ts / tau of the back-EMF filter._ 
+```C++
+struct sstep_gain sstep_ctx::emf_alpha;
+```
+
+
+
+
+<hr>
+
+
+
+### variable emf\_b 
+
+_L / Ts - R / 2 [pu V / pu A]._ 
+```C++
+struct sstep_gain sstep_ctx::emf_b;
+```
+
+
+
+
+<hr>
+
+
+
+### variable emf\_off 
+
+_Mean back-EMF at rest, d and q [mV \* 2^16]._ 
+```C++
+int64_t sstep_ctx::emf_off[2];
+```
+
+
+
+
+<hr>
+
+
+
 ### variable faults 
 
 _Active faults._ 
 ```C++
 volatile uint16_t sstep_ctx::faults;
+```
+
+
+
+
+<hr>
+
+
+
+### variable ff\_cmd 
+
+_Back-EMF of vel\_cmd [pu V]._ 
+```C++
+sstep_real_t sstep_ctx::ff_cmd;
 ```
 
 
@@ -312,6 +408,20 @@ sstep_real_t sstep_ctx::i_hold;
 _Last measured phase currents [pu]._ 
 ```C++
 sstep_real_t sstep_ctx::i_meas[2];
+```
+
+
+
+
+<hr>
+
+
+
+### variable i\_prev 
+
+_Phase currents of the previous period [pu]._ 
+```C++
+sstep_real_t sstep_ctx::i_prev[2];
 ```
 
 
@@ -517,6 +627,48 @@ volatile uint8_t sstep_ctx::sp_pending;
 
 
 
+### variable stall\_count 
+
+_Stall detector up/down counter._ 
+```C++
+uint32_t sstep_ctx::stall_count;
+```
+
+
+
+
+<hr>
+
+
+
+### variable stall\_emf\_mv 
+
+_Back-EMF of stall\_speed [mV]._ 
+```C++
+int32_t sstep_ctx::stall_emf_mv;
+```
+
+
+
+
+<hr>
+
+
+
+### variable stall\_ticks 
+
+_Slow periods of stall to trip; 0 = detection off._ 
+```C++
+uint32_t sstep_ctx::stall_ticks;
+```
+
+
+
+
+<hr>
+
+
+
 ### variable state 
 
 _Driver state._ 
@@ -536,6 +688,20 @@ enum sstep_state sstep_ctx::state;
 _Slow periods at standstill._ 
 ```C++
 uint32_t sstep_ctx::still;
+```
+
+
+
+
+<hr>
+
+
+
+### variable v\_hist 
+
+_Applied phase voltages computed 1 and 2 periods ago [pu V]._ 
+```C++
+sstep_acc_t sstep_ctx::v_hist[2][2];
 ```
 
 
@@ -578,6 +744,20 @@ uint16_t sstep_ctx::vbus_min_raw;
 _Last bus voltage [ADC counts]._ 
 ```C++
 volatile uint16_t sstep_ctx::vbus_raw;
+```
+
+
+
+
+<hr>
+
+
+
+### variable vel\_cmd 
+
+_Commanded velocity of the period in use [microsteps/s]._ 
+```C++
+int32_t sstep_ctx::vel_cmd;
 ```
 
 

@@ -8,9 +8,26 @@
 * **ACC\_HALF** ([**sstep\_bridge.c**](sstep__bridge_8c.md))
 
 
+## c
+
+* **CDEG\_PER\_TURN** ([**sstep\_stall.c**](sstep__stall_8c.md))
+* **CORDIC\_NORM** ([**sstep\_stall.c**](sstep__stall_8c.md))
+* **CORDIC\_STEPS** ([**sstep\_stall.c**](sstep__stall_8c.md))
+
+
 ## f
 
 * **FRAC\_BITS** ([**sstep\_math.c**](sstep__math_8c.md))
+
+
+## h
+
+* **HALF\_TURN** ([**sstep\_stall.c**](sstep__stall_8c.md))
+
+
+## o
+
+* **OFF\_ONE** ([**sstep\_stall.c**](sstep__stall_8c.md))
 
 
 ## q
@@ -48,8 +65,9 @@
 
 ## t
 
-* **TWO\_PI\_DEN** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
-* **TWO\_PI\_NUM** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
+* **TWO\_PI\_DEN** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md), [**sstep\_stall.c**](sstep__stall_8c.md))
+* **TWO\_PI\_NUM** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md), [**sstep\_stall.c**](sstep__stall_8c.md))
+* **TURN** ([**sstep\_stall.c**](sstep__stall_8c.md))
 
 
 ## v

@@ -82,7 +82,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_defs.h" line="113" column="1" bodyfile="inc/sstep_defs.h" bodystart="114" bodyend="119"/>
+        <location file="inc/sstep_defs.h" line="117" column="1" bodyfile="inc/sstep_defs.h" bodystart="118" bodyend="123"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="define">
@@ -230,6 +230,18 @@
         <inbodydescription>
         </inbodydescription>
         <location file="inc/sstep_defs.h" line="106" column="9" bodyfile="inc/sstep_defs.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__defs_1ga88d60a46d72e1ead7ce8e2b62feb417d" prot="public" static="no">
+        <name>SSTEP_FAULT_STALL</name>
+        <initializer>0x0020U</initializer>
+        <briefdescription>
+<para>The rotor does not follow the commanded electrical angle: lost synchronism in motion, or rotor motion while the command is at rest (sensorless back-EMF observer, enabled with <ref refid="structsstep__ctrl__cfg_1aef6458a978393e13733abe2ef5492375" kindref="member">sstep_ctrl_cfg::stall_time_ms</ref>). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="110" column="9" bodyfile="inc/sstep_defs.h" bodystart="110" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>

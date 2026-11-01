@@ -2,326 +2,334 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/LICENSE/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/about/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/api/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/architecture/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/changelog/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/configuration/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/extending/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/guide/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/integration/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/misra/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/motor-control/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/overview/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/usage/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/annotated/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/files/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structalign__ctx/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structalign__pub/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structsstep/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structsstep__bridge__out/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structsstep__callbacks/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structsstep__config/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structsstep__ctrl__cfg/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structsstep__ctx/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structsstep__motion/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structsstep__motor__cfg/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structsstep__sample/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structsstep__setpoint/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structsstep__stage__cfg/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structsstep__status/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/group__sstep__api/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/group__sstep__config/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/group__sstep__defs/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/group__sstep__math/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structsstep__gain/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/structsstep__sincos/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/dir_bfccd401955b95cf8c75461437045ac0/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__config_8h/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__config_8h_source/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__ctrl_8h/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__ctrl_8h_source/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__defs_8h/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__defs_8h_source/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/dir_68267d1309a1af8e8297ef4c3efbcdba/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__bridge_8c/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__bridge_8c_source/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__ctrl_8c/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__ctrl_8c_source/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__internal_8h/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__internal_8h_source/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__math_8c/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__math_8c_source/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__math_8h/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__math_8h_source/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__motion_8c/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__motion_8c_source/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__sin__table_8c/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__sin__table_8c_source/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__sin__table_8h/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__sin__table_8h_source/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
+    </url>
+    <url>
+         <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__stall_8c/</loc>
+         <lastmod>2026-11-01</lastmod>
+    </url>
+    <url>
+         <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep__stall_8c_source/</loc>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep_8h/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/sstep_8h_source/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/namespaces/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/classes/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/hierarchy/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/modules/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/pages/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/class_members/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/class_member_functions/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/class_member_variables/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/class_member_typedefs/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/class_member_enums/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/namespace_members/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/namespace_member_functions/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/namespace_member_variables/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/namespace_member_typedefs/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/namespace_member_enums/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/functions/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/macros/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/variables/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
     <url>
          <loc>https://antonvynohradov.github.io/Stepper-C/reference/links/</loc>
-         <lastmod>2026-10-31</lastmod>
+         <lastmod>2026-11-01</lastmod>
     </url>
 </urlset>

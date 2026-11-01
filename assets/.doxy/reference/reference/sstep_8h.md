@@ -81,9 +81,9 @@
 
 | Type | Name |
 | ---: | :--- |
-| define  | [**SSTEP\_VERSION**](sstep_8h.md#define-sstep_version)  `"1.0.0"`<br> |
+| define  | [**SSTEP\_VERSION**](sstep_8h.md#define-sstep_version)  `"1.1.0"`<br> |
 | define  | [**SSTEP\_VERSION\_MAJOR**](sstep_8h.md#define-sstep_version_major)  `1`<br> |
-| define  | [**SSTEP\_VERSION\_MINOR**](sstep_8h.md#define-sstep_version_minor)  `0`<br> |
+| define  | [**SSTEP\_VERSION\_MINOR**](sstep_8h.md#define-sstep_version_minor)  `1`<br> |
 | define  | [**SSTEP\_VERSION\_PATCH**](sstep_8h.md#define-sstep_version_patch)  `0`<br> |
 
 ## Macro Definition Documentation
@@ -95,7 +95,7 @@
 ### define SSTEP\_VERSION 
 
 ```C++
-#define SSTEP_VERSION `"1.0.0"`
+#define SSTEP_VERSION `"1.1.0"`
 ```
 
 
@@ -121,7 +121,7 @@
 ### define SSTEP\_VERSION\_MINOR 
 
 ```C++
-#define SSTEP_VERSION_MINOR `0`
+#define SSTEP_VERSION_MINOR `1`
 ```
 
 

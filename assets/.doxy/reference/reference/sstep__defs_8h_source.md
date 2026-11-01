@@ -78,6 +78,7 @@ enum sstep_topology
 #define SSTEP_FAULT_UNDERVOLTAGE 0x0004U
 #define SSTEP_FAULT_HAL 0x0008U
 #define SSTEP_FAULT_EXTERNAL 0x0010U
+#define SSTEP_FAULT_STALL 0x0020U
 
 /* ==============================================================================
  * STATES

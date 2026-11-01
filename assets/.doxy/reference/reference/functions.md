@@ -7,7 +7,8 @@
 
 * **acc\_max** ([**sstep\_bridge.c**](sstep__bridge_8c.md))
 * **abs\_i32** ([**sstep\_motion.c**](sstep__motion_8c.md))
-* **abs\_i64** ([**sstep\_motion.c**](sstep__motion_8c.md))
+* **abs\_i64** ([**sstep\_motion.c**](sstep__motion_8c.md), [**sstep\_stall.c**](sstep__stall_8c.md))
+* **atan2\_turn** ([**sstep\_stall.c**](sstep__stall_8c.md))
 
 
 ## b
@@ -18,6 +19,7 @@
 ## c
 
 * **check\_config** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
+* **check\_stall** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 * **control** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 * **clamp\_i32** ([**sstep\_motion.c**](sstep__motion_8c.md))
 
@@ -25,7 +27,13 @@
 ## d
 
 * **derive** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
+* **derive\_stall** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 * **div\_round** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
+
+
+## e
+
+* **emf\_mv** ([**sstep\_stall.c**](sstep__stall_8c.md))
 
 
 ## g
@@ -53,6 +61,7 @@
 ## m
 
 * **mul\_ok** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
+* **muldiv\_u64** ([**sstep\_stall.c**](sstep__stall_8c.md))
 
 
 ## p
@@ -84,6 +93,10 @@
 * **sstep\_ctx\_of\_const** ([**sstep\_internal.h**](sstep__internal_8h.md))
 * **sstep\_isqrt64** ([**sstep\_internal.h**](sstep__internal_8h.md), [**sstep\_motion.c**](sstep__motion_8c.md))
 * **sstep\_motion\_step** ([**sstep\_internal.h**](sstep__internal_8h.md), [**sstep\_motion.c**](sstep__motion_8c.md))
+* **sstep\_stall\_check** ([**sstep\_internal.h**](sstep__internal_8h.md), [**sstep\_stall.c**](sstep__stall_8c.md))
+* **sstep\_stall\_observe** ([**sstep\_internal.h**](sstep__internal_8h.md), [**sstep\_stall.c**](sstep__stall_8c.md))
+* **sstep\_stall\_reset** ([**sstep\_internal.h**](sstep__internal_8h.md), [**sstep\_stall.c**](sstep__stall_8c.md))
+* **sstep\_stall\_status** ([**sstep\_internal.h**](sstep__internal_8h.md), [**sstep\_stall.c**](sstep__stall_8c.md))
 
 
 ## t

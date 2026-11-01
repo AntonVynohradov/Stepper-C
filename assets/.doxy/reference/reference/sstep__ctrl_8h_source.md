@@ -131,6 +131,10 @@ struct sstep_ctrl_cfg
     uint32_t v_max;                   
     uint32_t accel;                   
     uint32_t decel;                   
+    uint32_t stall_time_ms;           
+    uint32_t stall_filter_us;         
+    uint32_t stall_speed;             
+    uint16_t stall_sync_pct;          
 };
 
 struct sstep_config
@@ -154,14 +158,19 @@ struct sstep_sample
 
 struct sstep_status
 {
-    enum sstep_state state; 
-    uint16_t faults;        
-    int32_t position;       
-    int32_t target;         
-    int32_t velocity;       
-    int32_t i_a_ma;         
-    int32_t i_b_ma;         
-    uint32_t vbus_mv;       
+    enum sstep_state state;  
+    uint16_t faults;         
+    int32_t position;        
+    int32_t target;          
+    int32_t velocity;        
+    int32_t i_a_ma;          
+    int32_t i_b_ma;          
+    uint32_t vbus_mv;        
+    int32_t emf_d_mv;        
+    int32_t emf_q_mv;        
+    int32_t rotor_velocity;  
+    int32_t load_angle_cdeg; 
+    uint8_t stall_level_pct; 
 };
 
 /* ==============================================================================
@@ -169,18 +178,18 @@ struct sstep_status
  * =============================================================================*/
 
 #if defined(UINTPTR_MAX) && (UINTPTR_MAX > 0xFFFFFFFFU)
-#define SSTEP_CONFIG_BYTES 160U
+#define SSTEP_CONFIG_BYTES 176U
 #if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
-#define SSTEP_STATE_BYTES 200U
+#define SSTEP_STATE_BYTES 280U
 #else
-#define SSTEP_STATE_BYTES 232U
+#define SSTEP_STATE_BYTES 304U
 #endif
 #else
-#define SSTEP_CONFIG_BYTES 136U
+#define SSTEP_CONFIG_BYTES 152U
 #if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
-#define SSTEP_STATE_BYTES 200U
+#define SSTEP_STATE_BYTES 280U
 #else
-#define SSTEP_STATE_BYTES 224U
+#define SSTEP_STATE_BYTES 304U
 #endif
 #endif
 

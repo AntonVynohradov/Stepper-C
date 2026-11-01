@@ -1773,8 +1773,39 @@ that do not fit return <code>SSTEP_ERR_CONFIG</code>.</p>
 <td>0</td>
 <td>Deceleration; 0 = same as <code>accel</code></td>
 </tr>
+<tr>
+<td><code>stall_time_ms</code></td>
+<td>ms</td>
+<td>0, or 1 .. <span class="arithmatex">\(10^7\)</span> and at least one slow period</td>
+<td>50</td>
+<td>Stall detection: time the condition must persist before <code>SSTEP_FAULT_STALL</code>; 0 = off (default) and the other <code>stall_*</code> fields are ignored</td>
+</tr>
+<tr>
+<td><code>stall_filter_us</code></td>
+<td>µs</td>
+<td>≥ one fast period, ≤ <span class="arithmatex">\(10^7\)</span></td>
+<td>1000</td>
+<td>Time constant of the back-EMF low-pass filter</td>
+</tr>
+<tr>
+<td><code>stall_speed</code></td>
+<td>microsteps/s</td>
+<td>1 .. <span class="arithmatex">\(10^7\)</span>; its back-EMF 1 mV .. <code>vbus_nominal_mv</code></td>
+<td>1600</td>
+<td>Slip threshold at rest and below this commanded speed; synchronism check above it</td>
+</tr>
+<tr>
+<td><code>stall_sync_pct</code></td>
+<td>%</td>
+<td>1 .. 100</td>
+<td>50</td>
+<td>Smallest back-EMF along the commanded motion, relative to <span class="arithmatex">\(K_e\,\omega\)</span></td>
+</tr>
 </tbody>
 </table>
+<p>Stall detection requires <code>SSTEP_DRIVE_CURRENT</code> and <code>ke_uv_s_per_rad &gt; 0</code>
+(<code>SSTEP_ERR_CONFIG</code> otherwise); the <a href="../motor-control/#stall-detection">Stall detection</a>
+section explains the algorithm and how to choose the four values.</p>
 <p>The motion limits are converted to 1/65 536 microstep per slow period. Each must round
 to at least 1 and stay below <span class="arithmatex">\(2^{30}\)</span>: with <code>slow_loop_hz = 1000</code>, <code>v_max</code> from 0.008 to
 below 16 384 000 microsteps/s, <code>accel</code> and <code>decel</code> from 8 to below
@@ -1836,13 +1867,13 @@ below 16 384 000 microsteps/s, <code>accel</code> and <code>decel</code> from 8 
 <tbody>
 <tr>
 <td><code>struct sstep</code> (RAM per motor)</td>
-<td>336 B</td>
-<td>360 B</td>
+<td>432 B</td>
+<td>456 B</td>
 </tr>
 <tr>
 <td>Code and constants, <code>-Os</code> (flash)</td>
-<td>6980 B</td>
-<td>7446 B</td>
+<td>9040 B</td>
+<td>9718 B</td>
 </tr>
 <tr>
 <td>of which the sine table</td>
@@ -1856,10 +1887,11 @@ below 16 384 000 microsteps/s, <code>accel</code> and <code>decel</code> from 8 
 </tr>
 </tbody>
 </table>
-<p><code>struct sstep</code> is the configuration copy (<code>SSTEP_CONFIG_BYTES</code>: 136 B on Cortex-M4,
-160 B on 64-bit hosts) plus the private state (<code>SSTEP_STATE_BYTES</code>: 200 B fixed point,
-224 B float on Cortex-M4, 232 B float on 64-bit hosts); on a 64-bit host the instance
-is 360 B and 392 B.</p>
+<p><code>struct sstep</code> is the configuration copy (<code>SSTEP_CONFIG_BYTES</code>: 152 B on Cortex-M4,
+176 B on 64-bit hosts) plus the private state (<code>SSTEP_STATE_BYTES</code>: 280 B fixed point,
+304 B float); on a 64-bit host the instance is 456 B and 480 B. Stall detection accounts
+for 96 B of it, and for 2060 B (fixed point) or 2272 B (float) of the flash whether it is
+enabled or not.</p>
 <h2 id="stack-usage">Stack usage<a class="headerlink" href="#stack-usage" title="Permanent link">&para;</a></h2>
 <p>Worst-case stack of each public function including the library functions it calls,
 measured with <code>-fstack-usage -fcallgraph-info=su</code> and <code>tools/docs/stack_usage.py</code>
@@ -1879,10 +1911,10 @@ functions that call them.</p>
 <tbody>
 <tr>
 <td><code>sstep_init()</code></td>
-<td style="text-align: right;">192</td>
-<td style="text-align: right;">1096</td>
-<td style="text-align: right;">168</td>
-<td style="text-align: right;">1064</td>
+<td style="text-align: right;">224</td>
+<td style="text-align: right;">1544</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">1432</td>
 </tr>
 <tr>
 <td><code>sstep_enable()</code></td>
@@ -1900,7 +1932,7 @@ functions that call them.</p>
 </tr>
 <tr>
 <td><code>sstep_fast_loop()</code></td>
-<td style="text-align: right;">184</td>
+<td style="text-align: right;">216</td>
 <td style="text-align: right;">304</td>
 <td style="text-align: right;">128</td>
 <td style="text-align: right;">312</td>
@@ -1908,9 +1940,9 @@ functions that call them.</p>
 <tr>
 <td><code>sstep_slow_loop()</code></td>
 <td style="text-align: right;">140</td>
+<td style="text-align: right;">592</td>
+<td style="text-align: right;">140</td>
 <td style="text-align: right;">560</td>
-<td style="text-align: right;">132</td>
-<td style="text-align: right;">552</td>
 </tr>
 <tr>
 <td><code>sstep_move_to()</code></td>
@@ -1977,10 +2009,10 @@ functions that call them.</p>
 </tr>
 <tr>
 <td><code>sstep_get_status()</code></td>
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">184</td>
-<td style="text-align: right;">16</td>
-<td style="text-align: right;">152</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">544</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">504</td>
 </tr>
 </tbody>
 </table>

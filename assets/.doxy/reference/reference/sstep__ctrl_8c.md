@@ -63,8 +63,10 @@
 | Type | Name |
 | ---: | :--- |
 |  int | [**check\_config**](#function-check_config) (const struct [**sstep\_config**](structsstep__config.md) \* cfg) <br>_Validate a configuration field by field and as a whole._  |
+|  int | [**check\_stall**](#function-check_stall) (const struct [**sstep\_config**](structsstep__config.md) \* cfg) <br>_Validate the stall detection fields (ignored when stall\_time\_ms is 0)._  |
 |  void | [**control**](#function-control) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Current control, power stage and PWM write of one fast loop period._  |
 |  int | [**derive**](#function-derive) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Derive gains, scaling and limits from the (validated) configuration._  |
+|  int | [**derive\_stall**](#function-derive_stall) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Derive the stall detection constants (after the other gains)._  |
 |  int64\_t | [**div\_round**](#function-div_round) (int64\_t num, int64\_t den) <br>_round(num / den) for den &gt; 0, half away from zero._  |
 |  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**gain\_apply\_i32**](#function-gain_apply_i32) (const struct [**sstep\_gain**](structsstep__gain.md) \* g, int32\_t v) <br>_g \* v for a 32-bit integer v (slow loop, 64-bit product), as a saturated signal._  |
 |  bool | [**is\_active**](#function-is_active) (enum [**sstep\_state**](group__sstep__defs.md#enum-sstep_state) s) <br>_Outputs are on._  |
@@ -136,6 +138,22 @@ static int check_config (
 
 
 
+### function check\_stall 
+
+_Validate the stall detection fields (ignored when stall\_time\_ms is 0)._ 
+```C++
+static int check_stall (
+    const struct sstep_config * cfg
+) 
+```
+
+
+
+
+<hr>
+
+
+
 ### function control 
 
 _Current control, power stage and PWM write of one fast loop period._ 
@@ -157,6 +175,22 @@ static void control (
 _Derive gains, scaling and limits from the (validated) configuration._ 
 ```C++
 static int derive (
+    struct sstep_ctx * m
+) 
+```
+
+
+
+
+<hr>
+
+
+
+### function derive\_stall 
+
+_Derive the stall detection constants (after the other gains)._ 
+```C++
+static int derive_stall (
     struct sstep_ctx * m
 ) 
 ```

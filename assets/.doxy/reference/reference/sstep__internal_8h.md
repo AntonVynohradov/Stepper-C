@@ -66,6 +66,10 @@
 |  void | [**sstep\_bridge\_map**](#function-sstep_bridge_map) (enum [**sstep\_topology**](group__sstep__defs.md#enum-sstep_topology) topology, [**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t) va, [**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t) vb, const struct [**sstep\_gain**](structsstep__gain.md) \* inv\_vbus, [**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t) vbus, uint16\_t period, struct [**sstep\_bridge\_out**](structsstep__bridge__out.md) \* out) <br>_Map requested phase voltages to leg compare values (averaged power stage)._  |
 |  uint32\_t | [**sstep\_isqrt64**](#function-sstep_isqrt64) (uint64\_t x) <br>_Integer square root: floor(sqrt(x))._  |
 |  uint8\_t | [**sstep\_motion\_step**](#function-sstep_motion_step) (struct [**sstep\_motion**](structsstep__motion.md) \* mo) <br>_One slow loop period of the motion generator: trapezoidal velocity profile with one-period look-ahead braking for moves, exact stop on the target._  |
+|  bool | [**sstep\_stall\_check**](#function-sstep_stall_check) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Stall decision of one slow loop period, against the command of the period that just ended (vel\_cmd, ff\_cmd)._  |
+|  void | [**sstep\_stall\_observe**](#function-sstep_stall_observe) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m, const struct [**sstep\_sincos**](structsstep__sincos.md) \* sc, const [**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t) v\_applied) <br>_Back-EMF observer of one fast loop period (fast loop, current drive)._  |
+|  void | [**sstep\_stall\_reset**](#function-sstep_stall_reset) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Reset the stall detector when the outputs are enabled: empty voltage history, filters at zero, current history from the last measurement._  |
+|  void | [**sstep\_stall\_status**](#function-sstep_stall_status) (const struct [**sstep\_ctx**](structsstep__ctx.md) \* m, struct [**sstep\_status**](structsstep__status.md) \* status) <br>_Fill the observer fields of a status (zero when stall detection is off)._  |
 
 
 ## Public Static Functions
@@ -212,6 +216,127 @@ uint8_t sstep_motion_step (
 
 SSTEP\_MOTION\_DONE when a move reached its target in this period, else 0. 
 
+
+
+
+
+        
+
+<hr>
+
+
+
+### function sstep\_stall\_check 
+
+_Stall decision of one slow loop period, against the command of the period that just ended (vel\_cmd, ff\_cmd)._ 
+```C++
+bool sstep_stall_check (
+    struct sstep_ctx * m
+) 
+```
+
+
+
+
+
+**Parameters:**
+
+
+* `m` Driver state. 
+
+
+
+**Returns:**
+
+true when the stall condition has persisted for stall\_time\_ms. 
+
+
+
+
+
+        
+
+<hr>
+
+
+
+### function sstep\_stall\_observe 
+
+_Back-EMF observer of one fast loop period (fast loop, current drive)._ 
+```C++
+void sstep_stall_observe (
+    struct sstep_ctx * m,
+    const struct sstep_sincos * sc,
+    const sstep_acc_t v_applied
+) 
+```
+
+
+
+Uses the voltage computed two periods ago (applied during the period that just ended), the measured currents and the commanded angle, then stores v\_applied. 
+
+**Parameters:**
+
+
+* `m` Driver state; i\_meas holds the currents of this period. 
+* `sc` Sine and cosine of the commanded angle of this period. 
+* `v_applied` Phase voltages computed in this period [pu V]. 
+
+
+
+
+        
+
+<hr>
+
+
+
+### function sstep\_stall\_reset 
+
+_Reset the stall detector when the outputs are enabled: empty voltage history, filters at zero, current history from the last measurement._ 
+```C++
+void sstep_stall_reset (
+    struct sstep_ctx * m
+) 
+```
+
+
+
+
+
+**Parameters:**
+
+
+* `m` Driver state. 
+
+
+
+
+        
+
+<hr>
+
+
+
+### function sstep\_stall\_status 
+
+_Fill the observer fields of a status (zero when stall detection is off)._ 
+```C++
+void sstep_stall_status (
+    const struct sstep_ctx * m,
+    struct sstep_status * status
+) 
+```
+
+
+
+
+
+**Parameters:**
+
+
+* `m` Driver state. 
+* `status` Status to complete. 
 
 
 

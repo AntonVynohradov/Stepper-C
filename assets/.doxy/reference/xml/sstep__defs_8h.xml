@@ -56,6 +56,7 @@
       <member refid="group__sstep__defs_1gadf817747c1ca590152b756f4d5cf88ed" kind="define"><name>SSTEP_FAULT_UNDERVOLTAGE</name></member>
       <member refid="group__sstep__defs_1gab51def6949f6a27cf6c6651c246c8cc7" kind="define"><name>SSTEP_FAULT_HAL</name></member>
       <member refid="group__sstep__defs_1ga6160f6093576feb828e106ab46dc7269" kind="define"><name>SSTEP_FAULT_EXTERNAL</name></member>
+      <member refid="group__sstep__defs_1ga88d60a46d72e1ead7ce8e2b62feb417d" kind="define"><name>SSTEP_FAULT_STALL</name></member>
     </sectiondef>
     <sectiondef kind="enum">
       <member refid="group__sstep__defs_1gabd2c373f4d8a7502c78952555c8cb23c" kind="enum"><name>sstep_topology</name></member>
@@ -135,21 +136,22 @@
 <codeline lineno="99" refid="group__sstep__defs_1gaac654b622282f0a713bf3d7d066bcc8e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_FAULT_OVERVOLTAGE<sp/>0x0002U</highlight></codeline>
 <codeline lineno="101" refid="group__sstep__defs_1gadf817747c1ca590152b756f4d5cf88ed" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_FAULT_UNDERVOLTAGE<sp/>0x0004U</highlight></codeline>
 <codeline lineno="103" refid="group__sstep__defs_1gab51def6949f6a27cf6c6651c246c8cc7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_FAULT_HAL<sp/>0x0008U</highlight></codeline>
-<codeline lineno="106" refid="group__sstep__defs_1ga6160f6093576feb828e106ab46dc7269" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_FAULT_EXTERNAL<sp/>0x0010U</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="107"><highlight class="normal"></highlight></codeline>
-<codeline lineno="108"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
-<codeline lineno="109"><highlight class="comment"><sp/>*<sp/>STATES</highlight></codeline>
-<codeline lineno="110"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106" refid="group__sstep__defs_1ga6160f6093576feb828e106ab46dc7269" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_FAULT_EXTERNAL<sp/>0x0010U</highlight></codeline>
+<codeline lineno="110" refid="group__sstep__defs_1ga88d60a46d72e1ead7ce8e2b62feb417d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_FAULT_STALL<sp/>0x0020U</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="111"><highlight class="normal"></highlight></codeline>
-<codeline lineno="113" refid="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" kindref="member">sstep_state</ref></highlight></codeline>
-<codeline lineno="114"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="115" refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0eaba01894d51e56a80832a7e110412cb96" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0eaba01894d51e56a80832a7e110412cb96" kindref="member">SSTEP_STATE_DISABLED</ref><sp/>=<sp/>0,<sp/></highlight></codeline>
-<codeline lineno="116" refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0eaa14ce43a1268feb093f8c2c24258646a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0eaa14ce43a1268feb093f8c2c24258646a" kindref="member">SSTEP_STATE_HOLDING</ref><sp/>=<sp/>1,<sp/><sp/></highlight></codeline>
-<codeline lineno="117" refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0ea123279ad3851c4bbf9f1478965363d01" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0ea123279ad3851c4bbf9f1478965363d01" kindref="member">SSTEP_STATE_MOVING</ref><sp/>=<sp/>2,<sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0ea3974b935bf744d601c1b92ce99b36900" kindref="member">SSTEP_STATE_FAULT</ref><sp/>=<sp/>3<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="119" refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0ea3974b935bf744d601c1b92ce99b36900" refkind="member"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="120"><highlight class="normal"></highlight></codeline>
-<codeline lineno="123"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_DEFS_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="113"><highlight class="comment"><sp/>*<sp/>STATES</highlight></codeline>
+<codeline lineno="114"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117" refid="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" kindref="member">sstep_state</ref></highlight></codeline>
+<codeline lineno="118"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="119" refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0eaba01894d51e56a80832a7e110412cb96" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0eaba01894d51e56a80832a7e110412cb96" kindref="member">SSTEP_STATE_DISABLED</ref><sp/>=<sp/>0,<sp/></highlight></codeline>
+<codeline lineno="120" refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0eaa14ce43a1268feb093f8c2c24258646a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0eaa14ce43a1268feb093f8c2c24258646a" kindref="member">SSTEP_STATE_HOLDING</ref><sp/>=<sp/>1,<sp/><sp/></highlight></codeline>
+<codeline lineno="121" refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0ea123279ad3851c4bbf9f1478965363d01" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0ea123279ad3851c4bbf9f1478965363d01" kindref="member">SSTEP_STATE_MOVING</ref><sp/>=<sp/>2,<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0ea3974b935bf744d601c1b92ce99b36900" kindref="member">SSTEP_STATE_FAULT</ref><sp/>=<sp/>3<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="123" refid="group__sstep__defs_1ggafa25ddfb06816d5922d0b945ef81bd0ea3974b935bf744d601c1b92ce99b36900" refkind="member"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_DEFS_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
     <location file="inc/sstep_defs.h"/>
   </compounddef>

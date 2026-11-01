@@ -170,6 +170,68 @@
         </inbodydescription>
         <location file="inc/sstep_ctrl.h" line="169" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="169" bodyend="-1"/>
       </memberdef>
+      <memberdef kind="variable" id="structsstep__ctrl__cfg_1aef6458a978393e13733abe2ef5492375" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_ctrl_cfg::stall_time_ms</definition>
+        <argsstring></argsstring>
+        <name>stall_time_ms</name>
+        <qualifiedname>sstep_ctrl_cfg::stall_time_ms</qualifiedname>
+        <briefdescription>
+<para>Stall detection: time the stall condition must persist before <ref refid="group__sstep__defs_1ga88d60a46d72e1ead7ce8e2b62feb417d" kindref="member">SSTEP_FAULT_STALL</ref> [ms]; 0 = stall detection off (the other stall_* fields are then ignored). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Requires SSTEP_DRIVE_CURRENT and ke_uv_s_per_rad &gt; 0. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="170" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="170" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctrl__cfg_1a0fc0aadb0ad001e1d73d6421cb22edad" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_ctrl_cfg::stall_filter_us</definition>
+        <argsstring></argsstring>
+        <name>stall_filter_us</name>
+        <qualifiedname>sstep_ctrl_cfg::stall_filter_us</qualifiedname>
+        <briefdescription>
+<para>Time constant of the back-EMF low-pass filter [us], at least one fast loop period. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="175" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="175" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctrl__cfg_1a649f2601b89e78bd1ba76357bd270e27" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_ctrl_cfg::stall_speed</definition>
+        <argsstring></argsstring>
+        <name>stall_speed</name>
+        <qualifiedname>sstep_ctrl_cfg::stall_speed</qualifiedname>
+        <briefdescription>
+<para>Slip threshold [microsteps/s]: rotor speed that counts as motion while the command is at rest or slower than this; above it, the synchronism check. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="177" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="177" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctrl__cfg_1a5837fdad9f800d8155c3a3c8ba2ea616" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_ctrl_cfg::stall_sync_pct</definition>
+        <argsstring></argsstring>
+        <name>stall_sync_pct</name>
+        <qualifiedname>sstep_ctrl_cfg::stall_sync_pct</qualifiedname>
+        <briefdescription>
+<para>Synchronism threshold [%] (1 . </para>
+        </briefdescription>
+        <detaileddescription>
+<para>. 100): smallest back-EMF along the commanded motion, relative to Ke * speed. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="180" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="180" bodyend="-1"/>
+      </memberdef>
     </sectiondef>
     <briefdescription>
 <para>Control and motion parameters. </para>
@@ -177,7 +239,7 @@
     <detaileddescription>
 <para>All of them except the loop rates can be changed at run time with the sstep_set_*() functions. </para>
     </detaileddescription>
-    <location file="inc/sstep_ctrl.h" line="155" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="156" bodyend="170"/>
+    <location file="inc/sstep_ctrl.h" line="155" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="156" bodyend="182"/>
     <listofallmembers>
       <member refid="structsstep__ctrl__cfg_1aba43930ef8fb8e0f915a1afad82b38be" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>accel</name></member>
       <member refid="structsstep__ctrl__cfg_1a075acf829cbe48c45a0b48273de2c444" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>current_bw_hz</name></member>
@@ -189,6 +251,10 @@
       <member refid="structsstep__ctrl__cfg_1a3b5362bdade4f6c5fa8e0b5c1b84ed20" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>i_run_ma</name></member>
       <member refid="structsstep__ctrl__cfg_1a8475aa549a088982a589e6f1e9a18d62" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>microsteps</name></member>
       <member refid="structsstep__ctrl__cfg_1aee988d9b126ce5a47a6b084a5c5159e8" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>slow_loop_hz</name></member>
+      <member refid="structsstep__ctrl__cfg_1a0fc0aadb0ad001e1d73d6421cb22edad" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>stall_filter_us</name></member>
+      <member refid="structsstep__ctrl__cfg_1a649f2601b89e78bd1ba76357bd270e27" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>stall_speed</name></member>
+      <member refid="structsstep__ctrl__cfg_1a5837fdad9f800d8155c3a3c8ba2ea616" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>stall_sync_pct</name></member>
+      <member refid="structsstep__ctrl__cfg_1aef6458a978393e13733abe2ef5492375" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>stall_time_ms</name></member>
       <member refid="structsstep__ctrl__cfg_1afb1d36d1a16777c4de7424713c978145" prot="public" virt="non-virtual"><scope>sstep_ctrl_cfg</scope><name>v_max</name></member>
     </listofallmembers>
   </compounddef>

@@ -1267,6 +1267,50 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#function-sstep_stall_check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_stall_check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_stall_observe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_stall_observe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_stall_reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_stall_reset
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-sstep_stall_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_stall_status
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1479,6 +1523,22 @@
 <td style="text-align: right;">uint8_t</td>
 <td style="text-align: left;"><a href="#function-sstep_motion_step"><strong>sstep_motion_step</strong></a> (struct <a href="../structsstep__motion/"><strong>sstep_motion</strong></a> * mo) <br><em>One slow loop period of the motion generator: trapezoidal velocity profile with one-period look-ahead braking for moves, exact stop on the target.</em></td>
 </tr>
+<tr>
+<td style="text-align: right;">bool</td>
+<td style="text-align: left;"><a href="#function-sstep_stall_check"><strong>sstep_stall_check</strong></a> (struct <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> * m) <br><em>Stall decision of one slow loop period, against the command of the period that just ended (vel_cmd, ff_cmd).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">void</td>
+<td style="text-align: left;"><a href="#function-sstep_stall_observe"><strong>sstep_stall_observe</strong></a> (struct <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> * m, const struct <a href="../structsstep__sincos/"><strong>sstep_sincos</strong></a> * sc, const <a href="../group__sstep__math/#typedef-sstep_acc_t"><strong>sstep_acc_t</strong></a> v_applied) <br><em>Back-EMF observer of one fast loop period (fast loop, current drive).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">void</td>
+<td style="text-align: left;"><a href="#function-sstep_stall_reset"><strong>sstep_stall_reset</strong></a> (struct <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> * m) <br><em>Reset the stall detector when the outputs are enabled: empty voltage history, filters at zero, current history from the last measurement.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">void</td>
+<td style="text-align: left;"><a href="#function-sstep_stall_status"><strong>sstep_stall_status</strong></a> (const struct <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a> * m, struct <a href="../structsstep__status/"><strong>sstep_status</strong></a> * status) <br><em>Fill the observer fields of a status (zero when stall detection is off).</em></td>
+</tr>
 </tbody>
 </table>
 <h2 id="public-static-functions">Public Static Functions<a class="headerlink" href="#public-static-functions" title="Permanent link">&para;</a></h2>
@@ -1591,12 +1651,69 @@
 <p><strong>Returns:</strong></p>
 <p>SSTEP_MOTION_DONE when a move reached its target in this period, else 0. </p>
 <hr>
+
+<h3 id="function-sstep_stall_check">function sstep_stall_check<a class="headerlink" href="#function-sstep_stall_check" title="Permanent link">&para;</a></h3>
+<p><em>Stall decision of one slow loop period, against the command of the period that just ended (vel_cmd, ff_cmd).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">bool</span><span class="w"> </span><span class="n">sstep_stall_check</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>m</code> Driver state. </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>true when the stall condition has persisted for stall_time_ms. </p>
+<hr>
+
+<h3 id="function-sstep_stall_observe">function sstep_stall_observe<a class="headerlink" href="#function-sstep_stall_observe" title="Permanent link">&para;</a></h3>
+<p><em>Back-EMF observer of one fast loop period (fast loop, current drive).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">void</span><span class="w"> </span><span class="n">sstep_stall_observe</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_sincos</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sc</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">sstep_acc_t</span><span class="w"> </span><span class="n">v_applied</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<p>Uses the voltage computed two periods ago (applied during the period that just ended), the measured currents and the commanded angle, then stores v_applied. </p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>m</code> Driver state; i_meas holds the currents of this period. </li>
+<li><code>sc</code> Sine and cosine of the commanded angle of this period. </li>
+<li><code>v_applied</code> Phase voltages computed in this period [pu V]. </li>
+</ul>
+<hr>
+
+<h3 id="function-sstep_stall_reset">function sstep_stall_reset<a class="headerlink" href="#function-sstep_stall_reset" title="Permanent link">&para;</a></h3>
+<p><em>Reset the stall detector when the outputs are enabled: empty voltage history, filters at zero, current history from the last measurement.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">void</span><span class="w"> </span><span class="n">sstep_stall_reset</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>m</code> Driver state. </li>
+</ul>
+<hr>
+
+<h3 id="function-sstep_stall_status">function sstep_stall_status<a class="headerlink" href="#function-sstep_stall_status" title="Permanent link">&para;</a></h3>
+<p><em>Fill the observer fields of a status (zero when stall detection is off).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">void</span><span class="w"> </span><span class="n">sstep_stall_status</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_status</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">status</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>m</code> Driver state. </li>
+<li><code>status</code> Status to complete. </li>
+</ul>
+<hr>
 <h2 id="public-static-functions-documentation">Public Static Functions Documentation<a class="headerlink" href="#public-static-functions-documentation" title="Permanent link">&para;</a></h2>
 <h3 id="function-sstep_ctx_of">function sstep_ctx_of<a class="headerlink" href="#function-sstep_ctx_of" title="Permanent link">&para;</a></h3>
 <p><em>Driver state of an instance.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sstep_ctx_of</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">drv</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sstep_ctx_of</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">drv</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <p><strong>Note:</strong></p>
 <p>MISRA C:2012 Rule 11.3, deviation DEV-01 (docs/misra.md): <a href="../structsstep/"><strong>sstep</strong></a> is the opaque storage of <a href="../structsstep__ctx/"><strong>sstep_ctx</strong></a>; size and alignment are checked in sstep_ctrl.c. </p>
@@ -1610,49 +1727,49 @@
 
 <h3 id="function-sstep_ctx_of_const">function sstep_ctx_of_const<a class="headerlink" href="#function-sstep_ctx_of_const" title="Permanent link">&para;</a></h3>
 <p><em>Read-only variant of sstep_ctx_of().</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sstep_ctx_of_const</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">drv</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sstep_ctx_of_const</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">sstep</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">drv</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 <h2 id="macro-definition-documentation">Macro Definition Documentation<a class="headerlink" href="#macro-definition-documentation" title="Permanent link">&para;</a></h2>
 <h3 id="define-sstep_mode_hold">define SSTEP_MODE_HOLD<a class="headerlink" href="#define-sstep_mode_hold" title="Permanent link">&para;</a></h3>
 <p><em>Motion generator modes.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cp">#define SSTEP_MODE_HOLD `0U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="cp">#define SSTEP_MODE_HOLD `0U`</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_mode_move">define SSTEP_MODE_MOVE<a class="headerlink" href="#define-sstep_mode_move" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="cp">#define SSTEP_MODE_MOVE `1U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="cp">#define SSTEP_MODE_MOVE `1U`</span>
 </code></pre></div>
 <hr>
 
 <h3 id="define-sstep_mode_run">define SSTEP_MODE_RUN<a class="headerlink" href="#define-sstep_mode_run" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="cp">#define SSTEP_MODE_RUN `2U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="cp">#define SSTEP_MODE_RUN `2U`</span>
 </code></pre></div>
 <hr>
 
 <h3 id="define-sstep_motion_done">define SSTEP_MOTION_DONE<a class="headerlink" href="#define-sstep_motion_done" title="Permanent link">&para;</a></h3>
 <p><em>Result flags of sstep_motion_step().</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">#define SSTEP_MOTION_DONE `0x01U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="cp">#define SSTEP_MOTION_DONE `0x01U`</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_pos_one">define SSTEP_POS_ONE<a class="headerlink" href="#define-sstep_pos_one" title="Permanent link">&para;</a></h3>
 <p><em>Fixed point position: 1 microstep = 2^16.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="cp">#define SSTEP_POS_ONE `((int64_t)65536)`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="cp">#define SSTEP_POS_ONE `((int64_t)65536)`</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_pos_snap">define SSTEP_POS_SNAP<a class="headerlink" href="#define-sstep_pos_snap" title="Permanent link">&para;</a></h3>
 <p><em>A move ends when it is closer than this to the target and slow enough (1/1024 microstep).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="cp">#define SSTEP_POS_SNAP `((int64_t)64)`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="cp">#define SSTEP_POS_SNAP `((int64_t)64)`</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_ready">define SSTEP_READY<a class="headerlink" href="#define-sstep_ready" title="Permanent link">&para;</a></h3>
 <p><em>Value of</em> <a href="../structsstep__ctx/#variable-ready"><em><strong>sstep_ctx::ready</strong></em></a> <em>after a successful</em><a href="../group__sstep__api/#function-sstep_init"><em><strong>sstep_init()</strong></em></a> <em>("STPC").</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="cp">#define SSTEP_READY `0x53545043U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="cp">#define SSTEP_READY `0x53545043U`</span>
 </code></pre></div></p>
 <p>A zeroed or never initialized instance holds another value: every function but <a href="../group__sstep__api/#function-sstep_init"><strong>sstep_init()</strong></a> then returns <a href="../group__sstep__defs/#define-sstep_err_state"><strong>SSTEP_ERR_STATE</strong></a> instead of using an empty configuration. </p>
 <hr>

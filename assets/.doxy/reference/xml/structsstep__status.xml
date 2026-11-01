@@ -17,7 +17,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="197" column="21" bodyfile="inc/sstep_ctrl.h" bodystart="197" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="209" column="21" bodyfile="inc/sstep_ctrl.h" bodystart="209" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__status_1ab27f89ef5d99d1ee0b20285d9766ec3d" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -32,7 +32,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="198" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="198" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="210" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="210" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__status_1ae6aa515ae7cf74afc1ef786d82e64cad" prot="public" static="no" mutable="no">
         <type>int32_t</type>
@@ -47,7 +47,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="199" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="199" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="211" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="211" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__status_1a6fcbf7a3d68225b0d3416d527feae046" prot="public" static="no" mutable="no">
         <type>int32_t</type>
@@ -62,7 +62,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="200" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="200" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="212" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="212" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__status_1a21a6c20ef4fa9108811b9a981d2cd644" prot="public" static="no" mutable="no">
         <type>int32_t</type>
@@ -77,7 +77,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="201" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="201" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="213" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="213" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__status_1aa5d3e619afa9c158f9d12fab523542e3" prot="public" static="no" mutable="no">
         <type>int32_t</type>
@@ -92,7 +92,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="202" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="202" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="214" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="214" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__status_1a3558ee758854d46ef02a0198167d5655" prot="public" static="no" mutable="no">
         <type>int32_t</type>
@@ -107,7 +107,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="203" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="203" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="215" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="215" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__status_1a7f918e03de222e8cc0d7cf58ae050b06" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -122,7 +122,83 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="204" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="204" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="216" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="216" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__status_1afbaa38339e5d70619758294590decd92" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t sstep_status::emf_d_mv</definition>
+        <argsstring></argsstring>
+        <name>emf_d_mv</name>
+        <qualifiedname>sstep_status::emf_d_mv</qualifiedname>
+        <briefdescription>
+<para>Filtered back-EMF estimate along the commanded current vector [mV]; 0 when stall detection is off. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="217" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="217" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__status_1a9233c2f69219c654063874b1978ec6b1" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t sstep_status::emf_q_mv</definition>
+        <argsstring></argsstring>
+        <name>emf_q_mv</name>
+        <qualifiedname>sstep_status::emf_q_mv</qualifiedname>
+        <briefdescription>
+<para>Filtered back-EMF estimate 90 degrees ahead of the commanded current vector [mV]; 0 when stall detection is off. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="219" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="219" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__status_1a46c1cf99e6fa5179cd07cd1632fd404f" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t sstep_status::rotor_velocity</definition>
+        <argsstring></argsstring>
+        <name>rotor_velocity</name>
+        <qualifiedname>sstep_status::rotor_velocity</qualifiedname>
+        <briefdescription>
+<para>Estimated rotor velocity [microsteps/s], from the back-EMF magnitude; 0 when stall detection is off. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="221" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="221" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__status_1a19a0d9a6bc712097fb08fe3071190102" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t sstep_status::load_angle_cdeg</definition>
+        <argsstring></argsstring>
+        <name>load_angle_cdeg</name>
+        <qualifiedname>sstep_status::load_angle_cdeg</qualifiedname>
+        <briefdescription>
+<para>Estimated load angle, commanded minus rotor electrical angle [0.01 deg], same sign as the motor torque. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="223" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="223" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__status_1a3621f02fcc4b6e6b6a8881c22968b962" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t sstep_status::stall_level_pct</definition>
+        <argsstring></argsstring>
+        <name>stall_level_pct</name>
+        <qualifiedname>sstep_status::stall_level_pct</qualifiedname>
+        <briefdescription>
+<para>Stall detector level, 0 . </para>
+        </briefdescription>
+        <detaileddescription>
+<para>. 100 % of the trip. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="225" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="225" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -130,12 +206,17 @@
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="inc/sstep_ctrl.h" line="195" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="196" bodyend="205"/>
+    <location file="inc/sstep_ctrl.h" line="207" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="208" bodyend="226"/>
     <listofallmembers>
+      <member refid="structsstep__status_1afbaa38339e5d70619758294590decd92" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>emf_d_mv</name></member>
+      <member refid="structsstep__status_1a9233c2f69219c654063874b1978ec6b1" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>emf_q_mv</name></member>
       <member refid="structsstep__status_1ab27f89ef5d99d1ee0b20285d9766ec3d" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>faults</name></member>
       <member refid="structsstep__status_1aa5d3e619afa9c158f9d12fab523542e3" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>i_a_ma</name></member>
       <member refid="structsstep__status_1a3558ee758854d46ef02a0198167d5655" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>i_b_ma</name></member>
+      <member refid="structsstep__status_1a19a0d9a6bc712097fb08fe3071190102" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>load_angle_cdeg</name></member>
       <member refid="structsstep__status_1ae6aa515ae7cf74afc1ef786d82e64cad" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>position</name></member>
+      <member refid="structsstep__status_1a46c1cf99e6fa5179cd07cd1632fd404f" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>rotor_velocity</name></member>
+      <member refid="structsstep__status_1a3621f02fcc4b6e6b6a8881c22968b962" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>stall_level_pct</name></member>
       <member refid="structsstep__status_1a85458678f815241c72025e8f66e88c2d" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>state</name></member>
       <member refid="structsstep__status_1a6fcbf7a3d68225b0d3416d527feae046" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>target</name></member>
       <member refid="structsstep__status_1a7f918e03de222e8cc0d7cf58ae050b06" prot="public" virt="non-virtual"><scope>sstep_status</scope><name>vbus_mv</name></member>

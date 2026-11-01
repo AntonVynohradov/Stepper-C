@@ -1323,6 +1323,50 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#variable-stall_filter_us" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable stall_filter_us
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-stall_speed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable stall_speed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-stall_sync_pct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable stall_sync_pct
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-stall_time_ms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable stall_time_ms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#variable-v_max" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1412,6 +1456,22 @@
 </tr>
 <tr>
 <td style="text-align: right;">uint32_t</td>
+<td style="text-align: left;"><a href="#variable-stall_filter_us"><strong>stall_filter_us</strong></a>  <br><em>Time constant of the back-EMF low-pass filter [us], at least one fast loop period.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint32_t</td>
+<td style="text-align: left;"><a href="#variable-stall_speed"><strong>stall_speed</strong></a>  <br><em>Slip threshold [microsteps/s]: rotor speed that counts as motion while the command is at rest or slower than this; above it, the synchronism check.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint16_t</td>
+<td style="text-align: left;"><a href="#variable-stall_sync_pct"><strong>stall_sync_pct</strong></a>  <br><em>Synchronism threshold [%] (1 .</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint32_t</td>
+<td style="text-align: left;"><a href="#variable-stall_time_ms"><strong>stall_time_ms</strong></a>  <br><em>Stall detection: time the stall condition must persist before</em> <a href="../group__sstep__defs/#define-sstep_fault_stall"><em><strong>SSTEP_FAULT_STALL</strong></em></a> <em>[ms]; 0 = stall detection off (the other stall_* fields are then ignored).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint32_t</td>
 <td style="text-align: left;"><a href="#variable-v_max"><strong>v_max</strong></a>  <br><em>Maximum velocity [microsteps/s].</em></td>
 </tr>
 </tbody>
@@ -1480,9 +1540,35 @@
 </code></pre></div></p>
 <hr>
 
+<h3 id="variable-stall_filter_us">variable stall_filter_us<a class="headerlink" href="#variable-stall_filter_us" title="Permanent link">&para;</a></h3>
+<p><em>Time constant of the back-EMF low-pass filter [us], at least one fast loop period.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">stall_filter_us</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-stall_speed">variable stall_speed<a class="headerlink" href="#variable-stall_speed" title="Permanent link">&para;</a></h3>
+<p><em>Slip threshold [microsteps/s]: rotor speed that counts as motion while the command is at rest or slower than this; above it, the synchronism check.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">stall_speed</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-stall_sync_pct">variable stall_sync_pct<a class="headerlink" href="#variable-stall_sync_pct" title="Permanent link">&para;</a></h3>
+<p><em>Synchronism threshold [%] (1 .</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">stall_sync_pct</span><span class="p">;</span>
+</code></pre></div></p>
+<p>. 100): smallest back-EMF along the commanded motion, relative to Ke * speed. </p>
+<hr>
+
+<h3 id="variable-stall_time_ms">variable stall_time_ms<a class="headerlink" href="#variable-stall_time_ms" title="Permanent link">&para;</a></h3>
+<p><em>Stall detection: time the stall condition must persist before</em> <a href="../group__sstep__defs/#define-sstep_fault_stall"><em><strong>SSTEP_FAULT_STALL</strong></em></a> <em>[ms]; 0 = stall detection off (the other stall_* fields are then ignored).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">stall_time_ms</span><span class="p">;</span>
+</code></pre></div></p>
+<p>Requires SSTEP_DRIVE_CURRENT and ke_uv_s_per_rad &gt; 0. </p>
+<hr>
+
 <h3 id="variable-v_max">variable v_max<a class="headerlink" href="#variable-v_max" title="Permanent link">&para;</a></h3>
 <p><em>Maximum velocity [microsteps/s].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">v_max</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">v_max</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 

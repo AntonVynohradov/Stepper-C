@@ -105,9 +105,9 @@
 
 | Type | Name |
 | ---: | :--- |
-| define  | [**SSTEP\_CONFIG\_BYTES**](sstep__ctrl_8h.md#define-sstep_config_bytes)  `136U`<br>_Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers._  |
+| define  | [**SSTEP\_CONFIG\_BYTES**](sstep__ctrl_8h.md#define-sstep_config_bytes)  `152U`<br>_Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers._  |
 | define  | [**SSTEP\_INSTANCE\_WORDS**](sstep__ctrl_8h.md#define-sstep_instance_words)  `((SSTEP\_CONFIG\_BYTES + SSTEP\_STATE\_BYTES + 7U) / 8U)`<br>_Size of_ [_**sstep**_](structsstep.md) _in 64-bit words._ |
-| define  | [**SSTEP\_STATE\_BYTES**](sstep__ctrl_8h.md#define-sstep_state_bytes)  `200U`<br> |
+| define  | [**SSTEP\_STATE\_BYTES**](sstep__ctrl_8h.md#define-sstep_state_bytes)  `280U`<br> |
 
 ## Public Types Documentation
 
@@ -275,7 +275,7 @@ Called from [**sstep\_fast\_loop()**](group__sstep__api.md#function-sstep_fast_l
 
 _Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers._ 
 ```C++
-#define SSTEP_CONFIG_BYTES `136U`
+#define SSTEP_CONFIG_BYTES `152U`
 ```
 
 
@@ -306,7 +306,7 @@ _Size of_ [_**sstep**_](structsstep.md) _in 64-bit words._
 ### define SSTEP\_STATE\_BYTES 
 
 ```C++
-#define SSTEP_STATE_BYTES `200U`
+#define SSTEP_STATE_BYTES `280U`
 ```
 
 

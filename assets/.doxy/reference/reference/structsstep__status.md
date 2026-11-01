@@ -36,10 +36,15 @@ _Snapshot returned by_ [_**sstep\_get\_status()**_](group__sstep__api.md#functio
 
 | Type | Name |
 | ---: | :--- |
+|  int32\_t | [**emf\_d\_mv**](#variable-emf_d_mv)  <br>_Filtered back-EMF estimate along the commanded current vector [mV]; 0 when stall detection is off._  |
+|  int32\_t | [**emf\_q\_mv**](#variable-emf_q_mv)  <br>_Filtered back-EMF estimate 90 degrees ahead of the commanded current vector [mV]; 0 when stall detection is off._  |
 |  uint16\_t | [**faults**](#variable-faults)  <br>_Active_ [_**SSTEP\_FAULT\_OVERCURRENT**_](group__sstep__defs.md#define-sstep_fault_overcurrent) _... flags._ |
 |  int32\_t | [**i\_a\_ma**](#variable-i_a_ma)  <br>_Last measured phase A current [mA]._  |
 |  int32\_t | [**i\_b\_ma**](#variable-i_b_ma)  <br>_Last measured phase B current [mA]._  |
+|  int32\_t | [**load\_angle\_cdeg**](#variable-load_angle_cdeg)  <br>_Estimated load angle, commanded minus rotor electrical angle [0.01 deg], same sign as the motor torque._  |
 |  int32\_t | [**position**](#variable-position)  <br>_Commanded position [microsteps]._  |
+|  int32\_t | [**rotor\_velocity**](#variable-rotor_velocity)  <br>_Estimated rotor velocity [microsteps/s], from the back-EMF magnitude; 0 when stall detection is off._  |
+|  uint8\_t | [**stall\_level\_pct**](#variable-stall_level_pct)  <br>_Stall detector level, 0 ._  |
 |  enum [**sstep\_state**](group__sstep__defs.md#enum-sstep_state) | [**state**](#variable-state)  <br>_Driver state._  |
 |  int32\_t | [**target**](#variable-target)  <br>_Target of the current move [microsteps]._  |
 |  uint32\_t | [**vbus\_mv**](#variable-vbus_mv)  <br>_Last measured bus voltage [mV]._  |
@@ -93,6 +98,34 @@ _Snapshot returned by_ [_**sstep\_get\_status()**_](group__sstep__api.md#functio
 
 
 
+### variable emf\_d\_mv 
+
+_Filtered back-EMF estimate along the commanded current vector [mV]; 0 when stall detection is off._ 
+```C++
+int32_t sstep_status::emf_d_mv;
+```
+
+
+
+
+<hr>
+
+
+
+### variable emf\_q\_mv 
+
+_Filtered back-EMF estimate 90 degrees ahead of the commanded current vector [mV]; 0 when stall detection is off._ 
+```C++
+int32_t sstep_status::emf_q_mv;
+```
+
+
+
+
+<hr>
+
+
+
 ### variable faults 
 
 _Active_ [_**SSTEP\_FAULT\_OVERCURRENT**_](group__sstep__defs.md#define-sstep_fault_overcurrent) _... flags._
@@ -135,6 +168,20 @@ int32_t sstep_status::i_b_ma;
 
 
 
+### variable load\_angle\_cdeg 
+
+_Estimated load angle, commanded minus rotor electrical angle [0.01 deg], same sign as the motor torque._ 
+```C++
+int32_t sstep_status::load_angle_cdeg;
+```
+
+
+
+
+<hr>
+
+
+
 ### variable position 
 
 _Commanded position [microsteps]._ 
@@ -144,6 +191,38 @@ int32_t sstep_status::position;
 
 
 
+
+<hr>
+
+
+
+### variable rotor\_velocity 
+
+_Estimated rotor velocity [microsteps/s], from the back-EMF magnitude; 0 when stall detection is off._ 
+```C++
+int32_t sstep_status::rotor_velocity;
+```
+
+
+
+
+<hr>
+
+
+
+### variable stall\_level\_pct 
+
+_Stall detector level, 0 ._ 
+```C++
+uint8_t sstep_status::stall_level_pct;
+```
+
+
+
+. 100 % of the trip. 
+
+
+        
 
 <hr>
 

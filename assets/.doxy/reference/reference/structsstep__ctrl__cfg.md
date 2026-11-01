@@ -46,6 +46,10 @@ _Control and motion parameters._ [More...](#detailed-description)
 |  uint32\_t | [**i\_run\_ma**](#variable-i_run_ma)  <br>_Peak phase current while moving [mA]._  |
 |  uint16\_t | [**microsteps**](#variable-microsteps)  <br>_Microsteps per full step (power of two, 1 ._  |
 |  uint32\_t | [**slow\_loop\_hz**](#variable-slow_loop_hz)  <br>_Rate of_ [_**sstep\_slow\_loop()**_](group__sstep__api.md#function-sstep_slow_loop) _[Hz]._ |
+|  uint32\_t | [**stall\_filter\_us**](#variable-stall_filter_us)  <br>_Time constant of the back-EMF low-pass filter [us], at least one fast loop period._  |
+|  uint32\_t | [**stall\_speed**](#variable-stall_speed)  <br>_Slip threshold [microsteps/s]: rotor speed that counts as motion while the command is at rest or slower than this; above it, the synchronism check._  |
+|  uint16\_t | [**stall\_sync\_pct**](#variable-stall_sync_pct)  <br>_Synchronism threshold [%] (1 ._  |
+|  uint32\_t | [**stall\_time\_ms**](#variable-stall_time_ms)  <br>_Stall detection: time the stall condition must persist before_ [_**SSTEP\_FAULT\_STALL**_](group__sstep__defs.md#define-sstep_fault_stall) _[ms]; 0 = stall detection off (the other stall\_\* fields are then ignored)._ |
 |  uint32\_t | [**v\_max**](#variable-v_max)  <br>_Maximum velocity [microsteps/s]._  |
 
 
@@ -242,6 +246,70 @@ uint32_t sstep_ctrl_cfg::slow_loop_hz;
 
 
 
+
+<hr>
+
+
+
+### variable stall\_filter\_us 
+
+_Time constant of the back-EMF low-pass filter [us], at least one fast loop period._ 
+```C++
+uint32_t sstep_ctrl_cfg::stall_filter_us;
+```
+
+
+
+
+<hr>
+
+
+
+### variable stall\_speed 
+
+_Slip threshold [microsteps/s]: rotor speed that counts as motion while the command is at rest or slower than this; above it, the synchronism check._ 
+```C++
+uint32_t sstep_ctrl_cfg::stall_speed;
+```
+
+
+
+
+<hr>
+
+
+
+### variable stall\_sync\_pct 
+
+_Synchronism threshold [%] (1 ._ 
+```C++
+uint16_t sstep_ctrl_cfg::stall_sync_pct;
+```
+
+
+
+. 100): smallest back-EMF along the commanded motion, relative to Ke \* speed. 
+
+
+        
+
+<hr>
+
+
+
+### variable stall\_time\_ms 
+
+_Stall detection: time the stall condition must persist before_ [_**SSTEP\_FAULT\_STALL**_](group__sstep__defs.md#define-sstep_fault_stall) _[ms]; 0 = stall detection off (the other stall\_\* fields are then ignored)._
+```C++
+uint32_t sstep_ctrl_cfg::stall_time_ms;
+```
+
+
+
+Requires SSTEP\_DRIVE\_CURRENT and ke\_uv\_s\_per\_rad &gt; 0. 
+
+
+        
 
 <hr>
 

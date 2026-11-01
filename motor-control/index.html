@@ -818,6 +818,100 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#stall-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stall detection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stall detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Principle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Design decisions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-the-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing the parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measured-on-the-motor-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measured on the motor model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#numeric-backends" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1453,6 +1547,100 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#stall-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stall detection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stall detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Principle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Design decisions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-the-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing the parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measured-on-the-motor-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measured on the motor model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#numeric-backends" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1483,7 +1671,8 @@
 <h1 id="motor-control">Motor Control<a class="headerlink" href="#motor-control" title="Permanent link">&para;</a></h1>
 <p>This chapter describes the algorithms of Stepper-C and the equations behind them: the
 motor model, per-unit scaling, the current controller, microstepping, the motion
-profile, the voltage limits of the two power stage topologies and the numeric backends.
+profile, the voltage limits of the two power stage topologies, the stall detection and
+the numeric backends.
 Every number in this chapter comes from the code or from the closed-loop tests on the
 motor model (<code>tests/unit/gtest_sstep_loop.cpp</code>).</p>
 <h2 id="motor-model">Motor model<a class="headerlink" href="#motor-model" title="Permanent link">&para;</a></h2>
@@ -1745,6 +1934,274 @@ round to zero or reach <span class="arithmatex">\(2^{30}\)</span> Q16 per period
 <code>i_hold_ma</code> and <code>on_event(SSTEP_EVENT_HOLD_CURRENT)</code> is reported. Any motion switches
 back to the run current in the same period. The hold current reduces heating at
 standstill; the holding torque is <span class="arithmatex">\(K_t\, i_\mathrm{hold}\)</span>.</p>
+<h2 id="stall-detection">Stall detection<a class="headerlink" href="#stall-detection" title="Permanent link">&para;</a></h2>
+<p>Without an encoder the library does not know where the rotor is. When the load exceeds
+the torque, the rotor stops following the commanded angle: it stalls at a hard stop,
+falls behind at speed, or slips under a load that the hold current cannot hold, while
+the commanded position keeps its value. The stall detector estimates the back-EMF from
+the quantities the fast loop already has and raises <code>SSTEP_FAULT_STALL</code> when the rotor
+does not move as commanded. It is off by default (<code>stall_time_ms = 0</code>) and needs
+<code>SSTEP_DRIVE_CURRENT</code> and <code>ke_uv_s_per_rad &gt; 0</code>.</p>
+<p><strong>Reference case.</strong> A 17HS19-2004S1 on a three-leg stage at 24 V, 1.5 A run current and
+0.5 A hold current after 500 ms, holds a constant 0.12 N·m load at the run current
+(<span class="arithmatex">\(K_t \cdot 1.5 = 0.31\)</span> N·m) but not at the hold current (0.10 N·m). At the run → hold change
+the rotor slips and spins away; without stall detection the driver stays in
+<code>SSTEP_STATE_HOLDING</code> with no fault. With the settings below it reports
+<code>SSTEP_FAULT_STALL</code> 48 ms after the load angle passes 90°.</p>
+<h3 id="principle">Principle<a class="headerlink" href="#principle" title="Permanent link">&para;</a></h3>
+<p>The winding equation gives the back-EMF from the applied voltage and the measured current.
+With the convention of the library (<span class="arithmatex">\(i_A = I\cos\varphi\)</span>, <span class="arithmatex">\(i_B = I\sin\varphi\)</span>), the back-EMF
+of a rotor at the angle <span class="arithmatex">\(\theta\)</span> and the speed <span class="arithmatex">\(\omega\)</span> is</p>
+<div class="arithmatex">\[
+e_A = -K_e\,\omega \sin(p\theta) \qquad e_B = K_e\,\omega \cos(p\theta)
+\]</div>
+<p>Rotated into the frame of the commanded current (d along the current, q 90° ahead):</p>
+<div class="arithmatex">\[
+e_d = e_A\cos\varphi + e_B\sin\varphi = K_e\,\omega \sin\delta \qquad
+e_q = -e_A\sin\varphi + e_B\cos\varphi = K_e\,\omega \cos\delta \qquad
+\delta = \varphi - p\theta
+\]</div>
+<p>The magnitude of the vector is the rotor speed, its angle the load angle <span class="arithmatex">\(\delta\)</span>.</p>
+<ul>
+<li><strong>In motion,</strong> a synchronous rotor has <span class="arithmatex">\(\omega = \omega_c\)</span> and a moderate load angle, so
+  <span class="arithmatex">\(e_q \approx K_e\,\omega_c \cos\delta\)</span> is a large constant of the sign of the motion. A stalled
+  rotor gives no back-EMF; a rotor that slips turns relative to the commanded frame and its
+  back-EMF averages out. Both make <span class="arithmatex">\(e_q\)</span> fall far below <span class="arithmatex">\(K_e\,\omega_c\)</span>.</li>
+<li><strong>At rest,</strong> the commanded frame stands still, so any lasting back-EMF means that the rotor
+  turns. A slipping rotor makes the vector rotate at its electrical speed.</li>
+</ul>
+<h3 id="equations">Equations<a class="headerlink" href="#equations" title="Permanent link">&para;</a></h3>
+<p>These are the exact operations of the library, in their order, so that a model can
+reproduce them (Scilab, Python). <span class="arithmatex">\(T_s = 1 /\)</span> <code>fast_loop_hz</code>, <span class="arithmatex">\(p = N_s / 4\)</span>, <span class="arithmatex">\(M\)</span> = <code>microsteps</code>;
+voltages are per unit of <code>vbus_nominal_mv</code> in the fast loop and millivolts in the slow
+loop.</p>
+<p><strong>Fast loop,</strong> every period <span class="arithmatex">\(k\)</span>, after the PI and the voltage limit (phase <span class="arithmatex">\(x \in \{A, B\}\)</span>):</p>
+<div class="arithmatex">\[
+\hat e_x[k] = \mathrm{sat}_{\pm 1\,\mathrm{pu}}\!\left( v_x[k-2] - a\, i_x[k] + b\, i_x[k-1] \right)
+\qquad a = \frac{L}{T_s} + \frac{R}{2} \qquad b = \frac{L}{T_s} - \frac{R}{2}
+\]</div>
+<p>This is <span class="arithmatex">\(v - R\,\frac{i[k] + i[k-1]}{2} - L\,\frac{i[k] - i[k-1]}{T_s}\)</span>: the winding equation
+integrated over the period from sample <span class="arithmatex">\(k-1\)</span> to <span class="arithmatex">\(k\)</span> with the trapezoidal rule, written with two
+gains computed by <code>sstep_init()</code>. <span class="arithmatex">\(v_x[k-2]\)</span> is the phase voltage computed two calls earlier:
+with the one-period computation delay, the compare values written in call <span class="arithmatex">\(k-2\)</span> are
+applied from sample <span class="arithmatex">\(k-1\)</span> to sample <span class="arithmatex">\(k\)</span>. It is the voltage after the limit of the power stage
+(what the bridge applies, not the PI output), so the estimate stays valid at the voltage
+limit.</p>
+<div class="arithmatex">\[
+\hat e_d = \hat e_A\cos\varphi[k] + \hat e_B\sin\varphi[k] \qquad
+\hat e_q = -\hat e_A\sin\varphi[k] + \hat e_B\cos\varphi[k]
+\]</div>
+<div class="arithmatex">\[
+\bar e_{d,q}[k] = \bar e_{d,q}[k-1] + \frac{T_s}{\tau}\left(\hat e_{d,q}[k] - \bar e_{d,q}[k-1]\right)
+\]</div>
+<p>with <span class="arithmatex">\(\tau\)</span> = <code>stall_filter_us</code>. <span class="arithmatex">\(\varphi[k]\)</span> is the commanded angle of call <span class="arithmatex">\(k\)</span>. The voltage was averaged over the period
+before it, so the estimate refers the rotor at the middle of that period to <span class="arithmatex">\(\varphi[k]\)</span>: the
+load angle reads <span class="arithmatex">\(\Omega T_s / 2\)</span> more than <span class="arithmatex">\(\varphi[k] - p\theta(t_k)\)</span>, 0.45° per rev/s at
+20 kHz with 50 pole pairs.</p>
+<p><strong>Slow loop,</strong> every period <span class="arithmatex">\(n\)</span>, against the command of the slow period that just ended:
+velocity <span class="arithmatex">\(v_c\)</span> [microsteps/s] and its back-EMF <span class="arithmatex">\(e_c = K_e\,\omega_c = K_e\,2\pi v_c / (N_s M)\)</span>
+(the feed-forward value, saturated at 1 pu, converted to mV). <span class="arithmatex">\(\bar e_d\)</span>, <span class="arithmatex">\(\bar e_q\)</span> are the
+filter outputs rounded to mV.</p>
+<div class="arithmatex">\[
+\text{in motion } (\lvert v_c \rvert \ge v_s): \qquad
+\mathrm{bad} = \mathrm{sgn}(v_c)\,\bar e_q &lt; \frac{s}{100}\,\lvert e_c \rvert
+\]</div>
+<div class="arithmatex">\[
+\text{at rest or slow } (\lvert v_c \rvert &lt; v_s): \qquad
+\Delta = (\bar e_d,\; \bar e_q - e_c) \qquad
+o \leftarrow o + \frac{\Delta - o}{N} \qquad
+\mathrm{bad} = \lvert \Delta - o \rvert &gt; e_s
+\]</div>
+<div class="arithmatex">\[
+c \leftarrow \begin{cases} c + 1 &amp; \mathrm{bad} \\ \max(c - 1,\, 0) &amp; \text{otherwise} \end{cases}
+\]</div>
+<p>and <code>SSTEP_FAULT_STALL</code> when <span class="arithmatex">\(c \ge N\)</span>, with <span class="arithmatex">\(v_s\)</span> = <code>stall_speed</code>, <span class="arithmatex">\(s\)</span> = <code>stall_sync_pct</code>,
+<span class="arithmatex">\(N\)</span> = <code>stall_time_ms</code> · <code>slow_loop_hz</code> / 1000 and the slip threshold
+<span class="arithmatex">\(e_s = K_e\, 2\pi\, v_s / (N_s M)\)</span> rounded to mV. In integers: <span class="arithmatex">\(o\)</span> is held in mV·<span class="arithmatex">\(2^{16}\)</span>, the
+update divides with truncation, <span class="arithmatex">\(\Delta - o\)</span> uses <span class="arithmatex">\(o\)</span> truncated to mV, and the magnitude is
+compared as a sum of squares. <code>sstep_enable()</code> clears <span class="arithmatex">\(\bar e\)</span>, <span class="arithmatex">\(o\)</span>, <span class="arithmatex">\(c\)</span> and the voltage
+history (<span class="arithmatex">\(v[k-1] = v[k-2] = 0\)</span>, <span class="arithmatex">\(i[k-1]\)</span> = the last measurement).</p>
+<p><strong>Diagnostics</strong> in <code>sstep_get_status()</code>: <code>emf_d_mv</code> and <code>emf_q_mv</code> are <span class="arithmatex">\(\bar e_d\)</span>, <span class="arithmatex">\(\bar e_q\)</span>;
+<code>rotor_velocity</code> is <span class="arithmatex">\(\mathrm{sgn}(\bar e_q)\,\lvert \bar e \rvert\, N_s M / (2\pi K_e)\)</span>;
+<code>load_angle_cdeg</code> is <span class="arithmatex">\(\mathrm{atan2}(\sigma\bar e_d,\; \sigma\bar e_q)\)</span> with <span class="arithmatex">\(\sigma = \mathrm{sgn}(v_c)\)</span> (at rest
+<span class="arithmatex">\(\mathrm{sgn}(\bar e_q)\)</span>), in 0.01°, positive when the rotor lags in the positive direction (the sign
+of the motor torque); <code>stall_level_pct</code> is <span class="arithmatex">\(100\,c / N\)</span>.</p>
+<h3 id="design-decisions">Design decisions<a class="headerlink" href="#design-decisions" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Filter in the commanded frame</td>
+<td>A synchronous back-EMF is constant there at any speed, so a millisecond filter neither attenuates nor delays it. In the phase frame the back-EMF at 10 rev/s is a 500 Hz sine that such a filter would suppress.</td>
+</tr>
+<tr>
+<td>In motion, only <span class="arithmatex">\(e_q\)</span></td>
+<td>A resistance error (<span class="arithmatex">\(R\)</span> of a hot winding) adds <span class="arithmatex">\(\Delta R\, I\)</span> along the current, the d axis, and does not change <span class="arithmatex">\(e_q\)</span>. An inductance error adds <span class="arithmatex">\(\Delta L\, I\, p\,\omega\)</span> along q: it scales <span class="arithmatex">\(e_q\)</span> by <span class="arithmatex">\(1 + \Delta L\, I\, p / K_e\)</span> (−22 % for <span class="arithmatex">\(L\)</span> −20 % at 1.5 A), at every speed.</td>
+</tr>
+<tr>
+<td>Threshold relative to <span class="arithmatex">\(K_e\,\omega_c\)</span></td>
+<td>The synchronous value <span class="arithmatex">\(\cos\delta\)</span> does not depend on the speed; a fixed fraction separates a loaded synchronous rotor (0.5 to 1) from a stall or a slip (about 0, ±0.25 with the <span class="arithmatex">\(L\)</span> error).</td>
+</tr>
+<tr>
+<td>At rest, learned offset</td>
+<td>A resting rotor has no back-EMF, so a constant estimate is an observer error: <span class="arithmatex">\(\Delta R\, I\)</span>, the dead-time voltage, current-sensor offsets (0.91 V at 1.5 A in the worst case below, more than the threshold). Its running mean is subtracted. A slipping rotor makes the vector rotate, which averages out of the mean and stays in <span class="arithmatex">\(\Delta - o\)</span>.</td>
+</tr>
+<tr>
+<td>Offset time constant = trip time</td>
+<td>An offset that appears at once (enable, run → hold) decays below <span class="arithmatex">\(e_s\)</span> after <span class="arithmatex">\(N \ln(\text{offset} / e_s)\)</span> periods. That is less than <span class="arithmatex">\(N\)</span> for an offset below <span class="arithmatex">\(e \cdot e_s\)</span> (2.7 times the threshold), so it never trips. A slip at <span class="arithmatex">\(\Omega \gg 1 / T_N\)</span> (<span class="arithmatex">\(T_N\)</span> = <code>stall_time_ms</code>) passes the mean unchanged.</td>
+</tr>
+<tr>
+<td>Below <span class="arithmatex">\(v_s\)</span>, deviation from <span class="arithmatex">\((0, e_c)\)</span></td>
+<td>The motor may move slowly right after <code>sstep_enable()</code>, without a rest period to learn the offset: the deviation from the expected back-EMF has the same zero mean at rest and in slow motion.</td>
+</tr>
+<tr>
+<td>Up/down counter</td>
+<td>A stall keeps the condition true: the fault comes <span class="arithmatex">\(N\)</span> slow periods after it begins. Short events (enable, current steps, resonance, reversal through zero) count down again; a condition true less than half of the time does not accumulate.</td>
+</tr>
+<tr>
+<td>Decision in the slow loop</td>
+<td>The fast loop only estimates and filters; the comparison, the offset tracking and the counter run at 1 kHz on integer millivolts, identical in both numeric backends.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choosing-the-parameters">Choosing the parameters<a class="headerlink" href="#choosing-the-parameters" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Example (17HS19, ESC1)</th>
+<th>How to choose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>stall_time_ms</code></td>
+<td>50</td>
+<td>Detection delay after the stall; longer is more robust. Keep an offset at rest below <span class="arithmatex">\(e \cdot e_s\)</span> (see above).</td>
+</tr>
+<tr>
+<td><code>stall_filter_us</code></td>
+<td>1000</td>
+<td>0.5 to 2 ms. Shorter follows faster slips but passes more current quantization noise: one ADC count changes <span class="arithmatex">\(\hat e\)</span> by <span class="arithmatex">\(L\,\Delta i / \tau\)</span> (87 mV for 29 mA at 1 ms). A rotating vector is filtered to at most <span class="arithmatex">\(K_e / (p\,\tau)\)</span> (4.2 V at 1 ms), which must stay well above <span class="arithmatex">\(e_s\)</span>.</td>
+</tr>
+<tr>
+<td><code>stall_speed</code></td>
+<td>1600 (0.5 rev/s, <span class="arithmatex">\(e_s\)</span> = 655 mV)</td>
+<td>Above the back-EMF noise at rest; the commanded speed from which the synchronism check runs.</td>
+</tr>
+<tr>
+<td><code>stall_sync_pct</code></td>
+<td>50</td>
+<td>Below <span class="arithmatex">\(\cos\delta \cdot (1 + \Delta L\, I\, p / K_e)\)</span> at the worst synchronous operating point. At the voltage limit the current lags its reference and the ratio drops (0.46 at 11 rev/s on a 24 V three-leg stage); use 30 to 40 near the limit.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="measured-on-the-motor-model">Measured on the motor model<a class="headerlink" href="#measured-on-the-motor-model" title="Permanent link">&para;</a></h3>
+<p>Tests <code>SstepLoop.Stall*</code> and <code>SstepStall.*</code> with the example settings, fixed point and
+float backend alike. The worst-case plant differs from the configuration as a real board
+does: <span class="arithmatex">\(R\)</span> +30 % (hot winding), <span class="arithmatex">\(L\)</span> −20 % (saturation), 70 mV dead-time error per leg
+(24 V, 20 kHz), ESC1 current quantization (29 mA per count instead of 2 mA) and a detent
+torque of 0.02 N·m.</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reference case, 0.12 N·m at the hold current (nominal and worst-case plant)</td>
+<td><code>SSTEP_FAULT_STALL</code> 48 ms after the load angle passes 90°</td>
+</tr>
+<tr>
+<td>Rotor blocked at 3 rev/s (hard stop), either direction, both topologies, worst case</td>
+<td><code>SSTEP_FAULT_STALL</code> after 50.0 ms</td>
+</tr>
+<tr>
+<td>Rotor turning at 1 rev/s with the command at rest</td>
+<td><code>SSTEP_FAULT_STALL</code> after 50.0 ms</td>
+</tr>
+<tr>
+<td>Rotor imposed at 3 rev/s</td>
+<td><span class="arithmatex">\(\lvert \bar e \rvert\)</span> 3936 mV against <span class="arithmatex">\(K_e\,\omega\)</span> = 3932 mV; <code>rotor_velocity</code> 9609 microsteps/s for 9600; load angle 10.27° (model 10.28°)</td>
+</tr>
+<tr>
+<td>Enable, run → hold, 0.07 N·m through run → hold, 6400-microstep move, reversal ±4 rev/s and stop, runs at 0.125, 0.25, 0.47, 1, 2, 8, 9.5 and 11 rev/s</td>
+<td>No fault. Largest detector level 6 % (nominal plant), 32 % (worst case)</td>
+</tr>
+</tbody>
+</table>
+<p>The motor model of this repository shows no sustained mid-band oscillation between 8 and
+11 rev/s; those runs check the voltage limit and the current lag. A 0.09 N·m load at
+the run → hold change is a real slip in the model (the undamped rotor overshoots past 90°)
+and is reported.</p>
+<h3 id="cost">Cost<a class="headerlink" href="#cost" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Fixed point</th>
+<th>Float</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fast loop, added per period</td>
+<td>4 gain multiplications, 4 Q15 multiplications, 2 filter updates, 10 saturating additions</td>
+<td>Same operations in float</td>
+</tr>
+<tr>
+<td>Fast loop, executed instructions without / with stall detection (<code>-Os</code>)</td>
+<td>1035 / 1510</td>
+<td>720 / 933</td>
+</tr>
+<tr>
+<td>Same with <code>-O2</code></td>
+<td>666 / 912</td>
+<td>680 / 921</td>
+</tr>
+<tr>
+<td>Slow loop, added</td>
+<td>167 instructions (<code>-Os</code>)</td>
+<td>110 instructions</td>
+</tr>
+<tr>
+<td><code>sstep_get_status()</code></td>
+<td>1202 instructions (<code>-Os</code>; integer CORDIC and square root)</td>
+<td>1148</td>
+</tr>
+<tr>
+<td>RAM per instance, added</td>
+<td>96 B (Cortex-M4)</td>
+<td>96 B</td>
+</tr>
+</tbody>
+</table>
+<p>Instructions counted on a Cortex-M4 image (GCC 15.2) in an instruction-set emulator,
+mean over 600 fast-loop periods while accelerating to 3 rev/s; on Cortex-M4 most of them take one cycle. At
+170 MHz and 20 kHz the observer takes about 1.5 µs (<code>-O2</code>) to 2.8 µs (fixed point,
+<code>-Os</code>) of the 50 µs period. With <code>stall_time_ms = 0</code> the fast loop skips the observer
+(one comparison).</p>
+<h3 id="limits">Limits<a class="headerlink" href="#limits" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Below <code>stall_speed</code>, a rotor that stops while the command creeps slowly is not seen:
+  its back-EMF is close to zero either way. Only a rotor faster than the command is.</li>
+<li>The fault comes <code>stall_time_ms</code> after the stall begins; the position is lost from the
+  beginning of the stall.</li>
+<li>During a slip at rest <code>rotor_velocity</code> is low (the filter attenuates the rotating
+  vector: about 10 000 for 27 000 microsteps/s); it is accurate in synchronism.
+  An inductance error biases it too (26 700 for 31 400 microsteps/s with <span class="arithmatex">\(L\)</span> −20 % at
+  10 rev/s).</li>
+<li>The observer needs the phase currents (<code>SSTEP_DRIVE_CURRENT</code>) and <span class="arithmatex">\(K_e\)</span>.</li>
+<li>Verified on the motor model of the tests; the closed-loop validation with the
+  sfs-stepper-sim plant and on hardware follows.</li>
+</ul>
 <h2 id="numeric-backends">Numeric backends<a class="headerlink" href="#numeric-backends" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
