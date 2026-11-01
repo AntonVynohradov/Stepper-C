@@ -53,35 +53,36 @@ jobs:
       - name: Install tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtest-dev gcovr cppcheck doxygen libpango-1.0-0 libpangoft2-1.0-0
+          sudo apt-get install -y libgtest-dev gcovr cppcheck libpango-1.0-0 libpangoft2-1.0-0
           python -m pip install -r requirements-dev.txt
 
-      - name: Unit tests and coverage gate
+      # every configure preset with [UnitTests in its name, as in google-unit-tests.yml
+      - name: Unit tests and coverage gate (every unit test preset)
         run: |
-          cmake --preset "[UnitTests]Stepper Motor Control" -B "build/[UnitTests]Stepper Motor Control"
-          cmake --build "build/[UnitTests]Stepper Motor Control" --target coverage
-          cmake --preset "[UnitTestsFloat]Stepper Motor Control" -B "build/[UnitTestsFloat]Stepper Motor Control"
-          cmake --build "build/[UnitTestsFloat]Stepper Motor Control" --target coverage
+          for P in $(jq -r '.configurePresets[].name | select(contains("[UnitTests"))' CMakePresets.json); do
+            cmake --preset "$P" -B "build/$P"
+            cmake --build "build/$P" --target coverage
+          done
 
       - name: MISRA C:2012 gate
         run: |
-          cmake --preset "[Debug]Stepper Motor Control" -B "build/[Debug]Stepper Motor Control"
-          cmake --build "build/[Debug]Stepper Motor Control" --target misra-analyze
+          cmake --preset "SSTEP[Debug]" -B "build/SSTEP[Debug]"
+          cmake --build "build/SSTEP[Debug]" --target misra-analyze
 
       - name: Build release library
         run: |
-          cmake --preset "[Release]Stepper Motor Control" -B "build/[Release]Stepper Motor Control"
-          cmake --build "build/[Release]Stepper Motor Control"
+          cmake --preset "SSTEP[Release]" -B "build/SSTEP[Release]"
+          cmake --build "build/SSTEP[Release]"
 
       - name: Package
         run: |
           PKG="stepper-c-$VERSION-linux-x86_64"
           mkdir -p "$PKG/lib" "$PKG/include"
-          cp "build/[Release]Stepper Motor Control/libsstep.a" "$PKG/lib/"
+          cp "build/SSTEP[Release]/libsstep.a" "$PKG/lib/"
           cp sstep.h inc/*.h "$PKG/include/"
           cp LICENSE README.md CHANGELOG.md "$PKG/"
           tar -czf "$PKG.tar.gz" "$PKG"
-          cp "build/[Debug]Stepper Motor Control/misra.txt" "stepper-c-$VERSION-misra.txt"
+          cp "build/SSTEP[Debug]/misra.txt" "stepper-c-$VERSION-misra.txt"
           echo "PKG=$PKG" >> "$GITHUB_ENV"
 
       - name: PDF manual

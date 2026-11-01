@@ -87,7 +87,7 @@ if(GCOVR_EXECUTABLE)
         COMMAND ${GCOVR_EXECUTABLE}
             -r ${CMAKE_SOURCE_DIR}
             --object-directory ${CMAKE_BINARY_DIR}
-            ${CMAKE_BINARY_DIR}         # search only this build (not the other backend's)
+            ${CMAKE_BINARY_DIR}         # search only this build (not another preset's)
             --filter ${CMAKE_SOURCE_DIR}/src
             --exclude ${CMAKE_SOURCE_DIR}/tests
             --lcov ${COVERAGE_OUTPUT_DIR}/coverage.info

@@ -5,7 +5,7 @@
   // "Python: Setup venv" once before the tool, test and documentation tasks.
   // Works on Windows, Linux and macOS ("windows" blocks override the defaults).
   // Every task is "type": "process" with explicit args: the default Windows shell
-  // (PowerShell 5.1) has no "&&" and treats the brackets of build/[...]Stepper Motor Control as
+  // (PowerShell 5.1) has no "&&" and treats the brackets of build/SSTEP[...] as
   // wildcards. Destructive tasks (Delete venv, Clean) are never dependencies.
   "version": "2.0.0",
   "options": {
@@ -72,7 +72,7 @@
       "hide": true,
       "type": "process",
       "command": "cmake",
-      "args": ["--preset", "[Debug]Stepper Motor Control"],
+      "args": ["--preset", "SSTEP[Debug]"],
       "problemMatcher": []
     },
     {
@@ -81,7 +81,7 @@
       "detail": "Static library with debug information",
       "type": "process",
       "command": "cmake",
-      "args": ["--build", "build/[Debug]Stepper Motor Control"],
+      "args": ["--build", "build/SSTEP[Debug]"],
       "dependsOn": ["Library: Configure (Debug)"],
       "problemMatcher": {
         "base": "$gcc",
@@ -93,7 +93,7 @@
       "hide": true,
       "type": "process",
       "command": "cmake",
-      "args": ["--preset", "[Release]Stepper Motor Control"],
+      "args": ["--preset", "SSTEP[Release]"],
       "problemMatcher": []
     },
     {
@@ -102,7 +102,7 @@
       "detail": "Optimized static library (libsstep.a)",
       "type": "process",
       "command": "cmake",
-      "args": ["--build", "build/[Release]Stepper Motor Control"],
+      "args": ["--build", "build/SSTEP[Release]"],
       "dependsOn": ["Library: Configure (Release)"],
       "problemMatcher": {
         "base": "$gcc",
@@ -127,7 +127,7 @@
       "hide": true,
       "type": "process",
       "command": "cmake",
-      "args": ["--preset", "[UnitTests]Stepper Motor Control"],
+      "args": ["--preset", "SSTEP[UnitTests]"],
       "problemMatcher": []
     },
     {
@@ -135,7 +135,7 @@
       "hide": true,
       "type": "process",
       "command": "cmake",
-      "args": ["--build", "build/[UnitTests]Stepper Motor Control"],
+      "args": ["--build", "build/SSTEP[UnitTests]"],
       "dependsOn": ["Tests: Configure unit tests"],
       "problemMatcher": {
         "base": "$gcc",
@@ -148,7 +148,7 @@
       "detail": "GoogleTest suite through CTest",
       "type": "process",
       "command": "ctest",
-      "args": ["--test-dir", "build/[UnitTests]Stepper Motor Control", "-L", "unit", "--output-on-failure"],
+      "args": ["--test-dir", "build/SSTEP[UnitTests]", "-L", "unit", "--output-on-failure"],
       "dependsOn": ["Tests: Build unit tests"],
       "problemMatcher": []
     },
@@ -158,8 +158,26 @@
       "detail": "Unit tests + gcovr report (target 'coverage')",
       "type": "process",
       "command": "cmake",
-      "args": ["--build", "build/[UnitTests]Stepper Motor Control", "--target", "coverage"],
+      "args": ["--build", "build/SSTEP[UnitTests]", "--target", "coverage"],
       "dependsOn": ["Tests: Configure unit tests"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Tests: Configure unit tests (float)",
+      "hide": true,
+      "type": "process",
+      "command": "cmake",
+      "args": ["--preset", "SSTEP[UnitTestsFloat]"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Tests: Coverage report (float)",
+      "group": "build",
+      "detail": "Unit tests + gcovr report with the float backend (target 'coverage')",
+      "type": "process",
+      "command": "cmake",
+      "args": ["--build", "build/SSTEP[UnitTestsFloat]", "--target", "coverage"],
+      "dependsOn": ["Tests: Configure unit tests (float)"],
       "problemMatcher": []
     },
 
@@ -169,10 +187,10 @@
     {
       "label": "Analysis: Cppcheck",
       "group": "build",
-      "detail": "Target 'cppcheck-analyze' (report in build/[Debug]Stepper Motor Control/cppcheck.txt)",
+      "detail": "Target 'cppcheck-analyze' (report in build/SSTEP[Debug]/cppcheck.txt)",
       "type": "process",
       "command": "cmake",
-      "args": ["--build", "build/[Debug]Stepper Motor Control", "--target", "cppcheck-analyze"],
+      "args": ["--build", "build/SSTEP[Debug]", "--target", "cppcheck-analyze"],
       "dependsOn": ["Library: Configure (Debug)"],
       "problemMatcher": {
         "base": "$gcc",
@@ -182,10 +200,10 @@
     {
       "label": "Analysis: MISRA C:2012",
       "group": "build",
-      "detail": "Target 'misra-analyze' (report in build/[Debug]Stepper Motor Control/misra.txt)",
+      "detail": "Target 'misra-analyze' (report in build/SSTEP[Debug]/misra.txt)",
       "type": "process",
       "command": "cmake",
-      "args": ["--build", "build/[Debug]Stepper Motor Control", "--target", "misra-analyze"],
+      "args": ["--build", "build/SSTEP[Debug]", "--target", "misra-analyze"],
       "dependsOn": ["Library: Configure (Debug)"],
       "problemMatcher": []
     },

@@ -19,13 +19,13 @@ jobs:
           fetch-depth: 0
 
       - name: Configure (Debug preset)
-        run: cmake --preset "[Debug]Stepper Motor Control" -B "build/[Debug]Stepper Motor Control"
+        run: cmake --preset "SSTEP[Debug]" -B "build/SSTEP[Debug]"
 
       - name: Build
-        run: cmake --build "build/[Debug]Stepper Motor Control"
+        run: cmake --build "build/SSTEP[Debug]"
 
       - name: Configure (Release preset)
-        run: cmake --preset "[Release]Stepper Motor Control" -B "build/[Release]Stepper Motor Control"
+        run: cmake --preset "SSTEP[Release]" -B "build/SSTEP[Release]"
 
       - name: Build
-        run: cmake --build "build/[Release]Stepper Motor Control"
+        run: cmake --build "build/SSTEP[Release]"

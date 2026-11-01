@@ -103,10 +103,10 @@ communication, application logic. They belong to the firmware that uses it.
 ## Tests (definition of done)
 
 ```sh
-cmake --preset "[Debug]Stepper Motor Control" && cmake --build "build/[Debug]Stepper Motor Control"
-cmake --preset "[UnitTests]Stepper Motor Control" && cmake --build "build/[UnitTests]Stepper Motor Control" --target coverage
-cmake --preset "[UnitTestsFloat]Stepper Motor Control" && cmake --build "build/[UnitTestsFloat]Stepper Motor Control" --target coverage
-cmake --build "build/[Debug]Stepper Motor Control" --target misra-analyze
+cmake --preset "SSTEP[Debug]" && cmake --build "build/SSTEP[Debug]"
+cmake --preset "SSTEP[UnitTests]" && cmake --build "build/SSTEP[UnitTests]" --target coverage
+cmake --preset "SSTEP[UnitTestsFloat]" && cmake --build "build/SSTEP[UnitTestsFloat]" --target coverage
+cmake --build "build/SSTEP[Debug]" --target misra-analyze
 python tools/docs/check_snippets.py
 python tools/sstep_gen_sin_table.py --check
 ```
@@ -169,12 +169,21 @@ English and written for embedded engineers integrating the library.
   `tools/docs/snippet_include/` (FreeRTOS stubs); API prototypes must match the
   headers exactly. Add a board stub when a snippet needs a new function.
 - `mkdocs build` must print no WARNING.
-- The documentation tooling is the shared base of the `sfs-protocol-library` skill.
-  Keep `overrides/`, `svgkit.py`, `check_snippets.py`, `stack_usage.py` and the
-  stylesheet as in its templates and change project data only (`mkdocs.yml`,
-  `diagrams.py`, `snippets.json`). `build_manual.py` and `manual.css` differ from
-  the templates by the formula rendering (arithmatex + ziamath); keep that part
-  when syncing them.
+- The repository follows the `sfs-static-library` skill (Stepper-C is its reference
+  implementation). Its generic files (`overrides/`, the stylesheet and KaTeX script,
+  the brand logos, every file of `tools/docs/` except `diagrams.py`, `snippets.json`
+  and `snippet_stubs.h`, `.github/workflows/`, `cmake/unit_tests.cmake`,
+  `cmake/misra_check.cmake`, `.clang-format`, `cppcheck-excludes.txt`,
+  `.vscode/extensions.json`) stay identical to its templates; change project data only.
+  Check before a release, and update after a template change:
+
+  ```sh
+  python ~/.claude/skills/sfs-static-library/assets/scaffold.py --check --dest . \
+      --lib sstep --project Stepper-C --domain "Stepper Motor Control"   # --sync to update
+  ```
+
+  The workflows run every preset with `[UnitTests` in its name (`SSTEP[UnitTests]`,
+  `SSTEP[UnitTestsFloat]`), read from `CMakePresets.json`.
 - Brand: SystemFromScratch® exactly like that; do not name the trademark owner;
   STM32 is a trademark of STMicroelectronics.
 

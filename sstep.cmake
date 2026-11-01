@@ -24,23 +24,16 @@
 # ==============================================================================
 
 list(APPEND CMAKE_MODULE_PATH
-
-    ${CMAKE_CURRENT_LIST_DIR}/cmake
+    # Add custom CMake modules here if needed
 )
-
-# ==============================================================================
-# VERSION EXTRACTION
-# ==============================================================================
-
-include(version) # Include the version extraction and parsing logic
 
 # ==============================================================================
 # INCLUDE DIRECTORIES
 # ==============================================================================
 
-list(APPEND SSTEP_HEADERS
+include_directories(${CMAKE_CURRENT_LIST_DIR})
 
-    ${CMAKE_CURRENT_LIST_DIR}
+list(APPEND SSTEP_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/inc
 )
 
@@ -62,6 +55,7 @@ set_source_files_properties(${SSTEP_SOURCES} PROPERTIES LANGUAGE C)
 # Library sources only (SSTEP_SOURCES also receives the test sources below)
 set(SSTEP_LIBRARY_SOURCES ${SSTEP_SOURCES})
 
+
 # ==============================================================================
 # BUILD-TIME CONFIGURATION (see inc/sstep_config.h)
 # ==============================================================================
@@ -72,13 +66,13 @@ set_property(CACHE SSTEP_MATH_BACKEND PROPERTY STRINGS FIXED FLOAT)
 if(NOT SSTEP_MATH_BACKEND MATCHES "^(FIXED|FLOAT)$")
     message(FATAL_ERROR "SSTEP_MATH_BACKEND must be FIXED or FLOAT, got '${SSTEP_MATH_BACKEND}'")
 endif()
-list(APPEND SSTEP_COMPILE_DEFINITIONS "SSTEP_CFG_MATH_BACKEND=SSTEP_MATH_BACKEND_${SSTEP_MATH_BACKEND}")
+list(APPEND COMPILE_DEFINITIONS "SSTEP_CFG_MATH_BACKEND=SSTEP_MATH_BACKEND_${SSTEP_MATH_BACKEND}")
 
 # Optional folder with sstep_user_config.h (overrides the SSTEP_CFG_* defaults)
 set(SSTEP_CONFIG_DIR "" CACHE PATH "Folder containing sstep_user_config.h (optional)")
 if(SSTEP_CONFIG_DIR)
     list(APPEND SSTEP_HEADERS ${SSTEP_CONFIG_DIR})
-    list(APPEND SSTEP_COMPILE_DEFINITIONS "SSTEP_USER_CONFIG")
+    list(APPEND COMPILE_DEFINITIONS "SSTEP_USER_CONFIG")
 endif()
 
 # ==============================================================================
@@ -86,7 +80,7 @@ endif()
 # ==============================================================================
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    list(APPEND SSTEP_COMPILE_DEFINITIONS "SSTEP_DEBUG")
+    list(APPEND COMPILE_DEFINITIONS "SSTEP_DEBUG")
 endif()
 
 set(SSTEP_LIBRARY_TYPE "STATIC")        # Default to static library, can be overridden by CMake presets
@@ -96,7 +90,7 @@ set(SSTEP_LIBRARY_INTERFACE "PUBLIC")   # Interface scope for consumers of the l
 # UNIT TESTS
 # ==============================================================================
 
-if(SSTEP_UNIT_TESTS)
+if(UNIT_TESTS)
 
     list(REMOVE_ITEM SSTEP_SOURCES
         # Add any source files that should be excluded from the main library when unit tests are enabled
@@ -130,17 +124,11 @@ endif()
 # LIBRARY TARGET
 # ==============================================================================
 
-# Without sources the target would be header-only
-if(NOT SSTEP_SOURCES)
-    set(SSTEP_LIBRARY_TYPE "INTERFACE")
-    set(SSTEP_LIBRARY_INTERFACE "INTERFACE")
-endif()
-
 set(SSTEP_C "sstep")
 add_library(${SSTEP_C} ${SSTEP_LIBRARY_TYPE} ${SSTEP_SOURCES})
 target_include_directories(${SSTEP_C} ${SSTEP_LIBRARY_INTERFACE} ${SSTEP_HEADERS})
-target_compile_definitions(${SSTEP_C} ${SSTEP_LIBRARY_INTERFACE} ${SSTEP_COMPILE_DEFINITIONS})
+target_compile_definitions(${SSTEP_C} ${SSTEP_LIBRARY_INTERFACE} ${COMPILE_DEFINITIONS})
 
-if(SSTEP_COMPILE_OPTIONS) # Add any additional compile options if defined
-    target_compile_options(${SSTEP_C} ${SSTEP_LIBRARY_INTERFACE} ${SSTEP_COMPILE_OPTIONS})
+if(COMPILE_OPTIONS) # Add any additional compile options if defined
+    target_compile_options(${SSTEP_C} ${SSTEP_LIBRARY_INTERFACE} ${COMPILE_OPTIONS})
 endif()

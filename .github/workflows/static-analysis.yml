@@ -35,7 +35,9 @@ jobs:
             esac
             excludes+=("-i" "$trimmed_line")
           done < cppcheck-excludes.txt
+          # tests/config holds the configuration header of libraries that have one
           includes=(-I . -I inc)
+          [ -d tests/config ] && includes+=(-I tests/config)
           cppcheck --enable=all --inconclusive --std=c11 --force \
             --suppress=missingIncludeSystem --suppress=unusedFunction \
             "${includes[@]}" \
@@ -63,16 +65,16 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y cppcheck
 
       - name: Configure (Debug preset)
-        run: cmake --preset "[Debug]Stepper Motor Control" -B "build/[Debug]Stepper Motor Control"
+        run: cmake --preset "SSTEP[Debug]" -B "build/SSTEP[Debug]"
 
       - name: Run MISRA analysis
-        run: cmake --build "build/[Debug]Stepper Motor Control" --target misra-analyze
+        run: cmake --build "build/SSTEP[Debug]" --target misra-analyze
 
       - name: Upload MISRA report
         uses: actions/upload-artifact@v4
         with:
           name: misra-report
-          path: build/\[Debug\]Stepper Motor Control/misra.txt
+          path: build/SSTEP\[Debug\]/misra.txt
 
   codeql:
     name: CodeQL Analysis

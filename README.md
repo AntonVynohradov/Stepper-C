@@ -109,19 +109,19 @@ Cppcheck for the MISRA check, Python 3 for the documentation.
 
 | Preset | Purpose |
 | --- | --- |
-| `[Debug]Stepper Motor Control` | Static library with debug information |
-| `[Release]Stepper Motor Control` | Optimized static library |
-| `[UnitTests]Stepper Motor Control` | Unit and closed-loop tests, fixed point, coverage gate |
-| `[UnitTestsFloat]Stepper Motor Control` | The same tests with the float backend |
+| `SSTEP[Debug]` | Static library with debug information |
+| `SSTEP[Release]` | Optimized static library |
+| `SSTEP[UnitTests]` | Unit and closed-loop tests, fixed point, coverage gate |
+| `SSTEP[UnitTestsFloat]` | The same tests with the float backend |
 
 ```bash
-cmake --preset "[Release]Stepper Motor Control"
-cmake --build "build/[Release]Stepper Motor Control"
+cmake --preset "SSTEP[Release]"
+cmake --build "build/SSTEP[Release]"
 
-cmake --preset "[UnitTests]Stepper Motor Control"
-cmake --build "build/[UnitTests]Stepper Motor Control" --target coverage
+cmake --preset "SSTEP[UnitTests]"
+cmake --build "build/SSTEP[UnitTests]" --target coverage
 
-cmake --build "build/[Debug]Stepper Motor Control" --target misra-analyze
+cmake --build "build/SSTEP[Debug]" --target misra-analyze
 ```
 
 **In your CMake project:**
@@ -139,7 +139,7 @@ include path.
 | --- | --- | --- |
 | `SSTEP_MATH_BACKEND` | `FIXED` | Numeric backend: `FIXED` or `FLOAT` |
 | `SSTEP_CONFIG_DIR` | empty | Folder with `sstep_user_config.h` (build-time options) |
-| `SSTEP_UNIT_TESTS` | `OFF` | GoogleTest suite and `coverage` target |
+| `UNIT_TESTS` | `OFF` | GoogleTest suite and `coverage` target |
 
 ## Project structure
 

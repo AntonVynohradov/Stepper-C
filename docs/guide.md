@@ -36,10 +36,10 @@ include path.
 
 | Preset | Purpose |
 | --- | --- |
-| `[Debug]Stepper Motor Control` | Static library with debug information |
-| `[Release]Stepper Motor Control` | Optimized static library |
-| `[UnitTests]Stepper Motor Control` | GoogleTest suite, fixed-point backend, with coverage; target `coverage` |
-| `[UnitTestsFloat]Stepper Motor Control` | The same suite with the float backend |
+| `SSTEP[Debug]` | Static library with debug information |
+| `SSTEP[Release]` | Optimized static library |
+| `SSTEP[UnitTests]` | GoogleTest suite, fixed-point backend, with coverage; target `coverage` |
+| `SSTEP[UnitTestsFloat]` | The same suite with the float backend |
 
 ## Unit tests and coverage
 

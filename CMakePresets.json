@@ -8,34 +8,34 @@
             "binaryDir": "${sourceDir}/build/${presetName}"
         },
         {
-            "name": "[Debug]Stepper Motor Control",
+            "name": "SSTEP[Debug]",
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
-            "name": "[Release]Stepper Motor Control",
+            "name": "SSTEP[Release]",
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
         },
         {
-            "name": "[UnitTests]Stepper Motor Control",
+            "name": "SSTEP[UnitTests]",
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "SSTEP_UNIT_TESTS": "ON",
+                "UNIT_TESTS": "ON",
                 "SSTEP_MATH_BACKEND": "FIXED"
             }
         },
         {
-            "name": "[UnitTestsFloat]Stepper Motor Control",
+            "name": "SSTEP[UnitTestsFloat]",
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "SSTEP_UNIT_TESTS": "ON",
+                "UNIT_TESTS": "ON",
                 "SSTEP_MATH_BACKEND": "FLOAT"
             }
         }

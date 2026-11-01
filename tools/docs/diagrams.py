@@ -13,7 +13,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #*****************************************************************************
 
-"""Documentation diagrams of Stepper-C, built with svgkit (sfs-protocol-library skill).
+"""Documentation diagrams of Stepper-C, built with svgkit (sfs-static-library skill).
 Preview every diagram (headless Chrome --screenshot) and check its labels against the
 code after a change. Curves (trajectory, voltage regions) are computed from the same
 equations as the library."""

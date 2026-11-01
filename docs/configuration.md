@@ -163,7 +163,7 @@ python ../tools/docs/stack_usage.py . --markdown
 | --- | --- | --- |
 | `SSTEP_MATH_BACKEND` | `FIXED` | Numeric backend: `FIXED` or `FLOAT` |
 | `SSTEP_CONFIG_DIR` | empty | Folder with `sstep_user_config.h` |
-| `SSTEP_UNIT_TESTS` | `OFF` | GoogleTest suite and `coverage` target |
+| `UNIT_TESTS` | `OFF` | GoogleTest suite and `coverage` target |
 | `SSTEP_COVERAGE_MIN` | `100` | Coverage gate (lines and branches, %) |
 | `SSTEP_MISRA_FAIL_ON_VIOLATION` | `ON` | `misra-analyze` fails on any violation |
 | `SSTEP_MISRA_RULE_TEXTS` | empty | Licensed MISRA rule texts for readable reports |

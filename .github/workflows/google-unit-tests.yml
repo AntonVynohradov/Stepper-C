@@ -11,14 +11,31 @@ on:
       - development
 
 jobs:
+  presets:
+    name: Unit test presets
+    runs-on: ubuntu-latest
+    outputs:
+      list: ${{ steps.list.outputs.list }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # every configure preset with [UnitTests in its name: one per numeric backend or
+      # variant (SSTEP[UnitTests], SSTEP[UnitTestsFloat] ...), read from CMakePresets.json
+      - name: List the unit test presets
+        id: list
+        run: |
+          echo "list=$(jq -c '[.configurePresets[].name | select(contains("[UnitTests"))]' CMakePresets.json)" >> "$GITHUB_OUTPUT"
+
   unit-tests:
     name: Unit tests (${{ matrix.preset }})
+    needs: presets
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
-        preset: [UnitTests, UnitTestsFloat]   # fixed point and float backend
+        preset: ${{ fromJSON(needs.presets.outputs.list) }}
 
     steps:
       - name: Checkout
@@ -32,14 +49,19 @@ jobs:
           sudo apt-get install -y libgtest-dev gcovr
 
       - name: Configure
-        run: cmake --preset "[${{ matrix.preset }}]Stepper Motor Control" -B "build/[${{ matrix.preset }}]Stepper Motor Control"
+        run: cmake --preset "${{ matrix.preset }}" -B "build/${{ matrix.preset }}"
 
       - name: Build, test and coverage gate
-        run: cmake --build "build/[${{ matrix.preset }}]Stepper Motor Control" --target coverage
+        run: cmake --build "build/${{ matrix.preset }}" --target coverage
+
+      # the brackets of the build folder are glob characters for upload-artifact
+      - name: Collect coverage report
+        if: always()
+        run: cp -r "build/${{ matrix.preset }}/Coverage" coverage-report || true
 
       - name: Upload coverage report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report-${{ matrix.preset }}
-          path: build/\[${{ matrix.preset }}\]Stepper Motor Control/Coverage
+          path: coverage-report

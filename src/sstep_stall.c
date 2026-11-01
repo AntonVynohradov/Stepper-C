@@ -109,8 +109,12 @@ static sstep_angle_t atan2_turn(int32_t y, int32_t x)
     int32_t ys = y;
     int32_t pw = 1; /* 2^i */
     sstep_angle_t a = 0U;
-    uint32_t steps = ((x == 0) && (y == 0)) ? 0U : CORDIC_STEPS;
+    uint32_t steps = CORDIC_STEPS;
 
+    if ((x == 0) && (y == 0))
+    {
+        steps = 0U; /* the zero vector: angle 0 */
+    }
     if (xs < 0)
     {
         /* rotate by half a turn into the right half plane */
@@ -256,8 +260,11 @@ void sstep_stall_status(const struct sstep_ctx* m, struct sstep_status* status)
         int64_t ed = (int64_t)emf_mv(m, 0U);
         int64_t eq = (int64_t)emf_mv(m, 1U);
         /* direction of the command, or of the back-EMF at rest */
-        bool fwd = (m->vel_cmd > 0) || ((m->vel_cmd == 0) && (eq >= 0));
-        int64_t s = fwd ? 1 : -1;
+        int64_t s = 1;
+        if ((m->vel_cmd < 0) || ((m->vel_cmd == 0) && (eq < 0)))
+        {
+            s = -1;
+        }
         int64_t sq = (ed * ed) + (eq * eq);
         uint64_t mag = sstep_isqrt64((uint64_t)sq);
         /* speed = |e| / Ke [microsteps/s] = |e| Ns M / (2 pi Ke) */

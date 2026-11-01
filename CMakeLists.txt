@@ -57,11 +57,17 @@ set(CMAKE_C_FLAGS_DEBUG "-Wall -Wextra -Wpedantic -Wconversion -g")
 set(CMAKE_C_FLAGS_RELEASE "-Wall -Wextra -Wpedantic -Wconversion -O2 -DNDEBUG")
 
 # ==============================================================================
+# VERSION EXTRACTION
+# ==============================================================================
+
+include(version) # Include the version extraction and parsing logic
+
+# ==============================================================================
 # LIBRARY/EXECUTABLE TARGETS
 # ==============================================================================
 
 # Unit tests are optional and can be enabled with CMake options
-option(SSTEP_UNIT_TESTS "Enable SSTEP unit tests (GoogleTest)" OFF)
+option(UNIT_TESTS "Enable SSTEP unit tests (GoogleTest)" OFF)
 
 # The static library target is defined in sstep.cmake
 include(sstep)
@@ -70,7 +76,7 @@ include(sstep)
 # UNIT TESTS
 # ==============================================================================
 
-if(SSTEP_UNIT_TESTS)
+if(UNIT_TESTS)
     # GTest integration, test discovery and the coverage target
     include(unit_tests)
 endif()
@@ -206,9 +212,3 @@ if(CODEQL_EXECUTABLE)
 else()
     message(STATUS "CodeQL not found. Static analysis target 'codeql-analyze' will be unavailable.")
 endif()
-
-# ==============================================================================
-# INSTALLATION
-# ==============================================================================
-
-# install(TARGETS PROJECT_NAME ...)
