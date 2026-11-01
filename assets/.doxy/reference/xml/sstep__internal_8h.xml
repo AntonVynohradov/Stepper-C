@@ -384,7 +384,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="237" column="6" bodyfile="src/sstep_stall.c" bodystart="151" bodyend="164" declfile="src/sstep_internal.h" declline="237" declcolumn="6"/>
+        <location file="src/sstep_internal.h" line="237" column="6" bodyfile="src/sstep_stall.c" bodystart="155" bodyend="168" declfile="src/sstep_internal.h" declline="237" declcolumn="6"/>
       </memberdef>
       <memberdef kind="function" id="sstep__internal_8h_1ad0aec17c0c2046b9215e69657cb1d316" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -437,7 +437,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="247" column="6" bodyfile="src/sstep_stall.c" bodystart="166" bodyend="193" declfile="src/sstep_internal.h" declline="247" declcolumn="6"/>
+        <location file="src/sstep_internal.h" line="247" column="6" bodyfile="src/sstep_stall.c" bodystart="170" bodyend="197" declfile="src/sstep_internal.h" declline="247" declcolumn="6"/>
       </memberdef>
       <memberdef kind="function" id="sstep__internal_8h_1a1e1cdc2b825465416f2b0d4a949bbba9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>bool</type>
@@ -467,7 +467,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="256" column="6" bodyfile="src/sstep_stall.c" bodystart="195" bodyend="242" declfile="src/sstep_internal.h" declline="256" declcolumn="6"/>
+        <location file="src/sstep_internal.h" line="256" column="6" bodyfile="src/sstep_stall.c" bodystart="199" bodyend="246" declfile="src/sstep_internal.h" declline="256" declcolumn="6"/>
       </memberdef>
       <memberdef kind="function" id="sstep__internal_8h_1a9ef04f1384fd950ee798bad25c53c243" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -507,7 +507,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="263" column="6" bodyfile="src/sstep_stall.c" bodystart="244" bodyend="279" declfile="src/sstep_internal.h" declline="263" declcolumn="6"/>
+        <location file="src/sstep_internal.h" line="263" column="6" bodyfile="src/sstep_stall.c" bodystart="248" bodyend="286" declfile="src/sstep_internal.h" declline="263" declcolumn="6"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
