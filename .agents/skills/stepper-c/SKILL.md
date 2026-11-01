@@ -156,8 +156,14 @@ English and written for embedded engineers integrating the library.
   renders them on the website (`docs/assets/javascripts/katex.js`), `ziamath`
   renders them as SVG in the PDF. Keep code identifiers in backticks, outside the
   math. Avoid `|` inside math in tables; use `\lvert … \rvert`.
-- Diagrams and the animated hero: edit and run `python tools/docs/diagrams.py`,
-  preview the SVGs, never edit them by hand.
+- Diagrams: edit and run `python tools/docs/diagrams.py`, preview the SVGs, never edit
+  them by hand.
+- Hero illustrations are static PNGs made in Canva, not generated:
+  `docs/assets/images/hero-dark.png` (website hero, `mkdocs.yml` `extra.landing.hero_image`,
+  and PDF cover, `extra.manual.cover_image`; background made transparent so it blends
+  into both dark backgrounds) and `hero-light.png` (README, white background). Replace
+  both files to change them; `svgkit.py` still contains the template's `hero_scene()`
+  and `Iso`, unused here and kept to stay in sync with the template.
 - C snippets of `docs/*.md` compile with `tools/docs/check_snippets.py` against
   `tools/docs/snippet_stubs.h` (board functions) and
   `tools/docs/snippet_include/` (FreeRTOS stubs); API prototypes must match the

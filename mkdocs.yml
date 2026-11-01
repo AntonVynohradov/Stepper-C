@@ -108,10 +108,10 @@ extra:
       Stepper-C turns phase-current measurements and motion commands into PWM duty cycles
       for two-phase stepper motors: closed-loop microstepping current control on any MCU,
       with no heap, no RTOS and code that passes MISRA C:2012.
-    hero_image: assets/images/hero-3d.svg
+    hero_image: assets/images/hero-dark.png
     hero_alt: >-
-      Isometric scene: a controller board with the Stepper-C chip and three half-bridges
-      drives a stepper motor; the two phase currents flow along the wires as sine waves.
+      A controller board with the Stepper-C chip and its power transistors drives a
+      stepper motor; the two phase currents are drawn as sine waves.
     buttons:
       - {text: Get started, link: guide/, style: primary}
       - {text: View on GitHub, link: "https://github.com/AntonVynohradov/Stepper-C", style: outline}
@@ -193,7 +193,7 @@ extra:
     version_macro: SSTEP_VERSION
     output: build/manual/Stepper-C_User_Manual_v{version}.pdf
     eyebrow: Open-source embedded library
-    cover_image: assets/images/hero-3d.svg
+    cover_image: assets/images/hero-dark.png
     appendices: [changelog.md, LICENSE.md]
     unnumbered: [about.md]
     web_only: [index.md, reference/]

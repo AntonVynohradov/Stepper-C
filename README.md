@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/images/hero-3d.svg" alt="Stepper-C drives the two phase currents of a stepper motor" width="640">
+  <img src="docs/assets/images/hero-light.png" alt="A controller board with the Stepper-C chip drives a stepper motor; the two phase currents are drawn as sine waves" width="640">
 </p>
 
 <h1 align="center">Stepper-C</h1>

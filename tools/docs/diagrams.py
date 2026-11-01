@@ -26,8 +26,8 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from svgkit import (BLUE, GREEN, GREY, HERO_DEFS, HERO_STYLE, LIGHT, LINE, NAVY,  # noqa: E402
-                    ORANGE, RED, TEAL, WHITE, Iso, Svg)
+from svgkit import (BLUE, GREEN, GREY, LIGHT, LINE, NAVY, ORANGE, RED, TEAL,  # noqa: E402
+                    WHITE, Svg)
 
 OUT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..",
                                     "docs", "assets", "images"))
@@ -467,96 +467,8 @@ def integration() -> None:
     s.save(OUT + "/integration.svg")
 
 
-# ==============================================================================
-# HERO
-# ==============================================================================
-
-def hero() -> None:
-    """Animated isometric hero: the controller board with the Stepper-C chip and three
-    half-bridges drives a NEMA 17 motor; the two phase currents (cosine and sine) flow
-    along the wires, the shaft turns."""
-    iso = Iso()
-    p = iso.p
-    # board and traces
-    iso.box(0, 10, 0, 7.2, -0.4, 0, "url(#boardTop)", "#0a1628", "#071122", "#1e3a66", 1.2)
-    traces = []
-    for i in range(6):
-        y = 2.3 + i * 0.55
-        traces.append([p(2.0, y), p(1.1, y), p(0.7, y - 0.4), p(0.25, y - 0.4)])
-        x = 2.3 + i * 0.55
-        traces.append([p(x, 2.0), p(x, 1.1), p(x + 0.35, 0.75), p(x + 0.35, 0.25)])
-    for trace in traces:
-        iso.path(trace, "#1d5fbf", 1.3, ' opacity="0.7"')
-    for i, y in enumerate((1.6, 3.2, 4.8)):
-        trace = [p(5.4, 3.6), p(6.0, y + 0.45), p(6.9, y + 0.45)]
-        iso.path(trace, "#1d5fbf", 1.6)
-        iso.path(trace, "#5ea6ff", 1.6, ' class="flow"')
-    # three half-bridges (high-side and low-side switch each) and the shunts
-    for y in (1.6, 3.2, 4.8):
-        for x in (6.9, 7.9):
-            iso.box(x, x + 0.8, y, y + 0.9, 0, 0.42, "#14243c", "#0c182b", "#09121f", "#2a4870")
-            iso.box(x + 0.15, x + 0.65, y + 0.9, y + 1.05, 0, 0.1, "#8fa6c6", "#6b819f", "#5a6f8b")
-    # phase connector
-    iso.box(9.2, 10.0, 2.4, 4.8, 0, 0.55, "#c9d6ea", "#8aa0bf", "#6f86a6")
-    # library chip
-    for i in range(7):
-        c = 2.25 + i * 0.45
-        iso.box(c - 0.08, c + 0.08, 5.2, 5.45, 0, 0.12, "#8fa6c6", "#6b819f", "#5a6f8b")
-        iso.box(5.2, 5.45, c - 0.08, c + 0.08, 0, 0.12, "#8fa6c6", "#6b819f", "#5a6f8b")
-    iso.box(2.0, 5.2, 2.0, 5.2, 0, 0.75, "url(#chipTop)", "#0a1322", "#060d18", "#2f8cff", 1.0)
-    iso.text(3.6, 3.55, 0.76, "Stepper-C", 0.5, "#e6edf7", 800, 0.03)
-    iso.text(3.6, 4.25, 0.76, "CURRENT CONTROL", 0.24, "#5ea6ff", 600, 0.06)
-    iso.led(2.45, 2.45, 0.76)
-    iso.led(9.6, 2.7, 0.56, color="#5ea6ff", r=2.4)
-
-    # wires: phase A (blue) and phase B (teal) to the motor
-    mx0, mx1, my0, my1 = 18.0, 22.2, 1.4, 5.6
-    for k, (color, glow, y_board, y_motor) in enumerate(
-            (("#1e5aa8", "#5ea6ff", 2.9, 2.8), ("#0f8b9a", "#4fd1d9", 4.2, 4.2))):
-        wire = [p(10.0, y_board, 0.3), p(11.4, y_board, 0.3), p(16.0, y_motor, 0.3),
-                p(mx0, y_motor, 0.3)]
-        iso.path(wire, "#0e2a4f", 6)
-        iso.path(wire, color, 2.2)
-        # the phase current as a glowing wave travelling along the wire
-        wave = []
-        for n in range(121):
-            t = n / 120
-            x = 11.0 + t * (mx0 - 11.8)
-            z = 1.6 + 0.6 * math.sin(2 * math.pi * (2.5 * t) + (0 if k == 0 else math.pi / 2))
-            wave.append(p(x, y_board + (y_motor - y_board) * t, z + 0.7 * k))
-        iso.path(wave, color, 2.4, ' opacity="0.55" filter="url(#glow)"')
-        iso.path(wave, glow, 2.0, ' class="flow"')
-
-    # NEMA 17 motor: end caps, laminated body, boss and shaft
-    iso.box(mx0, mx1, my0, my1, -0.4, 0.5, "#c9d6ea", "#8aa0bf", "#6f86a6")
-    for n in range(6):
-        z0 = 0.5 + n * 0.45
-        iso.box(mx0, mx1, my0, my1, z0, z0 + 0.45, "#1b2a40",
-                "#131f31" if n % 2 == 0 else "#17253a", "#0e1726" if n % 2 == 0 else "#111d2f",
-                "#2a4870", 0.6)
-    iso.box(mx0, mx1, my0, my1, 3.2, 3.8, "#c9d6ea", "#8aa0bf", "#6f86a6")
-    cx, cy = (mx0 + mx1) / 2, (my0 + my1) / 2
-    iso.disc(cx, cy, 3.8, 1.3, [(1.0, "#8aa0bf"), (0.92, "#b5c4da"), (0.5, "#6f86a6")])
-    iso.disc(cx, cy, 3.85, 0.32, [(1.0, "#e6edf7"), (0.55, "#9aabc4")])
-    ox, oy = p(cx, cy, 3.86)
-    iso.parts.append(
-        f'<g transform="matrix({iso._matrix("top")} {ox:.1f} {oy:.1f})">'
-        '<g><line x1="0" y1="0" x2="0.3" y2="0" stroke="#2f8cff" stroke-width="0.09" '
-        'stroke-linecap="round"/><animateTransform attributeName="transform" type="rotate" '
-        'from="0" to="360" dur="4s" repeatCount="indefinite"/></g></g>')
-    for corner_x, corner_y in ((mx0 + 0.45, my0 + 0.45), (mx1 - 0.45, my0 + 0.45),
-                               (mx0 + 0.45, my1 - 0.45), (mx1 - 0.45, my1 - 0.45)):
-        iso.disc(corner_x, corner_y, 3.8, 0.16, [(1.0, "#5a6f8b"), (0.5, "#2a3a52")])
-
-    label = "Stepper-C drives the two phase currents of a stepper motor"
-    path = os.path.join(OUT, "hero-3d.svg")
-    with open(path, "w", encoding="utf-8", newline=chr(10)) as f:
-        f.write(iso.svg(label, HERO_DEFS, HERO_STYLE, glow_at=(11, 4)))
-
-
 def main() -> None:
     os.makedirs(OUT, exist_ok=True)
-    hero()
     architecture()
     data_flow()
     state_machine()

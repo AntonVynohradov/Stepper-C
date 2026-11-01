@@ -32,7 +32,9 @@ unchanged; rebuild the application with the new headers (the instance size chang
   `load_angle_cdeg`, `stall_level_pct`.
 - **Documentation:** the stall detection section of Motor Control (principle, the exact
   equations for a model, design decisions, parameter choice, measured results, cost,
-  limits), configuration, usage, integration and API updates.
+  limits), configuration, usage, integration and API updates. New hero illustrations
+  (`docs/assets/images/hero-dark.png` for the website and the PDF cover,
+  `hero-light.png` for the README).
 
 ### Changed
 
