@@ -42,7 +42,7 @@
 #endif
 
 #ifndef SSTEP_VERSION_MINOR
-#define SSTEP_VERSION_MINOR 0
+#define SSTEP_VERSION_MINOR 1
 #endif
 
 #ifndef SSTEP_VERSION_PATCH
@@ -50,7 +50,7 @@
 #endif
 
 #ifndef SSTEP_VERSION
-#define SSTEP_VERSION "1.0.0"
+#define SSTEP_VERSION "1.1.0"
 #endif
 
 /* ==============================================================================

@@ -73,9 +73,13 @@ def architecture() -> None:
     s.text(40, 200, "Stepper-C", size=17, weight="bold", fill=BLUE, anchor="start")
     s.text(140, 200, "public API: sstep.h · inc/sstep_ctrl.h · inc/sstep_defs.h · "
            "inc/sstep_config.h", size=12.5, fill=GREY, anchor="start")
-    box(s, 40, 216, 880, 76, "Control — src/sstep_ctrl.c",
-        ["configuration check · derived gains · state machine · fast loop: current control, "
-         "trips · slow loop: setpoints, hold current, events"], fill=SOFT_TEAL, stroke=TEAL)
+    box(s, 40, 216, 580, 76, "Control — src/sstep_ctrl.c",
+        ["configuration check · derived gains · state machine",
+         "fast loop: current control, trips · slow loop: setpoints, events"],
+        fill=SOFT_TEAL, stroke=TEAL)
+    box(s, 640, 216, 280, 76, "Stall detection", ["src/sstep_stall.c",
+                                                  "back-EMF observer, decision"],
+        fill=SOFT_TEAL, stroke=TEAL)
     box(s, 40, 310, 280, 92, "Motion", ["src/sstep_motion.c", "trapezoidal profile,",
                                         "integer Q16 positions"])
     box(s, 340, 310, 280, 92, "Power stage", ["src/sstep_bridge.c", "voltage limit per topology,",

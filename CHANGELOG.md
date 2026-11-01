@@ -6,6 +6,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-11-01
+
+Sensorless stall detection. Compatible with 1.0.0: the new configuration fields are
+zero in existing initializers, which keeps stall detection off and the behaviour
+unchanged; rebuild the application with the new headers (the instance size changed).
+
+### Added
+
+- **Stall detection** (`src/sstep_stall.c`): a back-EMF observer in the fast loop
+  (e = v − R·i − L·di/dt from the applied voltage, the measured currents and the
+  commanded angle, filtered in the commanded current frame) and a decision in the slow
+  loop. In motion it checks that the back-EMF along the commanded motion stays above
+  `stall_sync_pct` of Ke·ω; at rest and at low speed it checks that the rotor does
+  not turn faster than the command by more than `stall_speed`, with the observer offset
+  (resistance, dead time) learned while the rotor follows. An up/down counter raises the
+  new fault `SSTEP_FAULT_STALL` (`0x0020U`) after `stall_time_ms`, with the usual fault
+  behaviour (outputs off, `SSTEP_STATE_FAULT`, `on_fault()`, cleared by
+  `sstep_clear_faults()`).
+- **Configuration** (`struct sstep_ctrl_cfg`): `stall_time_ms` (0 = off, the default),
+  `stall_filter_us`, `stall_speed`, `stall_sync_pct`. `sstep_init()` returns
+  `SSTEP_ERR_CONFIG` for stall detection with voltage drive or without
+  `ke_uv_s_per_rad`.
+- **Status** (`struct sstep_status`): `emf_d_mv`, `emf_q_mv`, `rotor_velocity`,
+  `load_angle_cdeg`, `stall_level_pct`.
+- **Documentation:** the stall detection section of Motor Control (principle, the exact
+  equations for a model, design decisions, parameter choice, measured results, cost,
+  limits), configuration, usage, integration and API updates.
+
+### Changed
+
+- `struct sstep` grows by 96 B (432 B fixed point, 456 B float on Cortex-M4):
+  `SSTEP_CONFIG_BYTES` 152 / 176 B, `SSTEP_STATE_BYTES` 280 / 304 B.
+  `struct sstep_status` grows from 32 B to 48 B.
+- Flash on Cortex-M4 (`-Os`): 9040 B fixed point, 9718 B float. Worst-case stack of
+  `sstep_fast_loop()` 216 B fixed point (128 B float), of `sstep_get_status()` 92 B.
+- With stall detection on, the fast loop executes about 240 more instructions per
+  period (`-O2`, both backends; 475 fixed point and 213 float with `-Os`).
+
+### Quality
+
+- 93 GoogleTest tests (fixed point) and 92 (float), 100 % line, branch and function
+  coverage of `src/` in both backends. The motor model of the tests gained a detent
+  torque, a dead-time voltage error, a configurable current quantization and an imposed
+  rotor motion for synthetic tests.
+- Stall detection on the motor model: the reference case (17HS19-2004S1, three-leg stage,
+  24 V, 0.12 N·m held at 1.5 A but not at the 0.5 A hold current) reports
+  `SSTEP_FAULT_STALL` 48 ms after the load angle passes 90°; a hard stop at 3 rev/s after
+  50 ms. No fault through enable, run → hold, moves, reversal and runs from 0.125 to
+  11 rev/s, also with R +30 %, L −20 %, 70 mV dead time per leg, 29 mA current
+  quantization and detent torque (largest detector level 32 %).
+- MISRA C:2012: 0 violations, no new deviation.
+
 ## [1.0.0] - 2026-10-31
 
 First release: closed-loop microstepping current control for two-phase hybrid stepper
@@ -75,5 +127,6 @@ motors in portable C11.
   of `sstep_fast_loop()` 184 B / 128 B; `.data` and `.bss` empty.
 - Sine table error (default 8 bits): 1.0 LSB of Q15 (fixed point), 4.8·10^-6 (float).
 
-[Unreleased]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/AntonVynohradov/Stepper-C/releases/tag/v1.0.0

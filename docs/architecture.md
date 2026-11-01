@@ -13,6 +13,7 @@ microstepping, trajectory, voltage limits) are described in [Motor Control](moto
 | --- | --- | --- |
 | Public API | `sstep.h`, `inc/sstep_ctrl.h`, `inc/sstep_defs.h`, `inc/sstep_config.h` | Functions, configuration and status types, status codes, fault flags, build-time options |
 | Control | `src/sstep_ctrl.c` | Configuration check, derived constants, fast loop (current control, protection, PWM), slow loop (setpoints, hold current, events), commands, state machine |
+| Stall detection | `src/sstep_stall.c` | Back-EMF observer (fast loop), stall decision (slow loop), estimates of the status |
 | Motion | `src/sstep_motion.c` | Trapezoidal trajectory in integer arithmetic (both backends) |
 | Power stage | `src/sstep_bridge.c` | Voltage limit of the topology, phase voltages to leg compare values |
 | Numeric backend | `src/sstep_math.h`, `src/sstep_math.c`, `src/sstep_sin_table.c` | Saturating Q15/Q31 or float operations, gains, sine/cosine table |
@@ -32,7 +33,7 @@ The application calls two functions periodically. Both work on the same instance
 | Rate | `fast_loop_hz`, typically the PWM frequency (20 kHz) | `slow_loop_hz`, typically 1 kHz; `fast_loop_hz` must be an integer multiple |
 | Context | PWM/ADC interrupt | Main loop or a timer task |
 | Input | Raw ADC counts: phase A and B currents, bus voltage | Commands given since the last call |
-| Work | Convert the measurements, check the trip levels, interpolate the electrical angle, current references, PI controllers, voltage limit, leg duty cycles | Advance the trajectory one step, compute the setpoint of the next slow period, hold current, bus voltage compensation, state, events |
+| Work | Convert the measurements, check the trip levels, interpolate the electrical angle, current references, PI controllers, voltage limit, leg duty cycles; back-EMF observer (stall detection) | Advance the trajectory one step, compute the setpoint of the next slow period, hold current, bus voltage compensation, state, events, stall decision |
 | Output | `pwm_write()` with one compare value per leg | A setpoint for the fast loop; `on_event()` |
 | Time | Bounded: no loops over data; the only loops have fixed limits (voltage pre-scale at most 18, division at most 16 iterations); two divisions, only while the voltage is limited | Bounded: integer square root at most 32 iterations; one gain computation for the bus voltage |
 
@@ -68,10 +69,10 @@ detects them.
 
 | Object | Owner | Size | Lifetime |
 | --- | --- | --- | --- |
-| `struct sstep` (driver instance) | Application (static, stack or pool) | 336 B fixed point, 360 B float on Cortex-M4 | From `sstep_init()` as long as the motor runs |
-| `struct sstep_config` | Application; copied by `sstep_init()` | 136 B on Cortex-M4 | Only during `sstep_init()` |
+| `struct sstep` (driver instance) | Application (static, stack or pool) | 432 B fixed point, 456 B float on Cortex-M4 | From `sstep_init()` as long as the motor runs |
+| `struct sstep_config` | Application; copied by `sstep_init()` | 152 B on Cortex-M4 | Only during `sstep_init()` |
 | `struct sstep_sample` | Application | 6 B | Only during `sstep_fast_loop()` |
-| `struct sstep_status` | Application | 32 B on Cortex-M4 | Filled by `sstep_get_status()` |
+| `struct sstep_status` | Application | 48 B on Cortex-M4 | Filled by `sstep_get_status()` |
 | Sine table | Library, `static const` (flash) | 514 B fixed point, 1028 B float (default 257 entries) | Program |
 
 There is no heap, no global or static mutable variable and no hidden buffer: everything
@@ -95,6 +96,7 @@ analysis can evaluate them) and checked against the private state by `_Static_as
 | A phase current above `i_trip_ma` (current drive) | `SSTEP_FAULT_OVERCURRENT`, outputs off in the same fast period |
 | Bus voltage above `vbus_max_mv` or below `vbus_min_mv` | `SSTEP_FAULT_OVERVOLTAGE` / `SSTEP_FAULT_UNDERVOLTAGE`, outputs off |
 | `pwm_write()` or `output_enable()` returns a negative value | `SSTEP_FAULT_HAL`, outputs off |
+| The rotor does not follow the commanded angle for `stall_time_ms` (stall detection on) | `SSTEP_FAULT_STALL`, outputs off in the slow loop |
 | `sstep_report_fault()` | The given flags, outputs off |
 
 Every fault calls `output_enable(false)` and then `on_fault()` (if set) with the new

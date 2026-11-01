@@ -76,6 +76,14 @@ The B-G431B-ESC1 values above are placeholders derived from the schematic; measu
 | `v_max` | microsteps/s | see below | 16000 | Velocity limit |
 | `accel` | microsteps/s² | see below | 64000 | Acceleration |
 | `decel` | microsteps/s² | as `accel`, or 0 | 0 | Deceleration; 0 = same as `accel` |
+| `stall_time_ms` | ms | 0, or 1 .. $10^7$ and at least one slow period | 50 | Stall detection: time the condition must persist before `SSTEP_FAULT_STALL`; 0 = off (default) and the other `stall_*` fields are ignored |
+| `stall_filter_us` | µs | ≥ one fast period, ≤ $10^7$ | 1000 | Time constant of the back-EMF low-pass filter |
+| `stall_speed` | microsteps/s | 1 .. $10^7$; its back-EMF 1 mV .. `vbus_nominal_mv` | 1600 | Slip threshold at rest and below this commanded speed; synchronism check above it |
+| `stall_sync_pct` | % | 1 .. 100 | 50 | Smallest back-EMF along the commanded motion, relative to $K_e\,\omega$ |
+
+Stall detection requires `SSTEP_DRIVE_CURRENT` and `ke_uv_s_per_rad > 0`
+(`SSTEP_ERR_CONFIG` otherwise); the [Stall detection](motor-control.md#stall-detection)
+section explains the algorithm and how to choose the four values.
 
 The motion limits are converted to 1/65 536 microstep per slow period. Each must round
 to at least 1 and stay below $2^{30}$: with `slow_loop_hz = 1000`, `v_max` from 0.008 to
@@ -99,15 +107,16 @@ Measured with `arm-none-eabi-gcc` 15.2.1 for Cortex-M4 (`-mthumb`, float backend
 
 | Object | Fixed point | Float |
 | --- | --- | --- |
-| `struct sstep` (RAM per motor) | 336 B | 360 B |
-| Code and constants, `-Os` (flash) | 6980 B | 7446 B |
+| `struct sstep` (RAM per motor) | 432 B | 456 B |
+| Code and constants, `-Os` (flash) | 9040 B | 9718 B |
 | of which the sine table | 514 B | 1028 B |
 | `.data` + `.bss` | 0 B | 0 B |
 
-`struct sstep` is the configuration copy (`SSTEP_CONFIG_BYTES`: 136 B on Cortex-M4,
-160 B on 64-bit hosts) plus the private state (`SSTEP_STATE_BYTES`: 200 B fixed point,
-224 B float on Cortex-M4, 232 B float on 64-bit hosts); on a 64-bit host the instance
-is 360 B and 392 B.
+`struct sstep` is the configuration copy (`SSTEP_CONFIG_BYTES`: 152 B on Cortex-M4,
+176 B on 64-bit hosts) plus the private state (`SSTEP_STATE_BYTES`: 280 B fixed point,
+304 B float); on a 64-bit host the instance is 456 B and 480 B. Stall detection accounts
+for 96 B of it, and for 2060 B (fixed point) or 2272 B (float) of the flash whether it is
+enabled or not.
 
 ## Stack usage
 
@@ -119,11 +128,11 @@ functions that call them.
 
 | Function | Fixed `-Os` | Fixed `-O0` | Float `-Os` | Float `-O0` |
 | --- | ---: | ---: | ---: | ---: |
-| `sstep_init()` | 192 | 1096 | 168 | 1064 |
+| `sstep_init()` | 224 | 1544 | 200 | 1432 |
 | `sstep_enable()` | 48 | 80 | 64 | 88 |
 | `sstep_disable()` | 24 | 40 | 24 | 40 |
-| `sstep_fast_loop()` | 184 | 304 | 128 | 312 |
-| `sstep_slow_loop()` | 140 | 560 | 132 | 552 |
+| `sstep_fast_loop()` | 216 | 304 | 128 | 312 |
+| `sstep_slow_loop()` | 140 | 592 | 140 | 560 |
 | `sstep_move_to()` | 0 | 48 | 0 | 48 |
 | `sstep_move_by()` | 0 | 112 | 0 | 112 |
 | `sstep_run()` | 16 | 104 | 16 | 104 |
@@ -133,7 +142,7 @@ functions that call them.
 | `sstep_set_motion_limits()` | 72 | 224 | 72 | 224 |
 | `sstep_report_fault()` | 24 | 40 | 24 | 40 |
 | `sstep_clear_faults()` | 0 | 40 | 0 | 40 |
-| `sstep_get_status()` | 24 | 184 | 16 | 152 |
+| `sstep_get_status()` | 92 | 544 | 92 | 504 |
 
 The interrupt stack must hold the frame of `sstep_fast_loop()` plus `pwm_write()` (and
 `output_enable()` + `on_fault()` for the fault path) plus the interrupt entry. There is

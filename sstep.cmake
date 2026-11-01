@@ -53,6 +53,7 @@ list(APPEND SSTEP_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/src/sstep_sin_table.c
     ${CMAKE_CURRENT_LIST_DIR}/src/sstep_bridge.c
     ${CMAKE_CURRENT_LIST_DIR}/src/sstep_motion.c
+    ${CMAKE_CURRENT_LIST_DIR}/src/sstep_stall.c
     ${CMAKE_CURRENT_LIST_DIR}/src/sstep_ctrl.c
 )
 
@@ -107,6 +108,7 @@ if(SSTEP_UNIT_TESTS)
         ${CMAKE_CURRENT_LIST_DIR}/tests/unit/gtest_sstep_motion.cpp
         ${CMAKE_CURRENT_LIST_DIR}/tests/unit/gtest_sstep_api.cpp
         ${CMAKE_CURRENT_LIST_DIR}/tests/unit/gtest_sstep_loop.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tests/unit/gtest_sstep_stall.cpp
         # C compile check: sstep.h alone, no private header (#error otherwise)
         ${CMAKE_CURRENT_LIST_DIR}/tests/compile/sstep_api_check.c
     )

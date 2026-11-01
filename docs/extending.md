@@ -14,6 +14,7 @@ changes to the library itself.
 | Add soft limits | Application: clamp targets before `sstep_move_to()` | No |
 | Accept commands over UART, CAN, Modbus | Application: protocol handler that calls the commands from the slow-loop context | No |
 | Coordinate several axes | Application: one instance per axis, start moves in the same slow period, scale `v_max` per axis | No |
+| Detect a stall without a sensor | Configuration: `stall_time_ms` and the other `stall_*` fields ([Stall detection](motor-control.md#stall-detection)) | No |
 | Detect a stall with an encoder | Application: compare the encoder with `sstep_get_status()` position, `sstep_report_fault()` on a large difference | No |
 | Report a temperature or driver fault | `sstep_report_fault()` from the interrupt or task that detects it | No |
 | Use another numeric format or table size | Build-time options in `sstep_user_config.h` | No |

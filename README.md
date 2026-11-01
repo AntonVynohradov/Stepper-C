@@ -40,30 +40,33 @@ reached only through callbacks, so the same code runs on any MCU.
 | **Motion** | Trapezoidal moves without overshoot, constant-velocity runs, stop, smooth retargeting, homing; exact integer positions |
 | **Power stages** | Two H-bridges (4 legs) or three half-bridges with a shared leg (3 legs, for example B-G431B-ESC1) |
 | **Protection** | Overcurrent, overvoltage, undervoltage, callback errors and external faults switch the outputs off in the same PWM period |
+| **Stall detection** | Sensorless back-EMF observer: a stalled rotor, lost synchronism or a slip at standstill raises `SSTEP_FAULT_STALL`; estimated rotor speed and load angle in the status |
 | **Numeric backends** | Fixed point (Q15/Q31, integer only) for cores without FPU, or single-precision float; selected at build time |
 
 Measured on Cortex-M4 (GCC 15.2, `-Os`):
 
 | | Fixed point | Float |
 | --- | --- | --- |
-| RAM per motor | 336 B | 360 B |
-| Flash | 6980 B | 7446 B |
-| Worst-case stack, fast loop / slow loop | 184 B / 140 B | 128 B / 132 B |
+| RAM per motor | 432 B | 456 B |
+| Flash | 9040 B | 9718 B |
+| Worst-case stack, fast loop / slow loop | 216 B / 140 B | 128 B / 140 B |
 
 Closed loop on the motor model (17HS19-2004S1, 24 V, 20 kHz, 1 kHz current bandwidth):
 a 2 A current step settles in 0.40 ms with 1.1 % overshoot; a 6400-microstep move ends on
-the target with the rotor within 0.01 microstep.
+the target with the rotor within 0.01 microstep; a rotor that slips at the hold current
+is reported 48 ms after it passes the pull-out angle.
 
 ## Project status
 
-**Version 1.0.0**, the first release. The public API (`sstep.h` and `inc/`) is stable
-within major version 1. The control loops are verified against a motor model in both
+**Version 1.1.0**: sensorless stall detection. The public API (`sstep.h` and `inc/`) is
+stable within major version 1. The control loops are verified against a motor model in both
 numeric backends and both topologies.
 
 - [x] Current control, microstepping, motion planner, protection, both backends
+- [x] Sensorless stall detection (back-EMF observer), both backends
 - [x] Unit and closed-loop tests with 100 % coverage; MISRA C:2012 with 0 violations
 - [x] Documentation website and PDF manual
-- [ ] Software-in-the-loop against the Scilab/Xcos motor model
+- [ ] Software-in-the-loop against the Scilab/Xcos motor model (including the stall cases)
 - [ ] Port and measurements on STMicroelectronics B-G431B-ESC1 (fast-loop execution time)
 - [ ] Dead-time compensation (`dead_time_ns` is reserved in the configuration)
 
@@ -72,7 +75,7 @@ numeric backends and both topologies.
 ```c
 #include "sstep.h"
 
-static struct sstep motor;               /* 336 B on Cortex-M4, owned by the application */
+static struct sstep motor;               /* 432 B on Cortex-M4, owned by the application */
 
 void ADC1_2_IRQHandler(void)             /* PWM/ADC interrupt, 20 kHz */
 {
@@ -145,6 +148,7 @@ sstep.h                 public API: all functions, version
 inc/                    public types: configuration, status, codes, build-time options
 src/                    private implementation
   sstep_ctrl.c          control, state machine, fast and slow loop
+  sstep_stall.c         stall detection: back-EMF observer and decision
   sstep_motion.c        trapezoidal motion planner
   sstep_bridge.c        voltage limit and duty cycles per topology
   sstep_math.[ch]       numeric backend (fixed point or float)

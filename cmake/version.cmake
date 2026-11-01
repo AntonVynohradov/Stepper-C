@@ -25,7 +25,7 @@
 
 # Used when the source tree has no Git metadata or no vX.Y.Z tag yet; keep it in
 # sync with the fallback values in sstep.h.
-set(SSTEP_DEFAULT_VERSION "1.0.0")
+set(SSTEP_DEFAULT_VERSION "1.1.0")
 
 # ==============================================================================
 # VERSION EXTRACTION

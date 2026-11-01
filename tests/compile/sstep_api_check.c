@@ -54,7 +54,7 @@ const struct sstep_config cfg_17hs19_esc1 = {
     .motor = {.r_mohm = 1600U,
               .l_uh = 3000U,
               .i_rated_ma = 2000U,
-              .ke_uv_s_per_rad = 0U,
+              .ke_uv_s_per_rad = 208600U,
               .full_steps_per_rev = 200U},
     .stage = {.topology = SSTEP_TOPOLOGY_SHARED_LEG,
               .vbus_nominal_mv = 24000U,
@@ -79,7 +79,11 @@ const struct sstep_config cfg_17hs19_esc1 = {
              .hold_delay_ms = 500U,
              .v_max = 16000U,
              .accel = 64000U,
-             .decel = 0U},
+             .decel = 0U,
+             .stall_time_ms = 50U,
+             .stall_filter_us = 1000U,
+             .stall_speed = 1600U,
+             .stall_sync_pct = 50U},
     .hal = {.context = NULL,
             .pwm_write = pwm,
             .output_enable = en,
@@ -99,5 +103,5 @@ int use_api(void)
     r |= sstep_slow_loop(&m);
     r |= sstep_move_to(&m, 3200);
     r |= sstep_get_status(&m, &st);
-    return r;
+    return (st.faults == SSTEP_FAULT_STALL) ? (r | 1) : r;
 }

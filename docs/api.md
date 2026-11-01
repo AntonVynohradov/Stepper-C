@@ -20,8 +20,8 @@ Everything else (`src/`) is private and not installed with the library.
 
 | Macro | Value | Meaning |
 | --- | --- | --- |
-| `SSTEP_VERSION_MAJOR`, `…_MINOR`, `…_PATCH` | `1`, `0`, `0` | Version numbers; set by CMake from the latest `vX.Y.Z` tag, these are the fallbacks |
-| `SSTEP_VERSION` | `"1.0.0"` | Version string |
+| `SSTEP_VERSION_MAJOR`, `…_MINOR`, `…_PATCH` | `1`, `1`, `0` | Version numbers; set by CMake from the latest `vX.Y.Z` tag, these are the fallbacks |
+| `SSTEP_VERSION` | `"1.1.0"` | Version string |
 
 ## Configuration — `sstep_config.h`
 
@@ -68,6 +68,7 @@ Ranges and override rules: [Configuration](configuration.md#build-time-options).
 | `SSTEP_FAULT_UNDERVOLTAGE` | `0x0004U` | Bus voltage below `vbus_min_mv` |
 | `SSTEP_FAULT_HAL` | `0x0008U` | A callback returned an error |
 | `SSTEP_FAULT_EXTERNAL` | `0x0010U` | Reported by the application with `sstep_report_fault()` |
+| `SSTEP_FAULT_STALL` | `0x0020U` | The rotor does not follow the commanded angle (stall detection, `stall_time_ms` > 0); since 1.1.0 |
 
 ### Driver states — `enum sstep_state`
 
@@ -101,7 +102,7 @@ standstill).
 | `struct sstep_config` | `motor`, `stage`, `ctrl`, `hal` |
 | `struct sstep_motor_cfg` | `r_mohm`, `l_uh`, `i_rated_ma`, `ke_uv_s_per_rad`, `full_steps_per_rev` |
 | `struct sstep_stage_cfg` | `topology`, `vbus_nominal_mv`, `vbus_min_mv`, `vbus_max_mv`, `i_full_scale_ma`, `i_trip_ma`, `pwm_period_ticks`, `pwm_freq_hz`, `dead_time_ns`, `adc_i_zero`, `adc_i_span`, `adc_vbus_mv_full`, `adc_full` |
-| `struct sstep_ctrl_cfg` | `drive_mode`, `fast_loop_hz`, `slow_loop_hz`, `microsteps`, `current_bw_hz`, `i_run_ma`, `i_hold_ma`, `hold_delay_ms`, `v_max`, `accel`, `decel` |
+| `struct sstep_ctrl_cfg` | `drive_mode`, `fast_loop_hz`, `slow_loop_hz`, `microsteps`, `current_bw_hz`, `i_run_ma`, `i_hold_ma`, `hold_delay_ms`, `v_max`, `accel`, `decel`, `stall_time_ms`, `stall_filter_us`, `stall_speed`, `stall_sync_pct` (since 1.1.0) |
 | `struct sstep_callbacks` | `context`, `pwm_write`, `output_enable`, `on_fault`, `on_event` |
 | `enum sstep_drive_mode` | `SSTEP_DRIVE_CURRENT` (0), `SSTEP_DRIVE_VOLTAGE` (1) |
 
@@ -118,13 +119,20 @@ Units, ranges and examples of every member: [Run-time configuration](configurati
 | | `velocity` | microsteps/s (commanded) |
 | | `i_a_ma`, `i_b_ma` | mA (last measured) |
 | | `vbus_mv` | mV (last measured) |
+| | `emf_d_mv`, `emf_q_mv` | mV, filtered back-EMF estimate along and 90° ahead of the commanded current (since 1.1.0) |
+| | `rotor_velocity` | microsteps/s, estimated from the back-EMF (since 1.1.0) |
+| | `load_angle_cdeg` | 0.01°, estimated load angle, commanded minus rotor electrical angle (since 1.1.0) |
+| | `stall_level_pct` | %, stall detector level, 100 = trip (since 1.1.0) |
+
+The five estimates are 0 while stall detection is off; their equations are in
+[Stall detection](motor-control.md#stall-detection).
 
 ### Driver instance
 
 `struct sstep` is an opaque array of `SSTEP_INSTANCE_WORDS` 64-bit words (on Cortex-M4
-336 B fixed point, 360 B float; on 64-bit hosts 360 B and 392 B). Allocate it, pass its
+432 B fixed point, 456 B float; on 64-bit hosts 456 B and 480 B). Allocate it, pass its
 address, never read or write its content. `SSTEP_CONFIG_BYTES` is the size of the
-configuration copy (136 B with 32-bit pointers, 160 B with 64-bit pointers) and
+configuration copy (152 B with 32-bit pointers, 176 B with 64-bit pointers) and
 `SSTEP_STATE_BYTES` the size of the private state behind it.
 
 ## Functions — `sstep.h`
@@ -142,8 +150,9 @@ int sstep_init(struct sstep* drv, const struct sstep_config* cfg);
 ```
 
 Validate a configuration and initialize a driver; the outputs stay off. Derives the
-per-unit bases, the PI gains ($K_p = L\,\omega_c$, $K_i = R\,\omega_c$) and the trajectory constants
-without floating point. Calls no callback.
+per-unit bases, the PI gains ($K_p = L\,\omega_c$, $K_i = R\,\omega_c$), the trajectory constants and,
+with `stall_time_ms` > 0, the stall detector constants without floating point. Calls no
+callback.
 
 | Parameter | Description |
 | --- | --- |
@@ -154,7 +163,7 @@ without floating point. Calls no callback.
 | --- | --- |
 | `SSTEP_OK` | Success, state `SSTEP_STATE_DISABLED` |
 | `SSTEP_ERR_PARAM` | `NULL` pointer, missing required callback or a field out of range |
-| `SSTEP_ERR_CONFIG` | Inconsistent fields (for example `i_run_ma > i_trip_ma`) or a gain that does not fit |
+| `SSTEP_ERR_CONFIG` | Inconsistent fields (for example `i_run_ma > i_trip_ma`, stall detection with voltage drive or without `ke_uv_s_per_rad`) or a gain that does not fit |
 | `SSTEP_ERR_UNSUPPORTED` | Topology not compiled in |
 
 ### sstep_enable
@@ -357,8 +366,10 @@ Clear all fault flags; the driver goes to `SSTEP_STATE_DISABLED` and can be enab
 int sstep_get_status(const struct sstep* drv, struct sstep_status* status);
 ```
 
-Read a snapshot of the state, faults, commanded motion and the last measurements in
-engineering units.
+Read a snapshot of the state, faults, commanded motion, the last measurements and the
+stall detector estimates in engineering units. With stall detection on it also converts
+the back-EMF estimate (a square root and a CORDIC arctangent, about 1200 instructions on
+Cortex-M4): call it from the slow-loop context, not from the fast loop.
 
 | Parameter | Description |
 | --- | --- |

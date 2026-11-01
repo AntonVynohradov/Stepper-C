@@ -21,6 +21,8 @@ point (no FPU needed) or single-precision float.
   the measured bus voltage can deliver, keeping its direction.
 - **Protects the hardware.** Overcurrent, overvoltage and undervoltage trips in the fast
   loop, hardware-callback errors, external faults; outputs off within the same period.
+- **Detects a stall without a sensor.** A back-EMF observer reports a rotor that stops,
+  falls out of synchronism or slips at standstill (`SSTEP_FAULT_STALL`, optional).
 - **Reduces the current at standstill.** Hold current after a configurable delay.
 
 ## What the library does not do
@@ -29,7 +31,7 @@ point (no FPU needed) or single-precision float.
 | --- | --- |
 | Timer, PWM and ADC drivers | Hardware-specific; you start the conversions and pass raw ADC counts in, and write the compare values out in a callback. |
 | Interrupt and task setup | Every system has its own; the library only defines which function runs at which rate. See the [integration guide](integration.md). |
-| Position feedback (encoder) and stall detection | The library is an open-loop positioner with closed-loop current; the rotor position is not measured. |
+| Position feedback (encoder) | The library is an open-loop positioner with closed-loop current; the rotor position is not measured. Sensorless stall detection reports a lost synchronism but does not correct the position. |
 | Homing, limit switches, G-code, multi-axis coordination | Application logic on top of `sstep_move_to()`, `sstep_set_position()` and the status. |
 | Motor parameter identification | R, L and Kt come from the datasheet or a measurement. |
 | Communication (UART, CAN, Modbus…) | Out of scope; call the API from your protocol handler. |
@@ -50,9 +52,9 @@ point (no FPU needed) or single-precision float.
 | Dependencies | `<stddef.h>`, `<stdint.h>`, `<stdbool.h>` only |
 | Numeric backends | Fixed point Q15/Q31 (integer only) or single-precision float, chosen at build time |
 | Memory | No heap, no global or static mutable data (`.data` and `.bss` are empty) |
-| RAM per instance | 336 B fixed point, 360 B float on Cortex-M4 ([details](configuration.md#memory-footprint)) |
-| Flash | 6.8 KiB fixed point, 7.3 KiB float (Cortex-M4, `-Os`, both topologies) |
-| Stack | `sstep_fast_loop()` 184 B, `sstep_slow_loop()` 140 B worst case (Cortex-M4 `-Os`, [details](configuration.md#stack-usage)) |
+| RAM per instance | 432 B fixed point, 456 B float on Cortex-M4 ([details](configuration.md#memory-footprint)) |
+| Flash | 8.8 KiB fixed point, 9.5 KiB float (Cortex-M4, `-Os`, both topologies) |
+| Stack | `sstep_fast_loop()` 216 B, `sstep_slow_loop()` 140 B worst case (Cortex-M4 `-Os`, [details](configuration.md#stack-usage)) |
 | Coding standard | MISRA C:2012, 0 Cppcheck addon violations, [1 deviation](misra.md) |
 | Tests | 100 % line and branch coverage of `src/` in both backends; closed-loop tests on a motor model |
 | Thread safety | One fast-loop context and one slow-loop context per instance, by design; see [Threading](architecture.md#threading-and-reentrancy) |

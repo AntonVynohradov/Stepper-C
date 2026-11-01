@@ -21,3 +21,5 @@ uint16_t board_adc_vbus(void);
 bool board_tick_1ms(void);
 bool board_driver_fault(void);
 void board_led(bool on);
+void board_log_stall(int32_t velocity, int32_t rotor_velocity, int32_t load_angle_cdeg,
+                     uint8_t level_pct);

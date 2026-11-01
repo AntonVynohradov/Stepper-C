@@ -167,6 +167,18 @@ struct sstep_ctrl_cfg
     uint32_t v_max;                   /**< Maximum velocity [microsteps/s]. */
     uint32_t accel;                   /**< Acceleration [microsteps/s^2]. */
     uint32_t decel;                   /**< Deceleration [microsteps/s^2]; 0 = same as accel. */
+    uint32_t stall_time_ms;           /**< Stall detection: time the stall condition must
+                                           persist before ::SSTEP_FAULT_STALL [ms];
+                                           0 = stall detection off (the other stall_* fields
+                                           are then ignored). Requires ::SSTEP_DRIVE_CURRENT
+                                           and ke_uv_s_per_rad > 0. */
+    uint32_t stall_filter_us;         /**< Time constant of the back-EMF low-pass filter [us],
+                                           at least one fast loop period. */
+    uint32_t stall_speed;             /**< Slip threshold [microsteps/s]: rotor speed that
+                                           counts as motion while the command is at rest or
+                                           slower than this; above it, the synchronism check. */
+    uint16_t stall_sync_pct;          /**< Synchronism threshold [%] (1 .. 100): smallest back-EMF
+                                           along the commanded motion, relative to Ke * speed. */
 };
 
 /** @brief Complete configuration given to sstep_init(). Copied by sstep_init(); the
@@ -194,14 +206,23 @@ struct sstep_sample
 /** @brief Snapshot returned by sstep_get_status(), in engineering units. */
 struct sstep_status
 {
-    enum sstep_state state; /**< Driver state. */
-    uint16_t faults;        /**< Active ::SSTEP_FAULT_OVERCURRENT ... flags. */
-    int32_t position;       /**< Commanded position [microsteps]. */
-    int32_t target;         /**< Target of the current move [microsteps]. */
-    int32_t velocity;       /**< Commanded velocity [microsteps/s]. */
-    int32_t i_a_ma;         /**< Last measured phase A current [mA]. */
-    int32_t i_b_ma;         /**< Last measured phase B current [mA]. */
-    uint32_t vbus_mv;       /**< Last measured bus voltage [mV]. */
+    enum sstep_state state;  /**< Driver state. */
+    uint16_t faults;         /**< Active ::SSTEP_FAULT_OVERCURRENT ... flags. */
+    int32_t position;        /**< Commanded position [microsteps]. */
+    int32_t target;          /**< Target of the current move [microsteps]. */
+    int32_t velocity;        /**< Commanded velocity [microsteps/s]. */
+    int32_t i_a_ma;          /**< Last measured phase A current [mA]. */
+    int32_t i_b_ma;          /**< Last measured phase B current [mA]. */
+    uint32_t vbus_mv;        /**< Last measured bus voltage [mV]. */
+    int32_t emf_d_mv;        /**< Filtered back-EMF estimate along the commanded current
+                                  vector [mV]; 0 when stall detection is off. */
+    int32_t emf_q_mv;        /**< Filtered back-EMF estimate 90 degrees ahead of the commanded
+                                  current vector [mV]; 0 when stall detection is off. */
+    int32_t rotor_velocity;  /**< Estimated rotor velocity [microsteps/s], from the back-EMF
+                                  magnitude; 0 when stall detection is off. */
+    int32_t load_angle_cdeg; /**< Estimated load angle, commanded minus rotor electrical angle
+                                  [0.01 deg], same sign as the motor torque. */
+    uint8_t stall_level_pct; /**< Stall detector level, 0 .. 100 % of the trip. */
 };
 
 /* ==============================================================================
@@ -215,18 +236,18 @@ struct sstep_status
  *        sstep_ctrl.c checks both at compile time.
  */
 #if defined(UINTPTR_MAX) && (UINTPTR_MAX > 0xFFFFFFFFU)
-#define SSTEP_CONFIG_BYTES 160U
+#define SSTEP_CONFIG_BYTES 176U
 #if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
-#define SSTEP_STATE_BYTES 200U
+#define SSTEP_STATE_BYTES 280U
 #else
-#define SSTEP_STATE_BYTES 232U
+#define SSTEP_STATE_BYTES 304U
 #endif
 #else
-#define SSTEP_CONFIG_BYTES 136U
+#define SSTEP_CONFIG_BYTES 152U
 #if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
-#define SSTEP_STATE_BYTES 200U
+#define SSTEP_STATE_BYTES 280U
 #else
-#define SSTEP_STATE_BYTES 224U
+#define SSTEP_STATE_BYTES 304U
 #endif
 #endif
 

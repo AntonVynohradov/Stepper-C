@@ -97,6 +97,8 @@ static int64_t pow2_i64(uint32_t n);
 static sstep_real_t gain_apply_i32(const struct sstep_gain* g, int32_t v);
 static sstep_angle_t raw_angle(const struct sstep_ctx* m, int64_t pos);
 static int check_config(const struct sstep_config* cfg);
+static int check_stall(const struct sstep_config* cfg);
+static int derive_stall(struct sstep_ctx* m);
 static int set_currents(struct sstep_ctx* m, uint32_t run_ma, uint32_t hold_ma);
 static int set_limits(struct sstep_ctx* m, uint32_t v_max, uint32_t accel, uint32_t decel);
 static int derive(struct sstep_ctx* m);
@@ -254,7 +256,93 @@ static int check_config(const struct sstep_config* cfg)
     }
     else
     {
+        result = check_stall(cfg);
+    }
+    return result;
+}
+
+/** @brief Validate the stall detection fields (ignored when stall_time_ms is 0). */
+static int check_stall(const struct sstep_config* cfg)
+{
+    const struct sstep_ctrl_cfg* c = &cfg->ctrl;
+    int result = SSTEP_OK;
+
+    if (c->stall_time_ms == 0U)
+    {
+        /* stall detection off */
+    }
+    else if ((c->stall_time_ms > VALUE_MAX) || (c->stall_filter_us == 0U) ||
+             (c->stall_filter_us > VALUE_MAX) || (c->stall_speed == 0U) ||
+             (c->stall_speed > VALUE_MAX) || (c->stall_sync_pct == 0U) ||
+             (c->stall_sync_pct > 100U))
+    {
+        result = SSTEP_ERR_PARAM;
+    }
+    else if ((c->drive_mode != SSTEP_DRIVE_CURRENT) || (cfg->motor.ke_uv_s_per_rad == 0U) ||
+             (((uint64_t)c->stall_filter_us * c->fast_loop_hz) < 1000000U))
+    {
+        /* the observer needs measured currents, Ke, and tau >= Ts */
+        result = SSTEP_ERR_CONFIG;
+    }
+    else
+    {
         /* consistent */
+    }
+    return result;
+}
+
+/** @brief Derive the stall detection constants (after the other gains). */
+static int derive_stall(struct sstep_ctx* m)
+{
+    const struct sstep_motor_cfg* mo = &m->cfg.motor;
+    const struct sstep_stage_cfg* st = &m->cfg.stage;
+    const struct sstep_ctrl_cfg* c = &m->cfg.ctrl;
+    int result = SSTEP_OK;
+
+    if (c->stall_time_ms != 0U)
+    {
+        uint64_t ticks = ((uint64_t)c->stall_time_ms * c->slow_loop_hz) / 1000U;
+        /* back-EMF of stall_speed: Ke 2 pi v / (Ns M) [uV], every factor below 10^7 */
+        uint64_t e_thr_uv = ((uint64_t)c->stall_speed * mo->ke_uv_s_per_rad * TWO_PI_NUM) /
+                            ((uint64_t)TWO_PI_DEN * mo->full_steps_per_rev * c->microsteps);
+        uint64_t e_thr_mv = (e_thr_uv + 500U) / 1000U;
+        /* L / Ts and R / 2 in uOhm: l_uh fs and 500 r_mohm */
+        uint64_t l_fs = (uint64_t)mo->l_uh * c->fast_loop_hz;
+        uint64_t r_half = (uint64_t)mo->r_mohm * 500U;
+        bool b_negative = (l_fs < r_half);
+
+        /* a, b = (L / Ts +/- R / 2) I_base / V_base; Ts / tau = 10^6 / (fs tau_us) <= 1 */
+        result =
+            ratio(l_fs + r_half, st->i_full_scale_ma, 1000000U, st->vbus_nominal_mv, &m->emf_a);
+        if (result == SSTEP_OK)
+        {
+            result = ratio(b_negative ? (r_half - l_fs) : (l_fs - r_half), st->i_full_scale_ma,
+                           1000000U, st->vbus_nominal_mv, &m->emf_b);
+            if (b_negative)
+            {
+                /* R Ts / 2 > L: a very small inductance */
+#if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
+                m->emf_b.mant = (int16_t)(-m->emf_b.mant);
+#else
+                m->emf_b.value = -m->emf_b.value;
+#endif
+            }
+        }
+        if (result == SSTEP_OK)
+        {
+            result = ratio(1000000U, 1U, c->fast_loop_hz, c->stall_filter_us, &m->emf_alpha);
+        }
+        if ((result == SSTEP_OK) && ((ticks == 0U) || (ticks > UINT32_MAX) || (e_thr_mv == 0U) ||
+                                     (e_thr_mv >= st->vbus_nominal_mv)))
+        {
+            /* shorter than a slow period, or a threshold below 1 mV or above the bus */
+            result = SSTEP_ERR_CONFIG;
+        }
+        if (result == SSTEP_OK)
+        {
+            m->stall_ticks = (uint32_t)ticks;
+            m->stall_emf_mv = (int32_t)e_thr_mv;
+        }
     }
     return result;
 }
@@ -385,6 +473,10 @@ static int derive(struct sstep_ctx* m)
     }
     if (result == SSTEP_OK)
     {
+        result = derive_stall(m);
+    }
+    if (result == SSTEP_OK)
+    {
         m->i_trip_counts = (uint16_t)trip;
         m->vbus_max_raw = (uint16_t)((vmax_raw > 65535U) ? 65535U : vmax_raw);
         m->vbus_min_raw = (uint16_t)((vmin_raw > 65535U) ? 65535U : vmin_raw);
@@ -492,6 +584,10 @@ static void control(struct sstep_ctx* m)
                     sstep_integ_add_acc(m->integ[k], &m->kb, sstep_acc_add(out.v[k], -vu[k]));
             }
         }
+        if (m->stall_ticks != 0U)
+        {
+            sstep_stall_observe(m, &sc, out.v);
+        }
     }
 
     for (uint32_t k = 0U; k < SSTEP_LEGS_MAX; k++)
@@ -579,6 +675,7 @@ int sstep_enable(struct sstep* drv)
         m->cur = sp;
         m->adv = 0U;
         m->sp_pending = 0U;
+        sstep_stall_reset(m);
         if (m->cfg.hal.output_enable(m->cfg.hal.context, true) < 0)
         {
             shutdown(m, SSTEP_FAULT_HAL);
@@ -699,6 +796,7 @@ int sstep_slow_loop(struct sstep* drv)
         struct sstep_setpoint sp;
         int64_t p0 = m->mo.pos;
         int64_t dp;
+        int32_t vel;
         uint8_t flags = sstep_motion_step(&m->mo);
         uint16_t raw = m->vbus_raw;
         bool hold_event = false;
@@ -740,8 +838,8 @@ int sstep_slow_loop(struct sstep* drv)
         sp.angle = raw_angle(m, p0) + m->angle_offset;
         sp.dangle = (int32_t)((dp * pow2_i64((uint32_t)m->angle_shift)) / (int64_t)m->ratio);
         sp.i_amp = m->hold_active ? m->i_hold : m->i_run;
-        sp.ff = gain_apply_i32(
-            &m->ff_gain, (int32_t)div_round(dp * (int64_t)m->cfg.ctrl.slow_loop_hz, SSTEP_POS_ONE));
+        vel = (int32_t)div_round(dp * (int64_t)m->cfg.ctrl.slow_loop_hz, SSTEP_POS_ONE);
+        sp.ff = gain_apply_i32(&m->ff_gain, vel);
         sp.inv_vbus = m->inv_vbus;
         publish(m, &sp);
 
@@ -765,6 +863,17 @@ int sstep_slow_loop(struct sstep* drv)
             {
                 m->cfg.hal.on_event(m->cfg.hal.context, SSTEP_EVENT_HOLD_CURRENT);
             }
+        }
+
+        /* stall decision on the period that just ended, then the command of the next one */
+        if (m->stall_ticks != 0U)
+        {
+            if (sstep_stall_check(m))
+            {
+                shutdown(m, SSTEP_FAULT_STALL);
+            }
+            m->vel_cmd = vel;
+            m->ff_cmd = sp.ff;
         }
     }
     else
@@ -1023,6 +1132,7 @@ int sstep_get_status(const struct sstep* drv, struct sstep_status* status)
         status->i_b_ma = sstep_real_to_units(sstep_acc_from_real(m->i_meas[1]), base);
         status->vbus_mv = (uint32_t)(((uint64_t)m->vbus_raw * m->cfg.stage.adc_vbus_mv_full) /
                                      m->cfg.stage.adc_full);
+        sstep_stall_status(m, status);
     }
     return result;
 }

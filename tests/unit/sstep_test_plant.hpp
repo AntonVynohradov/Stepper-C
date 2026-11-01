@@ -34,6 +34,7 @@
  * INCLUDES
  * =============================================================================*/
 
+#include <algorithm>
 #include <cmath>
 #include <cstdint>
 #include <vector>
@@ -58,6 +59,7 @@ struct Motor
     double Ns = 200.0;  /* full steps per revolution */
     double J = 82e-7;   /* kg*m^2 */
     double B = 1e-5;    /* N*m*s/rad */
+    double Td = 0.0;    /* detent torque amplitude [N*m], period one full step */
 };
 
 struct State
@@ -68,17 +70,25 @@ struct State
     double th = 0.0;
 };
 
-inline State deriv(const Motor& m, const State& x, double vA, double vB, double TL, bool locked)
+/* Rotor: free (mechanics integrated), locked, or kinematic (constant speed x.w imposed) */
+enum class Rotor
+{
+    Free,
+    Locked,
+    Kinematic
+};
+
+inline State deriv(const Motor& m, const State& x, double vA, double vB, double TL, Rotor rotor)
 {
     const double p = m.Ns / 4.0;
     const double s = std::sin(p * x.th);
     const double c = std::cos(p * x.th);
-    const double Te = m.Kt * (-x.iA * s + x.iB * c);
+    const double Te = m.Kt * (-x.iA * s + x.iB * c) - m.Td * std::sin(4.0 * p * x.th);
     State d;
     d.iA = (vA - m.R * x.iA + m.Kt * x.w * s) / m.L;
     d.iB = (vB - m.R * x.iB - m.Kt * x.w * c) / m.L;
-    d.w = locked ? 0.0 : (Te - TL - m.B * x.w) / m.J;
-    d.th = locked ? 0.0 : x.w;
+    d.w = (rotor == Rotor::Free) ? (Te - TL - m.B * x.w) / m.J : 0.0;
+    d.th = (rotor == Rotor::Locked) ? 0.0 : x.w;
     return d;
 }
 
@@ -87,13 +97,13 @@ inline State axpy(const State& x, double h, const State& k)
     return State{x.iA + h * k.iA, x.iB + h * k.iB, x.w + h * k.w, x.th + h * k.th};
 }
 
-inline State rk4(const Motor& m, const State& x, double vA, double vB, double TL, bool locked,
+inline State rk4(const Motor& m, const State& x, double vA, double vB, double TL, Rotor rotor,
                  double h)
 {
-    const State k1 = deriv(m, x, vA, vB, TL, locked);
-    const State k2 = deriv(m, axpy(x, h / 2, k1), vA, vB, TL, locked);
-    const State k3 = deriv(m, axpy(x, h / 2, k2), vA, vB, TL, locked);
-    const State k4 = deriv(m, axpy(x, h, k3), vA, vB, TL, locked);
+    const State k1 = deriv(m, x, vA, vB, TL, rotor);
+    const State k2 = deriv(m, axpy(x, h / 2, k1), vA, vB, TL, rotor);
+    const State k3 = deriv(m, axpy(x, h / 2, k2), vA, vB, TL, rotor);
+    const State k4 = deriv(m, axpy(x, h, k3), vA, vB, TL, rotor);
     State r;
     r.iA = x.iA + h / 6 * (k1.iA + 2 * k2.iA + 2 * k3.iA + k4.iA);
     r.iB = x.iB + h / 6 * (k1.iB + 2 * k2.iB + 2 * k3.iB + k4.iB);
@@ -197,6 +207,24 @@ inline sstep_config make_config(Hal* hal, sstep_topology topo = SSTEP_TOPOLOGY_S
     return c;
 }
 
+/* Stall detection settings of the reference case (docs/motor-control.md) */
+inline void set_stall(sstep_config* c)
+{
+    c->ctrl.stall_time_ms = 50U;
+    c->ctrl.stall_filter_us = 1000U;
+    c->ctrl.stall_speed = 1600U;
+    c->ctrl.stall_sync_pct = 50U;
+}
+
+/* Currents of the reported case (sfs-stepper-driver test_lost_synchronism_is_reported):
+   run 1.5 A, hold 0.5 A after 500 ms */
+inline void set_reported_currents(sstep_config* c)
+{
+    c->ctrl.i_run_ma = 1500U;
+    c->ctrl.i_hold_ma = 500U;
+    c->ctrl.hold_delay_ms = 500U;
+}
+
 /* ==============================================================================
  * SOFTWARE IN THE LOOP: library + motor, one period computation delay
  * =============================================================================*/
@@ -216,9 +244,13 @@ struct Sim
     double vbus = 24.0;
     double TL = 0.0;
     bool locked = false;
+    bool kinematic = false; /* rotor turns at the imposed x.w (synthetic tests) */
+    double v_dead = 0.0;    /* dead-time voltage error per leg [V] */
+    int adc_span = kSpan;   /* ADC counts from 0 A to +4 A (ESC1: about 136) */
     int nsub = 4;
     uint16_t cmp_prev[SSTEP_LEGS_MAX] = {0, 0, 0, 0};
     uint64_t tick = 0;
+    uint32_t stall_peak = 0U; /* largest stall detector count seen */
     std::vector<Record> rec;
     bool record = true;
     int64_t phi_turns = 0; /* unwrapped electrical angle applied [2^-32 turn] */
@@ -228,12 +260,25 @@ struct Sim
 
     int init() { return sstep_init(&drv, &cfg); }
 
+    /* Plant that differs from the configuration as a real board does: hot winding
+       (R +30 %), saturated inductance (L -20 %), 70 mV dead-time error per leg, ESC1 current
+       quantization (29 mA per count) and a detent torque of 0.02 N*m */
+    void make_worst_case()
+    {
+        mot.R *= 1.3;
+        mot.L *= 0.8;
+        mot.Td = 0.02;
+        v_dead = 0.07;
+        adc_span = 136;
+        cfg.stage.adc_i_span = 136;
+    }
+
     /* Private driver state, for white-box checks */
     sstep_ctx& ctx() { return *sstep_ctx_of(&drv); }
 
-    static uint16_t adc_current(double i)
+    uint16_t adc_current(double i) const
     {
-        long v = std::lround(kZero + i / kIFull * kSpan);
+        long v = std::lround(kZero + i / kIFull * adc_span);
         return static_cast<uint16_t>(v < 0 ? 0 : (v > 4095 ? 4095 : v));
     }
 
@@ -255,6 +300,8 @@ struct Sim
         {
             leg[k] = cmp_prev[k] / per * vbus;
         }
+        /* dead time: a leg sourcing current loses v_dead (smooth sign, 50 mA) */
+        auto sgn = [](double i) { return std::max(-1.0, std::min(1.0, i / 0.05)); };
         if (!hal.enabled)
         {
             *vA = 0.0;
@@ -262,13 +309,14 @@ struct Sim
         }
         else if (cfg.stage.topology == SSTEP_TOPOLOGY_FULL_BRIDGE)
         {
-            *vA = leg[0] - leg[1];
-            *vB = leg[2] - leg[3];
+            *vA = leg[0] - leg[1] - 2.0 * v_dead * sgn(x.iA);
+            *vB = leg[2] - leg[3] - 2.0 * v_dead * sgn(x.iB);
         }
         else
         {
-            *vA = leg[0] - leg[2];
-            *vB = leg[1] - leg[2];
+            const double dw = v_dead * sgn(x.iA + x.iB);
+            *vA = leg[0] - leg[2] - v_dead * sgn(x.iA) - dw;
+            *vB = leg[1] - leg[2] - v_dead * sgn(x.iB) - dw;
         }
     }
 
@@ -284,6 +332,7 @@ struct Sim
         (void)sstep_fast_loop(&drv, &s);
         /* angle used in this period: the fast loop advances it after use */
         const uint32_t used = ctx().cur.angle - static_cast<uint32_t>(ctx().cur.dangle);
+        stall_peak = std::max(stall_peak, ctx().stall_count);
         phi_turns += static_cast<int32_t>(used - phi_last);
         phi_last = used;
         double vA = 0.0;
@@ -293,9 +342,10 @@ struct Sim
         {
             rec.push_back(Record{tick * Ts, x.iA, x.iB, x.w, x.th, vA, vB});
         }
+        const Rotor rotor = kinematic ? Rotor::Kinematic : (locked ? Rotor::Locked : Rotor::Free);
         for (int k = 0; k < nsub; k++)
         {
-            x = rk4(mot, x, vA, vB, TL, locked, Ts / nsub);
+            x = rk4(mot, x, vA, vB, TL, rotor, Ts / nsub);
         }
         for (unsigned k = 0; k < SSTEP_LEGS_MAX; k++)
         {

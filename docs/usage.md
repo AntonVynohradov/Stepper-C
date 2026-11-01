@@ -87,10 +87,56 @@ bool motor_is_idle(void)
 | `velocity` | microsteps/s | Commanded velocity |
 | `i_a_ma`, `i_b_ma` | mA | Last measured phase currents |
 | `vbus_mv` | mV | Last measured bus voltage |
+| `emf_d_mv`, `emf_q_mv` | mV | Back-EMF estimate along and 90° ahead of the commanded current (stall detection) |
+| `rotor_velocity` | microsteps/s | Rotor velocity estimated from the back-EMF (stall detection) |
+| `load_angle_cdeg` | 0.01° | Estimated load angle in motion (stall detection) |
+| `stall_level_pct` | % | Stall detector level; the fault comes at 100 |
 
-Position and velocity are *commanded* values. Without an encoder the library cannot see
-a lost step; keep the load angle reserve with enough current and a sensible acceleration
-([Motor Control](motor-control.md#motor-model)).
+Position and velocity are *commanded* values. There is no encoder: with stall detection
+the library reports a rotor that stops following the command (next section); without it
+a lost step goes unnoticed. Either way, keep the load angle reserve with enough current
+and a sensible acceleration ([Motor Control](motor-control.md#motor-model)).
+
+## Detecting a stall
+
+Stall detection estimates the back-EMF of the motor in the fast loop and raises
+`SSTEP_FAULT_STALL` when the rotor stops in motion, falls out of synchronism, or turns
+while the command is at rest (for example a load that the hold current cannot hold). It
+is off unless `stall_time_ms` is set, and needs current drive and `ke_uv_s_per_rad`:
+
+```c
+static struct sstep_config with_stall_detection(struct sstep_config cfg)
+{
+    cfg.ctrl.stall_time_ms = 50U;     /* report after 50 ms */
+    cfg.ctrl.stall_filter_us = 1000U; /* back-EMF filter */
+    cfg.ctrl.stall_speed = 1600U;     /* 0.5 rev/s at 16 microsteps: slip threshold */
+    cfg.ctrl.stall_sync_pct = 50U;    /* in motion: back-EMF >= 50 % of Ke * speed */
+    return cfg;
+}
+```
+
+The fault is handled like the others (next section): the outputs are off and the
+commanded position no longer matches the rotor, so home the axis again after
+`sstep_clear_faults()`. Below `stall_speed` only a rotor faster than the command is
+detected; run homing moves against a hard stop faster than `stall_speed`.
+
+While tuning, log the estimates from the slow-loop context and look at the margin:
+`stall_level_pct` should stay well below 100 in every normal operating point, and
+`load_angle_cdeg` shows how much torque reserve is left.
+
+```c
+void log_stall_margin(void)
+{
+    struct sstep_status st;
+    if (sstep_get_status(&motor, &st) == SSTEP_OK)
+    {
+        board_log_stall(st.velocity, st.rotor_velocity, st.load_angle_cdeg, st.stall_level_pct);
+    }
+}
+```
+
+The algorithm, the choice of the four values and the measured results are in
+[Stall detection](motor-control.md#stall-detection).
 
 ## Handling faults
 
@@ -104,6 +150,7 @@ A fault switches the outputs off at once, sets `SSTEP_STATE_FAULT` and calls
 | `SSTEP_FAULT_UNDERVOLTAGE` | Fast loop | Supply off or sagging; `vbus_min_mv` too close to nominal |
 | `SSTEP_FAULT_HAL` | Any function that calls a callback | `pwm_write()` or `output_enable()` returned a negative value |
 | `SSTEP_FAULT_EXTERNAL` (or any flag you choose) | `sstep_report_fault()` | Gate driver fault pin, over-temperature |
+| `SSTEP_FAULT_STALL` | Slow loop, stall detection on | Load above the torque, hard stop, rotor slipping at the hold current |
 
 Report a gate driver fault from its interrupt:
 
@@ -173,4 +220,6 @@ of several axes may run in one interrupt one after the other, or in separate int
 | Loses steps at speed | Not enough voltage for the speed ([Voltage limits](motor-control.md#voltage-limits)); shared-leg stage at its limit; acceleration too high for the load |
 | Moves are jerky, about once per millisecond | `sstep_slow_loop()` is not called at `slow_loop_hz`, or `fast_loop_hz` does not match the real interrupt rate |
 | Current settles at the wrong value | `i_full_scale_ma` / `adc_i_span` do not match the shunt and amplifier |
+| `SSTEP_FAULT_STALL` at enable or at the run → hold change, rotor at rest | Observer offset above $e$ times the slip threshold (wrong `r_mohm`, `adc_i_zero`): check `emf_d_mv` at rest, raise `stall_speed` |
+| `SSTEP_FAULT_STALL` at speed although the motor runs | `stall_sync_pct` above the synchronous ratio at the voltage limit or with heavy load: check `load_angle_cdeg`, lower `stall_sync_pct` |
 | `sstep_init()` returns `SSTEP_ERR_CONFIG` | Check the combinations: trip ≤ full scale, run current ≤ trip and rated, bandwidth ≤ `fast_loop_hz / 4`, `fast_loop_hz` a multiple of `slow_loop_hz` |

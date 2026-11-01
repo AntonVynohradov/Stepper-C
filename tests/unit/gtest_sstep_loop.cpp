@@ -2,7 +2,7 @@
  * Stepper-C: Stepper Motor Control Implementation
  *
  * Project:     Stepper-C - Hardware-Agnostic Stepper Motor Control Library
- * Description: Closed-loop tests: library + motor model through fake ADC/PWM (prototype T04..T09).
+ * Description: Closed-loop tests: library + motor model through fake ADC/PWM (prototype T04..T09, stall T10..T12).
  *
  * Author:      Anton Vynohradov
  * Email:       avynohradov@systemfromscratch.com
@@ -36,6 +36,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <functional>
 
 #include "sstep_test_plant.hpp"
 
@@ -291,5 +292,163 @@ TEST(SstepLoop, OtherMicrostepSettings)
         ASSERT_EQ(sstep_move_to(&sim.drv, 0), SSTEP_OK);
         sim.run_for(0.3);
         EXPECT_NEAR(sim.rotor_usteps(), 0.0, 0.05 * m + 0.5) << m;
+    }
+}
+
+/* ==============================================================================
+ * STALL DETECTION ON THE MOTOR MODEL
+ * =============================================================================*/
+
+namespace
+{
+
+/* Nominal plant, or the worst case of Sim::make_worst_case() */
+void stall_sim(Sim* sim, bool worst, bool detect)
+{
+    sim->record = false;
+    sstep_test::set_reported_currents(&sim->cfg);
+    if (detect)
+    {
+        sstep_test::set_stall(&sim->cfg);
+    }
+    if (worst)
+    {
+        sim->make_worst_case();
+    }
+}
+
+const char* plant_name(bool worst)
+{
+    return worst ? "worst case" : "nominal";
+}
+
+}  // namespace
+
+/* T10: the reported case. 0.12 N*m is held at 1.5 A (0.31 N*m) but not at the 0.5 A hold
+   current (0.10 N*m): the rotor slips at the run -> hold change */
+TEST(SstepLoop, StallAtHoldCurrent)
+{
+    for (bool worst : {false, true})
+    {
+        {
+            Sim sim; /* without stall detection: the slip is not seen (1.0.0 behaviour) */
+            stall_sim(&sim, worst, false);
+            ASSERT_EQ(sim.init(), SSTEP_OK);
+            ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
+            sim.TL = 0.12;
+            sim.run_for(0.8);
+            EXPECT_GT(std::fabs(sim.load_angle_deg()), 360.0);
+            EXPECT_EQ(sim.ctx().state, SSTEP_STATE_HOLDING);
+            EXPECT_EQ(sim.ctx().faults, SSTEP_FAULT_NONE);
+        }
+        Sim sim;
+        stall_sim(&sim, worst, true);
+        ASSERT_EQ(sim.init(), SSTEP_OK);
+        ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
+        sim.TL = 0.12;
+        double slip = -1.0;
+        double trip = -1.0;
+        for (int k = 0; (k < 16000) && (trip < 0.0); k++)
+        {
+            sim.step();
+            const double t = (k + 1) / 20000.0;
+            if ((slip < 0.0) && (std::fabs(sim.load_angle_deg()) > 90.0))
+            {
+                slip = t; /* beyond the pull-out angle */
+            }
+            if ((sim.ctx().faults & SSTEP_FAULT_STALL) != 0U)
+            {
+                trip = t;
+            }
+        }
+        std::printf("[ measured ] hold-current slip (%s): load angle beyond 90 deg at %.1f ms, "
+                    "SSTEP_FAULT_STALL at %.1f ms (%.1f ms later)\n",
+                    plant_name(worst), slip * 1e3, trip * 1e3, (trip - slip) * 1e3);
+        ASSERT_GT(slip, 0.5); /* held at the run current */
+        ASSERT_GT(trip, slip);
+        EXPECT_LT(trip - slip, 0.07);
+        EXPECT_EQ(sim.ctx().faults, SSTEP_FAULT_STALL);
+        EXPECT_EQ(sim.ctx().state, SSTEP_STATE_FAULT);
+        EXPECT_FALSE(sim.hal.enabled);
+        EXPECT_EQ(sim.hal.faults, SSTEP_FAULT_STALL);
+    }
+}
+
+/* T11: hard stop at 3 rev/s, both topologies */
+TEST(SstepLoop, StallAtHardStop)
+{
+    for (sstep_topology topo : {SSTEP_TOPOLOGY_FULL_BRIDGE, SSTEP_TOPOLOGY_SHARED_LEG})
+    {
+        Sim sim(topo);
+        stall_sim(&sim, true, true);
+        ASSERT_EQ(sim.init(), SSTEP_OK);
+        ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
+        ASSERT_EQ(sstep_run(&sim.drv, 9600), SSTEP_OK);
+        sim.run_for(0.2);
+        ASSERT_EQ(sim.ctx().faults, SSTEP_FAULT_NONE);
+        sim.kinematic = true;
+        sim.x.w = 0.0;
+        double trip = -1.0;
+        for (int k = 0; (k < 4000) && (trip < 0.0); k++)
+        {
+            sim.step();
+            if ((sim.ctx().faults & SSTEP_FAULT_STALL) != 0U)
+            {
+                trip = (k + 1) / 20000.0;
+            }
+        }
+        std::printf("[ measured ] hard stop at 3 rev/s (%s, worst case): SSTEP_FAULT_STALL after "
+                    "%.1f ms\n",
+                    topo == SSTEP_TOPOLOGY_FULL_BRIDGE ? "full" : "shared", trip * 1e3);
+        EXPECT_GT(trip, 0.05);
+        EXPECT_LT(trip, 0.07);
+    }
+}
+
+/* T12: no stall fault in normal operation, nominal and worst-case plant */
+TEST(SstepLoop, StallNoFalseAlarm)
+{
+    struct Scenario
+    {
+        const char* name;
+        std::function<void(Sim&)> run;
+    };
+    auto run_v = [](int32_t v) {
+        return [v](Sim& s) {
+            ASSERT_EQ(sstep_set_motion_limits(&s.drv, 40000, 160000, 0), SSTEP_OK);
+            ASSERT_EQ(sstep_run(&s.drv, v), SSTEP_OK);
+            s.run_for(0.8);
+        };
+    };
+    // clang-format off: one scenario per line
+    const Scenario scenarios[] = {
+        {"enable, run -> hold", [](Sim& s) { s.run_for(0.8); }},
+        {"0.07 N*m through run -> hold", [](Sim& s) { s.TL = 0.07; s.run_for(0.8); }},
+        {"move 6400 usteps, hold", [](Sim& s) { ASSERT_EQ(sstep_move_to(&s.drv, 6400), SSTEP_OK); s.run_for(1.2); }},
+        {"reversal +-4 rev/s, stop", [](Sim& s) { ASSERT_EQ(sstep_run(&s.drv, 12800), SSTEP_OK); s.run_for(0.2); ASSERT_EQ(sstep_run(&s.drv, -12800), SSTEP_OK); s.run_for(0.3); ASSERT_EQ(sstep_stop(&s.drv), SSTEP_OK); s.run_for(0.3); }},
+        {"0.125 rev/s", run_v(400)},
+        {"0.25 rev/s", run_v(800)},
+        {"0.47 rev/s", run_v(1500)},
+        {"1 rev/s", run_v(3200)},
+        {"2 rev/s", run_v(6400)},
+        {"8 rev/s", run_v(25600)},
+        {"9.5 rev/s", run_v(30400)},
+        {"11 rev/s", run_v(35200)},
+    };
+    // clang-format on
+    for (bool worst : {false, true})
+    {
+        for (const Scenario& sc : scenarios)
+        {
+            Sim sim;
+            stall_sim(&sim, worst, true);
+            ASSERT_EQ(sim.init(), SSTEP_OK);
+            ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
+            sc.run(sim);
+            std::printf("[ measured ] no stall (%s) %s: largest detector level %u %%\n",
+                        plant_name(worst), sc.name, 100U * sim.stall_peak / sim.ctx().stall_ticks);
+            EXPECT_EQ(sim.ctx().faults, SSTEP_FAULT_NONE) << plant_name(worst) << " " << sc.name;
+            EXPECT_LT(std::fabs(sim.load_angle_deg()), 90.0) << sc.name;
+        }
     }
 }

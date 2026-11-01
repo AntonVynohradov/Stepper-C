@@ -129,3 +129,8 @@ path, and pass the same `-DSSTEP_CFG_…` definitions to the library and the app
    speed and the acceleration to the application's values.
 5. **Protection:** check the trips with a lowered `i_trip_ma` and `vbus_max_mv`, and the
    external fault input with `sstep_report_fault()`.
+6. **Stall detection (optional):** enable it with the example values, log
+   `stall_level_pct`, `emf_d_mv` and `load_angle_cdeg` through every operating point
+   (enable, hold, the fastest move, the heaviest load), then block the shaft by hand at
+   speed and at standstill to see `SSTEP_FAULT_STALL`
+   ([choosing the parameters](motor-control.md#choosing-the-parameters)).

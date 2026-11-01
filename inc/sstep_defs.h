@@ -104,6 +104,10 @@ enum sstep_topology
 /** @brief Reported by the application through sstep_report_fault() (driver fault pin,
  *         over-temperature...). */
 #define SSTEP_FAULT_EXTERNAL 0x0010U
+/** @brief The rotor does not follow the commanded electrical angle: lost synchronism in
+ *         motion, or rotor motion while the command is at rest (sensorless back-EMF
+ *         observer, enabled with ::sstep_ctrl_cfg::stall_time_ms). */
+#define SSTEP_FAULT_STALL 0x0020U
 
 /* ==============================================================================
  * STATES

@@ -10,7 +10,8 @@ description: "Use when working on Stepper-C (sstep), the C11 closed-loop microst
 A portable C11 static library that drives a two-phase hybrid stepper motor: PI
 current control per phase with back-EMF feed-forward and anti-windup, microstep
 angle generation, a trapezoidal motion planner, the voltage limit and duty cycles of
-two power stage topologies, and protection trips. Version 1.0.0 is released: the
+two power stage topologies, protection trips and sensorless stall detection (back-EMF
+observer, 1.1.0). Version 1.0.0 is released and 1.1.0 is prepared: the
 public API (`sstep.h`, `inc/`) is stable within major version 1, so a removed or
 changed public symbol, struct member, enum value or return code needs 2.0.0.
 Verified on a motor model in both numeric backends; the next steps are
@@ -25,13 +26,14 @@ communication, application logic. They belong to the firmware that uses it.
 | Public API | `sstep.h` | Every public function declaration (15), version fallbacks; includes the public headers |
 | Public types | `inc/sstep_ctrl.h`, `inc/sstep_defs.h`, `inc/sstep_config.h` | Configuration, callbacks, sample, status, opaque `struct sstep`; status codes, faults, states; build-time options |
 | Control | `src/sstep_ctrl.c` | Config check, derived gains, state machine, fast loop, slow loop, commands |
+| Stall detection | `src/sstep_stall.c` | Back-EMF observer (fast loop), decision with learned offset and up/down counter (slow loop, integer mV), status estimates |
 | Motion | `src/sstep_motion.c` | Integer trajectory (Q16 microsteps, 64-bit), both backends |
 | Power stage | `src/sstep_bridge.c` | Voltage limit per topology, leg compare values |
 | Numeric backend | `src/sstep_math.h`, `src/sstep_math.c`, `src/sstep_sin_table.[ch]` | Saturating Q15/Q31 or float operations, gains, sine table |
 | Internal | `src/sstep_internal.h` | `struct sstep_ctx`, `sstep_ctx_of()`, internal declarations |
 | Sine table | `tools/sstep_gen_sin_table.py` | Generates `src/sstep_sin_table.c`; never edit the table by hand |
 | Build | `CMakeLists.txt`, `sstep.cmake`, `cmake/`, `CMakePresets.json` | Library target in `sstep.cmake`; tests and analysis in `cmake/` |
-| Tests | `tests/unit/gtest_sstep_*.cpp`, `tests/unit/sstep_test_plant.hpp` | GoogleTest; the plant header holds the motor model and the 17HS19/ESC1 configuration |
+| Tests | `tests/unit/gtest_sstep_*.cpp`, `tests/unit/sstep_test_plant.hpp` | GoogleTest; the plant header holds the motor model (optional detent torque, dead-time error, ADC span, imposed rotor motion, `make_worst_case()`) and the 17HS19/ESC1 configuration |
 
 ## Execution model
 
@@ -122,6 +124,10 @@ python tools/sstep_gen_sin_table.py --check
   overshoot and < 1 ms settling (measured 1.11 %, 0.40 ms), 6400-microstep move
   ending on target, load step below/above `Kt·I`, reversal, 8 rev/s topology limit
   (1.862 A full bridge, 1.557 A shared leg), bus voltage compensation, voltage drive.
+- Stall detection (`SstepLoop.Stall*`, `SstepStall.*`): the hold-current slip
+  (0.12 N·m, 1.5 A / 0.5 A) trips 48 ms after the load angle passes 90° and a hard stop
+  after 50 ms; no fault in the robustness matrix on the nominal and the worst-case plant
+  (largest detector level 32 %).
 
 ## Measured figures in the documentation
 
@@ -130,7 +136,7 @@ a change that can affect it.
 
 | Figure | How |
 | --- | --- |
-| RAM per instance | `sizeof(struct sstep)` on Cortex-M4: 336 B fixed, 360 B float (64-bit host: 360 B, 392 B) |
+| RAM per instance | `sizeof(struct sstep)` on Cortex-M4: 432 B fixed, 456 B float (64-bit host: 456 B, 480 B) |
 | Flash | `arm-none-eabi-size` of `src/*.c` at `-Os`, Cortex-M4 (float with `-mfpu=fpv4-sp-d16 -mfloat-abi=hard`) |
 | Stack | `-fstack-usage -fcallgraph-info=su`, then `python tools/docs/stack_usage.py <dir> --markdown`; table in `docs/configuration.md` (Cortex-M4, `-Os`/`-O0`, both backends) |
 | Sine accuracy | Sweep `sstep_sin_cos()` over a full turn against `sin`/`cos` for table bits 6, 8, 10 |

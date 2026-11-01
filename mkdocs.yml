@@ -141,7 +141,7 @@ extra:
         - icon: memory
           title: Tight embedded budgets
           text: >-
-            336 B of RAM per motor, 184 B worst-case stack in the PWM interrupt, 6.8 KiB
+            432 B of RAM per motor, 216 B worst-case stack in the PWM interrupt, 8.8 KiB
             of flash on Cortex-M4. A fixed-point backend for cores without FPU; no
             allocation, no globals, no OS.
           tags: [Q15 or float, Static memory, Bare metal & RTOS]
@@ -156,20 +156,20 @@ extra:
       eyebrow: What you get
       title: One library from motion command to PWM
       intro: >-
-        15 public functions, four modules (control, motion, power stage, numeric
-        backend), two power stage topologies and two numeric backends, verified in
+        15 public functions, five modules (control, stall detection, motion, power
+        stage, numeric backend), two power stage topologies and two numeric backends, verified in
         closed loop on a motor model.
       cards:
         - {icon: wave, title: Current control and microstepping, text: "PI per phase with feed-forward, sine/cosine references from a 32-bit electrical angle, 1 to 256 microsteps.", tags: [PI, Sine table, Microsteps], link: motor-control/}
         - {icon: gauge, title: Motion planner, text: "Trapezoidal moves without overshoot, constant-velocity runs, smooth stop and retargeting, exact integer positions.", tags: [Trapezoid, Q16 positions], link: "motor-control/#motion-profile"}
         - {icon: plug, title: Any power stage, text: "Two H-bridges or three half-bridges with a shared leg; the voltage limit keeps the direction; the bus voltage is compensated.", tags: [4 legs, 3 legs, B-G431B-ESC1], link: integration/}
-        - {icon: lock, title: Protection in the interrupt, text: "Overcurrent, overvoltage and undervoltage trips, callback errors and external faults switch the outputs off in the same period.", tags: [Trips, Fault callback], link: "usage/#handling-faults"}
+        - {icon: lock, title: Protection and stall detection, text: "Overcurrent, overvoltage and undervoltage trips switch the outputs off in the same period; a back-EMF observer reports a stalled or slipping rotor without a sensor.", tags: [Trips, Stall detection, Fault callback], link: "usage/#handling-faults"}
         - {icon: document, title: Complete documentation, text: "Guides, the control theory with measured results, the integration guide and a full API reference, also as a PDF.", tags: [API, Guides, PDF], link: api/}
         - {icon: check, title: Quality gates in CI, text: "Unit and closed-loop tests in both backends with a 100 % coverage gate, MISRA C:2012 gate, Cppcheck and CodeQL.", tags: [GoogleTest, Coverage, MISRA C], link: misra/}
     stats:                                   # measured values only
       - {value: "15", label: public functions}
-      - {value: "336 B", label: RAM per motor}
-      - {value: "184 B", label: stack in the PWM interrupt}
+      - {value: "432 B", label: RAM per motor}
+      - {value: "216 B", label: stack in the PWM interrupt}
       - {value: "0", label: MISRA C:2012 violations}
     portfolio:
       title: Part of an open-source embedded portfolio

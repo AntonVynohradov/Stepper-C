@@ -2,7 +2,8 @@
 
 This chapter describes the algorithms of Stepper-C and the equations behind them: the
 motor model, per-unit scaling, the current controller, microstepping, the motion
-profile, the voltage limits of the two power stage topologies and the numeric backends.
+profile, the voltage limits of the two power stage topologies, the stall detection and
+the numeric backends.
 Every number in this chapter comes from the code or from the closed-loop tests on the
 motor model (`tests/unit/gtest_sstep_loop.cpp`).
 
@@ -233,6 +234,194 @@ After `hold_delay_ms` without motion the current amplitude drops from `i_run_ma`
 `i_hold_ma` and `on_event(SSTEP_EVENT_HOLD_CURRENT)` is reported. Any motion switches
 back to the run current in the same period. The hold current reduces heating at
 standstill; the holding torque is $K_t\, i_\mathrm{hold}$.
+
+## Stall detection
+
+Without an encoder the library does not know where the rotor is. When the load exceeds
+the torque, the rotor stops following the commanded angle: it stalls at a hard stop,
+falls behind at speed, or slips under a load that the hold current cannot hold, while
+the commanded position keeps its value. The stall detector estimates the back-EMF from
+the quantities the fast loop already has and raises `SSTEP_FAULT_STALL` when the rotor
+does not move as commanded. It is off by default (`stall_time_ms = 0`) and needs
+`SSTEP_DRIVE_CURRENT` and `ke_uv_s_per_rad > 0`.
+
+**Reference case.** A 17HS19-2004S1 on a three-leg stage at 24 V, 1.5 A run current and
+0.5 A hold current after 500 ms, holds a constant 0.12 N·m load at the run current
+($K_t \cdot 1.5 = 0.31$ N·m) but not at the hold current (0.10 N·m). At the run → hold change
+the rotor slips and spins away; without stall detection the driver stays in
+`SSTEP_STATE_HOLDING` with no fault. With the settings below it reports
+`SSTEP_FAULT_STALL` 48 ms after the load angle passes 90°.
+
+### Principle
+
+The winding equation gives the back-EMF from the applied voltage and the measured current.
+With the convention of the library ($i_A = I\cos\varphi$, $i_B = I\sin\varphi$), the back-EMF
+of a rotor at the angle $\theta$ and the speed $\omega$ is
+
+$$
+e_A = -K_e\,\omega \sin(p\theta) \qquad e_B = K_e\,\omega \cos(p\theta)
+$$
+
+Rotated into the frame of the commanded current (d along the current, q 90° ahead):
+
+$$
+e_d = e_A\cos\varphi + e_B\sin\varphi = K_e\,\omega \sin\delta \qquad
+e_q = -e_A\sin\varphi + e_B\cos\varphi = K_e\,\omega \cos\delta \qquad
+\delta = \varphi - p\theta
+$$
+
+The magnitude of the vector is the rotor speed, its angle the load angle $\delta$.
+
+- **In motion,** a synchronous rotor has $\omega = \omega_c$ and a moderate load angle, so
+  $e_q \approx K_e\,\omega_c \cos\delta$ is a large constant of the sign of the motion. A stalled
+  rotor gives no back-EMF; a rotor that slips turns relative to the commanded frame and its
+  back-EMF averages out. Both make $e_q$ fall far below $K_e\,\omega_c$.
+- **At rest,** the commanded frame stands still, so any lasting back-EMF means that the rotor
+  turns. A slipping rotor makes the vector rotate at its electrical speed.
+
+### Equations
+
+These are the exact operations of the library, in their order, so that a model can
+reproduce them (Scilab, Python). $T_s = 1 /$ `fast_loop_hz`, $p = N_s / 4$, $M$ = `microsteps`;
+voltages are per unit of `vbus_nominal_mv` in the fast loop and millivolts in the slow
+loop.
+
+**Fast loop,** every period $k$, after the PI and the voltage limit (phase $x \in \{A, B\}$):
+
+$$
+\hat e_x[k] = \mathrm{sat}_{\pm 1\,\mathrm{pu}}\!\left( v_x[k-2] - a\, i_x[k] + b\, i_x[k-1] \right)
+\qquad a = \frac{L}{T_s} + \frac{R}{2} \qquad b = \frac{L}{T_s} - \frac{R}{2}
+$$
+
+This is $v - R\,\frac{i[k] + i[k-1]}{2} - L\,\frac{i[k] - i[k-1]}{T_s}$: the winding equation
+integrated over the period from sample $k-1$ to $k$ with the trapezoidal rule, written with two
+gains computed by `sstep_init()`. $v_x[k-2]$ is the phase voltage computed two calls earlier:
+with the one-period computation delay, the compare values written in call $k-2$ are
+applied from sample $k-1$ to sample $k$. It is the voltage after the limit of the power stage
+(what the bridge applies, not the PI output), so the estimate stays valid at the voltage
+limit.
+
+$$
+\hat e_d = \hat e_A\cos\varphi[k] + \hat e_B\sin\varphi[k] \qquad
+\hat e_q = -\hat e_A\sin\varphi[k] + \hat e_B\cos\varphi[k]
+$$
+
+$$
+\bar e_{d,q}[k] = \bar e_{d,q}[k-1] + \frac{T_s}{\tau}\left(\hat e_{d,q}[k] - \bar e_{d,q}[k-1]\right)
+$$
+
+with $\tau$ = `stall_filter_us`. $\varphi[k]$ is the commanded angle of call $k$. The voltage was averaged over the period
+before it, so the estimate refers the rotor at the middle of that period to $\varphi[k]$: the
+load angle reads $\Omega T_s / 2$ more than $\varphi[k] - p\theta(t_k)$, 0.45° per rev/s at
+20 kHz with 50 pole pairs.
+
+**Slow loop,** every period $n$, against the command of the slow period that just ended:
+velocity $v_c$ [microsteps/s] and its back-EMF $e_c = K_e\,\omega_c = K_e\,2\pi v_c / (N_s M)$
+(the feed-forward value, saturated at 1 pu, converted to mV). $\bar e_d$, $\bar e_q$ are the
+filter outputs rounded to mV.
+
+$$
+\text{in motion } (\lvert v_c \rvert \ge v_s): \qquad
+\mathrm{bad} = \mathrm{sgn}(v_c)\,\bar e_q < \frac{s}{100}\,\lvert e_c \rvert
+$$
+
+$$
+\text{at rest or slow } (\lvert v_c \rvert < v_s): \qquad
+\Delta = (\bar e_d,\; \bar e_q - e_c) \qquad
+o \leftarrow o + \frac{\Delta - o}{N} \qquad
+\mathrm{bad} = \lvert \Delta - o \rvert > e_s
+$$
+
+$$
+c \leftarrow \begin{cases} c + 1 & \mathrm{bad} \\ \max(c - 1,\, 0) & \text{otherwise} \end{cases}
+$$
+
+and `SSTEP_FAULT_STALL` when $c \ge N$, with $v_s$ = `stall_speed`, $s$ = `stall_sync_pct`,
+$N$ = `stall_time_ms` · `slow_loop_hz` / 1000 and the slip threshold
+$e_s = K_e\, 2\pi\, v_s / (N_s M)$ rounded to mV. In integers: $o$ is held in mV·$2^{16}$, the
+update divides with truncation, $\Delta - o$ uses $o$ truncated to mV, and the magnitude is
+compared as a sum of squares. `sstep_enable()` clears $\bar e$, $o$, $c$ and the voltage
+history ($v[k-1] = v[k-2] = 0$, $i[k-1]$ = the last measurement).
+
+**Diagnostics** in `sstep_get_status()`: `emf_d_mv` and `emf_q_mv` are $\bar e_d$, $\bar e_q$;
+`rotor_velocity` is $\mathrm{sgn}(\bar e_q)\,\lvert \bar e \rvert\, N_s M / (2\pi K_e)$;
+`load_angle_cdeg` is $\mathrm{atan2}(\sigma\bar e_d,\; \sigma\bar e_q)$ with $\sigma = \mathrm{sgn}(v_c)$ (at rest
+$\mathrm{sgn}(\bar e_q)$), in 0.01°, positive when the rotor lags in the positive direction (the sign
+of the motor torque); `stall_level_pct` is $100\,c / N$.
+
+### Design decisions
+
+| Decision | Reason |
+| --- | --- |
+| Filter in the commanded frame | A synchronous back-EMF is constant there at any speed, so a millisecond filter neither attenuates nor delays it. In the phase frame the back-EMF at 10 rev/s is a 500 Hz sine that such a filter would suppress. |
+| In motion, only $e_q$ | A resistance error ($R$ of a hot winding) adds $\Delta R\, I$ along the current, the d axis, and does not change $e_q$. An inductance error adds $\Delta L\, I\, p\,\omega$ along q: it scales $e_q$ by $1 + \Delta L\, I\, p / K_e$ (−22 % for $L$ −20 % at 1.5 A), at every speed. |
+| Threshold relative to $K_e\,\omega_c$ | The synchronous value $\cos\delta$ does not depend on the speed; a fixed fraction separates a loaded synchronous rotor (0.5 to 1) from a stall or a slip (about 0, ±0.25 with the $L$ error). |
+| At rest, learned offset | A resting rotor has no back-EMF, so a constant estimate is an observer error: $\Delta R\, I$, the dead-time voltage, current-sensor offsets (0.91 V at 1.5 A in the worst case below, more than the threshold). Its running mean is subtracted. A slipping rotor makes the vector rotate, which averages out of the mean and stays in $\Delta - o$. |
+| Offset time constant = trip time | An offset that appears at once (enable, run → hold) decays below $e_s$ after $N \ln(\text{offset} / e_s)$ periods. That is less than $N$ for an offset below $e \cdot e_s$ (2.7 times the threshold), so it never trips. A slip at $\Omega \gg 1 / T_N$ ($T_N$ = `stall_time_ms`) passes the mean unchanged. |
+| Below $v_s$, deviation from $(0, e_c)$ | The motor may move slowly right after `sstep_enable()`, without a rest period to learn the offset: the deviation from the expected back-EMF has the same zero mean at rest and in slow motion. |
+| Up/down counter | A stall keeps the condition true: the fault comes $N$ slow periods after it begins. Short events (enable, current steps, resonance, reversal through zero) count down again; a condition true less than half of the time does not accumulate. |
+| Decision in the slow loop | The fast loop only estimates and filters; the comparison, the offset tracking and the counter run at 1 kHz on integer millivolts, identical in both numeric backends. |
+
+### Choosing the parameters
+
+| Field | Example (17HS19, ESC1) | How to choose |
+| --- | --- | --- |
+| `stall_time_ms` | 50 | Detection delay after the stall; longer is more robust. Keep an offset at rest below $e \cdot e_s$ (see above). |
+| `stall_filter_us` | 1000 | 0.5 to 2 ms. Shorter follows faster slips but passes more current quantization noise: one ADC count changes $\hat e$ by $L\,\Delta i / \tau$ (87 mV for 29 mA at 1 ms). A rotating vector is filtered to at most $K_e / (p\,\tau)$ (4.2 V at 1 ms), which must stay well above $e_s$. |
+| `stall_speed` | 1600 (0.5 rev/s, $e_s$ = 655 mV) | Above the back-EMF noise at rest; the commanded speed from which the synchronism check runs. |
+| `stall_sync_pct` | 50 | Below $\cos\delta \cdot (1 + \Delta L\, I\, p / K_e)$ at the worst synchronous operating point. At the voltage limit the current lags its reference and the ratio drops (0.46 at 11 rev/s on a 24 V three-leg stage); use 30 to 40 near the limit. |
+
+### Measured on the motor model
+
+Tests `SstepLoop.Stall*` and `SstepStall.*` with the example settings, fixed point and
+float backend alike. The worst-case plant differs from the configuration as a real board
+does: $R$ +30 % (hot winding), $L$ −20 % (saturation), 70 mV dead-time error per leg
+(24 V, 20 kHz), ESC1 current quantization (29 mA per count instead of 2 mA) and a detent
+torque of 0.02 N·m.
+
+| Case | Result |
+| --- | --- |
+| Reference case, 0.12 N·m at the hold current (nominal and worst-case plant) | `SSTEP_FAULT_STALL` 48 ms after the load angle passes 90° |
+| Rotor blocked at 3 rev/s (hard stop), either direction, both topologies, worst case | `SSTEP_FAULT_STALL` after 50.0 ms |
+| Rotor turning at 1 rev/s with the command at rest | `SSTEP_FAULT_STALL` after 50.0 ms |
+| Rotor imposed at 3 rev/s | $\lvert \bar e \rvert$ 3936 mV against $K_e\,\omega$ = 3932 mV; `rotor_velocity` 9609 microsteps/s for 9600; load angle 10.27° (model 10.28°) |
+| Enable, run → hold, 0.07 N·m through run → hold, 6400-microstep move, reversal ±4 rev/s and stop, runs at 0.125, 0.25, 0.47, 1, 2, 8, 9.5 and 11 rev/s | No fault. Largest detector level 6 % (nominal plant), 32 % (worst case) |
+
+The motor model of this repository shows no sustained mid-band oscillation between 8 and
+11 rev/s; those runs check the voltage limit and the current lag. A 0.09 N·m load at
+the run → hold change is a real slip in the model (the undamped rotor overshoots past 90°)
+and is reported.
+
+### Cost
+
+| | Fixed point | Float |
+| --- | --- | --- |
+| Fast loop, added per period | 4 gain multiplications, 4 Q15 multiplications, 2 filter updates, 10 saturating additions | Same operations in float |
+| Fast loop, executed instructions without / with stall detection (`-Os`) | 1035 / 1510 | 720 / 933 |
+| Same with `-O2` | 666 / 912 | 680 / 921 |
+| Slow loop, added | 167 instructions (`-Os`) | 110 instructions |
+| `sstep_get_status()` | 1202 instructions (`-Os`; integer CORDIC and square root) | 1148 |
+| RAM per instance, added | 96 B (Cortex-M4) | 96 B |
+
+Instructions counted on a Cortex-M4 image (GCC 15.2) in an instruction-set emulator,
+mean over 600 fast-loop periods while accelerating to 3 rev/s; on Cortex-M4 most of them take one cycle. At
+170 MHz and 20 kHz the observer takes about 1.5 µs (`-O2`) to 2.8 µs (fixed point,
+`-Os`) of the 50 µs period. With `stall_time_ms = 0` the fast loop skips the observer
+(one comparison).
+
+### Limits
+
+- Below `stall_speed`, a rotor that stops while the command creeps slowly is not seen:
+  its back-EMF is close to zero either way. Only a rotor faster than the command is.
+- The fault comes `stall_time_ms` after the stall begins; the position is lost from the
+  beginning of the stall.
+- During a slip at rest `rotor_velocity` is low (the filter attenuates the rotating
+  vector: about 10 000 for 27 000 microsteps/s); it is accurate in synchronism.
+  An inductance error biases it too (26 700 for 31 400 microsteps/s with $L$ −20 % at
+  10 rev/s).
+- The observer needs the phase currents (`SSTEP_DRIVE_CURRENT`) and $K_e$.
+- Verified on the motor model of the tests; the closed-loop validation with the
+  sfs-stepper-sim plant and on hardware follows.
 
 ## Numeric backends
 

@@ -15,9 +15,14 @@
 <rect x="20" y="172" width="920" height="250" rx="14" fill="#FFFFFF" stroke="#1E5AA8" stroke-width="2"/>
 <text x="40" y="200" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="17" font-weight="bold" fill="#1E5AA8" text-anchor="start">Stepper-C</text>
 <text x="140" y="200" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="start">public API: sstep.h · inc/sstep_ctrl.h · inc/sstep_defs.h · inc/sstep_config.h</text>
-<rect x="40" y="216" width="880" height="76" rx="10" fill="#E6F4F5" stroke="#0F8B9A" stroke-width="1.5"/>
-<text x="480.0" y="243.5" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="15" font-weight="bold" fill="#0B2545" text-anchor="middle">Control — src/sstep_ctrl.c</text>
-<text x="480.0" y="263.5" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">configuration check · derived gains · state machine · fast loop: current control, trips · slow loop: setpoints, hold current, events</text>
+<rect x="40" y="216" width="580" height="76" rx="10" fill="#E6F4F5" stroke="#0F8B9A" stroke-width="1.5"/>
+<text x="330.0" y="235.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="15" font-weight="bold" fill="#0B2545" text-anchor="middle">Control — src/sstep_ctrl.c</text>
+<text x="330.0" y="255.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">configuration check · derived gains · state machine</text>
+<text x="330.0" y="272.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">fast loop: current control, trips · slow loop: setpoints, events</text>
+<rect x="640" y="216" width="280" height="76" rx="10" fill="#E6F4F5" stroke="#0F8B9A" stroke-width="1.5"/>
+<text x="780.0" y="235.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="15" font-weight="bold" fill="#0B2545" text-anchor="middle">Stall detection</text>
+<text x="780.0" y="255.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">src/sstep_stall.c</text>
+<text x="780.0" y="272.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">back-EMF observer, decision</text>
 <rect x="40" y="310" width="280" height="92" rx="10" fill="#F2F5FA" stroke="#C9D3E0" stroke-width="1.5"/>
 <text x="180.0" y="328.5" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="15" font-weight="bold" fill="#0B2545" text-anchor="middle">Motion</text>
 <text x="180.0" y="348.5" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">src/sstep_motion.c</text>
