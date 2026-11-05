@@ -33,8 +33,10 @@
 
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <cstdlib>
 #include <functional>
 
 #include "sstep_test_plant.hpp"
@@ -361,6 +363,172 @@ TEST(SstepStall, IntermittentConditionDoesNotTrip)
     }
     EXPECT_EQ(sim.ctx().state, SSTEP_STATE_FAULT);
     EXPECT_EQ(sim.ctx().faults, SSTEP_FAULT_STALL);
+}
+
+namespace
+{
+
+/* Accelerate to v with a synchronous back-EMF, then stay there: decision tests in motion */
+void reach_speed(Sim* sim, int32_t v)
+{
+    ASSERT_EQ(sstep_run(&sim->drv, v), SSTEP_OK);
+    for (int k = 0; k < 60; k++)
+    {
+        sim->ctx().emf[0] = emf_state(0.0);
+        sim->ctx().emf[1] = emf_state(emf_mv(sim->ctx().vel_cmd));
+        ASSERT_EQ(sstep_slow_loop(&sim->drv), SSTEP_OK);
+    }
+    ASSERT_EQ(sim->ctx().vel_cmd, v);
+    ASSERT_EQ(sim->ctx().stall_count, 0U);
+}
+
+/* One slow period with the back-EMF (ed, eq) */
+void decide(Sim* sim, double ed, double eq)
+{
+    sim->ctx().emf[0] = emf_state(ed);
+    sim->ctx().emf[1] = emf_state(eq);
+    ASSERT_EQ(sstep_slow_loop(&sim->drv), SSTEP_OK);
+}
+
+}  // namespace
+
+TEST(SstepStall, LoadedRotorIsNotAStall)
+{
+    /* 1 rev/s, 2 A: Ke w = 1311 mV, R I = 3200 mV. Back-EMF along the motion below 50 %,
+       but the d axis shows the rotor: outside [-756, +1717] mV it cannot be blocked */
+    struct Case
+    {
+        int32_t v;
+        double ed;
+    };
+    for (const Case& c :
+         {Case{3200, 1800.0}, Case{3200, -800.0}, Case{-3200, -800.0}, Case{-3200, 1800.0}})
+    {
+        Sim sim;
+        start(&sim);
+        reach_speed(&sim, c.v);
+        const double eq = (c.v > 0 ? 1.0 : -1.0) * 0.2 * emf_mv(std::abs(c.v));
+        for (int k = 0; k < 200; k++)
+        {
+            decide(&sim, c.ed, eq);
+        }
+        EXPECT_EQ(sim.ctx().stall_count, 0U) << c.v << " " << c.ed;
+        EXPECT_EQ(sim.ctx().state, SSTEP_STATE_MOVING);
+    }
+}
+
+TEST(SstepStall, BlockedRotorInsideTheResistanceWindowTrips)
+{
+    /* the limits of the window itself still mean "no rotor": up to +40 %, -10 % of R I */
+    for (double ed : {1650.0, -700.0})
+    {
+        Sim sim;
+        start(&sim);
+        reach_speed(&sim, 3200);
+        for (int k = 0; k < 50; k++)
+        {
+            decide(&sim, ed, 0.0);
+        }
+        EXPECT_EQ(sim.ctx().faults, SSTEP_FAULT_STALL) << ed;
+    }
+}
+
+TEST(SstepStall, RotatingBackEmfVectorTrips)
+{
+    /* a slipping rotor: the vector turns in the commanded frame, the back-EMF along the motion
+       is good half of the time, so the up/down counter alone does not accumulate */
+    for (int32_t v : {3200, -3200})
+    {
+        Sim sim;
+        start(&sim);
+        reach_speed(&sim, v);
+        int n = 0;
+        for (; (n < 500) && (sim.ctx().faults == SSTEP_FAULT_NONE); n++)
+        {
+            const double th = 2.0 * kPi * n / 10.0; /* 100 Hz slip */
+            decide(&sim, 4000.0 * std::sin(th), 4000.0 * std::cos(th));
+        }
+        std::printf("[ measured ] rotating back-EMF vector at %d usteps/s: stall after %d ms\n", v,
+                    n);
+        EXPECT_EQ(sim.ctx().faults, SSTEP_FAULT_STALL);
+        EXPECT_LE(n, 60); /* stall_time_ms + one slip period */
+    }
+}
+
+TEST(SstepStall, SingleReversalDoesNotTrip)
+{
+    /* one reversed sample counts for half of the trip time, then the counter recovers */
+    Sim sim;
+    start(&sim);
+    reach_speed(&sim, 3200);
+    decide(&sim, 0.0, -1400.0); /* below -(Ke w / 2 + e_s) = -1310 mV */
+    uint32_t peak = 0U;
+    for (int k = 0; k < 100; k++)
+    {
+        decide(&sim, 0.0, emf_mv(3200.0));
+        peak = std::max(peak, sim.ctx().stall_count);
+    }
+    EXPECT_EQ(peak, 25U);
+    EXPECT_EQ(sim.ctx().stall_count, 0U);
+    EXPECT_EQ(sim.ctx().state, SSTEP_STATE_MOVING);
+}
+
+TEST(SstepStall, SmallReversalIsNotASlip)
+{
+    /* just above the limit of the reversal: the ordinary up/down decision only */
+    Sim sim;
+    start(&sim);
+    reach_speed(&sim, 3200);
+    decide(&sim, 0.0, -1300.0);
+    decide(&sim, 0.0, emf_mv(3200.0));
+    EXPECT_EQ(sim.ctx().stall_count, 0U);
+}
+
+TEST(SstepStall, EnableForgetsAReversal)
+{
+    Sim sim;
+    start(&sim);
+    reach_speed(&sim, 3200);
+    decide(&sim, 0.0, -1400.0);
+    ASSERT_EQ(sstep_disable(&sim.drv), SSTEP_OK);
+    ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
+    decide(&sim, 0.0, 0.0); /* at rest, no deviation: not bad */
+    EXPECT_EQ(sim.ctx().stall_count, 0U);
+}
+
+TEST(SstepStall, OvercurrentCarriesTheStallFlagWhenTheDetectorIsActive)
+{
+    /* the trip can be faster than stall_time_ms: the application still learns that the rotor
+       was slipping, so the position is lost */
+    for (bool active : {false, true})
+    {
+        Sim sim;
+        start(&sim);
+        reach_speed(&sim, 3200);
+        if (active)
+        {
+            decide(&sim, 0.0, 0.0);
+        }
+        sstep_sample s = sim.sample();
+        s.i_a = sim.adc_current(3.9);
+        ASSERT_EQ(sstep_fast_loop(&sim.drv, &s), SSTEP_OK);
+        const auto expected = static_cast<uint16_t>(
+            active ? (SSTEP_FAULT_OVERCURRENT | SSTEP_FAULT_STALL) : SSTEP_FAULT_OVERCURRENT);
+        EXPECT_EQ(sim.ctx().faults, expected) << active;
+        EXPECT_EQ(sim.hal.faults, expected) << active;
+    }
+}
+
+TEST(SstepStall, OvercurrentWithoutStallDetectionIsOnlyOvercurrent)
+{
+    Sim sim;
+    sim.record = false;
+    ASSERT_EQ(sim.init(), SSTEP_OK);
+    ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
+    sstep_sample s = sim.sample();
+    s.i_a = sim.adc_current(3.9);
+    ASSERT_EQ(sstep_fast_loop(&sim.drv, &s), SSTEP_OK);
+    EXPECT_EQ(sim.ctx().faults, SSTEP_FAULT_OVERCURRENT);
 }
 
 TEST(SstepStall, OffsetAtRestIsLearned)

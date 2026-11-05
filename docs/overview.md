@@ -53,8 +53,8 @@ point (no FPU needed) or single-precision float.
 | Numeric backends | Fixed point Q15/Q31 (integer only) or single-precision float, chosen at build time |
 | Memory | No heap, no global or static mutable data (`.data` and `.bss` are empty) |
 | RAM per instance | 432 B fixed point, 456 B float on Cortex-M4 ([details](configuration.md#memory-footprint)) |
-| Flash | 8.8 KiB fixed point, 9.5 KiB float (Cortex-M4, `-Os`, both topologies) |
-| Stack | `sstep_fast_loop()` 216 B, `sstep_slow_loop()` 140 B worst case (Cortex-M4 `-Os`, [details](configuration.md#stack-usage)) |
+| Flash | 9.0 KiB fixed point, 9.7 KiB float (Cortex-M4, `-Os`, both topologies) |
+| Stack | `sstep_fast_loop()` 216 B, `sstep_slow_loop()` 152 B worst case (Cortex-M4 `-Os`, [details](configuration.md#stack-usage)) |
 | Coding standard | MISRA C:2012, 0 Cppcheck addon violations, [1 deviation](misra.md) |
 | Tests | 100 % line and branch coverage of `src/` in both backends; closed-loop tests on a motor model |
 | Thread safety | One fast-loop context and one slow-loop context per instance, by design; see [Threading](architecture.md#threading-and-reentrancy) |

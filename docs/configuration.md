@@ -108,15 +108,15 @@ Measured with `arm-none-eabi-gcc` 15.2.1 for Cortex-M4 (`-mthumb`, float backend
 | Object | Fixed point | Float |
 | --- | --- | --- |
 | `struct sstep` (RAM per motor) | 432 B | 456 B |
-| Code and constants, `-Os` (flash) | 9040 B | 9718 B |
+| Code and constants, `-Os` (flash) | 9216 B | 9894 B |
 | of which the sine table | 514 B | 1028 B |
 | `.data` + `.bss` | 0 B | 0 B |
 
 `struct sstep` is the configuration copy (`SSTEP_CONFIG_BYTES`: 152 B on Cortex-M4,
 176 B on 64-bit hosts) plus the private state (`SSTEP_STATE_BYTES`: 280 B fixed point,
-304 B float); on a 64-bit host the instance is 456 B and 480 B. Stall detection accounts
-for 96 B of it, and for 2060 B (fixed point) or 2272 B (float) of the flash whether it is
-enabled or not.
+304 B float on Cortex-M4; 288 B and 312 B on 64-bit hosts); on a 64-bit host the instance
+is 464 B and 488 B. Stall detection accounts for 96 B of it on Cortex-M4, and for 2236 B
+(fixed point) or 2448 B (float) of the flash whether it is enabled or not.
 
 ## Stack usage
 
@@ -132,7 +132,7 @@ functions that call them.
 | `sstep_enable()` | 48 | 80 | 64 | 88 |
 | `sstep_disable()` | 24 | 40 | 24 | 40 |
 | `sstep_fast_loop()` | 216 | 304 | 128 | 312 |
-| `sstep_slow_loop()` | 140 | 592 | 140 | 560 |
+| `sstep_slow_loop()` | 152 | 696 | 140 | 624 |
 | `sstep_move_to()` | 0 | 48 | 0 | 48 |
 | `sstep_move_by()` | 0 | 112 | 0 | 112 |
 | `sstep_run()` | 16 | 104 | 16 | 104 |
@@ -142,7 +142,7 @@ functions that call them.
 | `sstep_set_motion_limits()` | 72 | 224 | 72 | 224 |
 | `sstep_report_fault()` | 24 | 40 | 24 | 40 |
 | `sstep_clear_faults()` | 0 | 40 | 0 | 40 |
-| `sstep_get_status()` | 92 | 544 | 92 | 504 |
+| `sstep_get_status()` | 92 | 536 | 92 | 496 |
 
 The interrupt stack must hold the frame of `sstep_fast_loop()` plus `pwm_write()` (and
 `output_enable()` + `on_fault()` for the fault path) plus the interrupt entry. There is

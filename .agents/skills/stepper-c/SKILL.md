@@ -14,9 +14,9 @@ two power stage topologies, protection trips and sensorless stall detection (bac
 observer, 1.1.0). Version 1.0.0 is released and 1.1.0 is prepared: the
 public API (`sstep.h`, `inc/`) is stable within major version 1, so a removed or
 changed public symbol, struct member, enum value or return code needs 2.0.0.
-Verified on a motor model in both numeric backends; the next steps are
-software-in-the-loop with the Scilab model, the B-G431B-ESC1 port and dead-time
-compensation.
+Verified on a motor model in both numeric backends and in software-in-the-loop with the
+Scilab/Xcos model (repository `sfs-stepper-sim`, next to this one); the next steps are the
+B-G431B-ESC1 port and dead-time compensation.
 
 Not in the library: timer/PWM/ADC drivers, interrupt setup, encoders, homing,
 communication, application logic. They belong to the firmware that uses it.
@@ -26,7 +26,7 @@ communication, application logic. They belong to the firmware that uses it.
 | Public API | `sstep.h` | Every public function declaration (15), version fallbacks; includes the public headers |
 | Public types | `inc/sstep_ctrl.h`, `inc/sstep_defs.h`, `inc/sstep_config.h` | Configuration, callbacks, sample, status, opaque `struct sstep`; status codes, faults, states; build-time options |
 | Control | `src/sstep_ctrl.c` | Config check, derived gains, state machine, fast loop, slow loop, commands |
-| Stall detection | `src/sstep_stall.c` | Back-EMF observer (fast loop), decision with learned offset and up/down counter (slow loop, integer mV), status estimates |
+| Stall detection | `src/sstep_stall.c` | Back-EMF observer (fast loop), decision in the slow loop in integer mV: in motion `e_q` with a window on `e_d` and a hold after a reversed back-EMF, at rest a learned offset, then an up/down counter; status estimates |
 | Motion | `src/sstep_motion.c` | Integer trajectory (Q16 microsteps, 64-bit), both backends |
 | Power stage | `src/sstep_bridge.c` | Voltage limit per topology, leg compare values |
 | Numeric backend | `src/sstep_math.h`, `src/sstep_math.c`, `src/sstep_sin_table.[ch]` | Saturating Q15/Q31 or float operations, gains, sine table |
@@ -126,8 +126,28 @@ python tools/sstep_gen_sin_table.py --check
   (1.862 A full bridge, 1.557 A shared leg), bus voltage compensation, voltage drive.
 - Stall detection (`SstepLoop.Stall*`, `SstepStall.*`): the hold-current slip
   (0.12 N·m, 1.5 A / 0.5 A) trips 48 ms after the load angle passes 90° and a hard stop
-  after 50 ms; no fault in the robustness matrix on the nominal and the worst-case plant
-  (largest detector level 32 %).
+  after 50 ms; a heavy axis (`J` ×20, ×100, 0.5 N·m) trips 43 to 60 ms after it; the bare
+  rotor and `J` ×5 end in `SSTEP_FAULT_OVERCURRENT | SSTEP_FAULT_STALL`; no fault in the
+  robustness matrix on the nominal and the worst-case plant (largest detector level 32 %),
+  at 0.30 N·m with `R` +30 %, `L` −20 % (40 %), at 0.25 N·m on the worst-case plant (58 %)
+  and at the voltage limit with a low bus voltage or `L` +20 % (0 %).
+
+### Changing the stall detector
+
+- `SSTEP_FAULT_STALL` can come with `SSTEP_FAULT_OVERCURRENT`, so tests and applications
+  test the bits of `faults`; a slip can reach the trip before `stall_time_ms`.
+- An inductance error adds to the ratio of `e_q`: `cos δ + ΔL·I·p / Ke`, at every speed
+  (±0.29 at ±20 %, 2 A). A resistance error is on `e_d` only and has one sign, so going
+  forward and backward behave differently: test both directions.
+- Check every new scenario on both sides: a stall that must trip and the same operating
+  point held in synchronism. Read the ground truth of the model (`load_angle_deg()`, up to
+  180° is no lost step) before calling a trip false or changing a threshold.
+- Cover what the nominal cases hide: load inertia, load near the pull-out torque, `L` ±20 %,
+  `R` +30 %, a lower bus voltage, the voltage limit.
+- `sfs-stepper-sim` holds a copy of the detector (`model/stall_init.sci`,
+  `model/stall_check.sci`, overcurrent in `model/sim_closed_loop.sci`) and test S06 compares
+  it with the C code: port every change there and run `tests/run_all.sce`
+  (FIXED and FLOAT).
 
 ## Measured figures in the documentation
 
@@ -136,11 +156,12 @@ a change that can affect it.
 
 | Figure | How |
 | --- | --- |
-| RAM per instance | `sizeof(struct sstep)` on Cortex-M4: 432 B fixed, 456 B float (64-bit host: 456 B, 480 B) |
+| RAM per instance | `sizeof(struct sstep)` on Cortex-M4: 432 B fixed, 456 B float (64-bit host: 464 B, 488 B) |
 | Flash | `arm-none-eabi-size` of `src/*.c` at `-Os`, Cortex-M4 (float with `-mfpu=fpv4-sp-d16 -mfloat-abi=hard`) |
 | Stack | `-fstack-usage -fcallgraph-info=su`, then `python tools/docs/stack_usage.py <dir> --markdown`; table in `docs/configuration.md` (Cortex-M4, `-Os`/`-O0`, both backends) |
 | Sine accuracy | Sweep `sstep_sin_cos()` over a full turn against `sin`/`cos` for table bits 6, 8, 10 |
 | Closed loop | `[ measured ]` lines of the `SstepLoop` tests |
+| Executed instructions | Cortex-M4 image in an instruction-set emulator, mean over 600 fast-loop periods while accelerating to 3 rev/s; table in `docs/motor-control.md` (Cost). Compare before and after with one bench: the absolute values depend on it |
 
 ## Documentation
 

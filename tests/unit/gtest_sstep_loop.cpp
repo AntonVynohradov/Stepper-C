@@ -405,6 +405,214 @@ TEST(SstepLoop, StallAtHardStop)
     }
 }
 
+namespace
+{
+
+/* Drive at v [microsteps/s], 2 A, stall detection on, ramp 0.2 s */
+void run_with_stall(Sim* sim, int32_t v)
+{
+    sim->record = false;
+    sstep_test::set_stall(&sim->cfg);
+    ASSERT_EQ(sim->init(), SSTEP_OK);
+    ASSERT_EQ(sstep_enable(&sim->drv), SSTEP_OK);
+    ASSERT_EQ(sstep_set_motion_limits(&sim->drv, 40000, static_cast<uint32_t>(std::abs(v) * 5), 0),
+              SSTEP_OK);
+    ASSERT_EQ(sstep_run(&sim->drv, v), SSTEP_OK);
+}
+
+/* Raise the load to TL in steps of 0.02 N*m every 20 ms */
+void load_stairs(Sim* sim, double TL)
+{
+    const int n = static_cast<int>(std::lround(std::fabs(TL) / 0.02));
+    for (int k = 1; k <= n; k++)
+    {
+        sim->TL = 0.02 * k * (TL < 0.0 ? -1.0 : 1.0);
+        sim->run_for(0.02);
+    }
+}
+
+}  // namespace
+
+/* T13: a heavy axis torn out of synchronism at low speed. Above the pull-out torque the rotor
+   slips and the back-EMF vector turns in the commanded frame. A stall in 1.1.0 stayed
+   unreported (hundreds of full steps) */
+TEST(SstepLoop, StallOfAHeavyAxis)
+{
+    struct Case
+    {
+        double jx;
+        int32_t v;
+        bool worst;
+    };
+    // clang-format off: one case per line
+    const Case cases[] = {
+        {20.0, 3200, false}, {100.0, 3200, false}, {100.0, -3200, false},
+        {20.0, 3200, true}, {100.0, 3200, true}, {20.0, 9600, false}, {100.0, 9600, false},
+    };
+    // clang-format on
+    for (const Case& c : cases)
+    {
+        Sim sim;
+        if (c.worst)
+        {
+            sim.make_worst_case();
+        }
+        sim.mot.J *= c.jx;
+        run_with_stall(&sim, c.v);
+        sim.run_for(0.3);
+        ASSERT_EQ(sim.ctx().faults, SSTEP_FAULT_NONE);
+        sim.TL = (c.v > 0) ? 0.5 : -0.5;
+        double slip = -1.0;
+        double trip = -1.0;
+        for (int k = 0; (k < 12000) && (trip < 0.0); k++)
+        {
+            sim.step();
+            const double t = (k + 1) / 20000.0;
+            if ((slip < 0.0) && (std::fabs(sim.load_angle_deg()) > 90.0))
+            {
+                slip = t;
+            }
+            if (sim.ctx().faults != SSTEP_FAULT_NONE)
+            {
+                trip = t;
+            }
+        }
+        std::printf("[ measured ] heavy axis J x%.0f, %d usteps/s (%s), 0.5 N*m: fault 0x%02x "
+                    "%.1f ms after the pull-out, %.0f full steps lost\n",
+                    c.jx, c.v, plant_name(c.worst), static_cast<unsigned>(sim.ctx().faults),
+                    (trip - slip) * 1e3, std::fabs(sim.load_angle_deg()) / 90.0);
+        ASSERT_GT(slip, 0.0);
+        ASSERT_GT(trip, slip) << c.jx << " " << c.v;
+        EXPECT_NE(sim.ctx().faults & SSTEP_FAULT_STALL, 0U) << c.jx << " " << c.v;
+        EXPECT_LT(trip - slip, 0.09) << c.jx << " " << c.v;
+    }
+}
+
+/* T14: the bare rotor is torn away faster than stall_time_ms: the overcurrent trip stops the
+   drive, with the stall flag because the detector had started */
+TEST(SstepLoop, StallReportedWithTheOvercurrentOfAFastSlip)
+{
+    for (double jx : {1.0, 5.0})
+    {
+        Sim sim;
+        sim.mot.J *= jx;
+        run_with_stall(&sim, 3200);
+        sim.run_for(0.3);
+        ASSERT_EQ(sim.ctx().faults, SSTEP_FAULT_NONE);
+        sim.TL = 0.5;
+        for (int k = 0; (k < 4000) && (sim.ctx().faults == SSTEP_FAULT_NONE); k++)
+        {
+            sim.step();
+        }
+        std::printf("[ measured ] fast slip J x%.0f: fault 0x%02x, %.0f full steps lost\n", jx,
+                    static_cast<unsigned>(sim.ctx().faults),
+                    std::fabs(sim.load_angle_deg()) / 90.0);
+        EXPECT_NE(sim.ctx().faults & SSTEP_FAULT_OVERCURRENT, 0U) << jx;
+        EXPECT_NE(sim.ctx().faults & SSTEP_FAULT_STALL, 0U) << jx;
+    }
+}
+
+/* T15: heavy load held in synchronism on a hot winding with a saturated inductance: the error
+   of L lowers the back-EMF along the motion, the resistance and the load angle show on d */
+TEST(SstepLoop, StallNoFalseAlarmUnderLoad)
+{
+    struct Case
+    {
+        int32_t v;
+        double TL;
+        bool worst;
+    };
+    // clang-format off: one case per line
+    const Case cases[] = {
+        {3200, 0.30, false}, {-3200, -0.30, false}, {6400, 0.30, false}, {-6400, -0.30, false},
+        {9600, 0.30, false}, {-9600, -0.30, false}, {3200, 0.25, true}, {-3200, -0.25, true},
+    };
+    // clang-format on
+    for (const Case& c : cases)
+    {
+        Sim sim;
+        if (c.worst)
+        {
+            sim.make_worst_case();
+        }
+        else
+        {
+            sim.mot.R *= 1.3;
+            sim.mot.L *= 0.8;
+        }
+        run_with_stall(&sim, c.v);
+        sim.run_for(0.3);
+        load_stairs(&sim, c.TL);
+        sim.run_for(0.2);
+        std::printf("[ measured ] no stall under load %d usteps/s, %.2f N*m (%s): largest detector "
+                    "level %u %%, load angle %.1f deg\n",
+                    c.v, c.TL, c.worst ? "worst case" : "R +30 %, L -20 %",
+                    100U * sim.stall_peak / sim.ctx().stall_ticks, sim.load_angle_deg());
+        EXPECT_EQ(sim.ctx().faults, SSTEP_FAULT_NONE) << c.v << " " << c.TL;
+        EXPECT_LT(std::fabs(sim.load_angle_deg()), 90.0) << c.v;
+    }
+}
+
+/* T16: the voltage limit on a lower bus voltage and with a larger inductance: the current lags
+   its reference, the rotor stays synchronous */
+TEST(SstepLoop, StallNoFalseAlarmAtTheVoltageLimit)
+{
+    struct Case
+    {
+        int32_t v;
+        double vbus;
+        double l;
+    };
+    for (const Case& c : {Case{25600, 18.0, 1.0}, Case{28800, 20.0, 1.0}, Case{35200, 24.0, 1.0},
+                          Case{35200, 24.0, 1.2}})
+    {
+        Sim sim;
+        sim.mot.L *= c.l;
+        sim.vbus = c.vbus;
+        sim.cfg.stage.vbus_nominal_mv = static_cast<uint32_t>(c.vbus * 1000.0);
+        run_with_stall(&sim, c.v);
+        sim.run_for(0.8);
+        std::printf(
+            "[ measured ] no stall at the voltage limit %d usteps/s, %.0f V, L x%.1f: largest "
+            "detector level %u %%\n",
+            c.v, c.vbus, c.l, 100U * sim.stall_peak / sim.ctx().stall_ticks);
+        EXPECT_EQ(sim.ctx().faults, SSTEP_FAULT_NONE) << c.v;
+    }
+}
+
+/* T17: 11 rev/s at 20 V, no margin left: the load angle swings past 120 deg and is reported */
+TEST(SstepLoop, StallOfALoadAngleSwingAtTheVoltageLimit)
+{
+    Sim sim;
+    sim.vbus = 20.0;
+    sim.cfg.stage.vbus_nominal_mv = 20000U;
+    run_with_stall(&sim, 35200);
+    double swing = -1.0;
+    double trip = -1.0;
+    double largest = 0.0;
+    for (int k = 0; (k < 16000) && (trip < 0.0); k++)
+    {
+        sim.step();
+        const double t = (k + 1) / 20000.0;
+        largest = std::max(largest, std::fabs(sim.load_angle_deg()));
+        if ((swing < 0.0) && (largest > 90.0))
+        {
+            swing = t;
+        }
+        if (sim.ctx().faults != SSTEP_FAULT_NONE)
+        {
+            trip = t;
+        }
+    }
+    std::printf("[ measured ] load angle swing at 11 rev/s, 20 V: fault 0x%02x %.1f ms after the "
+                "angle first passes 90 deg, largest angle %.1f deg\n",
+                static_cast<unsigned>(sim.ctx().faults), (trip - swing) * 1e3, largest);
+    ASSERT_GT(swing, 0.0);
+    ASSERT_GT(trip, swing);
+    EXPECT_EQ(sim.ctx().faults, SSTEP_FAULT_STALL);
+    EXPECT_LT(largest, 180.0); /* no step lost yet */
+}
+
 /* T12: no stall fault in normal operation, nominal and worst-case plant */
 TEST(SstepLoop, StallNoFalseAlarm)
 {

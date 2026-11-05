@@ -68,7 +68,7 @@ Ranges and override rules: [Configuration](configuration.md#build-time-options).
 | `SSTEP_FAULT_UNDERVOLTAGE` | `0x0004U` | Bus voltage below `vbus_min_mv` |
 | `SSTEP_FAULT_HAL` | `0x0008U` | A callback returned an error |
 | `SSTEP_FAULT_EXTERNAL` | `0x0010U` | Reported by the application with `sstep_report_fault()` |
-| `SSTEP_FAULT_STALL` | `0x0020U` | The rotor does not follow the commanded angle (stall detection, `stall_time_ms` > 0); since 1.1.0 |
+| `SSTEP_FAULT_STALL` | `0x0020U` | The rotor does not follow the commanded angle (stall detection, `stall_time_ms` > 0); since 1.1.0. Also together with `SSTEP_FAULT_OVERCURRENT` when the trip comes while the detector is counting |
 
 ### Driver states — `enum sstep_state`
 

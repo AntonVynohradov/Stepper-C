@@ -48,8 +48,8 @@ Measured on Cortex-M4 (GCC 15.2, `-Os`):
 | | Fixed point | Float |
 | --- | --- | --- |
 | RAM per motor | 432 B | 456 B |
-| Flash | 9040 B | 9718 B |
-| Worst-case stack, fast loop / slow loop | 216 B / 140 B | 128 B / 140 B |
+| Flash | 9216 B | 9894 B |
+| Worst-case stack, fast loop / slow loop | 216 B / 152 B | 128 B / 140 B |
 
 Closed loop on the motor model (17HS19-2004S1, 24 V, 20 kHz, 1 kHz current bandwidth):
 a 2 A current step settles in 0.40 ms with 1.1 % overshoot; a 6400-microstep move ends on

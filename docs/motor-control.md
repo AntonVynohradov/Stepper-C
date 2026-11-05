@@ -274,8 +274,10 @@ The magnitude of the vector is the rotor speed, its angle the load angle $\delta
 
 - **In motion,** a synchronous rotor has $\omega = \omega_c$ and a moderate load angle, so
   $e_q \approx K_e\,\omega_c \cos\delta$ is a large constant of the sign of the motion. A stalled
-  rotor gives no back-EMF; a rotor that slips turns relative to the commanded frame and its
-  back-EMF averages out. Both make $e_q$ fall far below $K_e\,\omega_c$.
+  rotor gives no back-EMF, so $e_q$ falls far below $K_e\,\omega_c$. A rotor that slips turns
+  relative to the commanded frame: the vector rotates, $e_q$ changes its sign, and the
+  negative half is the sign of the slip. A rotor under load keeps its speed, so a low $e_q$
+  comes with a large $e_d = K_e\,\omega \sin\delta$; that tells it from a blocked rotor.
 - **At rest,** the commanded frame stands still, so any lasting back-EMF means that the rotor
   turns. A slipping rotor makes the vector rotate at its electrical speed.
 
@@ -322,7 +324,13 @@ filter outputs rounded to mV.
 
 $$
 \text{in motion } (\lvert v_c \rvert \ge v_s): \qquad
-\mathrm{bad} = \mathrm{sgn}(v_c)\,\bar e_q < \frac{s}{100}\,\lvert e_c \rvert
+a = \mathrm{sgn}(v_c)\,\bar e_q \qquad
+\mathrm{bad} = \left(a < \frac{s}{100}\,\lvert e_c \rvert\right) \;\wedge\;
+\left(-\frac{\lvert e_c \rvert}{3} - \frac{R I_r}{10} \le \bar e_d \le \frac{\lvert e_c \rvert}{3} + \frac{2 R I_r}{5}\right)
+$$
+
+$$
+a < -\left(\frac{\lvert e_c \rvert}{2} + e_s\right) \;\Rightarrow\; h \leftarrow \lfloor N / 2 \rfloor
 $$
 
 $$
@@ -333,15 +341,20 @@ o \leftarrow o + \frac{\Delta - o}{N} \qquad
 $$
 
 $$
+h > 0 \;\Rightarrow\; h \leftarrow h - 1,\;\; \mathrm{bad} \leftarrow \mathrm{true} \qquad\qquad
 c \leftarrow \begin{cases} c + 1 & \mathrm{bad} \\ \max(c - 1,\, 0) & \text{otherwise} \end{cases}
 $$
 
 and `SSTEP_FAULT_STALL` when $c \ge N$, with $v_s$ = `stall_speed`, $s$ = `stall_sync_pct`,
-$N$ = `stall_time_ms` · `slow_loop_hz` / 1000 and the slip threshold
-$e_s = K_e\, 2\pi\, v_s / (N_s M)$ rounded to mV. In integers: $o$ is held in mV·$2^{16}$, the
-update divides with truncation, $\Delta - o$ uses $o$ truncated to mV, and the magnitude is
-compared as a sum of squares. `sstep_enable()` clears $\bar e$, $o$, $c$ and the voltage
-history ($v[k-1] = v[k-2] = 0$, $i[k-1]$ = the last measurement).
+$N$ = `stall_time_ms` · `slow_loop_hz` / 1000, $I_r$ = `i_run_ma` and the slip threshold
+$e_s = K_e\, 2\pi\, v_s / (N_s M)$ rounded to mV. In integers: $R I_r$ is in mV, the divisions
+truncate, $o$ is held in mV·$2^{16}$, the update divides with truncation, $\Delta - o$ uses
+$o$ truncated to mV, and the magnitude is compared as a sum of squares. `sstep_enable()`
+clears $\bar e$, $o$, $c$, $h$ and the voltage history ($v[k-1] = v[k-2] = 0$, $i[k-1]$ = the
+last measurement).
+
+**Overcurrent:** when the trip of the fast loop finds $c > 0$, the fault is
+`SSTEP_FAULT_OVERCURRENT | SSTEP_FAULT_STALL`.
 
 **Diagnostics** in `sstep_get_status()`: `emf_d_mv` and `emf_q_mv` are $\bar e_d$, $\bar e_q$;
 `rotor_velocity` is $\mathrm{sgn}(\bar e_q)\,\lvert \bar e \rvert\, N_s M / (2\pi K_e)$;
@@ -354,8 +367,11 @@ of the motor torque); `stall_level_pct` is $100\,c / N$.
 | Decision | Reason |
 | --- | --- |
 | Filter in the commanded frame | A synchronous back-EMF is constant there at any speed, so a millisecond filter neither attenuates nor delays it. In the phase frame the back-EMF at 10 rev/s is a 500 Hz sine that such a filter would suppress. |
-| In motion, only $e_q$ | A resistance error ($R$ of a hot winding) adds $\Delta R\, I$ along the current, the d axis, and does not change $e_q$. An inductance error adds $\Delta L\, I\, p\,\omega$ along q: it scales $e_q$ by $1 + \Delta L\, I\, p / K_e$ (−22 % for $L$ −20 % at 1.5 A), at every speed. |
-| Threshold relative to $K_e\,\omega_c$ | The synchronous value $\cos\delta$ does not depend on the speed; a fixed fraction separates a loaded synchronous rotor (0.5 to 1) from a stall or a slip (about 0, ±0.25 with the $L$ error). |
+| In motion, $e_q$ against $K_e\,\omega_c$ | A resistance error ($R$ of a hot winding) adds $\Delta R\, I$ along the current, the d axis, and does not change $e_q$. An inductance error adds $\Delta L\, I\, p\,\omega$ along q, so the ratio is $\cos\delta + \Delta L\, I\, p / K_e$ at every speed (the second term is −0.22 for $L$ −20 % at 1.5 A, −0.29 at 2 A). |
+| Window on $e_d$ | The $L$ error alone brings a rotor under load down to the threshold: at 2 A and $L$ −20 % a ratio of 0.30 means only $\delta \approx 54°$. A blocked rotor has only the resistance error on d, mostly positive and, for $R$ between −10 % and +40 %, inside the window. A rotor under load is outside it at speed; at low speed the outcome depends on the sign of the motion and on $\Delta R$, so the margin is wider going forward on a hot winding. |
+| Reversed back-EMF holds the condition | The vector of a slipping rotor is above any threshold on $e_q$ for about half of each turn, so the up/down counter alone stays low. $a < -(\lvert e_c \rvert / 2 + e_s)$ means $\delta$ beyond about 120°: no equilibrium exists there. It keeps the condition true for $N / 2$ periods, a turn of the vector faster than that accumulates at full rate, and a single event ends at 50 % of the trip. |
+| Threshold relative to $K_e\,\omega_c$ | The synchronous value $\cos\delta$ does not depend on the speed; a fixed fraction separates a loaded synchronous rotor from a stall (about 0, ±0.29 with the $L$ error at 2 A). |
+| Stall flag on the overcurrent trip | A light rotor torn away by a large load reaches the trip in less than `stall_time_ms`, because the back-EMF of a rotor spinning backwards exceeds the bus. The flag tells the application that the position is lost. It only needs the detector to have started ($c > 0$), so it can also appear with an overcurrent of another cause during a transient. |
 | At rest, learned offset | A resting rotor has no back-EMF, so a constant estimate is an observer error: $\Delta R\, I$, the dead-time voltage, current-sensor offsets (0.91 V at 1.5 A in the worst case below, more than the threshold). Its running mean is subtracted. A slipping rotor makes the vector rotate, which averages out of the mean and stays in $\Delta - o$. |
 | Offset time constant = trip time | An offset that appears at once (enable, run → hold) decays below $e_s$ after $N \ln(\text{offset} / e_s)$ periods. That is less than $N$ for an offset below $e \cdot e_s$ (2.7 times the threshold), so it never trips. A slip at $\Omega \gg 1 / T_N$ ($T_N$ = `stall_time_ms`) passes the mean unchanged. |
 | Below $v_s$, deviation from $(0, e_c)$ | The motor may move slowly right after `sstep_enable()`, without a rest period to learn the offset: the deviation from the expected back-EMF has the same zero mean at rest and in slow motion. |
@@ -369,7 +385,7 @@ of the motor torque); `stall_level_pct` is $100\,c / N$.
 | `stall_time_ms` | 50 | Detection delay after the stall; longer is more robust. Keep an offset at rest below $e \cdot e_s$ (see above). |
 | `stall_filter_us` | 1000 | 0.5 to 2 ms. Shorter follows faster slips but passes more current quantization noise: one ADC count changes $\hat e$ by $L\,\Delta i / \tau$ (87 mV for 29 mA at 1 ms). A rotating vector is filtered to at most $K_e / (p\,\tau)$ (4.2 V at 1 ms), which must stay well above $e_s$. |
 | `stall_speed` | 1600 (0.5 rev/s, $e_s$ = 655 mV) | Above the back-EMF noise at rest; the commanded speed from which the synchronism check runs. |
-| `stall_sync_pct` | 50 | Below $\cos\delta \cdot (1 + \Delta L\, I\, p / K_e)$ at the worst synchronous operating point. At the voltage limit the current lags its reference and the ratio drops (0.46 at 11 rev/s on a 24 V three-leg stage); use 30 to 40 near the limit. |
+| `stall_sync_pct` | 50 | Above $\lvert\Delta L\rvert\, I\, p / K_e$, the value a blocked rotor shows with a larger inductance than configured (29 % at $L$ +20 %, 2 A). A rotor under load with $e_d$ inside the window must stay above it: at 50 %, with the nominal $R$ and $L$, that ends at $\delta$ = 60°, 87 % of the pull-out torque. The window accepts the lag at the voltage limit, so this value also runs at 11 rev/s on a 24 V three-leg stage. |
 
 ### Measured on the motor model
 
@@ -386,6 +402,10 @@ torque of 0.02 N·m.
 | Rotor turning at 1 rev/s with the command at rest | `SSTEP_FAULT_STALL` after 50.0 ms |
 | Rotor imposed at 3 rev/s | $\lvert \bar e \rvert$ 3936 mV against $K_e\,\omega$ = 3932 mV; `rotor_velocity` 9609 microsteps/s for 9600; load angle 10.27° (model 10.28°) |
 | Enable, run → hold, 0.07 N·m through run → hold, 6400-microstep move, reversal ±4 rev/s and stop, runs at 0.125, 0.25, 0.47, 1, 2, 8, 9.5 and 11 rev/s | No fault. Largest detector level 6 % (nominal plant), 32 % (worst case) |
+| Heavy axis, 0.5 N·m load step above the pull-out torque, $J$ ×20 and ×100 at 1 and 3 rev/s, either direction, nominal and worst case | `SSTEP_FAULT_STALL` 43 to 60 ms after the load angle passes 90°, 23 to 158 full steps lost |
+| Bare rotor and $J$ ×5, the same load step at 1 rev/s: the overcurrent trip comes first | `SSTEP_FAULT_OVERCURRENT \| SSTEP_FAULT_STALL`, 14 and 78 full steps lost |
+| 0.30 N·m (72 % of the pull-out torque) at ±1, ±2 and ±3 rev/s, $R$ +30 %, $L$ −20 %; 0.25 N·m at ±1 rev/s, worst case | No fault. Largest detector level 40 % and 58 % |
+| Voltage limit: 8 rev/s at 18 V, 9 rev/s at 20 V, 11 rev/s at 24 V with $L$ +20 % | No fault. Largest detector level 0 % |
 
 The motor model of this repository shows no sustained mid-band oscillation between 8 and
 11 rev/s; those runs check the voltage limit and the current lag. A 0.09 N·m load at
@@ -397,9 +417,9 @@ and is reported.
 | | Fixed point | Float |
 | --- | --- | --- |
 | Fast loop, added per period | 4 gain multiplications, 4 Q15 multiplications, 2 filter updates, 10 saturating additions | Same operations in float |
-| Fast loop, executed instructions without / with stall detection (`-Os`) | 1035 / 1510 | 720 / 933 |
-| Same with `-O2` | 666 / 912 | 680 / 921 |
-| Slow loop, added | 167 instructions (`-Os`) | 110 instructions |
+| Fast loop, executed instructions without / with stall detection (`-Os`) | 1030 / 1502 | 726 / 940 |
+| Same with `-O2` | 664 / 909 | 683 / 923 |
+| Slow loop, added | 367 instructions (`-Os`) | 318 instructions |
 | `sstep_get_status()` | 1202 instructions (`-Os`; integer CORDIC and square root) | 1148 |
 | RAM per instance, added | 96 B (Cortex-M4) | 96 B |
 
@@ -415,6 +435,13 @@ mean over 600 fast-loop periods while accelerating to 3 rev/s; on Cortex-M4 most
   its back-EMF is close to zero either way. Only a rotor faster than the command is.
 - The fault comes `stall_time_ms` after the stall begins; the position is lost from the
   beginning of the stall.
+- A rotor under load near the voltage limit whose load angle repeatedly swings beyond about
+  120° is reported, even if it has not lost a step yet (11 rev/s at 20 V: fault 74 to 78 ms
+  after the angle first passes 90°, largest angle 137° to 140° until then). This operating
+  point has no margin; lower the speed or raise the voltage.
+- On a hot winding with $L$ −20 % at low speed, going backward, $e_d$ of a rotor under load is
+  close to that of a blocked rotor. There the margin comes from `stall_sync_pct` alone
+  (the formula above).
 - During a slip at rest `rotor_velocity` is low (the filter attenuates the rotating
   vector: about 10 000 for 27 000 microsteps/s); it is accurate in synchronism.
   An inductance error biases it too (26 700 for 31 400 microsteps/s with $L$ −20 % at

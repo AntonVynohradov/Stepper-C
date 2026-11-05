@@ -150,7 +150,7 @@ A fault switches the outputs off at once, sets `SSTEP_STATE_FAULT` and calls
 | `SSTEP_FAULT_UNDERVOLTAGE` | Fast loop | Supply off or sagging; `vbus_min_mv` too close to nominal |
 | `SSTEP_FAULT_HAL` | Any function that calls a callback | `pwm_write()` or `output_enable()` returned a negative value |
 | `SSTEP_FAULT_EXTERNAL` (or any flag you choose) | `sstep_report_fault()` | Gate driver fault pin, over-temperature |
-| `SSTEP_FAULT_STALL` | Slow loop, stall detection on | Load above the torque, hard stop, rotor slipping at the hold current |
+| `SSTEP_FAULT_STALL` | Slow loop, stall detection on; fast loop, with `SSTEP_FAULT_OVERCURRENT`, when the rotor is torn away faster than `stall_time_ms` | Load above the torque, hard stop, rotor slipping at the hold current |
 
 Report a gate driver fault from its interrupt:
 
@@ -221,5 +221,5 @@ of several axes may run in one interrupt one after the other, or in separate int
 | Moves are jerky, about once per millisecond | `sstep_slow_loop()` is not called at `slow_loop_hz`, or `fast_loop_hz` does not match the real interrupt rate |
 | Current settles at the wrong value | `i_full_scale_ma` / `adc_i_span` do not match the shunt and amplifier |
 | `SSTEP_FAULT_STALL` at enable or at the run → hold change, rotor at rest | Observer offset above $e$ times the slip threshold (wrong `r_mohm`, `adc_i_zero`): check `emf_d_mv` at rest, raise `stall_speed` |
-| `SSTEP_FAULT_STALL` at speed although the motor runs | `stall_sync_pct` above the synchronous ratio at the voltage limit or with heavy load: check `load_angle_cdeg`, lower `stall_sync_pct` |
+| `SSTEP_FAULT_STALL` at speed although the motor runs | Load close to the pull-out torque, or a load angle swinging beyond about 120° near the voltage limit: check `load_angle_cdeg`, lower `stall_sync_pct` for a heavy load (not below the inductance error, [Choosing the parameters](motor-control.md#choosing-the-parameters)), lower the speed or raise the current |
 | `sstep_init()` returns `SSTEP_ERR_CONFIG` | Check the combinations: trip ≤ full scale, run current ≤ trip and rated, bandwidth ≤ `fast_loop_hz / 4`, `fast_loop_hz` a multiple of `slow_loop_hz` |

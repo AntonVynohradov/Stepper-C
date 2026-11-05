@@ -165,6 +165,7 @@ void sstep_stall_reset(struct sstep_ctx* m)
     m->vel_cmd = 0;
     m->ff_cmd = SSTEP_REAL_ZERO;
     m->stall_count = 0U;
+    m->stall_hold = 0U;
 }
 
 void sstep_stall_observe(struct sstep_ctx* m, const struct sstep_sincos* sc,
@@ -208,9 +209,20 @@ bool sstep_stall_check(struct sstep_ctx* m)
 
     if (abs_i64(vel) >= (int64_t)m->cfg.ctrl.stall_speed)
     {
-        /* in motion: back-EMF along the commanded motion below sync_pct of Ke w */
+        /* in motion: back-EMF along the commanded motion below sync_pct of Ke w, with the
+           d axis inside the window of a rotor that does not turn: resistance error only
+           (mostly positive), so that a rotor under load is not taken for a blocked one */
         int64_t along = (vel > 0) ? eq : -eq;
-        bad = ((along * 100) < ((int64_t)m->cfg.ctrl.stall_sync_pct * abs_i64(eref)));
+        int64_t er = abs_i64(eref);
+        int64_t ri = ((int64_t)m->cfg.motor.r_mohm * (int64_t)m->cfg.ctrl.i_run_ma) / 1000;
+        bad = ((along * 100) < ((int64_t)m->cfg.ctrl.stall_sync_pct * er)) &&
+              (ed <= ((er / 3) + ((ri * 2) / 5))) && (ed >= -((er / 3) + (ri / 10)));
+        /* a reversed back-EMF is beyond the pull-out: a slipping rotor passes here once per
+           turn of the vector, and the condition stays true in between */
+        if ((along * 2) < -(er + (2 * (int64_t)m->stall_emf_mv)))
+        {
+            m->stall_hold = m->stall_ticks / 2U;
+        }
     }
     else
     {
@@ -228,6 +240,12 @@ bool sstep_stall_check(struct sstep_ctx* m)
             dev[k] -= m->emf_off[k] / OFF_ONE;
         }
         bad = (((dev[0] * dev[0]) + (dev[1] * dev[1])) > (lim * lim));
+    }
+
+    if (m->stall_hold != 0U)
+    {
+        m->stall_hold--;
+        bad = true;
     }
 
     if (bad)

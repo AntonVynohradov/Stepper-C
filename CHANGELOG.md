@@ -6,6 +6,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Stall detection missed a slipping rotor at low speed.** The back-EMF vector of a slipping
+  rotor turns in the commanded frame and stayed above `stall_sync_pct` about half of the
+  time, so the up/down counter did not accumulate: a heavy axis (load inertia ×100) lost
+  hundreds of full steps without a fault. A reversed back-EMF now keeps the condition true
+  for half of the trip time: `SSTEP_FAULT_STALL` 43 to 60 ms after the load angle passes 90°.
+- **False stall under a heavy load.** The inductance error adds to $\cos\delta$ (it does not
+  scale it, as the documentation said), so a synchronous rotor at 72 % of the pull-out torque
+  with $R$ +30 %, $L$ −20 % tripped. The condition in motion now also requires the d axis
+  inside the window of a rotor that does not turn. The same window removes the false trip at
+  the voltage limit: 11 rev/s at 24 V now runs with the example `stall_sync_pct` of 50.
+
+### Changed
+
+- `SSTEP_FAULT_OVERCURRENT` comes **together with `SSTEP_FAULT_STALL`** when the trip finds
+  the stall detector counting: a light rotor reaches the trip before `stall_time_ms`, and the
+  position is lost. An application that compares `faults` with a single flag must test the
+  bits. Without stall detection nothing changes.
+- A load angle swinging repeatedly beyond about 120° near the voltage limit is reported as a
+  stall even before a step is lost (documented in Limits).
+- `SSTEP_STATE_BYTES` on 64-bit hosts: 288 B fixed point, 312 B float (Cortex-M4 unchanged:
+  280 B, 304 B). Flash on Cortex-M4 (`-Os`): 9216 B fixed point, 9894 B float. Worst-case
+  stack of `sstep_slow_loop()` 152 B fixed point (float 140 B); the slow loop executes about
+  145 more instructions per period with stall detection on (`-Os`); the fast loop is unchanged.
+
 ## [1.1.0] - 2026-11-01
 
 Sensorless stall detection. Compatible with 1.0.0: the new configuration fields are

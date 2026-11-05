@@ -168,6 +168,7 @@ struct sstep_ctx
     sstep_real_t ff_cmd;        /**< Back-EMF of vel_cmd [pu V]. */
     int64_t emf_off[2];         /**< Mean back-EMF at rest, d and q [mV * 2^16]. */
     uint32_t stall_count;       /**< Stall detector up/down counter. */
+    uint32_t stall_hold;        /**< Slow periods the condition stays true after a reversal. */
 
     volatile uint16_t faults;        /**< Active faults. */
     volatile enum sstep_state state; /**< Driver state. */
