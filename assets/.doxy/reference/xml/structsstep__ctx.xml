@@ -634,6 +634,21 @@
         </inbodydescription>
         <location file="src/sstep_internal.h" line="170" column="14" bodyfile="src/sstep_internal.h" bodystart="170" bodyend="-1"/>
       </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a8576219187173368d6a8e09e598f476e" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_ctx::stall_hold</definition>
+        <argsstring></argsstring>
+        <name>stall_hold</name>
+        <qualifiedname>sstep_ctx::stall_hold</qualifiedname>
+        <briefdescription>
+<para>Slow periods the condition stays true after a reversal. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="171" column="14" bodyfile="src/sstep_internal.h" bodystart="171" bodyend="-1"/>
+      </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1aea889ec3ad563cb14a4e9203b6624175" prot="public" static="no" mutable="no">
         <type>volatile uint16_t</type>
         <definition>volatile uint16_t sstep_ctx::faults</definition>
@@ -647,7 +662,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="172" column="23" bodyfile="src/sstep_internal.h" bodystart="172" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="173" column="23" bodyfile="src/sstep_internal.h" bodystart="173" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a49e7de50e5440d9aa544c0c9038fc968" prot="public" static="no" mutable="no">
         <type>enum <ref refid="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" kindref="member">sstep_state</ref></type>
@@ -662,7 +677,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="173" column="30" bodyfile="src/sstep_internal.h" bodystart="173" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="174" column="30" bodyfile="src/sstep_internal.h" bodystart="174" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a8ac92a1cae8a0bffe1de31791bf05d0c" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -677,7 +692,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="174" column="14" bodyfile="src/sstep_internal.h" bodystart="174" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="175" column="14" bodyfile="src/sstep_internal.h" bodystart="175" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -762,7 +777,7 @@
         <link refid="structsstep__stage__cfg"/>
       </node>
     </collaborationgraph>
-    <location file="src/sstep_internal.h" line="116" column="1" bodyfile="src/sstep_internal.h" bodystart="117" bodyend="175"/>
+    <location file="src/sstep_internal.h" line="116" column="1" bodyfile="src/sstep_internal.h" bodystart="117" bodyend="176"/>
     <listofallmembers>
       <member refid="structsstep__ctx_1a48ede8aad4c742c12faa8dc92b22df8b" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>adc_i</name></member>
       <member refid="structsstep__ctx_1af6d85c1fd40cd00ebcc402bc6b1d5c19" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>adc_v</name></member>
@@ -801,6 +816,7 @@
       <member refid="structsstep__ctx_1ab258c071b68ef99090b0b7255f42e3cb" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>sp_pending</name></member>
       <member refid="structsstep__ctx_1a4a0445c885013aceb85e186974379a78" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>stall_count</name></member>
       <member refid="structsstep__ctx_1a1d7f9712100b09592ddd9e07c9c43875" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>stall_emf_mv</name></member>
+      <member refid="structsstep__ctx_1a8576219187173368d6a8e09e598f476e" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>stall_hold</name></member>
       <member refid="structsstep__ctx_1a4e4f505a34ae70c469b1e6b23505e5ab" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>stall_ticks</name></member>
       <member refid="structsstep__ctx_1a49e7de50e5440d9aa544c0c9038fc968" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>state</name></member>
       <member refid="structsstep__ctx_1a60464f27495ad8b58110fcf1b479937e" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>still</name></member>

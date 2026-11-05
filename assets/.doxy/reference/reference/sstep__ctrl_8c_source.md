@@ -738,6 +738,11 @@ int sstep_fast_loop(struct sstep* drv, const struct sstep_sample* sample)
                 ((da > trip) || (da < -trip) || (db > trip) || (db < -trip)))
             {
                 faults |= SSTEP_FAULT_OVERCURRENT;
+                if (m->stall_count != 0U)
+                {
+                    /* the slip can reach the trip before stall_time_ms: the position is lost */
+                    faults |= SSTEP_FAULT_STALL;
+                }
             }
             if ((m->vbus_max_raw != 0U) && (sample->vbus > m->vbus_max_raw))
             {

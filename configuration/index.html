@@ -1872,8 +1872,8 @@ below 16 384 000 microsteps/s, <code>accel</code> and <code>decel</code> from 8 
 </tr>
 <tr>
 <td>Code and constants, <code>-Os</code> (flash)</td>
-<td>9040 B</td>
-<td>9718 B</td>
+<td>9216 B</td>
+<td>9894 B</td>
 </tr>
 <tr>
 <td>of which the sine table</td>
@@ -1889,9 +1889,9 @@ below 16 384 000 microsteps/s, <code>accel</code> and <code>decel</code> from 8 
 </table>
 <p><code>struct sstep</code> is the configuration copy (<code>SSTEP_CONFIG_BYTES</code>: 152 B on Cortex-M4,
 176 B on 64-bit hosts) plus the private state (<code>SSTEP_STATE_BYTES</code>: 280 B fixed point,
-304 B float); on a 64-bit host the instance is 456 B and 480 B. Stall detection accounts
-for 96 B of it, and for 2060 B (fixed point) or 2272 B (float) of the flash whether it is
-enabled or not.</p>
+304 B float on Cortex-M4; 288 B and 312 B on 64-bit hosts); on a 64-bit host the instance
+is 464 B and 488 B. Stall detection accounts for 96 B of it on Cortex-M4, and for 2236 B
+(fixed point) or 2448 B (float) of the flash whether it is enabled or not.</p>
 <h2 id="stack-usage">Stack usage<a class="headerlink" href="#stack-usage" title="Permanent link">&para;</a></h2>
 <p>Worst-case stack of each public function including the library functions it calls,
 measured with <code>-fstack-usage -fcallgraph-info=su</code> and <code>tools/docs/stack_usage.py</code>
@@ -1939,10 +1939,10 @@ functions that call them.</p>
 </tr>
 <tr>
 <td><code>sstep_slow_loop()</code></td>
+<td style="text-align: right;">152</td>
+<td style="text-align: right;">696</td>
 <td style="text-align: right;">140</td>
-<td style="text-align: right;">592</td>
-<td style="text-align: right;">140</td>
-<td style="text-align: right;">560</td>
+<td style="text-align: right;">624</td>
 </tr>
 <tr>
 <td><code>sstep_move_to()</code></td>
@@ -2010,9 +2010,9 @@ functions that call them.</p>
 <tr>
 <td><code>sstep_get_status()</code></td>
 <td style="text-align: right;">92</td>
-<td style="text-align: right;">544</td>
+<td style="text-align: right;">536</td>
 <td style="text-align: right;">92</td>
-<td style="text-align: right;">504</td>
+<td style="text-align: right;">496</td>
 </tr>
 </tbody>
 </table>

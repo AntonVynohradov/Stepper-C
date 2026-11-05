@@ -1965,8 +1965,10 @@ e_q = -e_A\sin\varphi + e_B\cos\varphi = K_e\,\omega \cos\delta \qquad
 <ul>
 <li><strong>In motion,</strong> a synchronous rotor has <span class="arithmatex">\(\omega = \omega_c\)</span> and a moderate load angle, so
   <span class="arithmatex">\(e_q \approx K_e\,\omega_c \cos\delta\)</span> is a large constant of the sign of the motion. A stalled
-  rotor gives no back-EMF; a rotor that slips turns relative to the commanded frame and its
-  back-EMF averages out. Both make <span class="arithmatex">\(e_q\)</span> fall far below <span class="arithmatex">\(K_e\,\omega_c\)</span>.</li>
+  rotor gives no back-EMF, so <span class="arithmatex">\(e_q\)</span> falls far below <span class="arithmatex">\(K_e\,\omega_c\)</span>. A rotor that slips turns
+  relative to the commanded frame: the vector rotates, <span class="arithmatex">\(e_q\)</span> changes its sign, and the
+  negative half is the sign of the slip. A rotor under load keeps its speed, so a low <span class="arithmatex">\(e_q\)</span>
+  comes with a large <span class="arithmatex">\(e_d = K_e\,\omega \sin\delta\)</span>; that tells it from a blocked rotor.</li>
 <li><strong>At rest,</strong> the commanded frame stands still, so any lasting back-EMF means that the rotor
   turns. A slipping rotor makes the vector rotate at its electrical speed.</li>
 </ul>
@@ -2004,7 +2006,12 @@ velocity <span class="arithmatex">\(v_c\)</span> [microsteps/s] and its back-EMF
 filter outputs rounded to mV.</p>
 <div class="arithmatex">\[
 \text{in motion } (\lvert v_c \rvert \ge v_s): \qquad
-\mathrm{bad} = \mathrm{sgn}(v_c)\,\bar e_q &lt; \frac{s}{100}\,\lvert e_c \rvert
+a = \mathrm{sgn}(v_c)\,\bar e_q \qquad
+\mathrm{bad} = \left(a &lt; \frac{s}{100}\,\lvert e_c \rvert\right) \;\wedge\;
+\left(-\frac{\lvert e_c \rvert}{3} - \frac{R I_r}{10} \le \bar e_d \le \frac{\lvert e_c \rvert}{3} + \frac{2 R I_r}{5}\right)
+\]</div>
+<div class="arithmatex">\[
+a &lt; -\left(\frac{\lvert e_c \rvert}{2} + e_s\right) \;\Rightarrow\; h \leftarrow \lfloor N / 2 \rfloor
 \]</div>
 <div class="arithmatex">\[
 \text{at rest or slow } (\lvert v_c \rvert &lt; v_s): \qquad
@@ -2013,14 +2020,18 @@ o \leftarrow o + \frac{\Delta - o}{N} \qquad
 \mathrm{bad} = \lvert \Delta - o \rvert &gt; e_s
 \]</div>
 <div class="arithmatex">\[
+h &gt; 0 \;\Rightarrow\; h \leftarrow h - 1,\;\; \mathrm{bad} \leftarrow \mathrm{true} \qquad\qquad
 c \leftarrow \begin{cases} c + 1 &amp; \mathrm{bad} \\ \max(c - 1,\, 0) &amp; \text{otherwise} \end{cases}
 \]</div>
 <p>and <code>SSTEP_FAULT_STALL</code> when <span class="arithmatex">\(c \ge N\)</span>, with <span class="arithmatex">\(v_s\)</span> = <code>stall_speed</code>, <span class="arithmatex">\(s\)</span> = <code>stall_sync_pct</code>,
-<span class="arithmatex">\(N\)</span> = <code>stall_time_ms</code> · <code>slow_loop_hz</code> / 1000 and the slip threshold
-<span class="arithmatex">\(e_s = K_e\, 2\pi\, v_s / (N_s M)\)</span> rounded to mV. In integers: <span class="arithmatex">\(o\)</span> is held in mV·<span class="arithmatex">\(2^{16}\)</span>, the
-update divides with truncation, <span class="arithmatex">\(\Delta - o\)</span> uses <span class="arithmatex">\(o\)</span> truncated to mV, and the magnitude is
-compared as a sum of squares. <code>sstep_enable()</code> clears <span class="arithmatex">\(\bar e\)</span>, <span class="arithmatex">\(o\)</span>, <span class="arithmatex">\(c\)</span> and the voltage
-history (<span class="arithmatex">\(v[k-1] = v[k-2] = 0\)</span>, <span class="arithmatex">\(i[k-1]\)</span> = the last measurement).</p>
+<span class="arithmatex">\(N\)</span> = <code>stall_time_ms</code> · <code>slow_loop_hz</code> / 1000, <span class="arithmatex">\(I_r\)</span> = <code>i_run_ma</code> and the slip threshold
+<span class="arithmatex">\(e_s = K_e\, 2\pi\, v_s / (N_s M)\)</span> rounded to mV. In integers: <span class="arithmatex">\(R I_r\)</span> is in mV, the divisions
+truncate, <span class="arithmatex">\(o\)</span> is held in mV·<span class="arithmatex">\(2^{16}\)</span>, the update divides with truncation, <span class="arithmatex">\(\Delta - o\)</span> uses
+<span class="arithmatex">\(o\)</span> truncated to mV, and the magnitude is compared as a sum of squares. <code>sstep_enable()</code>
+clears <span class="arithmatex">\(\bar e\)</span>, <span class="arithmatex">\(o\)</span>, <span class="arithmatex">\(c\)</span>, <span class="arithmatex">\(h\)</span> and the voltage history (<span class="arithmatex">\(v[k-1] = v[k-2] = 0\)</span>, <span class="arithmatex">\(i[k-1]\)</span> = the
+last measurement).</p>
+<p><strong>Overcurrent:</strong> when the trip of the fast loop finds <span class="arithmatex">\(c &gt; 0\)</span>, the fault is
+<code>SSTEP_FAULT_OVERCURRENT | SSTEP_FAULT_STALL</code>.</p>
 <p><strong>Diagnostics</strong> in <code>sstep_get_status()</code>: <code>emf_d_mv</code> and <code>emf_q_mv</code> are <span class="arithmatex">\(\bar e_d\)</span>, <span class="arithmatex">\(\bar e_q\)</span>;
 <code>rotor_velocity</code> is <span class="arithmatex">\(\mathrm{sgn}(\bar e_q)\,\lvert \bar e \rvert\, N_s M / (2\pi K_e)\)</span>;
 <code>load_angle_cdeg</code> is <span class="arithmatex">\(\mathrm{atan2}(\sigma\bar e_d,\; \sigma\bar e_q)\)</span> with <span class="arithmatex">\(\sigma = \mathrm{sgn}(v_c)\)</span> (at rest
@@ -2040,12 +2051,24 @@ of the motor torque); <code>stall_level_pct</code> is <span class="arithmatex">\
 <td>A synchronous back-EMF is constant there at any speed, so a millisecond filter neither attenuates nor delays it. In the phase frame the back-EMF at 10 rev/s is a 500 Hz sine that such a filter would suppress.</td>
 </tr>
 <tr>
-<td>In motion, only <span class="arithmatex">\(e_q\)</span></td>
-<td>A resistance error (<span class="arithmatex">\(R\)</span> of a hot winding) adds <span class="arithmatex">\(\Delta R\, I\)</span> along the current, the d axis, and does not change <span class="arithmatex">\(e_q\)</span>. An inductance error adds <span class="arithmatex">\(\Delta L\, I\, p\,\omega\)</span> along q: it scales <span class="arithmatex">\(e_q\)</span> by <span class="arithmatex">\(1 + \Delta L\, I\, p / K_e\)</span> (−22 % for <span class="arithmatex">\(L\)</span> −20 % at 1.5 A), at every speed.</td>
+<td>In motion, <span class="arithmatex">\(e_q\)</span> against <span class="arithmatex">\(K_e\,\omega_c\)</span></td>
+<td>A resistance error (<span class="arithmatex">\(R\)</span> of a hot winding) adds <span class="arithmatex">\(\Delta R\, I\)</span> along the current, the d axis, and does not change <span class="arithmatex">\(e_q\)</span>. An inductance error adds <span class="arithmatex">\(\Delta L\, I\, p\,\omega\)</span> along q, so the ratio is <span class="arithmatex">\(\cos\delta + \Delta L\, I\, p / K_e\)</span> at every speed (the second term is −0.22 for <span class="arithmatex">\(L\)</span> −20 % at 1.5 A, −0.29 at 2 A).</td>
+</tr>
+<tr>
+<td>Window on <span class="arithmatex">\(e_d\)</span></td>
+<td>The <span class="arithmatex">\(L\)</span> error alone brings a rotor under load down to the threshold: at 2 A and <span class="arithmatex">\(L\)</span> −20 % a ratio of 0.30 means only <span class="arithmatex">\(\delta \approx 54°\)</span>. A blocked rotor has only the resistance error on d, mostly positive and, for <span class="arithmatex">\(R\)</span> between −10 % and +40 %, inside the window. A rotor under load is outside it at speed; at low speed the outcome depends on the sign of the motion and on <span class="arithmatex">\(\Delta R\)</span>, so the margin is wider going forward on a hot winding.</td>
+</tr>
+<tr>
+<td>Reversed back-EMF holds the condition</td>
+<td>The vector of a slipping rotor is above any threshold on <span class="arithmatex">\(e_q\)</span> for about half of each turn, so the up/down counter alone stays low. <span class="arithmatex">\(a &lt; -(\lvert e_c \rvert / 2 + e_s)\)</span> means <span class="arithmatex">\(\delta\)</span> beyond about 120°: no equilibrium exists there. It keeps the condition true for <span class="arithmatex">\(N / 2\)</span> periods, a turn of the vector faster than that accumulates at full rate, and a single event ends at 50 % of the trip.</td>
 </tr>
 <tr>
 <td>Threshold relative to <span class="arithmatex">\(K_e\,\omega_c\)</span></td>
-<td>The synchronous value <span class="arithmatex">\(\cos\delta\)</span> does not depend on the speed; a fixed fraction separates a loaded synchronous rotor (0.5 to 1) from a stall or a slip (about 0, ±0.25 with the <span class="arithmatex">\(L\)</span> error).</td>
+<td>The synchronous value <span class="arithmatex">\(\cos\delta\)</span> does not depend on the speed; a fixed fraction separates a loaded synchronous rotor from a stall (about 0, ±0.29 with the <span class="arithmatex">\(L\)</span> error at 2 A).</td>
+</tr>
+<tr>
+<td>Stall flag on the overcurrent trip</td>
+<td>A light rotor torn away by a large load reaches the trip in less than <code>stall_time_ms</code>, because the back-EMF of a rotor spinning backwards exceeds the bus. The flag tells the application that the position is lost. It only needs the detector to have started (<span class="arithmatex">\(c &gt; 0\)</span>), so it can also appear with an overcurrent of another cause during a transient.</td>
 </tr>
 <tr>
 <td>At rest, learned offset</td>
@@ -2097,7 +2120,7 @@ of the motor torque); <code>stall_level_pct</code> is <span class="arithmatex">\
 <tr>
 <td><code>stall_sync_pct</code></td>
 <td>50</td>
-<td>Below <span class="arithmatex">\(\cos\delta \cdot (1 + \Delta L\, I\, p / K_e)\)</span> at the worst synchronous operating point. At the voltage limit the current lags its reference and the ratio drops (0.46 at 11 rev/s on a 24 V three-leg stage); use 30 to 40 near the limit.</td>
+<td>Above <span class="arithmatex">\(\lvert\Delta L\rvert\, I\, p / K_e\)</span>, the value a blocked rotor shows with a larger inductance than configured (29 % at <span class="arithmatex">\(L\)</span> +20 %, 2 A). A rotor under load with <span class="arithmatex">\(e_d\)</span> inside the window must stay above it: at 50 %, with the nominal <span class="arithmatex">\(R\)</span> and <span class="arithmatex">\(L\)</span>, that ends at <span class="arithmatex">\(\delta\)</span> = 60°, 87 % of the pull-out torque. The window accepts the lag at the voltage limit, so this value also runs at 11 rev/s on a 24 V three-leg stage.</td>
 </tr>
 </tbody>
 </table>
@@ -2135,6 +2158,22 @@ torque of 0.02 N·m.</p>
 <td>Enable, run → hold, 0.07 N·m through run → hold, 6400-microstep move, reversal ±4 rev/s and stop, runs at 0.125, 0.25, 0.47, 1, 2, 8, 9.5 and 11 rev/s</td>
 <td>No fault. Largest detector level 6 % (nominal plant), 32 % (worst case)</td>
 </tr>
+<tr>
+<td>Heavy axis, 0.5 N·m load step above the pull-out torque, <span class="arithmatex">\(J\)</span> ×20 and ×100 at 1 and 3 rev/s, either direction, nominal and worst case</td>
+<td><code>SSTEP_FAULT_STALL</code> 43 to 60 ms after the load angle passes 90°, 23 to 158 full steps lost</td>
+</tr>
+<tr>
+<td>Bare rotor and <span class="arithmatex">\(J\)</span> ×5, the same load step at 1 rev/s: the overcurrent trip comes first</td>
+<td><code>SSTEP_FAULT_OVERCURRENT \| SSTEP_FAULT_STALL</code>, 14 and 78 full steps lost</td>
+</tr>
+<tr>
+<td>0.30 N·m (72 % of the pull-out torque) at ±1, ±2 and ±3 rev/s, <span class="arithmatex">\(R\)</span> +30 %, <span class="arithmatex">\(L\)</span> −20 %; 0.25 N·m at ±1 rev/s, worst case</td>
+<td>No fault. Largest detector level 40 % and 58 %</td>
+</tr>
+<tr>
+<td>Voltage limit: 8 rev/s at 18 V, 9 rev/s at 20 V, 11 rev/s at 24 V with <span class="arithmatex">\(L\)</span> +20 %</td>
+<td>No fault. Largest detector level 0 %</td>
+</tr>
 </tbody>
 </table>
 <p>The motor model of this repository shows no sustained mid-band oscillation between 8 and
@@ -2158,18 +2197,18 @@ and is reported.</p>
 </tr>
 <tr>
 <td>Fast loop, executed instructions without / with stall detection (<code>-Os</code>)</td>
-<td>1035 / 1510</td>
-<td>720 / 933</td>
+<td>1030 / 1502</td>
+<td>726 / 940</td>
 </tr>
 <tr>
 <td>Same with <code>-O2</code></td>
-<td>666 / 912</td>
-<td>680 / 921</td>
+<td>664 / 909</td>
+<td>683 / 923</td>
 </tr>
 <tr>
 <td>Slow loop, added</td>
-<td>167 instructions (<code>-Os</code>)</td>
-<td>110 instructions</td>
+<td>367 instructions (<code>-Os</code>)</td>
+<td>318 instructions</td>
 </tr>
 <tr>
 <td><code>sstep_get_status()</code></td>
@@ -2194,6 +2233,13 @@ mean over 600 fast-loop periods while accelerating to 3 rev/s; on Cortex-M4 most
   its back-EMF is close to zero either way. Only a rotor faster than the command is.</li>
 <li>The fault comes <code>stall_time_ms</code> after the stall begins; the position is lost from the
   beginning of the stall.</li>
+<li>A rotor under load near the voltage limit whose load angle repeatedly swings beyond about
+  120° is reported, even if it has not lost a step yet (11 rev/s at 20 V: fault 74 to 78 ms
+  after the angle first passes 90°, largest angle 137° to 140° until then). This operating
+  point has no margin; lower the speed or raise the voltage.</li>
+<li>On a hot winding with <span class="arithmatex">\(L\)</span> −20 % at low speed, going backward, <span class="arithmatex">\(e_d\)</span> of a rotor under load is
+  close to that of a blocked rotor. There the margin comes from <code>stall_sync_pct</code> alone
+  (the formula above).</li>
 <li>During a slip at rest <code>rotor_velocity</code> is low (the filter attenuates the rotating
   vector: about 10 000 for 27 000 microsteps/s); it is accurate in synchronism.
   An inductance error biases it too (26 700 for 31 400 microsteps/s with <span class="arithmatex">\(L\)</span> −20 % at

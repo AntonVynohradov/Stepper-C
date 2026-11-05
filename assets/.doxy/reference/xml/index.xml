@@ -89,6 +89,7 @@
     <member refid="structsstep__ctx_1ae17e0568420ef8e69d6aaeeced941484" kind="variable"><name>ff_cmd</name></member>
     <member refid="structsstep__ctx_1a09f5093ccb2343ff809423c4029c3824" kind="variable"><name>emf_off</name></member>
     <member refid="structsstep__ctx_1a4a0445c885013aceb85e186974379a78" kind="variable"><name>stall_count</name></member>
+    <member refid="structsstep__ctx_1a8576219187173368d6a8e09e598f476e" kind="variable"><name>stall_hold</name></member>
     <member refid="structsstep__ctx_1aea889ec3ad563cb14a4e9203b6624175" kind="variable"><name>faults</name></member>
     <member refid="structsstep__ctx_1a49e7de50e5440d9aa544c0c9038fc968" kind="variable"><name>state</name></member>
     <member refid="structsstep__ctx_1a8ac92a1cae8a0bffe1de31791bf05d0c" kind="variable"><name>ready</name></member>

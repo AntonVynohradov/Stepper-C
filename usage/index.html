@@ -1662,7 +1662,7 @@ detected; run homing moves against a hard stop faster than <code>stall_speed</co
 </tr>
 <tr>
 <td><code>SSTEP_FAULT_STALL</code></td>
-<td>Slow loop, stall detection on</td>
+<td>Slow loop, stall detection on; fast loop, with <code>SSTEP_FAULT_OVERCURRENT</code>, when the rotor is torn away faster than <code>stall_time_ms</code></td>
 <td>Load above the torque, hard stop, rotor slipping at the hold current</td>
 </tr>
 </tbody>
@@ -1781,7 +1781,7 @@ of several axes may run in one interrupt one after the other, or in separate int
 </tr>
 <tr>
 <td><code>SSTEP_FAULT_STALL</code> at speed although the motor runs</td>
-<td><code>stall_sync_pct</code> above the synchronous ratio at the voltage limit or with heavy load: check <code>load_angle_cdeg</code>, lower <code>stall_sync_pct</code></td>
+<td>Load close to the pull-out torque, or a load angle swinging beyond about 120° near the voltage limit: check <code>load_angle_cdeg</code>, lower <code>stall_sync_pct</code> for a heavy load (not below the inductance error, <a href="../motor-control/#choosing-the-parameters">Choosing the parameters</a>), lower the speed or raise the current</td>
 </tr>
 <tr>
 <td><code>sstep_init()</code> returns <code>SSTEP_ERR_CONFIG</code></td>

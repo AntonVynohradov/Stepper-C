@@ -1620,6 +1620,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#variable-stall_hold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable stall_hold
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#variable-stall_ticks" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1894,6 +1905,10 @@
 </tr>
 <tr>
 <td style="text-align: right;">uint32_t</td>
+<td style="text-align: left;"><a href="#variable-stall_hold"><strong>stall_hold</strong></a>  <br><em>Slow periods the condition stays true after a reversal.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint32_t</td>
 <td style="text-align: left;"><a href="#variable-stall_ticks"><strong>stall_ticks</strong></a>  <br><em>Slow periods of stall to trip; 0 = detection off.</em></td>
 </tr>
 <tr>
@@ -2151,51 +2166,57 @@
 </code></pre></div></p>
 <hr>
 
+<h3 id="variable-stall_hold">variable stall_hold<a class="headerlink" href="#variable-stall_hold" title="Permanent link">&para;</a></h3>
+<p><em>Slow periods the condition stays true after a reversal.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">stall_hold</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
 <h3 id="variable-stall_ticks">variable stall_ticks<a class="headerlink" href="#variable-stall_ticks" title="Permanent link">&para;</a></h3>
 <p><em>Slow periods of stall to trip; 0 = detection off.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">stall_ticks</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">stall_ticks</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-state">variable state<a class="headerlink" href="#variable-state" title="Permanent link">&para;</a></h3>
 <p><em>Driver state.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">sstep_state</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">state</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">sstep_state</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">state</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-still">variable still<a class="headerlink" href="#variable-still" title="Permanent link">&para;</a></h3>
 <p><em>Slow periods at standstill.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">still</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">still</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-v_hist">variable v_hist<a class="headerlink" href="#variable-v_hist" title="Permanent link">&para;</a></h3>
 <p><em>Applied phase voltages computed 1 and 2 periods ago [pu V].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="n">sstep_acc_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">v_hist</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">];</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="n">sstep_acc_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">v_hist</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">];</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-vbus_max_raw">variable vbus_max_raw<a class="headerlink" href="#variable-vbus_max_raw" title="Permanent link">&para;</a></h3>
 <p><em>Overvoltage trip [ADC counts], 0 = off.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_max_raw</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_max_raw</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-vbus_min_raw">variable vbus_min_raw<a class="headerlink" href="#variable-vbus_min_raw" title="Permanent link">&para;</a></h3>
 <p><em>Undervoltage trip [ADC counts], 0 = off.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_min_raw</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_min_raw</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-vbus_raw">variable vbus_raw<a class="headerlink" href="#variable-vbus_raw" title="Permanent link">&para;</a></h3>
 <p><em>Last bus voltage [ADC counts].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_raw</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="k">volatile</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vbus_raw</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-vel_cmd">variable vel_cmd<a class="headerlink" href="#variable-vel_cmd" title="Permanent link">&para;</a></h3>
 <p><em>Commanded velocity of the period in use [microsteps/s].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vel_cmd</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">sstep_ctx</span><span class="o">::</span><span class="n">vel_cmd</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 

@@ -73,6 +73,7 @@ _Driver state behind the opaque_ [_**sstep**_](structsstep.md) _._[More...](#det
 |  volatile uint8\_t | [**sp\_pending**](#variable-sp_pending)  <br>_1: sp[1 - sp\_active] is complete and new._  |
 |  uint32\_t | [**stall\_count**](#variable-stall_count)  <br>_Stall detector up/down counter._  |
 |  int32\_t | [**stall\_emf\_mv**](#variable-stall_emf_mv)  <br>_Back-EMF of stall\_speed [mV]._  |
+|  uint32\_t | [**stall\_hold**](#variable-stall_hold)  <br>_Slow periods the condition stays true after a reversal._  |
 |  uint32\_t | [**stall\_ticks**](#variable-stall_ticks)  <br>_Slow periods of stall to trip; 0 = detection off._  |
 |  enum [**sstep\_state**](group__sstep__defs.md#enum-sstep_state) | [**state**](#variable-state)  <br>_Driver state._  |
 |  uint32\_t | [**still**](#variable-still)  <br>_Slow periods at standstill._  |
@@ -646,6 +647,20 @@ uint32_t sstep_ctx::stall_count;
 _Back-EMF of stall\_speed [mV]._ 
 ```C++
 int32_t sstep_ctx::stall_emf_mv;
+```
+
+
+
+
+<hr>
+
+
+
+### variable stall\_hold 
+
+_Slow periods the condition stays true after a reversal._ 
+```C++
+uint32_t sstep_ctx::stall_hold;
 ```
 
 

@@ -159,6 +159,7 @@
 * **sp\_pending** ([**sstep\_ctx**](structsstep__ctx.md))
 * **stall\_count** ([**sstep\_ctx**](structsstep__ctx.md))
 * **stall\_emf\_mv** ([**sstep\_ctx**](structsstep__ctx.md))
+* **stall\_hold** ([**sstep\_ctx**](structsstep__ctx.md))
 * **stall\_ticks** ([**sstep\_ctx**](structsstep__ctx.md))
 * **state** ([**sstep\_ctx**](structsstep__ctx.md), [**sstep\_status**](structsstep__status.md))
 * **still** ([**sstep\_ctx**](structsstep__ctx.md))

@@ -1091,6 +1091,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Unreleased">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1117,7 +1145,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed" class="md-nav__link">
+  <a href="#changed_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Changed
@@ -1348,6 +1376,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Unreleased">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1374,7 +1430,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed" class="md-nav__link">
+  <a href="#changed_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Changed
@@ -1461,6 +1517,32 @@
 The format is based on <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <h2 id="unreleased"><a href="https://github.com/AntonVynohradov/Stepper-C/compare/v1.1.0...HEAD">Unreleased</a><a class="headerlink" href="#unreleased" title="Permanent link">&para;</a></h2>
+<h3 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Stall detection missed a slipping rotor at low speed.</strong> The back-EMF vector of a slipping
+  rotor turns in the commanded frame and stayed above <code>stall_sync_pct</code> about half of the
+  time, so the up/down counter did not accumulate: a heavy axis (load inertia ×100) lost
+  hundreds of full steps without a fault. A reversed back-EMF now keeps the condition true
+  for half of the trip time: <code>SSTEP_FAULT_STALL</code> 43 to 60 ms after the load angle passes 90°.</li>
+<li><strong>False stall under a heavy load.</strong> The inductance error adds to <span class="arithmatex">\(\cos\delta\)</span> (it does not
+  scale it, as the documentation said), so a synchronous rotor at 72 % of the pull-out torque
+  with <span class="arithmatex">\(R\)</span> +30 %, <span class="arithmatex">\(L\)</span> −20 % tripped. The condition in motion now also requires the d axis
+  inside the window of a rotor that does not turn. The same window removes the false trip at
+  the voltage limit: 11 rev/s at 24 V now runs with the example <code>stall_sync_pct</code> of 50.</li>
+</ul>
+<h3 id="changed">Changed<a class="headerlink" href="#changed" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>SSTEP_FAULT_OVERCURRENT</code> comes <strong>together with <code>SSTEP_FAULT_STALL</code></strong> when the trip finds
+  the stall detector counting: a light rotor reaches the trip before <code>stall_time_ms</code>, and the
+  position is lost. An application that compares <code>faults</code> with a single flag must test the
+  bits. Without stall detection nothing changes.</li>
+<li>A load angle swinging repeatedly beyond about 120° near the voltage limit is reported as a
+  stall even before a step is lost (documented in Limits).</li>
+<li><code>SSTEP_STATE_BYTES</code> on 64-bit hosts: 288 B fixed point, 312 B float (Cortex-M4 unchanged:
+  280 B, 304 B). Flash on Cortex-M4 (<code>-Os</code>): 9216 B fixed point, 9894 B float. Worst-case
+  stack of <code>sstep_slow_loop()</code> 152 B fixed point (float 140 B); the slow loop executes about
+  145 more instructions per period with stall detection on (<code>-Os</code>); the fast loop is unchanged.</li>
+</ul>
 <h2 id="110-2026-11-01"><a href="https://github.com/AntonVynohradov/Stepper-C/compare/v1.0.0...v1.1.0">1.1.0</a> - 2026-11-01<a class="headerlink" href="#110-2026-11-01" title="Permanent link">&para;</a></h2>
 <p>Sensorless stall detection. Compatible with 1.0.0: the new configuration fields are
 zero in existing initializers, which keeps stall detection off and the behaviour
@@ -1489,7 +1571,7 @@ unchanged; rebuild the application with the new headers (the instance size chang
   (<code>docs/assets/images/hero-dark.png</code> for the website and the PDF cover,
   <code>hero-light.png</code> for the README).</li>
 </ul>
-<h3 id="changed">Changed<a class="headerlink" href="#changed" title="Permanent link">&para;</a></h3>
+<h3 id="changed_1">Changed<a class="headerlink" href="#changed_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li><code>struct sstep</code> grows by 96 B (432 B fixed point, 456 B float on Cortex-M4):
   <code>SSTEP_CONFIG_BYTES</code> 152 / 176 B, <code>SSTEP_STATE_BYTES</code> 280 / 304 B.

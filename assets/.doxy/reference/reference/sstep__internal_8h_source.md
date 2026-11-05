@@ -156,6 +156,7 @@ struct sstep_ctx
     sstep_real_t ff_cmd;        
     int64_t emf_off[2];         
     uint32_t stall_count;       
+    uint32_t stall_hold;        
     volatile uint16_t faults;        
     volatile enum sstep_state state; 
     uint32_t ready;                  
