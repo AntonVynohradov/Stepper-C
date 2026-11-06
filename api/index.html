@@ -1974,12 +1974,12 @@ header; it declares every function and includes the public type headers:</p>
 <tbody>
 <tr>
 <td><code>SSTEP_VERSION_MAJOR</code>, <code>…_MINOR</code>, <code>…_PATCH</code></td>
-<td><code>1</code>, <code>1</code>, <code>0</code></td>
-<td>Version numbers; set by CMake from the latest <code>vX.Y.Z</code> tag, these are the fallbacks</td>
+<td><code>0</code>, <code>0</code>, <code>0</code></td>
+<td>Version numbers; set by CMake from the latest <code>vX.Y.Z</code> tag and stamped into the release package; <code>0.0.0</code> means unknown (a header from the repository built without CMake)</td>
 </tr>
 <tr>
 <td><code>SSTEP_VERSION</code></td>
-<td><code>"1.1.0"</code></td>
+<td><code>"0.0.0"</code></td>
 <td>Version string</td>
 </tr>
 </tbody>

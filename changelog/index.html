@@ -1083,15 +1083,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#unreleased" class="md-nav__link">
+  <a href="#120-2026-11-06" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Unreleased
+        1.2.0 - 2026-11-06
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Unreleased">
+    <nav class="md-nav" aria-label="1.2.0 - 2026-11-06">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1368,15 +1368,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#unreleased" class="md-nav__link">
+  <a href="#120-2026-11-06" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Unreleased
+        1.2.0 - 2026-11-06
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Unreleased">
+    <nav class="md-nav" aria-label="1.2.0 - 2026-11-06">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1516,7 +1516,7 @@
 <p>All notable changes to this project are documented in this file.
 The format is based on <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
-<h2 id="unreleased"><a href="https://github.com/AntonVynohradov/Stepper-C/compare/v1.1.0...HEAD">Unreleased</a><a class="headerlink" href="#unreleased" title="Permanent link">&para;</a></h2>
+<h2 id="120-2026-11-06"><a href="https://github.com/AntonVynohradov/Stepper-C/compare/v1.1.0...v1.2.0">1.2.0</a> - 2026-11-06<a class="headerlink" href="#120-2026-11-06" title="Permanent link">&para;</a></h2>
 <h3 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Stall detection missed a slipping rotor at low speed.</strong> The back-EMF vector of a slipping
@@ -1542,6 +1542,10 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   280 B, 304 B). Flash on Cortex-M4 (<code>-Os</code>): 9216 B fixed point, 9894 B float. Worst-case
   stack of <code>sstep_slow_loop()</code> 152 B fixed point (float 140 B); the slow loop executes about
   145 more instructions per period with stall detection on (<code>-Os</code>); the fast loop is unchanged.</li>
+<li>The version comes only from the <code>vX.Y.Z</code> Git tag. <code>sstep.cmake</code> now applies it to the
+  applications that include it, and the headers of the release package carry it. A header
+  taken from the repository and built without CMake reports <code>0.0.0</code> (unknown). <code>CITATION.cff</code>
+  no longer states a version or a release date.</li>
 </ul>
 <h2 id="110-2026-11-01"><a href="https://github.com/AntonVynohradov/Stepper-C/compare/v1.0.0...v1.1.0">1.1.0</a> - 2026-11-01<a class="headerlink" href="#110-2026-11-01" title="Permanent link">&para;</a></h2>
 <p>Sensorless stall detection. Compatible with 1.0.0: the new configuration fields are

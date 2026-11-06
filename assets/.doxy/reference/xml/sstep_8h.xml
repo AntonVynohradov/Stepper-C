@@ -54,7 +54,7 @@
     <sectiondef kind="define">
       <memberdef kind="define" id="sstep_8h_1acedf2fb3f7c0cac207b210fb614948f0" prot="public" static="no">
         <name>SSTEP_VERSION_MAJOR</name>
-        <initializer>1</initializer>
+        <initializer>0</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -65,7 +65,7 @@
       </memberdef>
       <memberdef kind="define" id="sstep_8h_1ae008ca8f66df44cfbad1b81ee50a0ee2" prot="public" static="no">
         <name>SSTEP_VERSION_MINOR</name>
-        <initializer>1</initializer>
+        <initializer>0</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -87,7 +87,7 @@
       </memberdef>
       <memberdef kind="define" id="sstep_8h_1adbcb80b18f3cf65751c3591180c8cfae" prot="public" static="no">
         <name>SSTEP_VERSION</name>
-        <initializer>&quot;1.1.0&quot;</initializer>
+        <initializer>&quot;0.0.0&quot;</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -154,16 +154,16 @@
 <codeline lineno="33"><highlight class="comment"><sp/>*<sp/>VERSION</highlight></codeline>
 <codeline lineno="34"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="35"><highlight class="normal"></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Normally<sp/>defined<sp/>by<sp/>cmake/version.cmake<sp/>from<sp/>the<sp/>latest<sp/>vX.Y.Z<sp/>tag;<sp/>these</highlight></codeline>
-<codeline lineno="37"><highlight class="comment"><sp/>*<sp/>fallbacks<sp/>are<sp/>used<sp/>when<sp/>the<sp/>library<sp/>is<sp/>built<sp/>without<sp/>CMake.<sp/>Keep<sp/>them<sp/>in<sp/>sync</highlight></codeline>
-<codeline lineno="38"><highlight class="comment"><sp/>*<sp/>with<sp/>SSTEP_DEFAULT_VERSION<sp/>and<sp/>CHANGELOG.md.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Set<sp/>by<sp/>cmake/version.cmake<sp/>from<sp/>the<sp/>latest<sp/>vX.Y.Z<sp/>Git<sp/>tag<sp/>and<sp/>stamped<sp/>into<sp/>this</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*<sp/>file<sp/>in<sp/>the<sp/>release<sp/>package.<sp/>0.0.0<sp/>means<sp/>unknown:<sp/>a<sp/>header<sp/>taken<sp/>from<sp/>the</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>*<sp/>repository<sp/>and<sp/>built<sp/>without<sp/>CMake.<sp/>Do<sp/>not<sp/>change<sp/>these<sp/>values<sp/>for<sp/>a<sp/>release.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="39"><highlight class="normal"></highlight></codeline>
 <codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_VERSION_MAJOR</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_VERSION_MAJOR<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_VERSION_MAJOR<sp/>0</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="43"><highlight class="normal"></highlight></codeline>
 <codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_VERSION_MINOR</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_VERSION_MINOR<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_VERSION_MINOR<sp/>0</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="47"><highlight class="normal"></highlight></codeline>
 <codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_VERSION_PATCH</highlight><highlight class="normal"></highlight></codeline>
@@ -171,7 +171,7 @@
 <codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="51"><highlight class="normal"></highlight></codeline>
 <codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_VERSION</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_VERSION<sp/>&quot;1.1.0&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_VERSION<sp/>&quot;0.0.0&quot;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="55"><highlight class="normal"></highlight></codeline>
 <codeline lineno="56"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>

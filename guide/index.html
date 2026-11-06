@@ -1530,10 +1530,11 @@ include path.</p>
 </code></pre></div>
 <h2 id="versioning-and-releases">Versioning and releases<a class="headerlink" href="#versioning-and-releases" title="Permanent link">&para;</a></h2>
 <p>Stepper-C follows <a href="https://semver.org">Semantic Versioning</a>: the public API (<code>sstep.h</code> and
-<code>inc/</code>) is stable within a major version. The version comes from the latest <code>vX.Y.Z</code> Git
-tag (<code>cmake/version.cmake</code>), with <code>SSTEP_VERSION</code> in <code>sstep.h</code> as the fallback for builds
-without CMake; every change is recorded under <code>[Unreleased]</code> in <code>CHANGELOG.md</code>.</p>
-<p>A release tag runs <code>release.yml</code>: version check, unit tests with the coverage gate, MISRA
+<code>inc/</code>) is stable within a major version. The version comes only from the latest <code>vX.Y.Z</code>
+Git tag: <code>cmake/version.cmake</code> sets it in CMake builds and the release workflow stamps it
+into the packaged <code>sstep.h</code>. A header taken from the repository and built without CMake
+reports <code>0.0.0</code> (unknown). Every change is recorded under <code>[Unreleased]</code> in <code>CHANGELOG.md</code>.</p>
+<p>A release tag runs <code>release.yml</code>: changelog check, version stamp, unit tests with the coverage gate, MISRA
 gate, release build, and a GitHub Release with the static library, the headers, the MISRA
 report and the PDF manual.</p>
 <h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
