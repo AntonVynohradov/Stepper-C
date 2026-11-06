@@ -23,9 +23,9 @@
 # DEFAULT VERSION
 # ==============================================================================
 
-# Used when the source tree has no Git metadata or no vX.Y.Z tag yet; keep it in
-# sync with the fallback values in sstep.h.
-set(SSTEP_DEFAULT_VERSION "1.1.0")
+# Version unknown: the source tree has no Git metadata of its own or no vX.Y.Z tag.
+# The version comes only from the tag; do not change this value for a release.
+set(SSTEP_DEFAULT_VERSION "0.0.0")
 
 # ==============================================================================
 # VERSION EXTRACTION
@@ -35,15 +35,27 @@ find_package(Git QUIET)
 
 set(SSTEP_GIT_TAG "")
 if(GIT_FOUND)
+    # Only the library's own repository counts: a copy of the library inside an
+    # application's repository must not report the application's tags.
     execute_process(
-        COMMAND ${GIT_EXECUTABLE} describe --tags --abbrev=0
+        COMMAND ${GIT_EXECUTABLE} rev-parse --show-prefix
         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/..
-        RESULT_VARIABLE SSTEP_GIT_DESCRIBE_RESULT
-        ERROR_VARIABLE SSTEP_GIT_DESCRIBE_ERROR
-        OUTPUT_VARIABLE SSTEP_GIT_TAG
+        RESULT_VARIABLE SSTEP_GIT_PREFIX_RESULT
+        OUTPUT_VARIABLE SSTEP_GIT_PREFIX
+        ERROR_QUIET
         OUTPUT_STRIP_TRAILING_WHITESPACE
-        ERROR_STRIP_TRAILING_WHITESPACE
     )
+    if(SSTEP_GIT_PREFIX_RESULT EQUAL 0 AND "${SSTEP_GIT_PREFIX}" STREQUAL "")
+        execute_process(
+            COMMAND ${GIT_EXECUTABLE} describe --tags --abbrev=0
+            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/..
+            RESULT_VARIABLE SSTEP_GIT_DESCRIBE_RESULT
+            ERROR_VARIABLE SSTEP_GIT_DESCRIBE_ERROR
+            OUTPUT_VARIABLE SSTEP_GIT_TAG
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            ERROR_STRIP_TRAILING_WHITESPACE
+        )
+    endif()
 endif()
 
 # ==============================================================================

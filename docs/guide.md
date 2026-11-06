@@ -62,11 +62,12 @@ clang-format -i src/*.c src/*.h inc/*.h sstep.h tests/unit/*.cpp tests/unit/*.hp
 ## Versioning and releases
 
 Stepper-C follows [Semantic Versioning](https://semver.org): the public API (`sstep.h` and
-`inc/`) is stable within a major version. The version comes from the latest `vX.Y.Z` Git
-tag (`cmake/version.cmake`), with `SSTEP_VERSION` in `sstep.h` as the fallback for builds
-without CMake; every change is recorded under `[Unreleased]` in `CHANGELOG.md`.
+`inc/`) is stable within a major version. The version comes only from the latest `vX.Y.Z`
+Git tag: `cmake/version.cmake` sets it in CMake builds and the release workflow stamps it
+into the packaged `sstep.h`. A header taken from the repository and built without CMake
+reports `0.0.0` (unknown). Every change is recorded under `[Unreleased]` in `CHANGELOG.md`.
 
-A release tag runs `release.yml`: version check, unit tests with the coverage gate, MISRA
+A release tag runs `release.yml`: changelog check, version stamp, unit tests with the coverage gate, MISRA
 gate, release build, and a GitHub Release with the static library, the headers, the MISRA
 report and the PDF manual.
 

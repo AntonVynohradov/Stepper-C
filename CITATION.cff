@@ -16,8 +16,6 @@ authors:
 repository-code: "https://github.com/AntonVynohradov/Stepper-C"
 url: "https://antonvynohradov.github.io/Stepper-C/"
 license: Apache-2.0
-version: "1.1.0"
-date-released: "2026-11-01"
 keywords:
   - embedded systems
   - C11

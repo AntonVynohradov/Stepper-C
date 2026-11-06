@@ -28,6 +28,13 @@ list(APPEND CMAKE_MODULE_PATH
 )
 
 # ==============================================================================
+# VERSION EXTRACTION
+# ==============================================================================
+
+# Here and not in CMakeLists.txt: applications include only this file
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/version.cmake)
+
+# ==============================================================================
 # INCLUDE DIRECTORIES
 # ==============================================================================
 

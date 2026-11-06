@@ -33,16 +33,16 @@
  * VERSION
  * =============================================================================*/
 
-/* Normally defined by cmake/version.cmake from the latest vX.Y.Z tag; these
- * fallbacks are used when the library is built without CMake. Keep them in sync
- * with SSTEP_DEFAULT_VERSION and CHANGELOG.md. */
+/* Set by cmake/version.cmake from the latest vX.Y.Z Git tag and stamped into this
+ * file in the release package. 0.0.0 means unknown: a header taken from the
+ * repository and built without CMake. Do not change these values for a release. */
 
 #ifndef SSTEP_VERSION_MAJOR
-#define SSTEP_VERSION_MAJOR 1
+#define SSTEP_VERSION_MAJOR 0
 #endif
 
 #ifndef SSTEP_VERSION_MINOR
-#define SSTEP_VERSION_MINOR 1
+#define SSTEP_VERSION_MINOR 0
 #endif
 
 #ifndef SSTEP_VERSION_PATCH
@@ -50,7 +50,7 @@
 #endif
 
 #ifndef SSTEP_VERSION
-#define SSTEP_VERSION "1.1.0"
+#define SSTEP_VERSION "0.0.0"
 #endif
 
 /* ==============================================================================

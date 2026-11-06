@@ -11,7 +11,7 @@ A portable C11 static library that drives a two-phase hybrid stepper motor: PI
 current control per phase with back-EMF feed-forward and anti-windup, microstep
 angle generation, a trapezoidal motion planner, the voltage limit and duty cycles of
 two power stage topologies, protection trips and sensorless stall detection (back-EMF
-observer, 1.1.0). Version 1.0.0 is released and 1.1.0 is prepared: the
+observer, since 1.1.0). The releases are listed in `CHANGELOG.md`: the
 public API (`sstep.h`, `inc/`) is stable within major version 1, so a removed or
 changed public symbol, struct member, enum value or return code needs 2.0.0.
 Verified on a motor model in both numeric backends and in software-in-the-loop with the
@@ -210,12 +210,15 @@ English and written for embedded engineers integrating the library.
 
 ## Releases
 
-1. Set `SSTEP_DEFAULT_VERSION` in `cmake/version.cmake` and the fallbacks in
-   `sstep.h` to the new version.
-2. Move the `[Unreleased]` entries in `CHANGELOG.md` to `[X.Y.Z] - date`.
-3. Merge to `main`, then push the tag `vX.Y.Z`. The Release workflow refuses a tag
-   that does not match these files, runs the coverage and MISRA gates and publishes
-   the library, headers, MISRA report and PDF manual as a GitHub Release.
+The Git tag is the only source of the version: do not write it into `sstep.h`,
+`cmake/version.cmake`, `CITATION.cff` or the documentation.
+
+1. Move the `[Unreleased]` entries in `CHANGELOG.md` to `[X.Y.Z] - date` and add the
+   compare links at the end of the file.
+2. Merge to `main`, then push the tag `vX.Y.Z`. The Release workflow refuses a tag
+   without a `CHANGELOG.md` section, stamps the version into the packaged `sstep.h`,
+   runs the coverage and MISRA gates and publishes the library, headers, MISRA report
+   and PDF manual as a GitHub Release.
 
 Never commit, push a tag or publish a release without the maintainer's explicit
 request.

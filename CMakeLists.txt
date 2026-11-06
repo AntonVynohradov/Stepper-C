@@ -57,12 +57,6 @@ set(CMAKE_C_FLAGS_DEBUG "-Wall -Wextra -Wpedantic -Wconversion -g")
 set(CMAKE_C_FLAGS_RELEASE "-Wall -Wextra -Wpedantic -Wconversion -O2 -DNDEBUG")
 
 # ==============================================================================
-# VERSION EXTRACTION
-# ==============================================================================
-
-include(version) # Include the version extraction and parsing logic
-
-# ==============================================================================
 # LIBRARY/EXECUTABLE TARGETS
 # ==============================================================================
 

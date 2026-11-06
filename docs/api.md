@@ -20,8 +20,8 @@ Everything else (`src/`) is private and not installed with the library.
 
 | Macro | Value | Meaning |
 | --- | --- | --- |
-| `SSTEP_VERSION_MAJOR`, `…_MINOR`, `…_PATCH` | `1`, `1`, `0` | Version numbers; set by CMake from the latest `vX.Y.Z` tag, these are the fallbacks |
-| `SSTEP_VERSION` | `"1.1.0"` | Version string |
+| `SSTEP_VERSION_MAJOR`, `…_MINOR`, `…_PATCH` | `0`, `0`, `0` | Version numbers; set by CMake from the latest `vX.Y.Z` tag and stamped into the release package; `0.0.0` means unknown (a header from the repository built without CMake) |
+| `SSTEP_VERSION` | `"0.0.0"` | Version string |
 
 ## Configuration — `sstep_config.h`
 

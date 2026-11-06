@@ -39,6 +39,7 @@ import datetime
 import html
 import os
 import re
+import subprocess
 import sys
 from typing import Dict, List, Optional, Tuple
 
@@ -92,6 +93,15 @@ def nav_pages(nav) -> List[str]:
 
 
 def library_version(manual: dict) -> str:
+    """The latest vX.Y.Z Git tag; without one, the macro in the header."""
+    try:
+        tag = subprocess.run(["git", "describe", "--tags", "--abbrev=0"], cwd=ROOT,
+                             capture_output=True, text=True, check=False).stdout.strip()
+    except OSError:
+        tag = ""
+    match = re.fullmatch(r"[Vv](\d+\.\d+\.\d+)", tag)
+    if match:
+        return match.group(1)
     header = manual.get("version_header")
     macro = manual.get("version_macro")
     if header and macro:

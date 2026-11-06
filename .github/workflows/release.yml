@@ -34,16 +34,21 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check version consistency
+      # The tag is the only source of the version; the packaged header gets it here
+      - name: Check the changelog and stamp the version
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
-          grep -q "set(SSTEP_DEFAULT_VERSION \"$VERSION\")" cmake/version.cmake \
-            || { echo "cmake/version.cmake: SSTEP_DEFAULT_VERSION is not $VERSION"; exit 1; }
-          grep -q "#define SSTEP_VERSION \"$VERSION\"" sstep.h \
-            || { echo "sstep.h: SSTEP_VERSION is not $VERSION"; exit 1; }
           grep -q "^## \[$VERSION\]" CHANGELOG.md \
             || { echo "CHANGELOG.md has no [$VERSION] section"; exit 1; }
+          IFS=. read -r MAJOR MINOR PATCH <<< "$VERSION"
+          sed -i -E \
+            -e "s/(#define SSTEP_VERSION_MAJOR) .*/\1 $MAJOR/" \
+            -e "s/(#define SSTEP_VERSION_MINOR) .*/\1 $MINOR/" \
+            -e "s/(#define SSTEP_VERSION_PATCH) .*/\1 $PATCH/" \
+            -e "s/(#define SSTEP_VERSION) \".*\"/\1 \"$VERSION\"/" sstep.h
+          grep -q "#define SSTEP_VERSION \"$VERSION\"" sstep.h \
+            || { echo "sstep.h: could not stamp SSTEP_VERSION"; exit 1; }
 
       - name: Set up Python
         uses: actions/setup-python@v5

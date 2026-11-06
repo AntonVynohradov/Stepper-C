@@ -4,7 +4,7 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.2.0] - 2026-11-06
 
 ### Fixed
 
@@ -31,6 +31,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   280 B, 304 B). Flash on Cortex-M4 (`-Os`): 9216 B fixed point, 9894 B float. Worst-case
   stack of `sstep_slow_loop()` 152 B fixed point (float 140 B); the slow loop executes about
   145 more instructions per period with stall detection on (`-Os`); the fast loop is unchanged.
+- The version comes only from the `vX.Y.Z` Git tag. `sstep.cmake` now applies it to the
+  applications that include it, and the headers of the release package carry it. A header
+  taken from the repository and built without CMake reports `0.0.0` (unknown). `CITATION.cff`
+  no longer states a version or a release date.
 
 ## [1.1.0] - 2026-11-01
 
@@ -155,6 +159,6 @@ motors in portable C11.
   of `sstep_fast_loop()` 184 B / 128 B; `.data` and `.bss` empty.
 - Sine table error (default 8 bits): 1.0 LSB of Q15 (fixed point), 4.8·10^-6 (float).
 
-[Unreleased]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.1.0...HEAD
+[1.2.0]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/AntonVynohradov/Stepper-C/releases/tag/v1.0.0

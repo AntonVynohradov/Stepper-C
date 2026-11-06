@@ -58,7 +58,7 @@ is reported 48 ms after it passes the pull-out angle.
 
 ## Project status
 
-**Version 1.1.0**: sensorless stall detection. The public API (`sstep.h` and `inc/`) is
+The current version is on the [Releases](https://github.com/AntonVynohradov/Stepper-C/releases) page. The public API (`sstep.h` and `inc/`) is
 stable within major version 1. The control loops are verified against a motor model in both
 numeric backends and both topologies.
 
