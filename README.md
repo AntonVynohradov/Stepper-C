@@ -182,7 +182,7 @@ SystemFromScratch®.
 [GitHub](https://github.com/AntonVynohradov) ·
 [LinkedIn](https://www.linkedin.com/in/vynohradov) ·
 [ORCID](https://orcid.org/0009-0005-6965-0911) ·
-avynohradov@systemfromscratch.com
+contact@systemfromscratch.com
 
 ## Releases and versioning
 
