@@ -1485,7 +1485,7 @@ point (no FPU needed) or single-precision float.</p>
 </tr>
 <tr>
 <td>Motor parameter identification</td>
-<td>R, L and Kt come from the datasheet or a measurement.</td>
+<td>R, L and Ke come from the datasheet or a measurement.</td>
 </tr>
 <tr>
 <td>Communication (UART, CAN, Modbus…)</td>
@@ -1498,7 +1498,7 @@ point (no FPU needed) or single-precision float.</p>
 <li><strong>Firmware for stepper drives</strong> on a general-purpose MCU with gate drivers, for example
   STMicroelectronics B-G431B-ESC1 or a custom board with two H-bridges.</li>
 <li><strong>Machines with several axes,</strong> one driver instance per motor, no shared state.</li>
-<li><strong>Projects that must be reviewed or certified:</strong> MISRA C:2012, 100 % coverage, no heap,
+<li><strong>Projects headed for review or certification:</strong> MISRA C:2012, 100 % coverage, no heap,
   bounded execution time.</li>
 </ul>
 <h2 id="key-properties">Key properties<a class="headerlink" href="#key-properties" title="Permanent link">&para;</a></h2>
@@ -1544,7 +1544,7 @@ point (no FPU needed) or single-precision float.</p>
 </tr>
 <tr>
 <td>Tests</td>
-<td>100 % line and branch coverage of <code>src/</code> in both backends; closed-loop tests on a motor model</td>
+<td>100 % line and branch coverage of <code>src/</code> in every build variant; closed-loop tests on a motor model</td>
 </tr>
 <tr>
 <td>Thread safety</td>

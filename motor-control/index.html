@@ -2398,8 +2398,8 @@ mean over 600 fast-loop periods while accelerating to 3 rev/s; on Cortex-M4 most
   An inductance error biases it too (26 700 for 31 400 microsteps/s with <span class="arithmatex">\(L\)</span> −20 % at
   10 rev/s).</li>
 <li>The observer needs the phase currents (<code>SSTEP_DRIVE_CURRENT</code>) and <span class="arithmatex">\(K_e\)</span>.</li>
-<li>Verified on the motor model of the tests; the closed-loop validation with the
-  sfs-stepper-sim plant and on hardware follows.</li>
+<li>Verified on the motor model of the tests and in software-in-the-loop against a
+  Scilab/Xcos motor model; the measurement on hardware follows.</li>
 </ul>
 <h2 id="numeric-backends">Numeric backends<a class="headerlink" href="#numeric-backends" title="Permanent link">&para;</a></h2>
 <table>

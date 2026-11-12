@@ -399,7 +399,7 @@
       </ul>
     </div>
     <div class="sfs-hero__visual">
-      <img src="assets/images/hero-dark.png" alt="A controller board with the Stepper-C chip and its power transistors drives a stepper motor; the two phase currents are drawn as sine waves.">
+      <img src="assets/images/hero-dark.png" alt="A controller board whose microcontroller runs Stepper-C drives a stepper motor through its power transistors; the two phase currents are drawn as sine waves.">
     </div>
   </div>
 </section>
@@ -422,17 +422,17 @@
       <article class="sfs-card">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h3l2-6 3 12 3-9 2 5 2-2h5"/></svg></div>
   <h3>Currents that follow the angle at 20 kHz</h3>
-  <p>One PI controller per phase with gains derived from R, L and one bandwidth value, back-EMF feed-forward and anti-windup. On the motor model a 2 A step settles in 0.40 ms with 1.1 % overshoot.</p>
+  <p>Smooth, quiet motion without hand-tuning: one PI controller per phase with gains derived from R, L and one bandwidth value, back-EMF feed-forward and anti-windup. On the motor model a 2 A step settles in 0.40 ms with 1.1 % overshoot.</p>
   <ul class="sfs-tags"><li>PI + feed-forward</li><li>Anti-windup</li><li>Bus compensation</li></ul>
 </article><article class="sfs-card">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h6"/></svg></div>
   <h3>Tight embedded budgets</h3>
-  <p>488 B of RAM per motor, 216 B worst-case stack in the PWM interrupt, 10.6 KiB of flash on Cortex-M4. A fixed-point backend for cores without FPU; no allocation, no globals, no OS.</p>
+  <p>Fits next to your application on a small MCU: 488 B of RAM per motor, 216 B worst-case stack in the PWM interrupt, 10.6 KiB of flash on Cortex-M4. A fixed-point backend for cores without FPU; no allocation, no globals, no OS.</p>
   <ul class="sfs-tags"><li>Q15 or float</li><li>Static memory</li><li>Bare metal & RTOS</li></ul>
 </article><article class="sfs-card">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
-  <h3>Code you can certify</h3>
-  <p>Zero MISRA C:2012 violations, a documented deviation register, 100 % line and branch coverage in both numeric backends, bounded execution time and static analysis in CI.</p>
+  <h3>Code built for certification</h3>
+  <p>Zero MISRA C:2012 violations, a documented deviation register, 100 % line and branch coverage in every build variant, bounded execution time and static analysis in CI: evidence for your safety case.</p>
   <ul class="sfs-tags"><li>MISRA C</li><li>Cppcheck</li><li>CodeQL</li></ul>
 </article>
     </div>
@@ -441,7 +441,7 @@
   <section class="sfs-section">
     <span class="sfs-eyebrow">What you get</span>
     <h2 class="sfs-title">One library from motion command to PWM</h2>
-    <p class="sfs-intro">15 public functions, five modules (control, stall detection, motion, power stage, numeric backend), two power stage topologies and two numeric backends, verified in closed loop on a motor model.</p>
+    <p class="sfs-intro">16 public functions, six modules (control, self-test, stall detection, motion, power stage, numeric backend), two power stage topologies and two numeric backends, verified in closed loop on a motor model and running on a B-G431B-ESC1 board.</p>
     <div class="sfs-grid">
       <a class="sfs-card sfs-card--link" href="motor-control/">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h3l2-6 3 12 3-9 2 5 2-2h5"/></svg></div>
@@ -458,11 +458,11 @@
   <h3>Any power stage</h3>
   <p>Two H-bridges or three half-bridges with a shared leg; the voltage limit keeps the direction; the bus voltage is compensated.</p>
   <ul class="sfs-tags"><li>4 legs</li><li>3 legs</li><li>B-G431B-ESC1</li></ul>
-</a><a class="sfs-card sfs-card--link" href="usage/#handling-faults">
+</a><a class="sfs-card sfs-card--link" href="protection/">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
   <h3>Protection and stall detection</h3>
-  <p>Overcurrent, overvoltage and undervoltage trips switch the outputs off in the same period; a back-EMF observer reports a stalled or slipping rotor without a sensor.</p>
-  <ul class="sfs-tags"><li>Trips</li><li>Stall detection</li><li>Fault callback</li></ul>
+  <p>A self-test finds a short, an open phase or miswiring before the motor turns. Overcurrent and bus voltage trips switch the outputs off within the same PWM period; a back-EMF observer reports a stalled rotor without a sensor.</p>
+  <ul class="sfs-tags"><li>Self-test</li><li>Trips</li><li>Stall detection</li></ul>
 </a><a class="sfs-card sfs-card--link" href="api/">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h5"/></svg></div>
   <h3>Complete documentation</h3>
@@ -470,9 +470,9 @@
   <ul class="sfs-tags"><li>API</li><li>Guides</li><li>PDF</li></ul>
 </a><a class="sfs-card sfs-card--link" href="misra/">
   <div class="sfs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></div>
-  <h3>Quality gates in CI</h3>
-  <p>Unit and closed-loop tests in both backends with a 100 % coverage gate, MISRA C:2012 gate, Cppcheck and CodeQL.</p>
-  <ul class="sfs-tags"><li>GoogleTest</li><li>Coverage</li><li>MISRA C</li></ul>
+  <h3>Evidence you can inspect</h3>
+  <p>Every release ships its MISRA C:2012 report and the PDF manual; unit and closed-loop tests with a 100 % coverage gate, MISRA, Cppcheck and CodeQL run in CI on every change.</p>
+  <ul class="sfs-tags"><li>MISRA report</li><li>Coverage</li><li>CI</li></ul>
 </a>
     </div>
   </section>
@@ -480,7 +480,7 @@
   
   <section class="sfs-section">
     <div class="sfs-stats">
-      <div><strong>15</strong><span>public functions</span></div><div><strong>488 B</strong><span>RAM per motor</span></div><div><strong>216 B</strong><span>stack in the PWM interrupt</span></div><div><strong>0</strong><span>MISRA C:2012 violations</span></div>
+      <div><strong>16</strong><span>public functions</span></div><div><strong>488 B</strong><span>RAM per motor</span></div><div><strong>216 B</strong><span>stack in the PWM interrupt</span></div><div><strong>0</strong><span>MISRA C:2012 violations</span></div>
     </div>
   </section>
   
@@ -606,11 +606,11 @@ above must be measured on your board (<a href="configuration/#power-stage-and-me
         <img class="sfs-portfolio__logo" src="assets/images/brand/systemfromscratch-logo-on-dark.png" alt="SystemFromScratch® logo">
         <span class="sfs-eyebrow">SystemFromScratch®</span>
         <h2 class="sfs-title">Part of an open-source embedded portfolio</h2>
-        <p class="sfs-intro">Stepper-C is developed by Anton Vynohradov under SystemFromScratch® — embedded software and hardware built from the first schematic to certification.</p>
+        <p class="sfs-intro">Stepper-C is developed by Anton Vynohradov under SystemFromScratch® — secure embedded systems and compliance-ready engineering, from concept to certification-ready product.</p>
       </div>
       <div class="sfs-actions">
   
-  <a class="sfs-btn sfs-btn--primary" href="https://systemfromscratch.com">SystemFromScratch® <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  <a class="sfs-btn sfs-btn--primary" href="https://systemfromscratch.com">Ask for a short call <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   
   <a class="sfs-btn sfs-btn--outline" href="about/">About the author <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   

@@ -1480,6 +1480,11 @@ microstepping, trajectory, voltage limits) are described in <a href="../motor-co
 <td>Configuration check, derived constants, fast loop (current control, protection, PWM), slow loop (setpoints, hold current, events), commands, state machine</td>
 </tr>
 <tr>
+<td>Self-test</td>
+<td><code>src/sstep_selftest.c</code></td>
+<td>Power stage and wiring test before the first enable, one step per fast loop period (<code>SSTEP_CFG_SELFTEST</code>)</td>
+</tr>
+<tr>
 <td>Stall detection</td>
 <td><code>src/sstep_stall.c</code></td>
 <td>Back-EMF observer (fast loop), stall decision (slow loop), estimates of the status</td>
