@@ -35,7 +35,7 @@ point (no FPU needed) or single-precision float.
 | Interrupt and task setup | Every system has its own; the library only defines which function runs at which rate. See the [integration guide](integration.md). |
 | Position feedback (encoder) | The library is an open-loop positioner with closed-loop current; the rotor position is not measured. Sensorless stall detection reports a lost synchronism but does not correct the position. |
 | Homing, limit switches, G-code, multi-axis coordination | Application logic on top of `sstep_move_to()`, `sstep_set_position()` and the status. |
-| Motor parameter identification | R, L and Kt come from the datasheet or a measurement. |
+| Motor parameter identification | R, L and Ke come from the datasheet or a measurement. |
 | Communication (UART, CAN, Modbus…) | Out of scope; call the API from your protocol handler. |
 
 ## Who it is for
@@ -43,7 +43,7 @@ point (no FPU needed) or single-precision float.
 - **Firmware for stepper drives** on a general-purpose MCU with gate drivers, for example
   STMicroelectronics B-G431B-ESC1 or a custom board with two H-bridges.
 - **Machines with several axes,** one driver instance per motor, no shared state.
-- **Projects that must be reviewed or certified:** MISRA C:2012, 100 % coverage, no heap,
+- **Projects headed for review or certification:** MISRA C:2012, 100 % coverage, no heap,
   bounded execution time.
 
 ## Key properties
@@ -58,7 +58,7 @@ point (no FPU needed) or single-precision float.
 | Flash | 10.6 KiB fixed point, 11.3 KiB float (Cortex-M4, `-Os`, both topologies) |
 | Stack | `sstep_fast_loop()` 216 B, `sstep_slow_loop()` 152 B worst case (Cortex-M4 `-Os`, [details](configuration.md#stack-usage)) |
 | Coding standard | MISRA C:2012, 0 Cppcheck addon violations, [1 deviation](misra.md) |
-| Tests | 100 % line and branch coverage of `src/` in both backends; closed-loop tests on a motor model |
+| Tests | 100 % line and branch coverage of `src/` in every build variant; closed-loop tests on a motor model |
 | Thread safety | One fast-loop context and one slow-loop context per instance, by design; see [Threading](architecture.md#threading-and-reentrancy) |
 | License | [Apache License 2.0](LICENSE.md) |
 

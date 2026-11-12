@@ -8,7 +8,7 @@
 
 Stepper-C is designed, written and maintained by **Anton Vynohradov** and published by
 **SystemFromScratch®** — secure embedded systems and compliance-ready engineering, from
-concept to certification.
+concept to certification-ready product.
 
 ## Author
 
@@ -42,7 +42,7 @@ Buildroot · ARM Cortex-M · STM32 · Microchip FPGA · RISC-V · CAN / ISO-TP �
 Docker · Git · CI/CD · MISRA C/C++ · EU CRA
 
 For Stepper-C, Anton wrote the library, its unit tests and closed-loop tests on a motor
-model, and this documentation.
+model, ported it to a B-G431B-ESC1 board, and wrote this documentation.
 
 ## SystemFromScratch®
 
@@ -77,9 +77,9 @@ full test coverage, documented decisions — that the company applies to custome
 | ORCID | [0009-0005-6965-0911](https://orcid.org/0009-0005-6965-0911) |
 | Location | Poland — working remotely worldwide |
 
-Building a connected product, bringing up new hardware, or preparing for the Cyber
-Resilience Act? Get in touch through [systemfromscratch.com](https://systemfromscratch.com)
-or by e-mail.
+Bringing up a motor-control board or your own power stage, building a connected product,
+or preparing for the Cyber Resilience Act? Ask for a short call through
+[systemfromscratch.com](https://systemfromscratch.com) or by e-mail.
 
 ## Support and feedback
 

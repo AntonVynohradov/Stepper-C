@@ -13,6 +13,7 @@ microstepping, trajectory, voltage limits) are described in [Motor Control](moto
 | --- | --- | --- |
 | Public API | `sstep.h`, `inc/sstep_ctrl.h`, `inc/sstep_defs.h`, `inc/sstep_config.h` | Functions, configuration and status types, status codes, fault flags, build-time options |
 | Control | `src/sstep_ctrl.c` | Configuration check, derived constants, fast loop (current control, protection, PWM), slow loop (setpoints, hold current, events), commands, state machine |
+| Self-test | `src/sstep_selftest.c` | Power stage and wiring test before the first enable, one step per fast loop period (`SSTEP_CFG_SELFTEST`) |
 | Stall detection | `src/sstep_stall.c` | Back-EMF observer (fast loop), stall decision (slow loop), estimates of the status |
 | Motion | `src/sstep_motion.c` | Trapezoidal trajectory in integer arithmetic (both backends) |
 | Power stage | `src/sstep_bridge.c` | Voltage limit of the topology, phase voltages to leg compare values |

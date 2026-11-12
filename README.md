@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/images/hero-light.png" alt="A controller board with the Stepper-C chip drives a stepper motor; the two phase currents are drawn as sine waves" width="640">
+  <img src="docs/assets/images/hero-light.png" alt="A controller board whose microcontroller runs Stepper-C drives a stepper motor; the two phase currents are drawn as sine waves" width="640">
 </p>
 
 <h1 align="center">Stepper-C</h1>
@@ -39,7 +39,7 @@ reached only through callbacks, so the same code runs on any MCU.
 | **Microstepping** | 1 to 256 microsteps per full step, 32-bit electrical angle, sine table with linear interpolation, angle interpolated at the PWM rate |
 | **Motion** | Trapezoidal moves without overshoot, constant-velocity runs, stop, smooth retargeting, homing; exact integer positions |
 | **Power stages** | Two H-bridges (4 legs) or three half-bridges with a shared leg (3 legs, for example B-G431B-ESC1) |
-| **Protection** | Overcurrent, overvoltage, undervoltage, callback errors and external faults switch the outputs off in the same PWM period |
+| **Protection** | Self-test of the power stage and the wiring before the first enable; overcurrent (both phases and the shared leg), overvoltage, undervoltage, callback errors and external faults switch the outputs off in the same PWM period |
 | **Stall detection** | Sensorless back-EMF observer: a stalled rotor, lost synchronism or a slip at standstill raises `SSTEP_FAULT_STALL`; estimated rotor speed and load angle in the status |
 | **Numeric backends** | Fixed point (Q15/Q31, integer only) for cores without FPU, or single-precision float; selected at build time |
 
@@ -153,12 +153,14 @@ sstep.h                 public API: all functions, version
 inc/                    public types: configuration, status, codes, build-time options
 src/                    private implementation
   sstep_ctrl.c          control, state machine, fast and slow loop
+  sstep_selftest.c      self-test of the power stage and the wiring
   sstep_stall.c         stall detection: back-EMF observer and decision
   sstep_motion.c        trapezoidal motion planner
   sstep_bridge.c        voltage limit and duty cycles per topology
   sstep_math.[ch]       numeric backend (fixed point or float)
   sstep_sin_table.c     generated sine table
 tests/unit/             GoogleTest unit tests and closed-loop tests on a motor model
+tests/config/           build-time options of the extra unit test presets
 cmake/                  version, unit tests, MISRA check
 docs/                   documentation website and PDF manual sources
 tools/                  sine table generator, documentation tools
@@ -189,6 +191,11 @@ SystemFromScratch®.
 [ORCID](https://orcid.org/0009-0005-6965-0911) ·
 contact@systemfromscratch.com
 
+**Commercial support.** Bringing up a motor-control board or your own power stage, or
+integrating Stepper-C into a product headed for certification? SystemFromScratch® builds
+secure embedded systems with compliance-ready engineering, from concept to
+certification-ready product — [ask for a short call](https://systemfromscratch.com).
+
 ## Releases and versioning
 
 [Semantic Versioning](https://semver.org); the version comes from the `vX.Y.Z` Git tag.
@@ -201,7 +208,7 @@ with your toolchain and options.
 ## Contributing
 
 Issues and pull requests are welcome. A change must keep the library warning-free, pass
-the unit tests of both numeric backends with 100 % line and branch coverage, pass
+the unit tests of every `[UnitTests` preset with 100 % line and branch coverage, pass
 `misra-analyze` with 0 violations and keep the documentation in sync. See
 [Extending the Library](https://antonvynohradov.github.io/Stepper-C/extending/).
 

@@ -15,10 +15,14 @@
 <rect x="20" y="172" width="920" height="250" rx="14" fill="#FFFFFF" stroke="#1E5AA8" stroke-width="2"/>
 <text x="40" y="200" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="17" font-weight="bold" fill="#1E5AA8" text-anchor="start">Stepper-C</text>
 <text x="140" y="200" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="start">public API: sstep.h · inc/sstep_ctrl.h · inc/sstep_defs.h · inc/sstep_config.h</text>
-<rect x="40" y="216" width="580" height="76" rx="10" fill="#E6F4F5" stroke="#0F8B9A" stroke-width="1.5"/>
-<text x="330.0" y="235.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="15" font-weight="bold" fill="#0B2545" text-anchor="middle">Control — src/sstep_ctrl.c</text>
-<text x="330.0" y="255.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">configuration check · derived gains · state machine</text>
-<text x="330.0" y="272.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">fast loop: current control, trips · slow loop: setpoints, events</text>
+<rect x="40" y="216" width="380" height="76" rx="10" fill="#E6F4F5" stroke="#0F8B9A" stroke-width="1.5"/>
+<text x="230.0" y="235.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="15" font-weight="bold" fill="#0B2545" text-anchor="middle">Control — src/sstep_ctrl.c</text>
+<text x="230.0" y="255.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">config check · derived gains · state machine</text>
+<text x="230.0" y="272.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">fast loop: control, trips · slow loop: setpoints</text>
+<rect x="440" y="216" width="180" height="76" rx="10" fill="#E6F4F5" stroke="#0F8B9A" stroke-width="1.5"/>
+<text x="530.0" y="235.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="15" font-weight="bold" fill="#0B2545" text-anchor="middle">Self-test</text>
+<text x="530.0" y="255.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">src/sstep_selftest.c</text>
+<text x="530.0" y="272.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">power stage, wiring</text>
 <rect x="640" y="216" width="280" height="76" rx="10" fill="#E6F4F5" stroke="#0F8B9A" stroke-width="1.5"/>
 <text x="780.0" y="235.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="15" font-weight="bold" fill="#0B2545" text-anchor="middle">Stall detection</text>
 <text x="780.0" y="255.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">src/sstep_stall.c</text>

@@ -111,8 +111,8 @@ extra:
       with no heap, no RTOS and code that passes MISRA C:2012.
     hero_image: assets/images/hero-dark.png
     hero_alt: >-
-      A controller board with the Stepper-C chip and its power transistors drives a
-      stepper motor; the two phase currents are drawn as sine waves.
+      A controller board whose microcontroller runs Stepper-C drives a stepper motor
+      through its power transistors; the two phase currents are drawn as sine waves.
     buttons:
       - {text: Get started, link: guide/, style: primary}
       - {text: View on GitHub, link: "https://github.com/AntonVynohradov/Stepper-C", style: outline}
@@ -135,50 +135,53 @@ extra:
         - icon: wave
           title: Currents that follow the angle at 20 kHz
           text: >-
-            One PI controller per phase with gains derived from R, L and one bandwidth
-            value, back-EMF feed-forward and anti-windup. On the motor model a 2 A step
-            settles in 0.40 ms with 1.1 % overshoot.
+            Smooth, quiet motion without hand-tuning: one PI controller per phase with
+            gains derived from R, L and one bandwidth value, back-EMF feed-forward and
+            anti-windup. On the motor model a 2 A step settles in 0.40 ms with 1.1 %
+            overshoot.
           tags: [PI + feed-forward, Anti-windup, Bus compensation]
         - icon: memory
           title: Tight embedded budgets
           text: >-
-            488 B of RAM per motor, 216 B worst-case stack in the PWM interrupt, 10.6 KiB
-            of flash on Cortex-M4. A fixed-point backend for cores without FPU; no
-            allocation, no globals, no OS.
+            Fits next to your application on a small MCU: 488 B of RAM per motor, 216 B
+            worst-case stack in the PWM interrupt, 10.6 KiB of flash on Cortex-M4. A
+            fixed-point backend for cores without FPU; no allocation, no globals, no OS.
           tags: [Q15 or float, Static memory, Bare metal & RTOS]
         - icon: shield
-          title: Code you can certify
+          title: Code built for certification
           text: >-
             Zero MISRA C:2012 violations, a documented deviation register, 100 % line
-            and branch coverage in both numeric backends, bounded execution time and
-            static analysis in CI.
+            and branch coverage in every build variant, bounded execution time and
+            static analysis in CI: evidence for your safety case.
           tags: [MISRA C, Cppcheck, CodeQL]
     offer:
       eyebrow: What you get
       title: One library from motion command to PWM
       intro: >-
-        15 public functions, five modules (control, stall detection, motion, power
-        stage, numeric backend), two power stage topologies and two numeric backends, verified in
-        closed loop on a motor model.
+        16 public functions, six modules (control, self-test, stall detection, motion,
+        power stage, numeric backend), two power stage topologies and two numeric
+        backends, verified in closed loop on a motor model and running on a
+        B-G431B-ESC1 board.
       cards:
         - {icon: wave, title: Current control and microstepping, text: "PI per phase with feed-forward, sine/cosine references from a 32-bit electrical angle, 1 to 256 microsteps.", tags: [PI, Sine table, Microsteps], link: motor-control/}
         - {icon: gauge, title: Motion planner, text: "Trapezoidal moves without overshoot, constant-velocity runs, smooth stop and retargeting, exact integer positions.", tags: [Trapezoid, Q16 positions], link: "motor-control/#motion-profile"}
         - {icon: plug, title: Any power stage, text: "Two H-bridges or three half-bridges with a shared leg; the voltage limit keeps the direction; the bus voltage is compensated.", tags: [4 legs, 3 legs, B-G431B-ESC1], link: integration/}
-        - {icon: lock, title: Protection and stall detection, text: "Overcurrent, overvoltage and undervoltage trips switch the outputs off in the same period; a back-EMF observer reports a stalled or slipping rotor without a sensor.", tags: [Trips, Stall detection, Fault callback], link: "usage/#handling-faults"}
+        - {icon: lock, title: Protection and stall detection, text: "A self-test finds a short, an open phase or miswiring before the motor turns. Overcurrent and bus voltage trips switch the outputs off within the same PWM period; a back-EMF observer reports a stalled rotor without a sensor.", tags: [Self-test, Trips, Stall detection], link: protection/}
         - {icon: document, title: Complete documentation, text: "Guides, the control theory with measured results, the integration guide and a full API reference, also as a PDF.", tags: [API, Guides, PDF], link: api/}
-        - {icon: check, title: Quality gates in CI, text: "Unit and closed-loop tests in both backends with a 100 % coverage gate, MISRA C:2012 gate, Cppcheck and CodeQL.", tags: [GoogleTest, Coverage, MISRA C], link: misra/}
+        - {icon: check, title: Evidence you can inspect, text: "Every release ships its MISRA C:2012 report and the PDF manual; unit and closed-loop tests with a 100 % coverage gate, MISRA, Cppcheck and CodeQL run in CI on every change.", tags: [MISRA report, Coverage, CI], link: misra/}
     stats:                                   # measured values only
-      - {value: "15", label: public functions}
+      - {value: "16", label: public functions}
       - {value: "488 B", label: RAM per motor}
       - {value: "216 B", label: stack in the PWM interrupt}
       - {value: "0", label: MISRA C:2012 violations}
     portfolio:
       title: Part of an open-source embedded portfolio
       text: >-
-        Stepper-C is developed by Anton Vynohradov under SystemFromScratch® — embedded
-        software and hardware built from the first schematic to certification.
+        Stepper-C is developed by Anton Vynohradov under SystemFromScratch® — secure
+        embedded systems and compliance-ready engineering, from concept to
+        certification-ready product.
       buttons:
-        - {text: SystemFromScratch®, link: "https://systemfromscratch.com", style: primary}
+        - {text: Ask for a short call, link: "https://systemfromscratch.com", style: primary}
         - {text: About the author, link: about/, style: outline}
     trademark: >-
       SystemFromScratch® is a registered trademark. STM32 is a registered trademark of
