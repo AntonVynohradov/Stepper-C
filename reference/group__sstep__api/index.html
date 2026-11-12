@@ -289,6 +289,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../../protection/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Protection
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../../integration/" class="md-tabs__link">
         
   
@@ -674,6 +693,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../protection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../integration/" class="md-nav__link">
         
   
@@ -714,10 +760,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -735,8 +781,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -794,10 +840,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
         
           
-          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
             
   
   
@@ -815,8 +861,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1057,10 +1103,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -1078,8 +1124,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1323,6 +1369,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#function-sstep_selftest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function sstep_selftest
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#function-sstep_set_current" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1453,6 +1510,10 @@
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
+<td style="text-align: left;"><a href="#function-sstep_selftest"><strong>sstep_selftest</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv, uint32_t i_test_ma) <br><em>Test the power stage and the motor wiring before the first enable.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">int</td>
 <td style="text-align: left;"><a href="#function-sstep_set_current"><strong>sstep_set_current</strong></a> (struct <a href="../structsstep/"><strong>sstep</strong></a> * drv, uint32_t run_ma, uint32_t hold_ma) <br><em>Change the run and hold currents.</em></td>
 </tr>
 <tr>
@@ -1541,13 +1602,14 @@
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    struct sstep * drv
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>) 
 </code></pre></div></p>
+<p>Refused without a fault when the last bus voltage sample is outside the trip limits (no sample yet: not checked, the fast loop trips). </p>
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>drv</code> Driver instance. </li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
-<li><a href="../group__sstep__defs/#define-sstep_ok"><strong>SSTEP_OK</strong></a> (faulted). </li>
+<li><a href="../group__sstep__defs/#define-sstep_ok"><strong>SSTEP_OK</strong></a> (faulted or self-test running), <a href="../group__sstep__defs/#define-sstep_err_vbus"><strong>SSTEP_ERR_VBUS</strong></a>. </li>
 </ul>
 <hr>
 
@@ -1684,13 +1746,36 @@
 </ul>
 <hr>
 
+<h3 id="function-sstep_selftest">function sstep_selftest<a class="headerlink" href="#function-sstep_selftest" title="Permanent link">&para;</a></h3>
+<p><em>Test the power stage and the motor wiring before the first enable.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>int sstep_selftest (
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    struct sstep * drv,
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    uint32_t i_test_ma
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>) 
+</code></pre></div></p>
+<p>The outputs are switched on; for each phase in turn the fast loop raises the voltage slowly until the phase current reaches i_test_ma, holds it for 2 ms and lets it decay. It checks that no current flows with every leg low, that each phase reaches the current with the expected sign at a plausible duty cycle, and that the other phase stays below half of it. Takes about 15 to 60 ms of fast loop periods, then the outputs go off, SSTEP_EVENT_SELFTEST_DONE is reported by <a href="./#function-sstep_slow_loop"><strong>sstep_slow_loop()</strong></a> and the result is in the status. A failure raises <a href="../group__sstep__defs/#define-sstep_fault_selftest"><strong>SSTEP_FAULT_SELFTEST</strong></a>. The rotor moves to the nearest full step of the tested phase (at most one full step) and must be free to: an external torque that turns it fails the test. </p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>drv</code> Driver instance. </li>
+<li><code>i_test_ma</code> Test current [mA], 1 .. i_run_ma; typically 30 % of the rated current. </li>
+</ul>
+<p><strong>Return value:</strong></p>
+<ul>
+<li><a href="../group__sstep__defs/#define-sstep_ok"><strong>SSTEP_OK</strong></a> The test runs. </li>
+<li><a href="../group__sstep__defs/#define-sstep_err_param"><strong>SSTEP_ERR_PARAM</strong></a> NULL pointer or i_test_ma out of range. </li>
+<li><a href="../group__sstep__defs/#define-sstep_err_state"><strong>SSTEP_ERR_STATE</strong></a> Not disabled, faulted, or a test is running. </li>
+<li><a href="../group__sstep__defs/#define-sstep_err_vbus"><strong>SSTEP_ERR_VBUS</strong></a> No bus voltage sample yet, or outside the trip limits. </li>
+<li><a href="../group__sstep__defs/#define-sstep_err_unsupported"><strong>SSTEP_ERR_UNSUPPORTED</strong></a> Built with <a href="../group__sstep__config/#define-sstep_cfg_selftest"><strong>SSTEP_CFG_SELFTEST</strong></a> = 0. </li>
+</ul>
+<hr>
+
 <h3 id="function-sstep_set_current">function sstep_set_current<a class="headerlink" href="#function-sstep_set_current" title="Permanent link">&para;</a></h3>
 <p><em>Change the run and hold currents.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>int sstep_set_current (
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    struct sstep * drv,
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    uint32_t run_ma,
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    uint32_t hold_ma
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>int sstep_set_current (
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    struct sstep * drv,
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    uint32_t run_ma,
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    uint32_t hold_ma
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>) 
 </code></pre></div></p>
 <p><strong>Parameters:</strong></p>
 <ul>
@@ -1706,12 +1791,12 @@
 
 <h3 id="function-sstep_set_motion_limits">function sstep_set_motion_limits<a class="headerlink" href="#function-sstep_set_motion_limits" title="Permanent link">&para;</a></h3>
 <p><em>Change the motion limits; they apply from the next</em> <a href="./#function-sstep_slow_loop"><em><strong>sstep_slow_loop()</strong></em></a> <em>, also to a running command.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>int sstep_set_motion_limits (
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    struct sstep * drv,
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    uint32_t v_max,
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    uint32_t accel,
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    uint32_t decel
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>int sstep_set_motion_limits (
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    struct sstep * drv,
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    uint32_t v_max,
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    uint32_t accel,
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    uint32_t decel
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>) 
 </code></pre></div></p>
 <p><strong>Parameters:</strong></p>
 <ul>
@@ -1728,10 +1813,10 @@
 
 <h3 id="function-sstep_set_position">function sstep_set_position<a class="headerlink" href="#function-sstep_set_position" title="Permanent link">&para;</a></h3>
 <p><em>Redefine the current position (homing).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>int sstep_set_position (
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    struct sstep * drv,
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    int32_t position
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>int sstep_set_position (
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    struct sstep * drv,
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    int32_t position
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>) 
 </code></pre></div></p>
 <p>Only at standstill. </p>
 <p><strong>Parameters:</strong></p>
@@ -1747,9 +1832,9 @@
 
 <h3 id="function-sstep_slow_loop">function sstep_slow_loop<a class="headerlink" href="#function-sstep_slow_loop" title="Permanent link">&para;</a></h3>
 <p><em>Slow loop: advance the trajectory, update the angle and current references, handle the hold current and report events.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>int sstep_slow_loop (
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    struct sstep * drv
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>int sstep_slow_loop (
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    struct sstep * drv
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>) 
 </code></pre></div></p>
 <p>Call at <code>slow_loop_hz</code>. </p>
 <p><strong>Parameters:</strong></p>
@@ -1764,9 +1849,9 @@
 
 <h3 id="function-sstep_stop">function sstep_stop<a class="headerlink" href="#function-sstep_stop" title="Permanent link">&para;</a></h3>
 <p><em>Decelerate to standstill with the configured deceleration and hold.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>int sstep_stop (
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    struct sstep * drv
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>) 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>int sstep_stop (
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    struct sstep * drv
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>) 
 </code></pre></div></p>
 <p><strong>Parameters:</strong></p>
 <ul>

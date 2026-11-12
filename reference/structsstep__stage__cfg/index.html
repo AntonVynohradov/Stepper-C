@@ -289,6 +289,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../../protection/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Protection
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../../integration/" class="md-tabs__link">
         
   
@@ -674,6 +693,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../protection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../integration/" class="md-nav__link">
         
   
@@ -714,10 +760,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -735,8 +781,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -794,10 +840,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
         
           
-          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
             
   
   
@@ -815,8 +861,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1057,10 +1103,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -1078,8 +1124,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1312,6 +1358,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#variable-sample_window_ticks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable sample_window_ticks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#variable-topology" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1410,7 +1467,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">uint32_t</td>
-<td style="text-align: left;"><a href="#variable-dead_time_ns"><strong>dead_time_ns</strong></a>  <br><em>Dead time [ns], for compensation; 0 = none.</em></td>
+<td style="text-align: left;"><a href="#variable-dead_time_ns"><strong>dead_time_ns</strong></a>  <br><em>Dead time [ns]: duty levels of</em> <a href="../group__sstep__api/#function-sstep_selftest"><em><strong>sstep_selftest()</strong></em></a> <em>; not compensated in the control.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">uint32_t</td>
@@ -1422,11 +1479,15 @@
 </tr>
 <tr>
 <td style="text-align: right;">uint32_t</td>
-<td style="text-align: left;"><a href="#variable-pwm_freq_hz"><strong>pwm_freq_hz</strong></a>  <br><em>PWM frequency [Hz].</em></td>
+<td style="text-align: left;"><a href="#variable-pwm_freq_hz"><strong>pwm_freq_hz</strong></a>  <br><em>PWM frequency [Hz]; with dead_time_ns the dead-time loss of the</em> <a href="../group__sstep__api/#function-sstep_selftest"><em><strong>sstep_selftest()</strong></em></a> <em>levels.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">uint16_t</td>
 <td style="text-align: left;"><a href="#variable-pwm_period_ticks"><strong>pwm_period_ticks</strong></a>  <br><em>Compare value for 100 % duty cycle.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint16_t</td>
+<td style="text-align: left;"><a href="#variable-sample_window_ticks"><strong>sample_window_ticks</strong></a>  <br><em>Compare ticks of every period that each leg spends on its low-side switch at least, for low-side current sensing; 0 = none (compare up to pwm_period_ticks).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">enum <a href="../group__sstep__defs/#enum-sstep_topology"><strong>sstep_topology</strong></a></td>
@@ -1474,9 +1535,10 @@
 <hr>
 
 <h3 id="variable-dead_time_ns">variable dead_time_ns<a class="headerlink" href="#variable-dead_time_ns" title="Permanent link">&para;</a></h3>
-<p><em>Dead time [ns], for compensation; 0 = none.</em> 
+<p><em>Dead time [ns]: duty levels of</em> <a href="../group__sstep__api/#function-sstep_selftest"><em><strong>sstep_selftest()</strong></em></a> <em>; not compensated in the control.</em>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">dead_time_ns</span><span class="p">;</span>
 </code></pre></div></p>
+<p>0 = none. </p>
 <hr>
 
 <h3 id="variable-i_full_scale_ma">variable i_full_scale_ma<a class="headerlink" href="#variable-i_full_scale_ma" title="Permanent link">&para;</a></h3>
@@ -1492,7 +1554,7 @@
 <hr>
 
 <h3 id="variable-pwm_freq_hz">variable pwm_freq_hz<a class="headerlink" href="#variable-pwm_freq_hz" title="Permanent link">&para;</a></h3>
-<p><em>PWM frequency [Hz].</em> 
+<p><em>PWM frequency [Hz]; with dead_time_ns the dead-time loss of the</em> <a href="../group__sstep__api/#function-sstep_selftest"><em><strong>sstep_selftest()</strong></em></a> <em>levels.</em>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">pwm_freq_hz</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
@@ -1503,28 +1565,35 @@
 </code></pre></div></p>
 <hr>
 
+<h3 id="variable-sample_window_ticks">variable sample_window_ticks<a class="headerlink" href="#variable-sample_window_ticks" title="Permanent link">&para;</a></h3>
+<p><em>Compare ticks of every period that each leg spends on its low-side switch at least, for low-side current sensing; 0 = none (compare up to pwm_period_ticks).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">sample_window_ticks</span><span class="p">;</span>
+</code></pre></div></p>
+<p>At most pwm_period_ticks / 4. The voltage limit shrinks by the same fraction. </p>
+<hr>
+
 <h3 id="variable-topology">variable topology<a class="headerlink" href="#variable-topology" title="Permanent link">&para;</a></h3>
 <p><em>Power stage topology.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">sstep_topology</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">topology</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">sstep_topology</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">topology</span><span class="p">;</span>
 </code></pre></div></p>
 <p>ESC1: SSTEP_TOPOLOGY_SHARED_LEG. </p>
 <hr>
 
 <h3 id="variable-vbus_max_mv">variable vbus_max_mv<a class="headerlink" href="#variable-vbus_max_mv" title="Permanent link">&para;</a></h3>
 <p><em>Overvoltage trip [mV]; 0 = disabled.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">vbus_max_mv</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">vbus_max_mv</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-vbus_min_mv">variable vbus_min_mv<a class="headerlink" href="#variable-vbus_min_mv" title="Permanent link">&para;</a></h3>
 <p><em>Undervoltage trip [mV]; 0 = disabled.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">vbus_min_mv</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">vbus_min_mv</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-vbus_nominal_mv">variable vbus_nominal_mv<a class="headerlink" href="#variable-vbus_nominal_mv" title="Permanent link">&para;</a></h3>
 <p><em>Nominal bus voltage [mV]; base of the per-unit voltage.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">vbus_nominal_mv</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">vbus_nominal_mv</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 

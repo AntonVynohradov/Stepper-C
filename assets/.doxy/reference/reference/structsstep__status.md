@@ -44,6 +44,10 @@ _Snapshot returned by_ [_**sstep\_get\_status()**_](group__sstep__api.md#functio
 |  int32\_t | [**load\_angle\_cdeg**](#variable-load_angle_cdeg)  <br>_Estimated load angle, commanded minus rotor electrical angle [0.01 deg], same sign as the motor torque._  |
 |  int32\_t | [**position**](#variable-position)  <br>_Commanded position [microsteps]._  |
 |  int32\_t | [**rotor\_velocity**](#variable-rotor_velocity)  <br>_Estimated rotor velocity [microsteps/s], from the back-EMF magnitude; 0 when stall detection is off._  |
+|  enum [**sstep\_selftest\_result**](group__sstep__defs.md#enum-sstep_selftest_result) | [**selftest**](#variable-selftest)  <br>_Result of the last_ [_**sstep\_selftest()**_](group__sstep__api.md#function-sstep_selftest) _._ |
+|  uint16\_t | [**selftest\_duty**](#variable-selftest_duty)  <br>_Compare value of that phase at the end of its test._  |
+|  int32\_t | [**selftest\_i\_ma**](#variable-selftest_i_ma)  <br>_Current of that phase at the end of its test [mA], positive in the expected direction._  |
+|  uint8\_t | [**selftest\_phase**](#variable-selftest_phase)  <br>_Phase the result refers to: 0 = A, 1 = B._  |
 |  uint8\_t | [**stall\_level\_pct**](#variable-stall_level_pct)  <br>_Stall detector level, 0 ._  |
 |  enum [**sstep\_state**](group__sstep__defs.md#enum-sstep_state) | [**state**](#variable-state)  <br>_Driver state._  |
 |  int32\_t | [**target**](#variable-target)  <br>_Target of the current move [microsteps]._  |
@@ -201,6 +205,62 @@ int32_t sstep_status::position;
 _Estimated rotor velocity [microsteps/s], from the back-EMF magnitude; 0 when stall detection is off._ 
 ```C++
 int32_t sstep_status::rotor_velocity;
+```
+
+
+
+
+<hr>
+
+
+
+### variable selftest 
+
+_Result of the last_ [_**sstep\_selftest()**_](group__sstep__api.md#function-sstep_selftest) _._
+```C++
+enum sstep_selftest_result sstep_status::selftest;
+```
+
+
+
+
+<hr>
+
+
+
+### variable selftest\_duty 
+
+_Compare value of that phase at the end of its test._ 
+```C++
+uint16_t sstep_status::selftest_duty;
+```
+
+
+
+
+<hr>
+
+
+
+### variable selftest\_i\_ma 
+
+_Current of that phase at the end of its test [mA], positive in the expected direction._ 
+```C++
+int32_t sstep_status::selftest_i_ma;
+```
+
+
+
+
+<hr>
+
+
+
+### variable selftest\_phase 
+
+_Phase the result refers to: 0 = A, 1 = B._ 
+```C++
+uint8_t sstep_status::selftest_phase;
 ```
 
 

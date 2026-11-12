@@ -295,6 +295,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../protection/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Protection
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../integration/" class="md-tabs__link">
         
   
@@ -837,6 +856,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../protection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../integration/" class="md-nav__link">
         
   
@@ -877,10 +923,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -898,8 +944,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -957,10 +1003,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
         
           
-          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
             
   
   
@@ -978,8 +1024,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1220,10 +1266,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -1241,8 +1287,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1504,6 +1550,12 @@ size of <code>struct sstep</code>.</p>
 <td>Compile the three-leg topology; at least one must be 1</td>
 </tr>
 <tr>
+<td><code>SSTEP_CFG_SELFTEST</code></td>
+<td><code>1</code></td>
+<td>0, 1</td>
+<td>Compile <code>sstep_selftest()</code>; 0 removes its code and state, the call then returns <code>SSTEP_ERR_UNSUPPORTED</code></td>
+</tr>
+<tr>
 <td><code>SSTEP_CFG_MICROSTEPS_MAX</code></td>
 <td><code>256U</code></td>
 <td>power of two, 1 .. 256</td>
@@ -1643,14 +1695,14 @@ that do not fit return <code>SSTEP_ERR_CONFIG</code>.</p>
 <td>Hz</td>
 <td>–</td>
 <td>20000</td>
-<td>Reserved; not used by this version</td>
+<td>PWM frequency; with <code>dead_time_ns</code> the dead-time loss of the self-test levels</td>
 </tr>
 <tr>
 <td><code>dead_time_ns</code></td>
 <td>ns</td>
 <td>–</td>
-<td>0</td>
-<td>Reserved for dead-time compensation; not used by this version</td>
+<td>1200</td>
+<td>Dead time; used for the duty levels of the self-test (<a href="../protection/#self-test">Protection</a>), not compensated in the control; unused with <code>SSTEP_CFG_SELFTEST = 0</code></td>
 </tr>
 <tr>
 <td><code>adc_i_zero</code></td>
@@ -1679,6 +1731,13 @@ that do not fit return <code>SSTEP_ERR_CONFIG</code>.</p>
 <td>≥ 1</td>
 <td>4095</td>
 <td>Largest ADC reading</td>
+</tr>
+<tr>
+<td><code>sample_window_ticks</code></td>
+<td>timer ticks</td>
+<td>0 .. <code>pwm_period_ticks / 4</code></td>
+<td>400</td>
+<td>Least time of every period each leg spends on its low-side switch, so that low-side shunts can be sampled; 0 = none. Every compare value stays at or below <code>pwm_period_ticks − sample_window_ticks</code>, and the voltage limit shrinks by the same fraction (<a href="../motor-control/#sampling-window">Sampling window</a>)</td>
 </tr>
 </tbody>
 </table>
@@ -1801,6 +1860,20 @@ that do not fit return <code>SSTEP_ERR_CONFIG</code>.</p>
 <td>50</td>
 <td>Smallest back-EMF along the commanded motion, relative to <span class="arithmatex">\(K_e\,\omega\)</span></td>
 </tr>
+<tr>
+<td><code>i_trip_voltage_drive</code></td>
+<td>–</td>
+<td><code>false</code>, <code>true</code></td>
+<td><code>false</code></td>
+<td>Overcurrent trips also in <code>SSTEP_DRIVE_VOLTAGE</code>, for boards that measure the currents there (<a href="../protection/#overcurrent">Protection</a>)</td>
+</tr>
+<tr>
+<td><code>i_slew_ma_per_ms</code></td>
+<td>mA/ms</td>
+<td>0 .. <span class="arithmatex">\(10^7\)</span></td>
+<td>30</td>
+<td>Largest change of the current amplitude: from 0 after <code>sstep_enable()</code>, between run and hold current, after <code>sstep_set_current()</code>; 0 = at once (<a href="../motor-control/#current-slew">Current slew</a>)</td>
+</tr>
 </tbody>
 </table>
 <p>Stall detection requires <code>SSTEP_DRIVE_CURRENT</code> and <code>ke_uv_s_per_rad &gt; 0</code>
@@ -1867,13 +1940,13 @@ below 16 384 000 microsteps/s, <code>accel</code> and <code>decel</code> from 8 
 <tbody>
 <tr>
 <td><code>struct sstep</code> (RAM per motor)</td>
-<td>432 B</td>
-<td>456 B</td>
+<td>488 B</td>
+<td>520 B</td>
 </tr>
 <tr>
 <td>Code and constants, <code>-Os</code> (flash)</td>
-<td>9216 B</td>
-<td>9894 B</td>
+<td>10816 B</td>
+<td>11542 B</td>
 </tr>
 <tr>
 <td>of which the sine table</td>
@@ -1887,11 +1960,34 @@ below 16 384 000 microsteps/s, <code>accel</code> and <code>decel</code> from 8 
 </tr>
 </tbody>
 </table>
-<p><code>struct sstep</code> is the configuration copy (<code>SSTEP_CONFIG_BYTES</code>: 152 B on Cortex-M4,
-176 B on 64-bit hosts) plus the private state (<code>SSTEP_STATE_BYTES</code>: 280 B fixed point,
-304 B float on Cortex-M4; 288 B and 312 B on 64-bit hosts); on a 64-bit host the instance
-is 464 B and 488 B. Stall detection accounts for 96 B of it on Cortex-M4, and for 2236 B
+<p><code>struct sstep</code> is the configuration copy (<code>SSTEP_CONFIG_BYTES</code>: 156 B on Cortex-M4,
+192 B on 64-bit hosts) plus the private state (<code>SSTEP_STATE_BYTES</code>: 332 B fixed point,
+364 B float on Cortex-M4; 344 B and 376 B on 64-bit hosts); on a 64-bit host the instance
+is 536 B and 568 B. Stall detection accounts for 96 B of it on Cortex-M4, and for 2236 B
 (fixed point) or 2448 B (float) of the flash whether it is enabled or not.</p>
+<p>The self-test accounts for 40 B of the instance (<code>SSTEP_SELFTEST_BYTES</code>) and for 1144 B
+(fixed point) or 1140 B (float) of the flash. Built with <code>SSTEP_CFG_SELFTEST = 0</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Fixed point</th>
+<th>Float</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>struct sstep</code> (RAM per motor)</td>
+<td>448 B</td>
+<td>480 B</td>
+</tr>
+<tr>
+<td>Code and constants, <code>-Os</code> (flash)</td>
+<td>9672 B</td>
+<td>10402 B</td>
+</tr>
+</tbody>
+</table>
 <h2 id="stack-usage">Stack usage<a class="headerlink" href="#stack-usage" title="Permanent link">&para;</a></h2>
 <p>Worst-case stack of each public function including the library functions it calls,
 measured with <code>-fstack-usage -fcallgraph-info=su</code> and <code>tools/docs/stack_usage.py</code>
@@ -1912,16 +2008,23 @@ functions that call them.</p>
 <tr>
 <td><code>sstep_init()</code></td>
 <td style="text-align: right;">224</td>
-<td style="text-align: right;">1544</td>
+<td style="text-align: right;">1600</td>
 <td style="text-align: right;">200</td>
-<td style="text-align: right;">1432</td>
+<td style="text-align: right;">1496</td>
 </tr>
 <tr>
 <td><code>sstep_enable()</code></td>
-<td style="text-align: right;">48</td>
+<td style="text-align: right;">56</td>
 <td style="text-align: right;">80</td>
 <td style="text-align: right;">64</td>
 <td style="text-align: right;">88</td>
+</tr>
+<tr>
+<td><code>sstep_selftest()</code></td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">384</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">384</td>
 </tr>
 <tr>
 <td><code>sstep_disable()</code></td>
@@ -1933,16 +2036,16 @@ functions that call them.</p>
 <tr>
 <td><code>sstep_fast_loop()</code></td>
 <td style="text-align: right;">216</td>
-<td style="text-align: right;">304</td>
-<td style="text-align: right;">128</td>
 <td style="text-align: right;">312</td>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">320</td>
 </tr>
 <tr>
 <td><code>sstep_slow_loop()</code></td>
 <td style="text-align: right;">152</td>
-<td style="text-align: right;">696</td>
-<td style="text-align: right;">140</td>
-<td style="text-align: right;">624</td>
+<td style="text-align: right;">720</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;">656</td>
 </tr>
 <tr>
 <td><code>sstep_move_to()</code></td>
@@ -2010,9 +2113,9 @@ functions that call them.</p>
 <tr>
 <td><code>sstep_get_status()</code></td>
 <td style="text-align: right;">92</td>
-<td style="text-align: right;">536</td>
+<td style="text-align: right;">568</td>
 <td style="text-align: right;">92</td>
-<td style="text-align: right;">496</td>
+<td style="text-align: right;">528</td>
 </tr>
 </tbody>
 </table>

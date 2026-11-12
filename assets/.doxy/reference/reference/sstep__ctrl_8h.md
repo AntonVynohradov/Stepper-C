@@ -105,9 +105,10 @@
 
 | Type | Name |
 | ---: | :--- |
-| define  | [**SSTEP\_CONFIG\_BYTES**](sstep__ctrl_8h.md#define-sstep_config_bytes)  `152U`<br>_Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers._  |
+| define  | [**SSTEP\_CONFIG\_BYTES**](sstep__ctrl_8h.md#define-sstep_config_bytes)  `156U`<br> |
 | define  | [**SSTEP\_INSTANCE\_WORDS**](sstep__ctrl_8h.md#define-sstep_instance_words)  `((SSTEP\_CONFIG\_BYTES + SSTEP\_STATE\_BYTES + 7U) / 8U)`<br>_Size of_ [_**sstep**_](structsstep.md) _in 64-bit words._ |
-| define  | [**SSTEP\_STATE\_BYTES**](sstep__ctrl_8h.md#define-sstep_state_bytes)  `280U`<br> |
+| define  | [**SSTEP\_SELFTEST\_BYTES**](sstep__ctrl_8h.md#define-sstep_selftest_bytes)  `40U`<br>_Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers._  |
+| define  | [**SSTEP\_STATE\_BYTES**](sstep__ctrl_8h.md#define-sstep_state_bytes)  `(292U + SSTEP\_SELFTEST\_BYTES)`<br> |
 
 ## Public Types Documentation
 
@@ -137,7 +138,8 @@ _Events reported through sstep\_event\_fn._
 ```C++
 enum sstep_event {
     SSTEP_EVENT_MOVE_DONE = 0,
-    SSTEP_EVENT_HOLD_CURRENT = 1
+    SSTEP_EVENT_HOLD_CURRENT = 1,
+    SSTEP_EVENT_SELFTEST_DONE = 2
 };
 ```
 
@@ -273,17 +275,12 @@ Called from [**sstep\_fast\_loop()**](group__sstep__api.md#function-sstep_fast_l
 
 ### define SSTEP\_CONFIG\_BYTES 
 
-_Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers._ 
 ```C++
-#define SSTEP_CONFIG_BYTES `152U`
+#define SSTEP_CONFIG_BYTES `156U`
 ```
 
 
 
-Plain constants, so that the instance size needs no sizeof (static analysis); sstep\_ctrl.c checks both at compile time. 
-
-
-        
 
 <hr>
 
@@ -303,10 +300,28 @@ _Size of_ [_**sstep**_](structsstep.md) _in 64-bit words._
 
 
 
+### define SSTEP\_SELFTEST\_BYTES 
+
+_Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers._ 
+```C++
+#define SSTEP_SELFTEST_BYTES `40U`
+```
+
+
+
+Plain constants, so that the instance size needs no sizeof (static analysis); sstep\_ctrl.c checks both at compile time. State of [**sstep\_selftest()**](group__sstep__api.md#function-sstep_selftest) ([**SSTEP\_CFG\_SELFTEST**](group__sstep__config.md#define-sstep_cfg_selftest)). 
+
+
+        
+
+<hr>
+
+
+
 ### define SSTEP\_STATE\_BYTES 
 
 ```C++
-#define SSTEP_STATE_BYTES `280U`
+#define SSTEP_STATE_BYTES `(292U + SSTEP_SELFTEST_BYTES)`
 ```
 
 

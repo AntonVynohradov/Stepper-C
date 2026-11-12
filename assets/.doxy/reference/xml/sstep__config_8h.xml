@@ -51,6 +51,7 @@
       <member refid="group__sstep__config_1gac0ee05e0335a33c6e3ecc3c9c59587d5" kind="define"><name>SSTEP_CFG_MATH_BACKEND</name></member>
       <member refid="group__sstep__config_1ga31fbdc1c85873c64564a26b02b8f9f70" kind="define"><name>SSTEP_CFG_TOPOLOGY_FULL_BRIDGE</name></member>
       <member refid="group__sstep__config_1gaeb2e0432614d6dca86d83418ffcfbea7" kind="define"><name>SSTEP_CFG_TOPOLOGY_SHARED_LEG</name></member>
+      <member refid="group__sstep__config_1ga80128e9a8782edd49b5020c2ddba6e94" kind="define"><name>SSTEP_CFG_SELFTEST</name></member>
       <member refid="group__sstep__config_1gacb1659c8029aeb92ff4062d4a265535b" kind="define"><name>SSTEP_CFG_MICROSTEPS_MAX</name></member>
       <member refid="group__sstep__config_1ga50ab8d5098e6740dbcd9dbc6f4200d70" kind="define"><name>SSTEP_CFG_SINE_TABLE_BITS</name></member>
       <member refid="group__sstep__config_1ga61a368eeac97ae6ab0f43c70a2acc423" kind="define"><name>SSTEP_CFG_ARG_CHECKS</name></member>
@@ -142,39 +143,51 @@
 <codeline lineno="102"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="103"><highlight class="normal"></highlight></codeline>
 <codeline lineno="104"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
-<codeline lineno="105"><highlight class="comment"><sp/>*<sp/>MICROSTEPPING</highlight></codeline>
+<codeline lineno="105"><highlight class="comment"><sp/>*<sp/>SELF-TEST</highlight></codeline>
 <codeline lineno="106"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="107"><highlight class="normal"></highlight></codeline>
-<codeline lineno="108"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_CFG_MICROSTEPS_MAX</highlight></codeline>
-<codeline lineno="110" refid="group__sstep__config_1gacb1659c8029aeb92ff4062d4a265535b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CFG_MICROSTEPS_MAX<sp/>256U</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="111"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="112"><highlight class="normal"></highlight></codeline>
-<codeline lineno="113"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_MICROSTEPS_MAX<sp/>&lt;<sp/>1U)<sp/>||<sp/>(SSTEP_CFG_MICROSTEPS_MAX<sp/>&gt;<sp/>256U)<sp/>||<sp/>\</highlight></codeline>
-<codeline lineno="114"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>((SSTEP_CFG_MICROSTEPS_MAX<sp/>&amp;<sp/>(SSTEP_CFG_MICROSTEPS_MAX<sp/>-<sp/>1U))<sp/>!=<sp/>0U)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="115"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;SSTEP_CFG_MICROSTEPS_MAX<sp/>must<sp/>be<sp/>a<sp/>power<sp/>of<sp/>two<sp/>in<sp/>1..256&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_CFG_SELFTEST</highlight></codeline>
+<codeline lineno="111" refid="group__sstep__config_1ga80128e9a8782edd49b5020c2ddba6e94" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CFG_SELFTEST<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_SELFTEST<sp/>!=<sp/>0)<sp/>&amp;&amp;<sp/>(SSTEP_CFG_SELFTEST<sp/>!=<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;SSTEP_CFG_SELFTEST<sp/>must<sp/>be<sp/>0<sp/>or<sp/>1&quot;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="116"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="117"><highlight class="normal"></highlight></codeline>
-<codeline lineno="118"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_CFG_SINE_TABLE_BITS</highlight></codeline>
-<codeline lineno="122" refid="group__sstep__config_1ga50ab8d5098e6740dbcd9dbc6f4200d70" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CFG_SINE_TABLE_BITS<sp/>8U</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="123"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="124"><highlight class="normal"></highlight></codeline>
-<codeline lineno="125"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_SINE_TABLE_BITS<sp/>&lt;<sp/>6U)<sp/>||<sp/>(SSTEP_CFG_SINE_TABLE_BITS<sp/>&gt;<sp/>10U)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="126"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;SSTEP_CFG_SINE_TABLE_BITS<sp/>must<sp/>be<sp/>in<sp/>6..10&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="127"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="128"><highlight class="normal"></highlight></codeline>
-<codeline lineno="129"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
-<codeline lineno="130"><highlight class="comment"><sp/>*<sp/>RUN-TIME<sp/>CHECKS</highlight></codeline>
-<codeline lineno="131"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="132"><highlight class="normal"></highlight></codeline>
-<codeline lineno="133"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_CFG_ARG_CHECKS</highlight></codeline>
-<codeline lineno="137" refid="group__sstep__config_1ga61a368eeac97ae6ab0f43c70a2acc423" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CFG_ARG_CHECKS<sp/>1</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="138"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="139"><highlight class="normal"></highlight></codeline>
-<codeline lineno="140"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_ARG_CHECKS<sp/>!=<sp/>0)<sp/>&amp;&amp;<sp/>(SSTEP_CFG_ARG_CHECKS<sp/>!=<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="141"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;SSTEP_CFG_ARG_CHECKS<sp/>must<sp/>be<sp/>0<sp/>or<sp/>1&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="142"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="143"><highlight class="normal"></highlight></codeline>
-<codeline lineno="146"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_CONFIG_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="119"><highlight class="comment"><sp/>*<sp/>MICROSTEPPING</highlight></codeline>
+<codeline lineno="120"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_CFG_MICROSTEPS_MAX</highlight></codeline>
+<codeline lineno="124" refid="group__sstep__config_1gacb1659c8029aeb92ff4062d4a265535b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CFG_MICROSTEPS_MAX<sp/>256U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_MICROSTEPS_MAX<sp/>&lt;<sp/>1U)<sp/>||<sp/>(SSTEP_CFG_MICROSTEPS_MAX<sp/>&gt;<sp/>256U)<sp/>||<sp/>\</highlight></codeline>
+<codeline lineno="128"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>((SSTEP_CFG_MICROSTEPS_MAX<sp/>&amp;<sp/>(SSTEP_CFG_MICROSTEPS_MAX<sp/>-<sp/>1U))<sp/>!=<sp/>0U)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;SSTEP_CFG_MICROSTEPS_MAX<sp/>must<sp/>be<sp/>a<sp/>power<sp/>of<sp/>two<sp/>in<sp/>1..256&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_CFG_SINE_TABLE_BITS</highlight></codeline>
+<codeline lineno="136" refid="group__sstep__config_1ga50ab8d5098e6740dbcd9dbc6f4200d70" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CFG_SINE_TABLE_BITS<sp/>8U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_SINE_TABLE_BITS<sp/>&lt;<sp/>6U)<sp/>||<sp/>(SSTEP_CFG_SINE_TABLE_BITS<sp/>&gt;<sp/>10U)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;SSTEP_CFG_SINE_TABLE_BITS<sp/>must<sp/>be<sp/>in<sp/>6..10&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="144"><highlight class="comment"><sp/>*<sp/>RUN-TIME<sp/>CHECKS</highlight></codeline>
+<codeline lineno="145"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_CFG_ARG_CHECKS</highlight></codeline>
+<codeline lineno="151" refid="group__sstep__config_1ga61a368eeac97ae6ab0f43c70a2acc423" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_CFG_ARG_CHECKS<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_ARG_CHECKS<sp/>!=<sp/>0)<sp/>&amp;&amp;<sp/>(SSTEP_CFG_ARG_CHECKS<sp/>!=<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;SSTEP_CFG_ARG_CHECKS<sp/>must<sp/>be<sp/>0<sp/>or<sp/>1&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_CONFIG_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
     <location file="inc/sstep_config.h"/>
   </compounddef>

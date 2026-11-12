@@ -81,6 +81,29 @@ struct sstep_bridge_out
     bool limited;                     
 };
 
+#if (SSTEP_CFG_SELFTEST == 1)
+struct sstep_selftest_ctx
+{
+    /* parameters, sstep_selftest_setup() */
+    int32_t i_test;         
+    uint32_t duty_max_q8;   
+    uint32_t duty_short_q8; 
+    uint32_t ramp_q8;       
+    uint16_t boot_periods;  
+    uint16_t hold_periods;  
+    uint16_t decay_periods; 
+    uint8_t leg[2];         
+    /* state */
+    uint8_t phase;                     
+    uint8_t coil;                      
+    uint16_t n;                        
+    uint32_t duty_q8;                  
+    int32_t i_own;                     
+    enum sstep_selftest_result result; 
+    volatile uint8_t done;             
+};
+#endif /* SSTEP_CFG_SELFTEST */
+
 /* ==============================================================================
  * DRIVER INSTANCE
  * =============================================================================*/
@@ -111,21 +134,26 @@ struct sstep_ctx
 {
     struct sstep_config cfg; 
     /* Constants derived by sstep_init() */
-    struct sstep_gain kp;      
-    struct sstep_gain ki;      
-    struct sstep_gain kb;      
-    struct sstep_gain r_pu;    
-    struct sstep_gain adc_i;   
-    struct sstep_gain adc_v;   
-    struct sstep_gain ff_gain; 
-    sstep_real_t i_run;        
-    sstep_real_t i_hold;       
-    uint16_t i_trip_counts;    
-    uint16_t vbus_min_raw;     
-    uint16_t vbus_max_raw;     
-    uint16_t ratio;            
-    uint32_t hold_ticks;       
-    uint8_t angle_shift;       
+    struct sstep_gain kp;       
+    struct sstep_gain ki;       
+    struct sstep_gain kb;       
+    struct sstep_gain r_pu;     
+    struct sstep_gain adc_i;    
+    struct sstep_gain adc_v;    
+    struct sstep_gain ff_gain;  
+    sstep_real_t i_run;         
+    sstep_real_t i_hold;        
+    uint16_t i_trip_counts;     
+    uint16_t vbus_min_raw;      
+    uint16_t vbus_max_raw;      
+    uint16_t ratio;             
+    uint32_t hold_ticks;        
+    uint8_t angle_shift;        
+    uint16_t period_eff;        
+    uint16_t bus_num;           
+    uint16_t bus_den;           
+    struct sstep_gain bus_frac; 
+    sstep_real_t i_slew;        
     /* Stall detection constants, sstep_stall_*() */
     struct sstep_gain emf_a;     
     struct sstep_gain emf_b;     
@@ -151,12 +179,17 @@ struct sstep_ctx
     sstep_angle_t angle_offset; 
     uint32_t still;             
     bool hold_active;           
+    sstep_real_t i_amp;         
     struct sstep_gain inv_vbus; 
     int32_t vel_cmd;            
     sstep_real_t ff_cmd;        
     int64_t emf_off[2];         
     uint32_t stall_count;       
     uint32_t stall_hold;        
+#if (SSTEP_CFG_SELFTEST == 1)
+    struct sstep_selftest_ctx st; 
+#endif
+
     volatile uint16_t faults;        
     volatile enum sstep_state state; 
     uint32_t ready;                  
@@ -181,6 +214,14 @@ static inline const struct sstep_ctx* sstep_ctx_of_const(const struct sstep* drv
 void sstep_bridge_map(enum sstep_topology topology, sstep_acc_t va, sstep_acc_t vb,
                       const struct sstep_gain* inv_vbus, sstep_acc_t vbus, uint16_t period,
                       struct sstep_bridge_out* out);
+
+#if (SSTEP_CFG_SELFTEST == 1)
+void sstep_selftest_setup(struct sstep_selftest_ctx* st, const struct sstep_config* cfg,
+                          uint16_t vbus_raw, uint32_t i_test_ma);
+
+enum sstep_selftest_result sstep_selftest_step(struct sstep_selftest_ctx* st, int32_t i_a,
+                                               int32_t i_b, uint16_t compare[SSTEP_LEGS_MAX]);
+#endif /* SSTEP_CFG_SELFTEST */
 
 uint8_t sstep_motion_step(struct sstep_motion* mo);
 

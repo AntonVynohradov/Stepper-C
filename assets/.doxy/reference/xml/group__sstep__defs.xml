@@ -34,7 +34,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_defs.h" line="78" column="1" bodyfile="inc/sstep_defs.h" bodystart="79" bodyend="87"/>
+        <location file="inc/sstep_defs.h" line="82" column="1" bodyfile="inc/sstep_defs.h" bodystart="83" bodyend="91"/>
       </memberdef>
       <memberdef kind="enum" id="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" prot="public" static="no" strong="no">
         <type></type>
@@ -82,7 +82,100 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_defs.h" line="117" column="1" bodyfile="inc/sstep_defs.h" bodystart="118" bodyend="123"/>
+        <location file="inc/sstep_defs.h" line="124" column="1" bodyfile="inc/sstep_defs.h" bodystart="125" bodyend="130"/>
+      </memberdef>
+      <memberdef kind="enum" id="group__sstep__defs_1gad39bac2fb7097d5cecf5c442af7dcbf5" prot="public" static="no" strong="no">
+        <type></type>
+        <name>sstep_selftest_result</name>
+        <enumvalue id="group__sstep__defs_1ggad39bac2fb7097d5cecf5c442af7dcbf5a47424a236540290f695d8eea28f9a521" prot="public">
+          <name>SSTEP_SELFTEST_NONE</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+<para>Not run since <ref refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kindref="member">sstep_init()</ref>, or stopped by <ref refid="group__sstep__api_1ga296ffb294291431f36e14fc306c20027" kindref="member">sstep_disable()</ref>. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__sstep__defs_1ggad39bac2fb7097d5cecf5c442af7dcbf5a90a1d2b8432c93cd187cd344057a6973" prot="public">
+          <name>SSTEP_SELFTEST_RUNNING</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+<para>The fast loop is running the test. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__sstep__defs_1ggad39bac2fb7097d5cecf5c442af7dcbf5ae76d20dbbc07ef71060ea4b8f4e9edda" prot="public">
+          <name>SSTEP_SELFTEST_PASS</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+<para>Both phases carry the test current as expected. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__sstep__defs_1ggad39bac2fb7097d5cecf5c442af7dcbf5a00d0340aaa20957f5927d6147b4e9942" prot="public">
+          <name>SSTEP_SELFTEST_LEAK</name>
+          <initializer>= 3</initializer>
+          <briefdescription>
+<para>Current with every leg low: a switch conducts. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__sstep__defs_1ggad39bac2fb7097d5cecf5c442af7dcbf5a411e660e12e6c9b3de9b171b6e08123c" prot="public">
+          <name>SSTEP_SELFTEST_OPEN</name>
+          <initializer>= 4</initializer>
+          <briefdescription>
+<para>No current at the largest test duty cycle: phase open, motor not connected or a leg dead. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__sstep__defs_1ggad39bac2fb7097d5cecf5c442af7dcbf5a86844d578aef18b2c0f60690d8c70865" prot="public">
+          <name>SSTEP_SELFTEST_SHORT</name>
+          <initializer>= 5</initializer>
+          <briefdescription>
+<para>Current too high, or reached at a duty cycle below the resistance of the phase: short circuit. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__sstep__defs_1ggad39bac2fb7097d5cecf5c442af7dcbf5acef7a1130d67052cf152b0401ca90217" prot="public">
+          <name>SSTEP_SELFTEST_POLARITY</name>
+          <initializer>= 6</initializer>
+          <briefdescription>
+<para>Current of the wrong sign: the sign of adc_i_span. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__sstep__defs_1ggad39bac2fb7097d5cecf5c442af7dcbf5a680ca8f1495a33193061d28baff4335c" prot="public">
+          <name>SSTEP_SELFTEST_WRONG_PHASE</name>
+          <initializer>= 7</initializer>
+          <briefdescription>
+<para>The other phase carries half the test current or more: a phase connected to the wrong legs. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__sstep__defs_1ggad39bac2fb7097d5cecf5c442af7dcbf5a0fcb588d43c90f85f07f8ca947539c9f" prot="public">
+          <name>SSTEP_SELFTEST_ABORTED</name>
+          <initializer>= 8</initializer>
+          <briefdescription>
+<para>A trip of the fast loop (bus voltage) ended the test. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>Result of <ref refid="group__sstep__api_1gabf6e86e82e3fec2d39be668525125a89" kindref="member">sstep_selftest()</ref>, in <ref refid="structsstep__status_1a48e3a665596df871dbdb7db5d2b419e7" kindref="member">sstep_status::selftest</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="137" column="1" bodyfile="inc/sstep_defs.h" bodystart="138" bodyend="151"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="define">
@@ -138,13 +231,26 @@
         <name>SSTEP_ERR_UNSUPPORTED</name>
         <initializer>(-4)</initializer>
         <briefdescription>
-<para>Topology not compiled in (see <ref refid="group__sstep__config_1ga31fbdc1c85873c64564a26b02b8f9f70" kindref="member">SSTEP_CFG_TOPOLOGY_FULL_BRIDGE</ref>). </para>
+<para>Topology or self-test not compiled in (see <ref refid="group__sstep__config_1ga31fbdc1c85873c64564a26b02b8f9f70" kindref="member">SSTEP_CFG_TOPOLOGY_FULL_BRIDGE</ref>, <ref refid="group__sstep__config_1ga80128e9a8782edd49b5020c2ddba6e94" kindref="member">SSTEP_CFG_SELFTEST</ref>). </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_defs.h" line="68" column="9" bodyfile="inc/sstep_defs.h" bodystart="68" bodyend="-1"/>
+        <location file="inc/sstep_defs.h" line="69" column="9" bodyfile="inc/sstep_defs.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__defs_1gad93b8d75937e0aba07a27ad33c058760" prot="public" static="no">
+        <name>SSTEP_ERR_VBUS</name>
+        <initializer>(-5)</initializer>
+        <briefdescription>
+<para>The last bus voltage sample is outside vbus_min_mv . </para>
+        </briefdescription>
+        <detaileddescription>
+<para>. vbus_max_mv: the outputs stay off, no fault is latched (<ref refid="group__sstep__api_1ga3f592ef6f7e95b2c4b0792f113eae5ac" kindref="member">sstep_enable()</ref>, <ref refid="group__sstep__api_1gabf6e86e82e3fec2d39be668525125a89" kindref="member">sstep_selftest()</ref>). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="72" column="9" bodyfile="inc/sstep_defs.h" bodystart="72" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__defs_1ga1322a183e22d7a74f48144c279a90fe7" prot="public" static="no">
         <name>SSTEP_LEGS_MAX</name>
@@ -156,7 +262,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_defs.h" line="75" column="9" bodyfile="inc/sstep_defs.h" bodystart="75" bodyend="-1"/>
+        <location file="inc/sstep_defs.h" line="79" column="9" bodyfile="inc/sstep_defs.h" bodystart="79" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__defs_1ga2d6e88422a533af881e0e02728673d55" prot="public" static="no">
         <name>SSTEP_FAULT_NONE</name>
@@ -169,7 +275,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_defs.h" line="95" column="9" bodyfile="inc/sstep_defs.h" bodystart="95" bodyend="-1"/>
+        <location file="inc/sstep_defs.h" line="99" column="9" bodyfile="inc/sstep_defs.h" bodystart="99" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__defs_1gaa353d481953ff35813c91602f7767914" prot="public" static="no">
         <name>SSTEP_FAULT_OVERCURRENT</name>
@@ -181,7 +287,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_defs.h" line="97" column="9" bodyfile="inc/sstep_defs.h" bodystart="97" bodyend="-1"/>
+        <location file="inc/sstep_defs.h" line="101" column="9" bodyfile="inc/sstep_defs.h" bodystart="101" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__defs_1gaac654b622282f0a713bf3d7d066bcc8e" prot="public" static="no">
         <name>SSTEP_FAULT_OVERVOLTAGE</name>
@@ -193,7 +299,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_defs.h" line="99" column="9" bodyfile="inc/sstep_defs.h" bodystart="99" bodyend="-1"/>
+        <location file="inc/sstep_defs.h" line="103" column="9" bodyfile="inc/sstep_defs.h" bodystart="103" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__defs_1gadf817747c1ca590152b756f4d5cf88ed" prot="public" static="no">
         <name>SSTEP_FAULT_UNDERVOLTAGE</name>
@@ -205,7 +311,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_defs.h" line="101" column="9" bodyfile="inc/sstep_defs.h" bodystart="101" bodyend="-1"/>
+        <location file="inc/sstep_defs.h" line="105" column="9" bodyfile="inc/sstep_defs.h" bodystart="105" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__defs_1gab51def6949f6a27cf6c6651c246c8cc7" prot="public" static="no">
         <name>SSTEP_FAULT_HAL</name>
@@ -217,7 +323,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_defs.h" line="103" column="9" bodyfile="inc/sstep_defs.h" bodystart="103" bodyend="-1"/>
+        <location file="inc/sstep_defs.h" line="107" column="9" bodyfile="inc/sstep_defs.h" bodystart="107" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__defs_1ga6160f6093576feb828e106ab46dc7269" prot="public" static="no">
         <name>SSTEP_FAULT_EXTERNAL</name>
@@ -229,7 +335,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_defs.h" line="106" column="9" bodyfile="inc/sstep_defs.h" bodystart="106" bodyend="-1"/>
+        <location file="inc/sstep_defs.h" line="110" column="9" bodyfile="inc/sstep_defs.h" bodystart="110" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__defs_1ga88d60a46d72e1ead7ce8e2b62feb417d" prot="public" static="no">
         <name>SSTEP_FAULT_STALL</name>
@@ -241,7 +347,19 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_defs.h" line="110" column="9" bodyfile="inc/sstep_defs.h" bodystart="110" bodyend="-1"/>
+        <location file="inc/sstep_defs.h" line="114" column="9" bodyfile="inc/sstep_defs.h" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__sstep__defs_1ga8f3bba3b4b2262a9d1bfc6df2b0ba2f1" prot="public" static="no">
+        <name>SSTEP_FAULT_SELFTEST</name>
+        <initializer>0x0040U</initializer>
+        <briefdescription>
+<para><ref refid="group__sstep__api_1gabf6e86e82e3fec2d39be668525125a89" kindref="member">sstep_selftest()</ref> found the power stage or the motor wiring faulty; the result is in <ref refid="structsstep__status_1a48e3a665596df871dbdb7db5d2b419e7" kindref="member">sstep_status::selftest</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_defs.h" line="117" column="9" bodyfile="inc/sstep_defs.h" bodystart="117" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>

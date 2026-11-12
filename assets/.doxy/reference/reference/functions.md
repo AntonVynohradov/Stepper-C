@@ -27,7 +27,9 @@
 ## d
 
 * **derive** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
+* **derive\_slew** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 * **derive\_stall** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
+* **derive\_window** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 * **div\_round** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 
 
@@ -89,6 +91,7 @@
 * **set\_currents** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 * **set\_limits** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 * **shutdown** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
+* **slew\_current** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 * **sstep\_ctx\_of** ([**sstep\_internal.h**](sstep__internal_8h.md))
 * **sstep\_ctx\_of\_const** ([**sstep\_internal.h**](sstep__internal_8h.md))
 * **sstep\_isqrt64** ([**sstep\_internal.h**](sstep__internal_8h.md), [**sstep\_motion.c**](sstep__motion_8c.md))
@@ -102,6 +105,11 @@
 ## t
 
 * **target\_velocity** ([**sstep\_motion.c**](sstep__motion_8c.md))
+
+
+## v
+
+* **vbus\_out\_of\_range** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 
 
 

@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://antonvynohradov.github.io/Stepper-C/integration/">
       
       
-        <link rel="prev" href="../motor-control/">
+        <link rel="prev" href="../protection/">
       
       
         <link rel="next" href="../api/">
@@ -281,6 +281,25 @@
     
   
   Motor Control
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../protection/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Protection
 
       </a>
     </li>
@@ -677,6 +696,33 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../protection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -844,10 +890,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -865,8 +911,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -924,10 +970,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
         
           
-          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
             
   
   
@@ -945,8 +991,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1187,10 +1233,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -1208,8 +1254,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1528,7 +1574,11 @@ path, and pass the same <code>-DSSTEP_CFG_…</code> definitions to the library 
 <h2 id="bring-up-checklist">Bring-up checklist<a class="headerlink" href="#bring-up-checklist" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>Outputs off:</strong> read the ADC and check <code>adc_i_zero</code> and the bus voltage reading
-   against a multimeter (<code>sstep_get_status()</code> shows <code>vbus_mv</code> after a fast loop).</li>
+   against a multimeter (<code>sstep_get_status()</code> shows <code>vbus_mv</code> after a fast loop). With
+   low-side shunts, set <code>sample_window_ticks</code> so that every conversion of the fast loop
+   falls into the time all legs are on their low-side switch
+   (<a href="../motor-control/#sampling-window">Sampling window</a>): without it a duty cycle near
+   100 % corrupts the samples, and a false undervoltage or overcurrent trip follows.</li>
 <li><strong>Polarity:</strong> start with <code>drive_mode = SSTEP_DRIVE_VOLTAGE</code> and a small <code>i_run_ma</code>;
    after <code>sstep_enable()</code>, the measured current of phase A must be positive and close to
    the reference. If it is negative, negate <code>adc_i_span</code>.</li>
@@ -1536,8 +1586,9 @@ path, and pass the same <code>-DSSTEP_CFG_…</code> definitions to the library 
    phase current with a current probe or the status: it must settle at <code>i_run_ma</code>.</li>
 <li><strong>Motion:</strong> run slowly (<code>sstep_run()</code> with a few hundred microsteps/s), then raise the
    speed and the acceleration to the application's values.</li>
-<li><strong>Protection:</strong> check the trips with a lowered <code>i_trip_ma</code> and <code>vbus_max_mv</code>, and the
-   external fault input with <code>sstep_report_fault()</code>.</li>
+<li><strong>Protection:</strong> run <code>sstep_selftest()</code> before the first enable, check the trips with a
+   lowered <code>i_trip_ma</code> and <code>vbus_max_mv</code>, and the external fault input with
+   <code>sstep_report_fault()</code> (<a href="../protection/">Protection</a>).</li>
 <li><strong>Stall detection (optional):</strong> enable it with the example values, log
    <code>stall_level_pct</code>, <code>emf_d_mv</code> and <code>load_angle_cdeg</code> through every operating point
    (enable, hold, the fastest move, the heaviest load), then block the shaft by hand at
@@ -1579,7 +1630,7 @@ path, and pass the same <code>-DSSTEP_CFG_…</code> definitions to the library 
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../motor-control/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Motor Control">
+          <a href="../protection/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Protection">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1589,7 +1640,7 @@ path, and pass the same <code>-DSSTEP_CFG_…</code> definitions to the library 
                 Previous
               </span>
               <div class="md-ellipsis">
-                Motor Control
+                Protection
               </div>
             </div>
           </a>

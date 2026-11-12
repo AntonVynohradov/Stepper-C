@@ -41,6 +41,9 @@ _Driver state behind the opaque_ [_**sstep**_](structsstep.md) _._[More...](#det
 |  uint16\_t | [**adv**](#variable-adv)  <br>_Angle increments applied since the hand-off._  |
 |  [**sstep\_angle\_t**](group__sstep__math.md#typedef-sstep_angle_t) | [**angle\_offset**](#variable-angle_offset)  <br>_Electrical angle of position 0._  |
 |  uint8\_t | [**angle\_shift**](#variable-angle_shift)  <br>_14 - log2(microsteps)._  |
+|  uint16\_t | [**bus\_den**](#variable-bus_den)  <br>_period\_eff, 1 without a sampling window._  |
+|  struct [**sstep\_gain**](structsstep__gain.md) | [**bus\_frac**](#variable-bus_frac)  <br>_period\_eff / pwm\_period\_ticks._  |
+|  uint16\_t | [**bus\_num**](#variable-bus_num)  <br>_pwm\_period\_ticks, 1 without a sampling window._  |
 |  struct [**sstep\_config**](structsstep__config.md) | [**cfg**](#variable-cfg)  <br>_Copy of the configuration._  |
 |  uint16\_t | [**compare**](#variable-compare)  <br>_Last compare values._  |
 |  struct [**sstep\_setpoint**](structsstep__setpoint.md) | [**cur**](#variable-cur)  <br>_Setpoint in use._  |
@@ -54,10 +57,12 @@ _Driver state behind the opaque_ [_**sstep**_](structsstep.md) _._[More...](#det
 |  struct [**sstep\_gain**](structsstep__gain.md) | [**ff\_gain**](#variable-ff_gain)  <br>_Feed-forward per microstep/s [pu]._  |
 |  bool | [**hold\_active**](#variable-hold_active)  <br>_Hold current applied._  |
 |  uint32\_t | [**hold\_ticks**](#variable-hold_ticks)  <br>_Slow periods at standstill before hold._  |
+|  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**i\_amp**](#variable-i_amp)  <br>_Current amplitude of the setpoint [pu] (slew)._  |
 |  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**i\_hold**](#variable-i_hold)  <br>_Hold current [pu]._  |
 |  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**i\_meas**](#variable-i_meas)  <br>_Last measured phase currents [pu]._  |
 |  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**i\_prev**](#variable-i_prev)  <br>_Phase currents of the previous period [pu]._  |
 |  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**i\_run**](#variable-i_run)  <br>_Run current [pu]._  |
+|  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**i\_slew**](#variable-i_slew)  <br>_Current slew per slow period [pu]; 0 = off._  |
 |  uint16\_t | [**i\_trip\_counts**](#variable-i_trip_counts)  <br>_Overcurrent trip [ADC counts from zero]._  |
 |  [**sstep\_integ\_t**](group__sstep__math.md#typedef-sstep_integ_t) | [**integ**](#variable-integ)  <br>_PI integrators [pu V]._  |
 |  struct [**sstep\_gain**](structsstep__gain.md) | [**inv\_vbus**](#variable-inv_vbus)  <br>_Last V\_base / bus voltage._  |
@@ -65,6 +70,7 @@ _Driver state behind the opaque_ [_**sstep**_](structsstep.md) _._[More...](#det
 |  struct [**sstep\_gain**](structsstep__gain.md) | [**ki**](#variable-ki)  <br>_Integral gain per fast loop period._  |
 |  struct [**sstep\_gain**](structsstep__gain.md) | [**kp**](#variable-kp)  <br>_Proportional gain [pu V / pu A]._  |
 |  struct [**sstep\_motion**](structsstep__motion.md) | [**mo**](#variable-mo)  <br>_Motion generator._  |
+|  uint16\_t | [**period\_eff**](#variable-period_eff)  <br>_pwm\_period\_ticks - sample\_window\_ticks._  |
 |  struct [**sstep\_gain**](structsstep__gain.md) | [**r\_pu**](#variable-r_pu)  <br>_Phase resistance [pu] (voltage drive)._  |
 |  uint16\_t | [**ratio**](#variable-ratio)  <br>_Fast loop periods per slow loop period._  |
 |  uint32\_t | [**ready**](#variable-ready)  <br>_SSTEP\_READY after a successful_ [_**sstep\_init()**_](group__sstep__api.md#function-sstep_init) _._ |
@@ -199,6 +205,48 @@ sstep_angle_t sstep_ctx::angle_offset;
 _14 - log2(microsteps)._ 
 ```C++
 uint8_t sstep_ctx::angle_shift;
+```
+
+
+
+
+<hr>
+
+
+
+### variable bus\_den 
+
+_period\_eff, 1 without a sampling window._ 
+```C++
+uint16_t sstep_ctx::bus_den;
+```
+
+
+
+
+<hr>
+
+
+
+### variable bus\_frac 
+
+_period\_eff / pwm\_period\_ticks._ 
+```C++
+struct sstep_gain sstep_ctx::bus_frac;
+```
+
+
+
+
+<hr>
+
+
+
+### variable bus\_num 
+
+_pwm\_period\_ticks, 1 without a sampling window._ 
+```C++
+uint16_t sstep_ctx::bus_num;
 ```
 
 
@@ -390,6 +438,20 @@ uint32_t sstep_ctx::hold_ticks;
 
 
 
+### variable i\_amp 
+
+_Current amplitude of the setpoint [pu] (slew)._ 
+```C++
+sstep_real_t sstep_ctx::i_amp;
+```
+
+
+
+
+<hr>
+
+
+
 ### variable i\_hold 
 
 _Hold current [pu]._ 
@@ -437,6 +499,20 @@ sstep_real_t sstep_ctx::i_prev[2];
 _Run current [pu]._ 
 ```C++
 sstep_real_t sstep_ctx::i_run;
+```
+
+
+
+
+<hr>
+
+
+
+### variable i\_slew 
+
+_Current slew per slow period [pu]; 0 = off._ 
+```C++
+sstep_real_t sstep_ctx::i_slew;
 ```
 
 
@@ -535,6 +611,20 @@ struct sstep_gain sstep_ctx::kp;
 _Motion generator._ 
 ```C++
 struct sstep_motion sstep_ctx::mo;
+```
+
+
+
+
+<hr>
+
+
+
+### variable period\_eff 
+
+_pwm\_period\_ticks - sample\_window\_ticks._ 
+```C++
+uint16_t sstep_ctx::period_eff;
 ```
 
 

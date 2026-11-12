@@ -21,6 +21,9 @@
 
 ## b
 
+* **bus\_den** ([**sstep\_ctx**](structsstep__ctx.md))
+* **bus\_frac** ([**sstep\_ctx**](structsstep__ctx.md))
+* **bus\_num** ([**sstep\_ctx**](structsstep__ctx.md))
 * **brake\_vmax** ([**sstep\_motion**](structsstep__motion.md))
 
 
@@ -79,17 +82,20 @@
 
 * **i\_hold\_ma** ([**sstep\_ctrl\_cfg**](structsstep__ctrl__cfg.md))
 * **i\_run\_ma** ([**sstep\_ctrl\_cfg**](structsstep__ctrl__cfg.md))
+* **i\_slew\_ma\_per\_ms** ([**sstep\_ctrl\_cfg**](structsstep__ctrl__cfg.md))
+* **i\_trip\_voltage\_drive** ([**sstep\_ctrl\_cfg**](structsstep__ctrl__cfg.md))
+* **i\_amp** ([**sstep\_ctx**](structsstep__ctx.md), [**sstep\_setpoint**](structsstep__setpoint.md))
 * **i\_hold** ([**sstep\_ctx**](structsstep__ctx.md))
 * **i\_meas** ([**sstep\_ctx**](structsstep__ctx.md))
 * **i\_prev** ([**sstep\_ctx**](structsstep__ctx.md))
 * **i\_run** ([**sstep\_ctx**](structsstep__ctx.md))
+* **i\_slew** ([**sstep\_ctx**](structsstep__ctx.md))
 * **i\_trip\_counts** ([**sstep\_ctx**](structsstep__ctx.md))
 * **integ** ([**sstep\_ctx**](structsstep__ctx.md))
 * **inv\_vbus** ([**sstep\_ctx**](structsstep__ctx.md), [**sstep\_setpoint**](structsstep__setpoint.md))
 * **i\_rated\_ma** ([**sstep\_motor\_cfg**](structsstep__motor__cfg.md))
 * **i\_a** ([**sstep\_sample**](structsstep__sample.md))
 * **i\_b** ([**sstep\_sample**](structsstep__sample.md))
-* **i\_amp** ([**sstep\_setpoint**](structsstep__setpoint.md))
 * **i\_full\_scale\_ma** ([**sstep\_stage\_cfg**](structsstep__stage__cfg.md))
 * **i\_trip\_ma** ([**sstep\_stage\_cfg**](structsstep__stage__cfg.md))
 * **i\_a\_ma** ([**sstep\_status**](structsstep__status.md))
@@ -131,6 +137,7 @@
 ## p
 
 * **pwm\_write** ([**sstep\_callbacks**](structsstep__callbacks.md))
+* **period\_eff** ([**sstep\_ctx**](structsstep__ctx.md))
 * **pos** ([**sstep\_motion**](structsstep__motion.md))
 * **pwm\_freq\_hz** ([**sstep\_stage\_cfg**](structsstep__stage__cfg.md))
 * **pwm\_period\_ticks** ([**sstep\_stage\_cfg**](structsstep__stage__cfg.md))
@@ -164,6 +171,11 @@
 * **state** ([**sstep\_ctx**](structsstep__ctx.md), [**sstep\_status**](structsstep__status.md))
 * **still** ([**sstep\_ctx**](structsstep__ctx.md))
 * **sin** ([**sstep\_sincos**](structsstep__sincos.md))
+* **sample\_window\_ticks** ([**sstep\_stage\_cfg**](structsstep__stage__cfg.md))
+* **selftest** ([**sstep\_status**](structsstep__status.md))
+* **selftest\_duty** ([**sstep\_status**](structsstep__status.md))
+* **selftest\_i\_ma** ([**sstep\_status**](structsstep__status.md))
+* **selftest\_phase** ([**sstep\_status**](structsstep__status.md))
 * **stall\_level\_pct** ([**sstep\_status**](structsstep__status.md))
 
 

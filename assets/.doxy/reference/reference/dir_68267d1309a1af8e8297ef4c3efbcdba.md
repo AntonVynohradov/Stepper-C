@@ -27,6 +27,7 @@
 | file | [**sstep\_math.c**](sstep__math_8c.md) <br> |
 | file | [**sstep\_math.h**](sstep__math_8h.md) <br> |
 | file | [**sstep\_motion.c**](sstep__motion_8c.md) <br> |
+| file | [**sstep\_selftest.c**](sstep__selftest_8c.md) <br> |
 | file | [**sstep\_sin\_table.c**](sstep__sin__table_8c.md) <br> |
 | file | [**sstep\_sin\_table.h**](sstep__sin__table_8h.md) <br> |
 | file | [**sstep\_stall.c**](sstep__stall_8c.md) <br> |

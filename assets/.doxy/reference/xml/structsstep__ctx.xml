@@ -17,7 +17,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="118" column="23" bodyfile="src/sstep_internal.h" bodystart="118" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="146" column="23" bodyfile="src/sstep_internal.h" bodystart="146" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a1e67c4340162d418cc5d5e9f3bc3e95b" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
@@ -32,7 +32,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="121" column="21" bodyfile="src/sstep_internal.h" bodystart="121" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="149" column="21" bodyfile="src/sstep_internal.h" bodystart="149" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a46b595654e2f1e01563b1a2d8cf9aaa9" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
@@ -47,7 +47,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="122" column="21" bodyfile="src/sstep_internal.h" bodystart="122" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="150" column="21" bodyfile="src/sstep_internal.h" bodystart="150" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1abfdd76cdb0afb54c2c51505114092405" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
@@ -62,7 +62,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="123" column="21" bodyfile="src/sstep_internal.h" bodystart="123" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="151" column="21" bodyfile="src/sstep_internal.h" bodystart="151" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a3d086e65b6a2ad860e427c36f27e56ec" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
@@ -77,7 +77,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="124" column="21" bodyfile="src/sstep_internal.h" bodystart="124" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="152" column="21" bodyfile="src/sstep_internal.h" bodystart="152" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a48ede8aad4c742c12faa8dc92b22df8b" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
@@ -92,7 +92,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="125" column="21" bodyfile="src/sstep_internal.h" bodystart="125" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="153" column="21" bodyfile="src/sstep_internal.h" bodystart="153" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1af6d85c1fd40cd00ebcc402bc6b1d5c19" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
@@ -107,7 +107,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="126" column="21" bodyfile="src/sstep_internal.h" bodystart="126" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="154" column="21" bodyfile="src/sstep_internal.h" bodystart="154" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a8be09d137512077d21285ac8e0886db7" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
@@ -122,7 +122,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="127" column="21" bodyfile="src/sstep_internal.h" bodystart="127" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="155" column="21" bodyfile="src/sstep_internal.h" bodystart="155" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a23be414f6e03d7d3d45b80929eeabe4c" prot="public" static="no" mutable="no">
         <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
@@ -137,7 +137,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="128" column="18" bodyfile="src/sstep_internal.h" bodystart="128" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="156" column="18" bodyfile="src/sstep_internal.h" bodystart="156" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a332c6bbffbe5d21901e7741e05264261" prot="public" static="no" mutable="no">
         <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
@@ -152,7 +152,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="129" column="18" bodyfile="src/sstep_internal.h" bodystart="129" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="157" column="18" bodyfile="src/sstep_internal.h" bodystart="157" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a8fd6a548bab8493551c729472a1ec5b8" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -167,7 +167,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="130" column="14" bodyfile="src/sstep_internal.h" bodystart="130" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="158" column="14" bodyfile="src/sstep_internal.h" bodystart="158" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1addb60a18b6f3a27bc6c70b0ecb81738a" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -182,7 +182,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="131" column="14" bodyfile="src/sstep_internal.h" bodystart="131" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="159" column="14" bodyfile="src/sstep_internal.h" bodystart="159" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a3da3a12210a404943e9d2e236a63ea0b" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -197,7 +197,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="132" column="14" bodyfile="src/sstep_internal.h" bodystart="132" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="160" column="14" bodyfile="src/sstep_internal.h" bodystart="160" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a82d7b9f7d886bb1943ba901e336e0d8b" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -212,7 +212,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="133" column="14" bodyfile="src/sstep_internal.h" bodystart="133" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="161" column="14" bodyfile="src/sstep_internal.h" bodystart="161" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1ae64fcf3425b2598936138ba299cf6b4d" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -227,7 +227,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="134" column="14" bodyfile="src/sstep_internal.h" bodystart="134" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="162" column="14" bodyfile="src/sstep_internal.h" bodystart="162" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a810f186b003933d53d8554a10541f92d" prot="public" static="no" mutable="no">
         <type>uint8_t</type>
@@ -242,7 +242,82 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="135" column="13" bodyfile="src/sstep_internal.h" bodystart="135" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="163" column="13" bodyfile="src/sstep_internal.h" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a9509fd54a9d8473143eac8aa57e24cfb" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_ctx::period_eff</definition>
+        <argsstring></argsstring>
+        <name>period_eff</name>
+        <qualifiedname>sstep_ctx::period_eff</qualifiedname>
+        <briefdescription>
+<para>pwm_period_ticks - sample_window_ticks. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="164" column="14" bodyfile="src/sstep_internal.h" bodystart="164" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1af6f3be94163478bbea56cfd4d93d46e1" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_ctx::bus_num</definition>
+        <argsstring></argsstring>
+        <name>bus_num</name>
+        <qualifiedname>sstep_ctx::bus_num</qualifiedname>
+        <briefdescription>
+<para>pwm_period_ticks, 1 without a sampling window. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="165" column="14" bodyfile="src/sstep_internal.h" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a6282012ddc779b32dad2fff09aea02d6" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_ctx::bus_den</definition>
+        <argsstring></argsstring>
+        <name>bus_den</name>
+        <qualifiedname>sstep_ctx::bus_den</qualifiedname>
+        <briefdescription>
+<para>period_eff, 1 without a sampling window. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="166" column="14" bodyfile="src/sstep_internal.h" bodystart="166" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a465c18cd9c41e6117840fa12685bd090" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
+        <definition>struct sstep_gain sstep_ctx::bus_frac</definition>
+        <argsstring></argsstring>
+        <name>bus_frac</name>
+        <qualifiedname>sstep_ctx::bus_frac</qualifiedname>
+        <briefdescription>
+<para>period_eff / pwm_period_ticks. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="167" column="21" bodyfile="src/sstep_internal.h" bodystart="167" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a58fa1f698790c1170af71ebf6a75d672" prot="public" static="no" mutable="no">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>sstep_real_t sstep_ctx::i_slew</definition>
+        <argsstring></argsstring>
+        <name>i_slew</name>
+        <qualifiedname>sstep_ctx::i_slew</qualifiedname>
+        <briefdescription>
+<para>Current slew per slow period [pu]; 0 = off. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="168" column="18" bodyfile="src/sstep_internal.h" bodystart="168" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1af6d7e055bebdb470e8c6cb5a870c2794" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
@@ -257,7 +332,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="138" column="21" bodyfile="src/sstep_internal.h" bodystart="138" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="171" column="21" bodyfile="src/sstep_internal.h" bodystart="171" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a08330a63c8b869e1494a30574dc01d7c" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
@@ -272,7 +347,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="139" column="21" bodyfile="src/sstep_internal.h" bodystart="139" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="172" column="21" bodyfile="src/sstep_internal.h" bodystart="172" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1ab66255e02ad17f32b54a0b91f64e4218" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
@@ -287,7 +362,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="140" column="21" bodyfile="src/sstep_internal.h" bodystart="140" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="173" column="21" bodyfile="src/sstep_internal.h" bodystart="173" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a4e4f505a34ae70c469b1e6b23505e5ab" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -302,7 +377,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="141" column="14" bodyfile="src/sstep_internal.h" bodystart="141" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="174" column="14" bodyfile="src/sstep_internal.h" bodystart="174" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a1d7f9712100b09592ddd9e07c9c43875" prot="public" static="no" mutable="no">
         <type>int32_t</type>
@@ -317,7 +392,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="142" column="13" bodyfile="src/sstep_internal.h" bodystart="142" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="175" column="13" bodyfile="src/sstep_internal.h" bodystart="175" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a9b6ace7a3294a768d244e4a00d428b15" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__setpoint" kindref="compound">sstep_setpoint</ref></type>
@@ -332,7 +407,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="145" column="25" bodyfile="src/sstep_internal.h" bodystart="145" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="178" column="25" bodyfile="src/sstep_internal.h" bodystart="178" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1aac285fd52795b36c9e83f80427f82eab" prot="public" static="no" mutable="no">
         <type>volatile uint8_t</type>
@@ -347,7 +422,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="146" column="22" bodyfile="src/sstep_internal.h" bodystart="146" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="179" column="22" bodyfile="src/sstep_internal.h" bodystart="179" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1ab258c071b68ef99090b0b7255f42e3cb" prot="public" static="no" mutable="no">
         <type>volatile uint8_t</type>
@@ -362,7 +437,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="147" column="22" bodyfile="src/sstep_internal.h" bodystart="147" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="180" column="22" bodyfile="src/sstep_internal.h" bodystart="180" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1adb272b220e797957556b8b3e37253a98" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__setpoint" kindref="compound">sstep_setpoint</ref></type>
@@ -377,7 +452,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="150" column="25" bodyfile="src/sstep_internal.h" bodystart="150" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="183" column="25" bodyfile="src/sstep_internal.h" bodystart="183" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a01ff4c75981ac1ac5e216372bd4cd965" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -392,7 +467,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="151" column="14" bodyfile="src/sstep_internal.h" bodystart="151" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="184" column="14" bodyfile="src/sstep_internal.h" bodystart="184" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a17668c85b69646377aa7c84cac353b3d" prot="public" static="no" mutable="no">
         <type><ref refid="group__sstep__math_1ga9e868b8abdb662b36b33ac870301e70e" kindref="member">sstep_integ_t</ref></type>
@@ -407,7 +482,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="152" column="19" bodyfile="src/sstep_internal.h" bodystart="152" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="185" column="19" bodyfile="src/sstep_internal.h" bodystart="185" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a012c6e0d1edfaeba7a920f3f5a78b6f7" prot="public" static="no" mutable="no">
         <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
@@ -422,7 +497,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="153" column="18" bodyfile="src/sstep_internal.h" bodystart="153" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="186" column="18" bodyfile="src/sstep_internal.h" bodystart="186" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a396559c5cf7e80f8284a758090e4c9fa" prot="public" static="no" mutable="no">
         <type>volatile uint16_t</type>
@@ -437,7 +512,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="154" column="23" bodyfile="src/sstep_internal.h" bodystart="154" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="187" column="23" bodyfile="src/sstep_internal.h" bodystart="187" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a3eb1be70191acef8e88f3479fae8e0e9" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -452,7 +527,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="155" column="14" bodyfile="src/sstep_internal.h" bodystart="155" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="188" column="14" bodyfile="src/sstep_internal.h" bodystart="188" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1ab44b90278a45c1455c8c1c5b78cbad10" prot="public" static="no" mutable="no">
         <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
@@ -467,7 +542,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="156" column="18" bodyfile="src/sstep_internal.h" bodystart="156" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="189" column="18" bodyfile="src/sstep_internal.h" bodystart="189" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a3c500091375d0a65ab22cf4204adfb83" prot="public" static="no" mutable="no">
         <type><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref></type>
@@ -482,7 +557,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="157" column="17" bodyfile="src/sstep_internal.h" bodystart="157" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="190" column="17" bodyfile="src/sstep_internal.h" bodystart="190" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a688ff04355950a77f4f42f6a36ed095c" prot="public" static="no" mutable="no">
         <type><ref refid="group__sstep__math_1ga9e868b8abdb662b36b33ac870301e70e" kindref="member">sstep_integ_t</ref></type>
@@ -497,7 +572,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="159" column="19" bodyfile="src/sstep_internal.h" bodystart="159" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="192" column="19" bodyfile="src/sstep_internal.h" bodystart="192" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a2e1ad5b7ce1ec2becb6891b47e153811" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__motion" kindref="compound">sstep_motion</ref></type>
@@ -512,7 +587,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="162" column="23" bodyfile="src/sstep_internal.h" bodystart="162" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="195" column="23" bodyfile="src/sstep_internal.h" bodystart="195" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1abec952592f81b9471eebd6e308761ad6" prot="public" static="no" mutable="no">
         <type><ref refid="group__sstep__math_1ga2d9b6ce2135a467c6d227cde4dd9c12b" kindref="member">sstep_angle_t</ref></type>
@@ -527,7 +602,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="163" column="19" bodyfile="src/sstep_internal.h" bodystart="163" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="196" column="19" bodyfile="src/sstep_internal.h" bodystart="196" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a60464f27495ad8b58110fcf1b479937e" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -542,7 +617,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="164" column="14" bodyfile="src/sstep_internal.h" bodystart="164" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="197" column="14" bodyfile="src/sstep_internal.h" bodystart="197" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1aa5dbd43a4ab41881800819204db9071c" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -557,7 +632,22 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="165" column="10" bodyfile="src/sstep_internal.h" bodystart="165" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="198" column="10" bodyfile="src/sstep_internal.h" bodystart="198" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__ctx_1a771e0965d2ae76a63aef558c72384a2b" prot="public" static="no" mutable="no">
+        <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
+        <definition>sstep_real_t sstep_ctx::i_amp</definition>
+        <argsstring></argsstring>
+        <name>i_amp</name>
+        <qualifiedname>sstep_ctx::i_amp</qualifiedname>
+        <briefdescription>
+<para>Current amplitude of the setpoint [pu] (slew). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/sstep_internal.h" line="199" column="18" bodyfile="src/sstep_internal.h" bodystart="199" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a2faf30dd7bf5a3afcae0aa32f8377a38" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></type>
@@ -572,7 +662,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="166" column="21" bodyfile="src/sstep_internal.h" bodystart="166" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="200" column="21" bodyfile="src/sstep_internal.h" bodystart="200" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1af715f0ffdd36047e827fe27a00f706d0" prot="public" static="no" mutable="no">
         <type>int32_t</type>
@@ -587,7 +677,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="167" column="13" bodyfile="src/sstep_internal.h" bodystart="167" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="201" column="13" bodyfile="src/sstep_internal.h" bodystart="201" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1ae17e0568420ef8e69d6aaeeced941484" prot="public" static="no" mutable="no">
         <type><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref></type>
@@ -602,7 +692,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="168" column="18" bodyfile="src/sstep_internal.h" bodystart="168" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="202" column="18" bodyfile="src/sstep_internal.h" bodystart="202" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a09f5093ccb2343ff809423c4029c3824" prot="public" static="no" mutable="no">
         <type>int64_t</type>
@@ -617,7 +707,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="169" column="13" bodyfile="src/sstep_internal.h" bodystart="169" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="203" column="13" bodyfile="src/sstep_internal.h" bodystart="203" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a4a0445c885013aceb85e186974379a78" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -632,7 +722,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="170" column="14" bodyfile="src/sstep_internal.h" bodystart="170" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="204" column="14" bodyfile="src/sstep_internal.h" bodystart="204" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a8576219187173368d6a8e09e598f476e" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -647,7 +737,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="171" column="14" bodyfile="src/sstep_internal.h" bodystart="171" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="205" column="14" bodyfile="src/sstep_internal.h" bodystart="205" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1aea889ec3ad563cb14a4e9203b6624175" prot="public" static="no" mutable="no">
         <type>volatile uint16_t</type>
@@ -662,7 +752,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="173" column="23" bodyfile="src/sstep_internal.h" bodystart="173" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="211" column="23" bodyfile="src/sstep_internal.h" bodystart="211" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a49e7de50e5440d9aa544c0c9038fc968" prot="public" static="no" mutable="no">
         <type>enum <ref refid="group__sstep__defs_1gafa25ddfb06816d5922d0b945ef81bd0e" kindref="member">sstep_state</ref></type>
@@ -677,7 +767,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="174" column="30" bodyfile="src/sstep_internal.h" bodystart="174" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="212" column="30" bodyfile="src/sstep_internal.h" bodystart="212" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__ctx_1a8ac92a1cae8a0bffe1de31791bf05d0c" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -692,7 +782,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_internal.h" line="175" column="14" bodyfile="src/sstep_internal.h" bodystart="175" bodyend="-1"/>
+        <location file="src/sstep_internal.h" line="213" column="14" bodyfile="src/sstep_internal.h" bodystart="213" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -735,6 +825,7 @@
         <childnode refid="7" relation="usage">
           <edgelabel>adc_i</edgelabel>
           <edgelabel>adc_v</edgelabel>
+          <edgelabel>bus_frac</edgelabel>
           <edgelabel>emf_a</edgelabel>
           <edgelabel>emf_alpha</edgelabel>
           <edgelabel>emf_b</edgelabel>
@@ -742,7 +833,6 @@
           <edgelabel>inv_vbus</edgelabel>
           <edgelabel>kb</edgelabel>
           <edgelabel>ki</edgelabel>
-          <edgelabel>kp</edgelabel>
           <edgelabel>...</edgelabel>
         </childnode>
         <childnode refid="8" relation="usage">
@@ -777,13 +867,16 @@
         <link refid="structsstep__stage__cfg"/>
       </node>
     </collaborationgraph>
-    <location file="src/sstep_internal.h" line="116" column="1" bodyfile="src/sstep_internal.h" bodystart="117" bodyend="176"/>
+    <location file="src/sstep_internal.h" line="144" column="1" bodyfile="src/sstep_internal.h" bodystart="145" bodyend="214"/>
     <listofallmembers>
       <member refid="structsstep__ctx_1a48ede8aad4c742c12faa8dc92b22df8b" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>adc_i</name></member>
       <member refid="structsstep__ctx_1af6d85c1fd40cd00ebcc402bc6b1d5c19" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>adc_v</name></member>
       <member refid="structsstep__ctx_1a01ff4c75981ac1ac5e216372bd4cd965" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>adv</name></member>
       <member refid="structsstep__ctx_1abec952592f81b9471eebd6e308761ad6" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>angle_offset</name></member>
       <member refid="structsstep__ctx_1a810f186b003933d53d8554a10541f92d" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>angle_shift</name></member>
+      <member refid="structsstep__ctx_1a6282012ddc779b32dad2fff09aea02d6" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>bus_den</name></member>
+      <member refid="structsstep__ctx_1a465c18cd9c41e6117840fa12685bd090" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>bus_frac</name></member>
+      <member refid="structsstep__ctx_1af6f3be94163478bbea56cfd4d93d46e1" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>bus_num</name></member>
       <member refid="structsstep__ctx_1a95044f0e3e149efbdef19cf5023add21" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>cfg</name></member>
       <member refid="structsstep__ctx_1a3eb1be70191acef8e88f3479fae8e0e9" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>compare</name></member>
       <member refid="structsstep__ctx_1adb272b220e797957556b8b3e37253a98" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>cur</name></member>
@@ -797,10 +890,12 @@
       <member refid="structsstep__ctx_1a8be09d137512077d21285ac8e0886db7" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>ff_gain</name></member>
       <member refid="structsstep__ctx_1aa5dbd43a4ab41881800819204db9071c" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>hold_active</name></member>
       <member refid="structsstep__ctx_1ae64fcf3425b2598936138ba299cf6b4d" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>hold_ticks</name></member>
+      <member refid="structsstep__ctx_1a771e0965d2ae76a63aef558c72384a2b" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>i_amp</name></member>
       <member refid="structsstep__ctx_1a332c6bbffbe5d21901e7741e05264261" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>i_hold</name></member>
       <member refid="structsstep__ctx_1a012c6e0d1edfaeba7a920f3f5a78b6f7" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>i_meas</name></member>
       <member refid="structsstep__ctx_1ab44b90278a45c1455c8c1c5b78cbad10" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>i_prev</name></member>
       <member refid="structsstep__ctx_1a23be414f6e03d7d3d45b80929eeabe4c" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>i_run</name></member>
+      <member refid="structsstep__ctx_1a58fa1f698790c1170af71ebf6a75d672" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>i_slew</name></member>
       <member refid="structsstep__ctx_1a8fd6a548bab8493551c729472a1ec5b8" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>i_trip_counts</name></member>
       <member refid="structsstep__ctx_1a17668c85b69646377aa7c84cac353b3d" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>integ</name></member>
       <member refid="structsstep__ctx_1a2faf30dd7bf5a3afcae0aa32f8377a38" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>inv_vbus</name></member>
@@ -808,6 +903,7 @@
       <member refid="structsstep__ctx_1a46b595654e2f1e01563b1a2d8cf9aaa9" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>ki</name></member>
       <member refid="structsstep__ctx_1a1e67c4340162d418cc5d5e9f3bc3e95b" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>kp</name></member>
       <member refid="structsstep__ctx_1a2e1ad5b7ce1ec2becb6891b47e153811" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>mo</name></member>
+      <member refid="structsstep__ctx_1a9509fd54a9d8473143eac8aa57e24cfb" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>period_eff</name></member>
       <member refid="structsstep__ctx_1a3d086e65b6a2ad860e427c36f27e56ec" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>r_pu</name></member>
       <member refid="structsstep__ctx_1a82d7b9f7d886bb1943ba901e336e0d8b" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>ratio</name></member>
       <member refid="structsstep__ctx_1a8ac92a1cae8a0bffe1de31791bf05d0c" prot="public" virt="non-virtual"><scope>sstep_ctx</scope><name>ready</name></member>

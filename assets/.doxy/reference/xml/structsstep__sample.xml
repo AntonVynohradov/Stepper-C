@@ -18,7 +18,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="201" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="201" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="214" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="214" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__sample_1a2a5852ca2dc92a9de72414c7f3d9c493" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -34,7 +34,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="202" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="202" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="215" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="215" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__sample_1a622ee6849365e05230e297c7c3c03561" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -49,7 +49,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="203" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="203" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="216" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="216" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -57,7 +57,7 @@
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="inc/sstep_ctrl.h" line="199" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="200" bodyend="204"/>
+    <location file="inc/sstep_ctrl.h" line="212" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="213" bodyend="217"/>
     <listofallmembers>
       <member refid="structsstep__sample_1a7e050a4725ec6b73627ffb6246ddfa6c" prot="public" virt="non-virtual"><scope>sstep_sample</scope><name>i_a</name></member>
       <member refid="structsstep__sample_1a2a5852ca2dc92a9de72414c7f3d9c493" prot="public" virt="non-virtual"><scope>sstep_sample</scope><name>i_b</name></member>

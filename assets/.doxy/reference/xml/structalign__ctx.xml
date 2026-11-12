@@ -77,6 +77,7 @@
         <childnode refid="8" relation="usage">
           <edgelabel>adc_i</edgelabel>
           <edgelabel>adc_v</edgelabel>
+          <edgelabel>bus_frac</edgelabel>
           <edgelabel>emf_a</edgelabel>
           <edgelabel>emf_alpha</edgelabel>
           <edgelabel>emf_b</edgelabel>
@@ -84,7 +85,6 @@
           <edgelabel>inv_vbus</edgelabel>
           <edgelabel>kb</edgelabel>
           <edgelabel>ki</edgelabel>
-          <edgelabel>kp</edgelabel>
           <edgelabel>...</edgelabel>
         </childnode>
         <childnode refid="9" relation="usage">

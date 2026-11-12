@@ -66,7 +66,9 @@
 |  int | [**check\_stall**](#function-check_stall) (const struct [**sstep\_config**](structsstep__config.md) \* cfg) <br>_Validate the stall detection fields (ignored when stall\_time\_ms is 0)._  |
 |  void | [**control**](#function-control) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Current control, power stage and PWM write of one fast loop period._  |
 |  int | [**derive**](#function-derive) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Derive gains, scaling and limits from the (validated) configuration._  |
+|  void | [**derive\_slew**](#function-derive_slew) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Current slew per slow period [pu], at least one mA; 0 = off._  |
 |  int | [**derive\_stall**](#function-derive_stall) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Derive the stall detection constants (after the other gains)._  |
+|  void | [**derive\_window**](#function-derive_window) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Sampling window: the legs may use the compare range 0 ._  |
 |  int64\_t | [**div\_round**](#function-div_round) (int64\_t num, int64\_t den) <br>_round(num / den) for den &gt; 0, half away from zero._  |
 |  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**gain\_apply\_i32**](#function-gain_apply_i32) (const struct [**sstep\_gain**](structsstep__gain.md) \* g, int32\_t v) <br>_g \* v for a 32-bit integer v (slow loop, 64-bit product), as a saturated signal._  |
 |  bool | [**is\_active**](#function-is_active) (enum [**sstep\_state**](group__sstep__defs.md#enum-sstep_state) s) <br>_Outputs are on._  |
@@ -81,6 +83,8 @@
 |  int | [**set\_currents**](#function-set_currents) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m, uint32\_t run\_ma, uint32\_t hold\_ma) <br>_Validate and store the run and hold currents._  |
 |  int | [**set\_limits**](#function-set_limits) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m, uint32\_t v\_max, uint32\_t accel, uint32\_t decel) <br>_Validate and store the motion limits (engineering units -&gt; Q16 per period)._  |
 |  void | [**shutdown**](#function-shutdown) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m, uint16\_t faults) <br>_Switch the outputs off and enter the fault state (any context)._  |
+|  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**slew\_current**](#function-slew_current) (const struct [**sstep\_ctx**](structsstep__ctx.md) \* m, [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) target) <br>_Current amplitude of the next slow period: towards target by at most i\_slew._  |
+|  bool | [**vbus\_out\_of\_range**](#function-vbus_out_of_range) (const struct [**sstep\_ctx**](structsstep__ctx.md) \* m, bool need\_sample) <br>_Last bus voltage sample outside the trip limits._  |
 
 
 
@@ -186,6 +190,22 @@ static int derive (
 
 
 
+### function derive\_slew 
+
+_Current slew per slow period [pu], at least one mA; 0 = off._ 
+```C++
+static void derive_slew (
+    struct sstep_ctx * m
+) 
+```
+
+
+
+
+<hr>
+
+
+
 ### function derive\_stall 
 
 _Derive the stall detection constants (after the other gains)._ 
@@ -197,6 +217,26 @@ static int derive_stall (
 
 
 
+
+<hr>
+
+
+
+### function derive\_window 
+
+_Sampling window: the legs may use the compare range 0 ._ 
+```C++
+static void derive_window (
+    struct sstep_ctx * m
+) 
+```
+
+
+
+. P - W only, which acts like a bus voltage of Vbus (P - W) / P. inv\_vbus is scaled by bus\_num / bus\_den (P / (P - W)), the bus voltage of the applied phase voltages by bus\_frac. With W = 0 both ratios are 1 / 1 and nothing changes. 
+
+
+        
 
 <hr>
 
@@ -453,6 +493,44 @@ static void shutdown (
 
 
 
+
+<hr>
+
+
+
+### function slew\_current 
+
+_Current amplitude of the next slow period: towards target by at most i\_slew._ 
+```C++
+static sstep_real_t slew_current (
+    const struct sstep_ctx * m,
+    sstep_real_t target
+) 
+```
+
+
+
+
+<hr>
+
+
+
+### function vbus\_out\_of\_range 
+
+_Last bus voltage sample outside the trip limits._ 
+```C++
+static bool vbus_out_of_range (
+    const struct sstep_ctx * m,
+    bool need_sample
+) 
+```
+
+
+
+Without a sample (0) the result is need\_sample: [**sstep\_enable()**](group__sstep__api.md#function-sstep_enable) then leaves the check to the fast loop. 
+
+
+        
 
 <hr>
 ## Macro Definition Documentation

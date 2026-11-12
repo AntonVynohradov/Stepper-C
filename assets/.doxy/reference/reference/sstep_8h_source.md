@@ -83,6 +83,8 @@ int sstep_init(struct sstep* drv, const struct sstep_config* cfg);
 
 int sstep_enable(struct sstep* drv);
 
+int sstep_selftest(struct sstep* drv, uint32_t i_test_ma);
+
 int sstep_disable(struct sstep* drv);
 
 int sstep_fast_loop(struct sstep* drv, const struct sstep_sample* sample);

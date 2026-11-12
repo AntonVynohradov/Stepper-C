@@ -289,6 +289,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../../protection/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Protection
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../../integration/" class="md-tabs__link">
         
   
@@ -674,6 +693,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../protection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../integration/" class="md-nav__link">
         
   
@@ -714,10 +760,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -735,8 +781,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -794,10 +840,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
         
           
-          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
             
   
   
@@ -815,8 +861,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1057,10 +1103,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -1078,8 +1124,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1301,6 +1347,28 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#variable-i_slew_ma_per_ms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable i_slew_ma_per_ms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-i_trip_voltage_drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable i_trip_voltage_drive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#variable-microsteps" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1447,6 +1515,14 @@
 <td style="text-align: left;"><a href="#variable-i_run_ma"><strong>i_run_ma</strong></a>  <br><em>Peak phase current while moving [mA].</em></td>
 </tr>
 <tr>
+<td style="text-align: right;">uint32_t</td>
+<td style="text-align: left;"><a href="#variable-i_slew_ma_per_ms"><strong>i_slew_ma_per_ms</strong></a>  <br><em>Largest change of the current amplitude [mA/ms]: from 0 after</em> <a href="../group__sstep__api/#function-sstep_enable"><em><strong>sstep_enable()</strong></em></a> <em>, between run and hold current, after</em><a href="../group__sstep__api/#function-sstep_set_current"><em><strong>sstep_set_current()</strong></em></a> <em>; 0 = at once.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">bool</td>
+<td style="text-align: left;"><a href="#variable-i_trip_voltage_drive"><strong>i_trip_voltage_drive</strong></a>  <br><em>Overcurrent trips also in SSTEP_DRIVE_VOLTAGE (the board measures the phase currents there too).</em></td>
+</tr>
+<tr>
 <td style="text-align: right;">uint16_t</td>
 <td style="text-align: left;"><a href="#variable-microsteps"><strong>microsteps</strong></a>  <br><em>Microsteps per full step (power of two, 1 .</em></td>
 </tr>
@@ -1527,48 +1603,60 @@
 </code></pre></div></p>
 <hr>
 
+<h3 id="variable-i_slew_ma_per_ms">variable i_slew_ma_per_ms<a class="headerlink" href="#variable-i_slew_ma_per_ms" title="Permanent link">&para;</a></h3>
+<p><em>Largest change of the current amplitude [mA/ms]: from 0 after</em> <a href="../group__sstep__api/#function-sstep_enable"><em><strong>sstep_enable()</strong></em></a> <em>, between run and hold current, after</em><a href="../group__sstep__api/#function-sstep_set_current"><em><strong>sstep_set_current()</strong></em></a> <em>; 0 = at once.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">i_slew_ma_per_ms</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-i_trip_voltage_drive">variable i_trip_voltage_drive<a class="headerlink" href="#variable-i_trip_voltage_drive" title="Permanent link">&para;</a></h3>
+<p><em>Overcurrent trips also in SSTEP_DRIVE_VOLTAGE (the board measures the phase currents there too).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">bool</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">i_trip_voltage_drive</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
 <h3 id="variable-microsteps">variable microsteps<a class="headerlink" href="#variable-microsteps" title="Permanent link">&para;</a></h3>
 <p><em>Microsteps per full step (power of two, 1 .</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">microsteps</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">microsteps</span><span class="p">;</span>
 </code></pre></div></p>
 <p>. <a href="../group__sstep__config/#define-sstep_cfg_microsteps_max"><strong>SSTEP_CFG_MICROSTEPS_MAX</strong></a>). </p>
 <hr>
 
 <h3 id="variable-slow_loop_hz">variable slow_loop_hz<a class="headerlink" href="#variable-slow_loop_hz" title="Permanent link">&para;</a></h3>
 <p><em>Rate of</em> <a href="../group__sstep__api/#function-sstep_slow_loop"><em><strong>sstep_slow_loop()</strong></em></a> <em>[Hz].</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">slow_loop_hz</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">slow_loop_hz</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-stall_filter_us">variable stall_filter_us<a class="headerlink" href="#variable-stall_filter_us" title="Permanent link">&para;</a></h3>
 <p><em>Time constant of the back-EMF low-pass filter [us], at least one fast loop period.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">stall_filter_us</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">stall_filter_us</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-stall_speed">variable stall_speed<a class="headerlink" href="#variable-stall_speed" title="Permanent link">&para;</a></h3>
 <p><em>Slip threshold [microsteps/s]: rotor speed that counts as motion while the command is at rest or slower than this; above it, the synchronism check.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">stall_speed</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">stall_speed</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-stall_sync_pct">variable stall_sync_pct<a class="headerlink" href="#variable-stall_sync_pct" title="Permanent link">&para;</a></h3>
 <p><em>Synchronism threshold [%] (1 .</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">stall_sync_pct</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">stall_sync_pct</span><span class="p">;</span>
 </code></pre></div></p>
 <p>. 100): smallest back-EMF along the commanded motion, relative to Ke * speed. </p>
 <hr>
 
 <h3 id="variable-stall_time_ms">variable stall_time_ms<a class="headerlink" href="#variable-stall_time_ms" title="Permanent link">&para;</a></h3>
 <p><em>Stall detection: time the stall condition must persist before</em> <a href="../group__sstep__defs/#define-sstep_fault_stall"><em><strong>SSTEP_FAULT_STALL</strong></em></a> <em>[ms]; 0 = stall detection off (the other stall_* fields are then ignored).</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">stall_time_ms</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">stall_time_ms</span><span class="p">;</span>
 </code></pre></div></p>
 <p>Requires SSTEP_DRIVE_CURRENT and ke_uv_s_per_rad &gt; 0. </p>
 <hr>
 
 <h3 id="variable-v_max">variable v_max<a class="headerlink" href="#variable-v_max" title="Permanent link">&para;</a></h3>
 <p><em>Maximum velocity [microsteps/s].</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">v_max</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_ctrl_cfg</span><span class="o">::</span><span class="n">v_max</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 

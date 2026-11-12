@@ -18,7 +18,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="125" column="24" bodyfile="inc/sstep_ctrl.h" bodystart="125" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="126" column="24" bodyfile="inc/sstep_ctrl.h" bodystart="126" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__stage__cfg_1a93077a7b8feae6c7183dec5138ec1a80" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -33,7 +33,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="126" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="126" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="127" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="127" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__stage__cfg_1a58b3db59ad88556c4ad898392abed552" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -48,7 +48,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="127" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="127" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="128" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="128" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__stage__cfg_1a8fbb5d4c914b80ca4c5f4f68e2be9f08" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -63,7 +63,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="128" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="128" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="129" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="129" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__stage__cfg_1a8d04fa83604ebb5c1afb9883a5b16d3b" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -78,7 +78,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="129" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="129" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="130" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="130" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__stage__cfg_1a743981d8853efa99cbe0a1f875bfc1a8" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -93,7 +93,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="131" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="131" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="132" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="132" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__stage__cfg_1a68c6d9a7cf0e36317a8f8b7b3e51276b" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -108,7 +108,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="132" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="132" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="133" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="133" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__stage__cfg_1a7077eee0b6eac953508137716580425c" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -117,13 +117,13 @@
         <name>pwm_freq_hz</name>
         <qualifiedname>sstep_stage_cfg::pwm_freq_hz</qualifiedname>
         <briefdescription>
-<para>PWM frequency [Hz]. </para>
+<para>PWM frequency [Hz]; with dead_time_ns the dead-time loss of the <ref refid="group__sstep__api_1gabf6e86e82e3fec2d39be668525125a89" kindref="member">sstep_selftest()</ref> levels. </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="133" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="133" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="134" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="134" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__stage__cfg_1a38ddcd9a31304b7ed2267a5d859b8d0f" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -132,13 +132,14 @@
         <name>dead_time_ns</name>
         <qualifiedname>sstep_stage_cfg::dead_time_ns</qualifiedname>
         <briefdescription>
-<para>Dead time [ns], for compensation; 0 = none. </para>
+<para>Dead time [ns]: duty levels of <ref refid="group__sstep__api_1gabf6e86e82e3fec2d39be668525125a89" kindref="member">sstep_selftest()</ref>; not compensated in the control. </para>
         </briefdescription>
         <detaileddescription>
+<para>0 = none. </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="134" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="134" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="136" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="136" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__stage__cfg_1a0b4f4977476ac4ab0f90c54f57f4d9b0" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -153,7 +154,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="135" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="135" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="138" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="138" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__stage__cfg_1a106fe2517131c402938eb6e6ddda78c3" prot="public" static="no" mutable="no">
         <type>int32_t</type>
@@ -168,7 +169,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="136" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="136" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="139" column="13" bodyfile="inc/sstep_ctrl.h" bodystart="139" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__stage__cfg_1aa48357c810835eea50baa3b5c8b81b73" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -183,7 +184,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="138" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="138" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="141" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="141" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structsstep__stage__cfg_1a3ac66eeaef5cebcdce32974f645343c8" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -198,7 +199,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_ctrl.h" line="139" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="139" bodyend="-1"/>
+        <location file="inc/sstep_ctrl.h" line="142" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="142" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__stage__cfg_1af4c27e889d5d3db2edaf8042135b95ce" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t sstep_stage_cfg::sample_window_ticks</definition>
+        <argsstring></argsstring>
+        <name>sample_window_ticks</name>
+        <qualifiedname>sstep_stage_cfg::sample_window_ticks</qualifiedname>
+        <briefdescription>
+<para>Compare ticks of every period that each leg spends on its low-side switch at least, for low-side current sensing; 0 = none (compare up to pwm_period_ticks). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>At most pwm_period_ticks / 4. The voltage limit shrinks by the same fraction. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="143" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="143" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -207,7 +224,7 @@
     <detaileddescription>
 <para>Example: B-G431B-ESC1. </para>
     </detaileddescription>
-    <location file="inc/sstep_ctrl.h" line="123" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="124" bodyend="140"/>
+    <location file="inc/sstep_ctrl.h" line="124" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="125" bodyend="148"/>
     <listofallmembers>
       <member refid="structsstep__stage__cfg_1a3ac66eeaef5cebcdce32974f645343c8" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>adc_full</name></member>
       <member refid="structsstep__stage__cfg_1a106fe2517131c402938eb6e6ddda78c3" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>adc_i_span</name></member>
@@ -218,6 +235,7 @@
       <member refid="structsstep__stage__cfg_1a743981d8853efa99cbe0a1f875bfc1a8" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>i_trip_ma</name></member>
       <member refid="structsstep__stage__cfg_1a7077eee0b6eac953508137716580425c" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>pwm_freq_hz</name></member>
       <member refid="structsstep__stage__cfg_1a68c6d9a7cf0e36317a8f8b7b3e51276b" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>pwm_period_ticks</name></member>
+      <member refid="structsstep__stage__cfg_1af4c27e889d5d3db2edaf8042135b95ce" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>sample_window_ticks</name></member>
       <member refid="structsstep__stage__cfg_1a94b0e9cdc247a5e0c573e63f59c1dcec" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>topology</name></member>
       <member refid="structsstep__stage__cfg_1a8fbb5d4c914b80ca4c5f4f68e2be9f08" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>vbus_max_mv</name></member>
       <member refid="structsstep__stage__cfg_1a58b3db59ad88556c4ad898392abed552" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>vbus_min_mv</name></member>

@@ -61,6 +61,7 @@ _Initialise a driver, run its loops and command motion._ [More...](#detailed-des
 |  int | [**sstep\_move\_to**](#function-sstep_move_to) (struct [**sstep**](structsstep.md) \* drv, int32\_t position) <br>_Start a move to an absolute position with the trapezoidal profile._  |
 |  int | [**sstep\_report\_fault**](#function-sstep_report_fault) (struct [**sstep**](structsstep.md) \* drv, uint16\_t faults) <br>_Report a fault detected by the application (driver fault pin, temperature)._  |
 |  int | [**sstep\_run**](#function-sstep_run) (struct [**sstep**](structsstep.md) \* drv, int32\_t velocity) <br>_Run at a constant velocity (accelerating with the configured limits) until another command._  |
+|  int | [**sstep\_selftest**](#function-sstep_selftest) (struct [**sstep**](structsstep.md) \* drv, uint32\_t i\_test\_ma) <br>_Test the power stage and the motor wiring before the first enable._  |
 |  int | [**sstep\_set\_current**](#function-sstep_set_current) (struct [**sstep**](structsstep.md) \* drv, uint32\_t run\_ma, uint32\_t hold\_ma) <br>_Change the run and hold currents._  |
 |  int | [**sstep\_set\_motion\_limits**](#function-sstep_set_motion_limits) (struct [**sstep**](structsstep.md) \* drv, uint32\_t v\_max, uint32\_t accel, uint32\_t decel) <br>_Change the motion limits; they apply from the next_ [_**sstep\_slow\_loop()**_](group__sstep__api.md#function-sstep_slow_loop) _, also to a running command._ |
 |  int | [**sstep\_set\_position**](#function-sstep_set_position) (struct [**sstep**](structsstep.md) \* drv, int32\_t position) <br>_Redefine the current position (homing)._  |
@@ -205,7 +206,7 @@ int sstep_enable (
 
 
 
-
+Refused without a fault when the last bus voltage sample is outside the trip limits (no sample yet: not checked, the fast loop trips). 
 
 **Parameters:**
 
@@ -217,7 +218,7 @@ int sstep_enable (
 **Return value:**
 
 
-* [**SSTEP\_OK**](group__sstep__defs.md#define-sstep_ok) (faulted). 
+* [**SSTEP\_OK**](group__sstep__defs.md#define-sstep_ok) (faulted or self-test running), [**SSTEP\_ERR\_VBUS**](group__sstep__defs.md#define-sstep_err_vbus). 
 
 
 
@@ -473,6 +474,46 @@ int sstep_run (
 
 
 * [**SSTEP\_OK**](group__sstep__defs.md#define-sstep_ok) 
+
+
+
+
+        
+
+<hr>
+
+
+
+### function sstep\_selftest 
+
+_Test the power stage and the motor wiring before the first enable._ 
+```
+int sstep_selftest (
+    struct sstep * drv,
+    uint32_t i_test_ma
+) 
+```
+
+
+
+The outputs are switched on; for each phase in turn the fast loop raises the voltage slowly until the phase current reaches i\_test\_ma, holds it for 2 ms and lets it decay. It checks that no current flows with every leg low, that each phase reaches the current with the expected sign at a plausible duty cycle, and that the other phase stays below half of it. Takes about 15 to 60 ms of fast loop periods, then the outputs go off, SSTEP\_EVENT\_SELFTEST\_DONE is reported by [**sstep\_slow\_loop()**](group__sstep__api.md#function-sstep_slow_loop) and the result is in the status. A failure raises [**SSTEP\_FAULT\_SELFTEST**](group__sstep__defs.md#define-sstep_fault_selftest). The rotor moves to the nearest full step of the tested phase (at most one full step) and must be free to: an external torque that turns it fails the test. 
+
+**Parameters:**
+
+
+* `drv` Driver instance. 
+* `i_test_ma` Test current [mA], 1 .. i\_run\_ma; typically 30 % of the rated current. 
+
+
+
+**Return value:**
+
+
+* [**SSTEP\_OK**](group__sstep__defs.md#define-sstep_ok) The test runs. 
+* [**SSTEP\_ERR\_PARAM**](group__sstep__defs.md#define-sstep_err_param) NULL pointer or i\_test\_ma out of range. 
+* [**SSTEP\_ERR\_STATE**](group__sstep__defs.md#define-sstep_err_state) Not disabled, faulted, or a test is running. 
+* [**SSTEP\_ERR\_VBUS**](group__sstep__defs.md#define-sstep_err_vbus) No bus voltage sample yet, or outside the trip limits. 
+* [**SSTEP\_ERR\_UNSUPPORTED**](group__sstep__defs.md#define-sstep_err_unsupported) Built with [**SSTEP\_CFG\_SELFTEST**](group__sstep__config.md#define-sstep_cfg_selftest) = 0. 
 
 
 

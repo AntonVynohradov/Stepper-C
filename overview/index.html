@@ -295,6 +295,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../protection/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Protection
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../integration/" class="md-tabs__link">
         
   
@@ -798,6 +817,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../protection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../integration/" class="md-nav__link">
         
   
@@ -838,10 +884,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -859,8 +905,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -918,10 +964,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
         
           
-          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
             
   
   
@@ -939,8 +985,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1181,10 +1227,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -1202,8 +1248,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1404,8 +1450,10 @@ point (no FPU needed) or single-precision float.</p>
 <li><strong>Fits the voltage to the power stage.</strong> Two full H-bridges (4 legs) or three
   half-bridges with a shared leg (3 legs); the request is limited to what the topology and
   the measured bus voltage can deliver, keeping its direction.</li>
-<li><strong>Protects the hardware.</strong> Overcurrent, overvoltage and undervoltage trips in the fast
-  loop, hardware-callback errors, external faults; outputs off within the same period.</li>
+<li><strong>Protects the hardware.</strong> Overcurrent (both phases and the shared leg), overvoltage and
+  undervoltage trips in the fast loop, a bus voltage check before the outputs go on, a
+  self-test of the power stage and the motor wiring, hardware-callback errors and external
+  faults; outputs off within the same period (<a href="../protection/">Protection</a>).</li>
 <li><strong>Detects a stall without a sensor.</strong> A back-EMF observer reports a rotor that stops,
   falls out of synchronism or slips at standstill (<code>SSTEP_FAULT_STALL</code>, optional).</li>
 <li><strong>Reduces the current at standstill.</strong> Hold current after a configurable delay.</li>
@@ -1480,11 +1528,11 @@ point (no FPU needed) or single-precision float.</p>
 </tr>
 <tr>
 <td>RAM per instance</td>
-<td>432 B fixed point, 456 B float on Cortex-M4 (<a href="../configuration/#memory-footprint">details</a>)</td>
+<td>488 B fixed point, 520 B float on Cortex-M4 (<a href="../configuration/#memory-footprint">details</a>)</td>
 </tr>
 <tr>
 <td>Flash</td>
-<td>9.0 KiB fixed point, 9.7 KiB float (Cortex-M4, <code>-Os</code>, both topologies)</td>
+<td>10.6 KiB fixed point, 11.3 KiB float (Cortex-M4, <code>-Os</code>, both topologies)</td>
 </tr>
 <tr>
 <td>Stack</td>

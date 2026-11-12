@@ -81,6 +81,7 @@ _Macros that select the code compiled into the library._ [More...](#detailed-des
 | define  | [**SSTEP\_CFG\_ARG\_CHECKS**](group__sstep__config.md#define-sstep_cfg_arg_checks)  `1`<br>_1: every public function validates its pointer arguments (MISRA Dir 4.11)._  |
 | define  | [**SSTEP\_CFG\_MATH\_BACKEND**](group__sstep__config.md#define-sstep_cfg_math_backend)  `[**SSTEP\_MATH\_BACKEND\_FIXED**](group__sstep__config.md#define-sstep_math_backend_fixed)`<br>_Selected numeric backend:_ [_**SSTEP\_MATH\_BACKEND\_FIXED**_](group__sstep__config.md#define-sstep_math_backend_fixed) _or_[_**SSTEP\_MATH\_BACKEND\_FLOAT**_](group__sstep__config.md#define-sstep_math_backend_float) _._ |
 | define  | [**SSTEP\_CFG\_MICROSTEPS\_MAX**](group__sstep__config.md#define-sstep_cfg_microsteps_max)  `256U`<br>_Largest microstep division accepted by_ [_**sstep\_init()**_](group__sstep__api.md#function-sstep_init) _(power of two, 1..256)._ |
+| define  | [**SSTEP\_CFG\_SELFTEST**](group__sstep__config.md#define-sstep_cfg_selftest)  `1`<br>_1: compile the power stage and wiring self-test,_ [_**sstep\_selftest()**_](group__sstep__api.md#function-sstep_selftest) _._ |
 | define  | [**SSTEP\_CFG\_SINE\_TABLE\_BITS**](group__sstep__config.md#define-sstep_cfg_sine_table_bits)  `8U`<br>_log2 of the number of entries of the quarter-wave sine table (6..10)._  |
 | define  | [**SSTEP\_CFG\_TOPOLOGY\_FULL\_BRIDGE**](group__sstep__config.md#define-sstep_cfg_topology_full_bridge)  `1`<br>_1: compile support for two full H-bridges (4 half-bridge legs)._  |
 | define  | [**SSTEP\_CFG\_TOPOLOGY\_SHARED\_LEG**](group__sstep__config.md#define-sstep_cfg_topology_shared_leg)  `1`<br>_1: compile support for three half-bridges with a common leg (3 legs), for example STMicroelectronics B-G431B-ESC1._  |
@@ -148,6 +149,24 @@ _Largest microstep division accepted by_ [_**sstep\_init()**_](group__sstep__api
 
 
 
+
+<hr>
+
+
+
+### define SSTEP\_CFG\_SELFTEST 
+
+_1: compile the power stage and wiring self-test,_ [_**sstep\_selftest()**_](group__sstep__api.md#function-sstep_selftest) _._
+```
+#define SSTEP_CFG_SELFTEST `1`
+```
+
+
+
+0 removes its code and state; [**sstep\_selftest()**](group__sstep__api.md#function-sstep_selftest) then returns [**SSTEP\_ERR\_UNSUPPORTED**](group__sstep__defs.md#define-sstep_err_unsupported). 
+
+
+        
 
 <hr>
 

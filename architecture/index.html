@@ -295,6 +295,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../protection/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Protection
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../integration/" class="md-tabs__link">
         
   
@@ -809,6 +828,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../protection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../integration/" class="md-nav__link">
         
   
@@ -849,10 +895,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -870,8 +916,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -929,10 +975,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
         
           
-          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
             
   
   
@@ -950,8 +996,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1192,10 +1238,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -1213,8 +1259,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1568,13 +1614,13 @@ detects them.</p>
 <tr>
 <td><code>struct sstep</code> (driver instance)</td>
 <td>Application (static, stack or pool)</td>
-<td>432 B fixed point, 456 B float on Cortex-M4</td>
+<td>488 B fixed point, 520 B float on Cortex-M4</td>
 <td>From <code>sstep_init()</code> as long as the motor runs</td>
 </tr>
 <tr>
 <td><code>struct sstep_config</code></td>
 <td>Application; copied by <code>sstep_init()</code></td>
-<td>152 B on Cortex-M4</td>
+<td>156 B on Cortex-M4</td>
 <td>Only during <code>sstep_init()</code></td>
 </tr>
 <tr>
@@ -1627,6 +1673,10 @@ analysis can evaluate them) and checked against the private state by <code>_Stat
 <tr>
 <td>A topology that is not compiled in</td>
 <td><code>sstep_init()</code> returns <code>SSTEP_ERR_UNSUPPORTED</code></td>
+</tr>
+<tr>
+<td><code>sstep_selftest()</code> built with <code>SSTEP_CFG_SELFTEST = 0</code></td>
+<td>Returns <code>SSTEP_ERR_UNSUPPORTED</code></td>
 </tr>
 <tr>
 <td>Any call before a successful <code>sstep_init()</code> (zeroed instance, or the last <code>sstep_init()</code> failed in the derivation)</td>

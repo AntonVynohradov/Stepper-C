@@ -289,6 +289,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../../protection/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Protection
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../../integration/" class="md-tabs__link">
         
   
@@ -674,6 +693,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../protection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../integration/" class="md-nav__link">
         
   
@@ -714,10 +760,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -735,8 +781,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -794,10 +840,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
         
           
-          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
             
   
   
@@ -815,8 +861,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1057,10 +1103,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -1078,8 +1124,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1246,6 +1292,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#define-sstep_cfg_selftest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_CFG_SELFTEST
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#define-sstep_cfg_sine_table_bits" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1348,6 +1405,10 @@
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_cfg_selftest"><strong>SSTEP_CFG_SELFTEST</strong></a>  <code>1</code><br><em>1: compile the power stage and wiring self-test,</em> <a href="../group__sstep__api/#function-sstep_selftest"><em><strong>sstep_selftest()</strong></em></a> <em>.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
 <td style="text-align: left;"><a href="./#define-sstep_cfg_sine_table_bits"><strong>SSTEP_CFG_SINE_TABLE_BITS</strong></a>  <code>8U</code><br><em>log2 of the number of entries of the quarter-wave sine table (6..10).</em></td>
 </tr>
 <tr>
@@ -1393,35 +1454,42 @@
 </code></pre></div></p>
 <hr>
 
+<h3 id="define-sstep_cfg_selftest">define SSTEP_CFG_SELFTEST<a class="headerlink" href="#define-sstep_cfg_selftest" title="Permanent link">&para;</a></h3>
+<p><em>1: compile the power stage and wiring self-test,</em> <a href="../group__sstep__api/#function-sstep_selftest"><em><strong>sstep_selftest()</strong></em></a> <em>.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>#define SSTEP_CFG_SELFTEST `1`
+</code></pre></div></p>
+<p>0 removes its code and state; <a href="../group__sstep__api/#function-sstep_selftest"><strong>sstep_selftest()</strong></a> then returns <a href="../group__sstep__defs/#define-sstep_err_unsupported"><strong>SSTEP_ERR_UNSUPPORTED</strong></a>. </p>
+<hr>
+
 <h3 id="define-sstep_cfg_sine_table_bits">define SSTEP_CFG_SINE_TABLE_BITS<a class="headerlink" href="#define-sstep_cfg_sine_table_bits" title="Permanent link">&para;</a></h3>
 <p><em>log2 of the number of entries of the quarter-wave sine table (6..10).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>#define SSTEP_CFG_SINE_TABLE_BITS `8U`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>#define SSTEP_CFG_SINE_TABLE_BITS `8U`
 </code></pre></div></p>
 <p>The table is <code>static const</code> (flash): 2^bits + 1 entries of 2 bytes (fixed) or 4 bytes (float). Values between entries are linearly interpolated. </p>
 <hr>
 
 <h3 id="define-sstep_cfg_topology_full_bridge">define SSTEP_CFG_TOPOLOGY_FULL_BRIDGE<a class="headerlink" href="#define-sstep_cfg_topology_full_bridge" title="Permanent link">&para;</a></h3>
 <p><em>1: compile support for two full H-bridges (4 half-bridge legs).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>#define SSTEP_CFG_TOPOLOGY_FULL_BRIDGE `1`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>#define SSTEP_CFG_TOPOLOGY_FULL_BRIDGE `1`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_cfg_topology_shared_leg">define SSTEP_CFG_TOPOLOGY_SHARED_LEG<a class="headerlink" href="#define-sstep_cfg_topology_shared_leg" title="Permanent link">&para;</a></h3>
 <p><em>1: compile support for three half-bridges with a common leg (3 legs), for example STMicroelectronics B-G431B-ESC1.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>#define SSTEP_CFG_TOPOLOGY_SHARED_LEG `1`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>#define SSTEP_CFG_TOPOLOGY_SHARED_LEG `1`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_math_backend_fixed">define SSTEP_MATH_BACKEND_FIXED<a class="headerlink" href="#define-sstep_math_backend_fixed" title="Permanent link">&para;</a></h3>
 <p><em>Fixed point backend: Q15 signals, Q31 accumulators, integer-only arithmetic.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>#define SSTEP_MATH_BACKEND_FIXED `0`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>#define SSTEP_MATH_BACKEND_FIXED `0`
 </code></pre></div></p>
 <p>For MCUs without an FPU (Cortex-M0/M0+/M3, RISC-V RV32IMC, 8/16-bit cores). </p>
 <hr>
 
 <h3 id="define-sstep_math_backend_float">define SSTEP_MATH_BACKEND_FLOAT<a class="headerlink" href="#define-sstep_math_backend_float" title="Permanent link">&para;</a></h3>
 <p><em>Single-precision float backend.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>#define SSTEP_MATH_BACKEND_FLOAT `1`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>#define SSTEP_MATH_BACKEND_FLOAT `1`
 </code></pre></div></p>
 <p>For MCUs with a hardware FPU (Cortex-M4F/M7/M33 with FPU, STM32G4, ESP32-S3...). </p>
 <hr>

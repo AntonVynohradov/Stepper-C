@@ -67,8 +67,9 @@ typedef void (*sstep_fault_fn)(void* context, uint16_t faults);
 
 enum sstep_event
 {
-    SSTEP_EVENT_MOVE_DONE = 0,   
-    SSTEP_EVENT_HOLD_CURRENT = 1 
+    SSTEP_EVENT_MOVE_DONE = 0,    
+    SSTEP_EVENT_HOLD_CURRENT = 1, 
+    SSTEP_EVENT_SELFTEST_DONE = 2 
 };
 
 typedef void (*sstep_event_fn)(void* context, enum sstep_event event);
@@ -110,6 +111,7 @@ struct sstep_stage_cfg
     int32_t adc_i_span;           
     uint32_t adc_vbus_mv_full;    
     uint16_t adc_full;            
+    uint16_t sample_window_ticks; 
 };
 
 enum sstep_drive_mode
@@ -135,6 +137,8 @@ struct sstep_ctrl_cfg
     uint32_t stall_filter_us;         
     uint32_t stall_speed;             
     uint16_t stall_sync_pct;          
+    bool i_trip_voltage_drive;        
+    uint32_t i_slew_ma_per_ms;        
 };
 
 struct sstep_config
@@ -171,25 +175,35 @@ struct sstep_status
     int32_t rotor_velocity;  
     int32_t load_angle_cdeg; 
     uint8_t stall_level_pct; 
+    enum sstep_selftest_result selftest; 
+    uint8_t selftest_phase;              
+    int32_t selftest_i_ma;  
+    uint16_t selftest_duty; 
 };
 
 /* ==============================================================================
  * DRIVER INSTANCE
  * =============================================================================*/
 
-#if defined(UINTPTR_MAX) && (UINTPTR_MAX > 0xFFFFFFFFU)
-#define SSTEP_CONFIG_BYTES 176U
-#if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
-#define SSTEP_STATE_BYTES 288U
+#if (SSTEP_CFG_SELFTEST == 1)
+#define SSTEP_SELFTEST_BYTES 40U 
 #else
-#define SSTEP_STATE_BYTES 312U
+#define SSTEP_SELFTEST_BYTES 0U
+#endif
+
+#if defined(UINTPTR_MAX) && (UINTPTR_MAX > 0xFFFFFFFFU)
+#define SSTEP_CONFIG_BYTES 192U
+#if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
+#define SSTEP_STATE_BYTES (304U + SSTEP_SELFTEST_BYTES)
+#else
+#define SSTEP_STATE_BYTES (336U + SSTEP_SELFTEST_BYTES)
 #endif
 #else
-#define SSTEP_CONFIG_BYTES 152U
+#define SSTEP_CONFIG_BYTES 156U
 #if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
-#define SSTEP_STATE_BYTES 280U
+#define SSTEP_STATE_BYTES (292U + SSTEP_SELFTEST_BYTES)
 #else
-#define SSTEP_STATE_BYTES 304U
+#define SSTEP_STATE_BYTES (324U + SSTEP_SELFTEST_BYTES)
 #endif
 #endif
 

@@ -55,6 +55,7 @@
 #define SSTEP_ERR_CONFIG (-2)
 #define SSTEP_ERR_STATE (-3)
 #define SSTEP_ERR_UNSUPPORTED (-4)
+#define SSTEP_ERR_VBUS (-5)
 
 /* ==============================================================================
  * POWER STAGE
@@ -79,6 +80,7 @@ enum sstep_topology
 #define SSTEP_FAULT_HAL 0x0008U
 #define SSTEP_FAULT_EXTERNAL 0x0010U
 #define SSTEP_FAULT_STALL 0x0020U
+#define SSTEP_FAULT_SELFTEST 0x0040U
 
 /* ==============================================================================
  * STATES
@@ -90,6 +92,23 @@ enum sstep_state
     SSTEP_STATE_HOLDING = 1,  
     SSTEP_STATE_MOVING = 2,   
     SSTEP_STATE_FAULT = 3     
+};
+
+/* ==============================================================================
+ * SELF-TEST
+ * =============================================================================*/
+
+enum sstep_selftest_result
+{
+    SSTEP_SELFTEST_NONE = 0,     
+    SSTEP_SELFTEST_RUNNING = 1,  
+    SSTEP_SELFTEST_PASS = 2,     
+    SSTEP_SELFTEST_LEAK = 3,     
+    SSTEP_SELFTEST_OPEN = 4,     
+    SSTEP_SELFTEST_SHORT = 5,    
+    SSTEP_SELFTEST_POLARITY = 6, 
+    SSTEP_SELFTEST_WRONG_PHASE = 7, 
+    SSTEP_SELFTEST_ABORTED = 8      
 };
 
 #endif /* SSTEP_DEFS_H */

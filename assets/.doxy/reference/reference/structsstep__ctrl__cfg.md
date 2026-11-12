@@ -44,6 +44,8 @@ _Control and motion parameters._ [More...](#detailed-description)
 |  uint32\_t | [**hold\_delay\_ms**](#variable-hold_delay_ms)  <br>_Standstill time before switching to i\_hold\_ma [ms]._  |
 |  uint32\_t | [**i\_hold\_ma**](#variable-i_hold_ma)  <br>_Peak phase current at standstill [mA]._  |
 |  uint32\_t | [**i\_run\_ma**](#variable-i_run_ma)  <br>_Peak phase current while moving [mA]._  |
+|  uint32\_t | [**i\_slew\_ma\_per\_ms**](#variable-i_slew_ma_per_ms)  <br>_Largest change of the current amplitude [mA/ms]: from 0 after_ [_**sstep\_enable()**_](group__sstep__api.md#function-sstep_enable) _, between run and hold current, after_[_**sstep\_set\_current()**_](group__sstep__api.md#function-sstep_set_current) _; 0 = at once._ |
+|  bool | [**i\_trip\_voltage\_drive**](#variable-i_trip_voltage_drive)  <br>_Overcurrent trips also in SSTEP\_DRIVE\_VOLTAGE (the board measures the phase currents there too)._  |
 |  uint16\_t | [**microsteps**](#variable-microsteps)  <br>_Microsteps per full step (power of two, 1 ._  |
 |  uint32\_t | [**slow\_loop\_hz**](#variable-slow_loop_hz)  <br>_Rate of_ [_**sstep\_slow\_loop()**_](group__sstep__api.md#function-sstep_slow_loop) _[Hz]._ |
 |  uint32\_t | [**stall\_filter\_us**](#variable-stall_filter_us)  <br>_Time constant of the back-EMF low-pass filter [us], at least one fast loop period._  |
@@ -210,6 +212,34 @@ uint32_t sstep_ctrl_cfg::i_hold_ma;
 _Peak phase current while moving [mA]._ 
 ```C++
 uint32_t sstep_ctrl_cfg::i_run_ma;
+```
+
+
+
+
+<hr>
+
+
+
+### variable i\_slew\_ma\_per\_ms 
+
+_Largest change of the current amplitude [mA/ms]: from 0 after_ [_**sstep\_enable()**_](group__sstep__api.md#function-sstep_enable) _, between run and hold current, after_[_**sstep\_set\_current()**_](group__sstep__api.md#function-sstep_set_current) _; 0 = at once._
+```C++
+uint32_t sstep_ctrl_cfg::i_slew_ma_per_ms;
+```
+
+
+
+
+<hr>
+
+
+
+### variable i\_trip\_voltage\_drive 
+
+_Overcurrent trips also in SSTEP\_DRIVE\_VOLTAGE (the board measures the phase currents there too)._ 
+```C++
+bool sstep_ctrl_cfg::i_trip_voltage_drive;
 ```
 
 

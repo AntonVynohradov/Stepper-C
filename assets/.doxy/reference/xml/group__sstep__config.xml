@@ -66,6 +66,19 @@
         </inbodydescription>
         <location file="inc/sstep_config.h" line="89" column="9" bodyfile="inc/sstep_config.h" bodystart="89" bodyend="-1"/>
       </memberdef>
+      <memberdef kind="define" id="group__sstep__config_1ga80128e9a8782edd49b5020c2ddba6e94" prot="public" static="no">
+        <name>SSTEP_CFG_SELFTEST</name>
+        <initializer>1</initializer>
+        <briefdescription>
+<para>1: compile the power stage and wiring self-test, <ref refid="group__sstep__api_1gabf6e86e82e3fec2d39be668525125a89" kindref="member">sstep_selftest()</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>0 removes its code and state; <ref refid="group__sstep__api_1gabf6e86e82e3fec2d39be668525125a89" kindref="member">sstep_selftest()</ref> then returns <ref refid="group__sstep__defs_1ga80beeffdc48a72869fd2e6aa6bb84d32" kindref="member">SSTEP_ERR_UNSUPPORTED</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_config.h" line="111" column="9" bodyfile="inc/sstep_config.h" bodystart="111" bodyend="-1"/>
+      </memberdef>
       <memberdef kind="define" id="group__sstep__config_1gacb1659c8029aeb92ff4062d4a265535b" prot="public" static="no">
         <name>SSTEP_CFG_MICROSTEPS_MAX</name>
         <initializer>256U</initializer>
@@ -76,7 +89,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_config.h" line="110" column="9" bodyfile="inc/sstep_config.h" bodystart="110" bodyend="-1"/>
+        <location file="inc/sstep_config.h" line="124" column="9" bodyfile="inc/sstep_config.h" bodystart="124" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__config_1ga50ab8d5098e6740dbcd9dbc6f4200d70" prot="public" static="no">
         <name>SSTEP_CFG_SINE_TABLE_BITS</name>
@@ -89,7 +102,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_config.h" line="122" column="9" bodyfile="inc/sstep_config.h" bodystart="122" bodyend="-1"/>
+        <location file="inc/sstep_config.h" line="136" column="9" bodyfile="inc/sstep_config.h" bodystart="136" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__sstep__config_1ga61a368eeac97ae6ab0f43c70a2acc423" prot="public" static="no">
         <name>SSTEP_CFG_ARG_CHECKS</name>
@@ -102,7 +115,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/sstep_config.h" line="137" column="9" bodyfile="inc/sstep_config.h" bodystart="137" bodyend="-1"/>
+        <location file="inc/sstep_config.h" line="151" column="9" bodyfile="inc/sstep_config.h" bodystart="151" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
