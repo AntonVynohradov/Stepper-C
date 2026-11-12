@@ -119,7 +119,11 @@ path, and pass the same `-DSSTEP_CFG_…` definitions to the library and the app
 ## Bring-up checklist
 
 1. **Outputs off:** read the ADC and check `adc_i_zero` and the bus voltage reading
-   against a multimeter (`sstep_get_status()` shows `vbus_mv` after a fast loop).
+   against a multimeter (`sstep_get_status()` shows `vbus_mv` after a fast loop). With
+   low-side shunts, set `sample_window_ticks` so that every conversion of the fast loop
+   falls into the time all legs are on their low-side switch
+   ([Sampling window](motor-control.md#sampling-window)): without it a duty cycle near
+   100 % corrupts the samples, and a false undervoltage or overcurrent trip follows.
 2. **Polarity:** start with `drive_mode = SSTEP_DRIVE_VOLTAGE` and a small `i_run_ma`;
    after `sstep_enable()`, the measured current of phase A must be positive and close to
    the reference. If it is negative, negate `adc_i_span`.
@@ -127,8 +131,9 @@ path, and pass the same `-DSSTEP_CFG_…` definitions to the library and the app
    phase current with a current probe or the status: it must settle at `i_run_ma`.
 4. **Motion:** run slowly (`sstep_run()` with a few hundred microsteps/s), then raise the
    speed and the acceleration to the application's values.
-5. **Protection:** check the trips with a lowered `i_trip_ma` and `vbus_max_mv`, and the
-   external fault input with `sstep_report_fault()`.
+5. **Protection:** run `sstep_selftest()` before the first enable, check the trips with a
+   lowered `i_trip_ma` and `vbus_max_mv`, and the external fault input with
+   `sstep_report_fault()` ([Protection](protection.md)).
 6. **Stall detection (optional):** enable it with the example values, log
    `stall_level_pct`, `emf_d_mv` and `load_angle_cdeg` through every operating point
    (enable, hold, the fastest move, the heaviest load), then block the shaft by hand at

@@ -80,7 +80,7 @@ need no rebuild: pass another `struct sstep_config` to `sstep_init()`, or use
 1. **Code.** C11, no new dependencies, no heap, no global state; the rules of
    `misra-analyze`; internal types stay in `src/`, `sstep.h` declares the public API only.
 2. **Both backends.** Every arithmetic change works with fixed point and float; the
-   `[UnitTests]` and `[UnitTestsFloat]` presets must both pass.
+   `[UnitTests]`, `[UnitTestsFloat]` and `[UnitTestsNoSelftest]` presets must all pass.
 3. **Tests.** 100 % line and branch coverage of `src/`; a closed-loop test on the motor
    model for any change of the control behavior.
 4. **Instance size.** If the private state grows, update `SSTEP_STATE_BYTES` in

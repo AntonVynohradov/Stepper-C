@@ -103,6 +103,15 @@ static int set_currents(struct sstep_ctx* m, uint32_t run_ma, uint32_t hold_ma);
 static int set_limits(struct sstep_ctx* m, uint32_t v_max, uint32_t accel, uint32_t decel);
 static int derive(struct sstep_ctx* m);
 static void shutdown(struct sstep_ctx* m, uint16_t faults);
+static bool vbus_out_of_range(const struct sstep_ctx* m, bool need_sample);
+#if (SSTEP_CFG_SELFTEST == 1)
+static bool selftest_running(const struct sstep_ctx* m);
+static void report_selftest(struct sstep_ctx* m);
+static void selftest_period(struct sstep_ctx* m, int32_t da, int32_t db);
+#endif
+static void derive_window(struct sstep_ctx* m);
+static void derive_slew(struct sstep_ctx* m);
+static sstep_real_t slew_current(const struct sstep_ctx* m, sstep_real_t target);
 static void publish(struct sstep_ctx* m, const struct sstep_setpoint* sp);
 static bool is_active(enum sstep_state s);
 static bool is_moving(const struct sstep_ctx* m);
@@ -230,7 +239,8 @@ static int check_config(const struct sstep_config* cfg)
         ((c->drive_mode != SSTEP_DRIVE_CURRENT) && (c->drive_mode != SSTEP_DRIVE_VOLTAGE)) ||
         (c->fast_loop_hz == 0U) || (c->slow_loop_hz == 0U) || (c->fast_loop_hz > VALUE_MAX) ||
         (!is_pow2(c->microsteps)) || (c->microsteps > SSTEP_CFG_MICROSTEPS_MAX) ||
-        (c->current_bw_hz == 0U) || (c->i_run_ma == 0U) || (c->v_max == 0U) || (c->accel == 0U))
+        (c->current_bw_hz == 0U) || (c->i_run_ma == 0U) || (c->v_max == 0U) || (c->accel == 0U) ||
+        (c->i_slew_ma_per_ms > VALUE_MAX))
     {
         result = SSTEP_ERR_PARAM;
     }
@@ -249,6 +259,7 @@ static int check_config(const struct sstep_config* cfg)
     else if ((st->i_trip_ma > st->i_full_scale_ma) || ((c->fast_loop_hz % c->slow_loop_hz) != 0U) ||
              ((c->fast_loop_hz / c->slow_loop_hz) > 65535U) ||
              (c->current_bw_hz > (c->fast_loop_hz / 4U)) ||
+             (st->sample_window_ticks > (st->pwm_period_ticks / 4U)) ||
              ((st->vbus_min_mv != 0U) && (st->vbus_min_mv >= st->vbus_nominal_mv)) ||
              ((st->vbus_max_mv != 0U) && (st->vbus_max_mv <= st->vbus_nominal_mv)))
     {
@@ -483,9 +494,159 @@ static int derive(struct sstep_ctx* m)
         m->ratio = (uint16_t)(c->fast_loop_hz / c->slow_loop_hz);
         m->hold_ticks = (uint32_t)(((uint64_t)c->hold_delay_ms * c->slow_loop_hz) / 1000U);
         m->angle_shift = (uint8_t)(14U - log2_u32(c->microsteps));
-        (void)sstep_gain_from_ratio(1, 1, &m->inv_vbus); /* nominal until measured */
+        derive_window(m);
+        derive_slew(m);
+        /* nominal until measured */
+        (void)sstep_gain_from_ratio((int32_t)m->bus_num, (int32_t)m->bus_den, &m->inv_vbus);
     }
     return result;
+}
+
+/**
+ * @brief  Last bus voltage sample outside the trip limits. Without a sample (0) the result is
+ *         need_sample: sstep_enable() then leaves the check to the fast loop.
+ */
+static bool vbus_out_of_range(const struct sstep_ctx* m, bool need_sample)
+{
+    uint16_t raw = m->vbus_raw;
+    bool out;
+
+    if (raw == 0U)
+    {
+        out = need_sample;
+    }
+    else
+    {
+        out = ((m->vbus_min_raw != 0U) && (raw < m->vbus_min_raw)) ||
+              ((m->vbus_max_raw != 0U) && (raw > m->vbus_max_raw));
+    }
+    return out;
+}
+
+#if (SSTEP_CFG_SELFTEST == 1)
+/** @brief A self-test is running (the fast loop drives the outputs). */
+static bool selftest_running(const struct sstep_ctx* m)
+{
+    return m->st.result == SSTEP_SELFTEST_RUNNING;
+}
+
+/** @brief Report the end of a self-test once (slow loop context). */
+static void report_selftest(struct sstep_ctx* m)
+{
+    if (m->st.done != 0U)
+    {
+        m->st.done = 0U;
+        if (m->cfg.hal.on_event != NULL)
+        {
+            m->cfg.hal.on_event(m->cfg.hal.context, SSTEP_EVENT_SELFTEST_DONE);
+        }
+    }
+}
+
+/** @brief One fast loop period of a running self-test (no trip in this period). */
+static void selftest_period(struct sstep_ctx* m, int32_t da, int32_t db)
+{
+    uint16_t compare[SSTEP_LEGS_MAX];
+    int32_t sign = 1;
+    enum sstep_selftest_result r;
+
+    if (m->cfg.stage.adc_i_span < 0)
+    {
+        sign = -1; /* inverting amplifier */
+    }
+    r = sstep_selftest_step(&m->st, sign * da, sign * db, compare);
+
+    if (m->cfg.hal.pwm_write(m->cfg.hal.context, compare) < 0)
+    {
+        m->st.result = SSTEP_SELFTEST_ABORTED;
+        m->st.done = 1U;
+        shutdown(m, SSTEP_FAULT_HAL);
+    }
+    else if (r == SSTEP_SELFTEST_PASS)
+    {
+        m->st.done = 1U;
+        if (m->cfg.hal.output_enable(m->cfg.hal.context, false) < 0)
+        {
+            shutdown(m, SSTEP_FAULT_HAL);
+        }
+    }
+    else if (r != SSTEP_SELFTEST_RUNNING)
+    {
+        m->st.done = 1U;
+        shutdown(m, SSTEP_FAULT_SELFTEST);
+    }
+    else
+    {
+        /* running */
+    }
+}
+#endif /* SSTEP_CFG_SELFTEST */
+
+/**
+ * @brief  Sampling window: the legs may use the compare range 0 .. P - W only, which acts
+ *         like a bus voltage of Vbus (P - W) / P. inv_vbus is scaled by bus_num / bus_den
+ *         (P / (P - W)), the bus voltage of the applied phase voltages by bus_frac. With
+ *         W = 0 both ratios are 1 / 1 and nothing changes.
+ */
+static void derive_window(struct sstep_ctx* m)
+{
+    uint16_t p = m->cfg.stage.pwm_period_ticks;
+    uint16_t w = m->cfg.stage.sample_window_ticks;
+
+    m->period_eff = (uint16_t)(p - w);
+    m->bus_num = (w == 0U) ? 1U : p;
+    m->bus_den = (w == 0U) ? 1U : m->period_eff;
+    /* (P - W) / P with P >= 2, W <= P / 4: always representable */
+    (void)sstep_gain_from_ratio((int32_t)m->bus_den, (int32_t)m->bus_num, &m->bus_frac);
+}
+
+/** @brief Current slew per slow period [pu], at least one mA; 0 = off. */
+static void derive_slew(struct sstep_ctx* m)
+{
+    uint32_t slew = m->cfg.ctrl.i_slew_ma_per_ms;
+    uint64_t per_period = ((uint64_t)slew * 1000U) / m->cfg.ctrl.slow_loop_hz;
+
+    if (slew == 0U)
+    {
+        m->i_slew = SSTEP_REAL_ZERO;
+    }
+    else
+    {
+        if (per_period == 0U)
+        {
+            per_period = 1U;
+        }
+        if (per_period > m->cfg.stage.i_full_scale_ma)
+        {
+            per_period = m->cfg.stage.i_full_scale_ma;
+        }
+        (void)sstep_real_from_ratio((int32_t)per_period, (int32_t)m->cfg.stage.i_full_scale_ma,
+                                    &m->i_slew);
+    }
+}
+
+/** @brief Current amplitude of the next slow period: towards target by at most i_slew. */
+static sstep_real_t slew_current(const struct sstep_ctx* m, sstep_real_t target)
+{
+    sstep_real_t now = m->i_amp;
+    sstep_real_t next = target;
+
+    if (m->cfg.ctrl.i_slew_ma_per_ms != 0U)
+    {
+        if (sstep_sub(target, now) > m->i_slew)
+        {
+            next = sstep_add(now, m->i_slew);
+        }
+        else if (sstep_sub(now, target) > m->i_slew)
+        {
+            next = sstep_sub(now, m->i_slew);
+        }
+        else
+        {
+            /* within one step: target */
+        }
+    }
+    return next;
 }
 
 /** @brief Switch the outputs off and enter the fault state (any context). */
@@ -569,8 +730,13 @@ static void control(struct sstep_ctx* m)
 
     vbus = sstep_acc_clamp(sstep_gain_mul_int(&m->adc_v, (int32_t)m->vbus_raw), SSTEP_ACC_ZERO,
                            VBUS_PU_MAX);
-    sstep_bridge_map(m->cfg.stage.topology, vu[0], vu[1], &m->cur.inv_vbus, vbus,
-                     m->cfg.stage.pwm_period_ticks, &out);
+    if (m->bus_num != m->bus_den)
+    {
+        /* sampling window: the stage acts like Vbus (P - W) / P on 0 .. P - W */
+        vbus = sstep_gain_mul_acc(&m->bus_frac, vbus);
+    }
+    sstep_bridge_map(m->cfg.stage.topology, vu[0], vu[1], &m->cur.inv_vbus, vbus, m->period_eff,
+                     &out);
 
     if (m->cfg.ctrl.drive_mode == SSTEP_DRIVE_CURRENT)
     {
@@ -657,6 +823,16 @@ int sstep_enable(struct sstep* drv)
     {
         result = SSTEP_ERR_STATE;
     }
+#if (SSTEP_CFG_SELFTEST == 1)
+    else if (selftest_running(m))
+    {
+        result = SSTEP_ERR_STATE;
+    }
+#endif
+    else if ((m->state == SSTEP_STATE_DISABLED) && vbus_out_of_range(m, false))
+    {
+        result = SSTEP_ERR_VBUS; /* not latched: the supply may come up later */
+    }
     else if (m->state == SSTEP_STATE_DISABLED)
     {
         struct sstep_setpoint sp;
@@ -669,7 +845,9 @@ int sstep_enable(struct sstep* drv)
         m->hold_active = false;
         sp.angle = raw_angle(m, m->mo.pos) + m->angle_offset;
         sp.dangle = 0;
-        sp.i_amp = m->i_run;
+        /* with a current slew the amplitude rises from 0 in the slow loop */
+        m->i_amp = (m->cfg.ctrl.i_slew_ma_per_ms == 0U) ? m->i_run : SSTEP_REAL_ZERO;
+        sp.i_amp = m->i_amp;
         sp.ff = SSTEP_REAL_ZERO;
         sp.inv_vbus = m->inv_vbus;
         m->cur = sp;
@@ -708,6 +886,12 @@ int sstep_disable(struct sstep* drv)
     }
     else
     {
+#if (SSTEP_CFG_SELFTEST == 1)
+        if (selftest_running(m))
+        {
+            m->st.result = SSTEP_SELFTEST_NONE; /* stopped by the application */
+        }
+#endif
         if (m->state != SSTEP_STATE_FAULT)
         {
             m->state = SSTEP_STATE_DISABLED;
@@ -743,16 +927,29 @@ int sstep_fast_loop(struct sstep* drv, const struct sstep_sample* sample)
         int32_t da = (int32_t)sample->i_a - (int32_t)m->cfg.stage.adc_i_zero;
         int32_t db = (int32_t)sample->i_b - (int32_t)m->cfg.stage.adc_i_zero;
         uint16_t faults = SSTEP_FAULT_NONE;
-
         m->i_meas[0] = sstep_acc_to_real(sstep_gain_mul_int(&m->adc_i, da));
         m->i_meas[1] = sstep_acc_to_real(sstep_gain_mul_int(&m->adc_i, db));
         m->vbus_raw = sample->vbus;
 
+#if (SSTEP_CFG_SELFTEST == 1)
+        if (is_active(m->state) || selftest_running(m))
+#else
         if (is_active(m->state))
+#endif
         {
             int32_t trip = (int32_t)m->i_trip_counts;
-            if ((m->cfg.ctrl.drive_mode == SSTEP_DRIVE_CURRENT) &&
-                ((da > trip) || (da < -trip) || (db > trip) || (db < -trip)))
+            int32_t dw = da + db; /* shared leg: iA + iB */
+#if (SSTEP_CFG_SELFTEST == 1)
+            bool checked = (m->cfg.ctrl.drive_mode == SSTEP_DRIVE_CURRENT) ||
+                           m->cfg.ctrl.i_trip_voltage_drive || selftest_running(m);
+#else
+            bool checked =
+                (m->cfg.ctrl.drive_mode == SSTEP_DRIVE_CURRENT) || m->cfg.ctrl.i_trip_voltage_drive;
+#endif
+            bool over = (da > trip) || (da < -trip) || (db > trip) || (db < -trip) ||
+                        ((m->cfg.stage.topology == SSTEP_TOPOLOGY_SHARED_LEG) &&
+                         ((dw > trip) || (dw < -trip)));
+            if (checked && over)
             {
                 faults |= SSTEP_FAULT_OVERCURRENT;
                 if (m->stall_count != 0U)
@@ -772,8 +969,28 @@ int sstep_fast_loop(struct sstep* drv, const struct sstep_sample* sample)
 
             if (faults != SSTEP_FAULT_NONE)
             {
+#if (SSTEP_CFG_SELFTEST == 1)
+                if (selftest_running(m))
+                {
+                    /* an overcurrent during the test is a short; a bus trip ends it */
+                    m->st.result = ((faults & SSTEP_FAULT_OVERCURRENT) != 0U) ?
+                                       SSTEP_SELFTEST_SHORT :
+                                       SSTEP_SELFTEST_ABORTED;
+                    m->st.done = 1U;
+                    if ((faults & SSTEP_FAULT_OVERCURRENT) != 0U)
+                    {
+                        faults |= SSTEP_FAULT_SELFTEST;
+                    }
+                }
+#endif
                 shutdown(m, faults);
             }
+#if (SSTEP_CFG_SELFTEST == 1)
+            else if (selftest_running(m))
+            {
+                selftest_period(m, da, db);
+            }
+#endif
             else
             {
                 control(m);
@@ -833,8 +1050,10 @@ int sstep_slow_loop(struct sstep* drv)
         {
             struct sstep_gain inv;
             if (sstep_gain_from_ratio64(
-                    (int64_t)m->cfg.stage.adc_full * (int64_t)m->cfg.stage.vbus_nominal_mv,
-                    (int64_t)raw * (int64_t)m->cfg.stage.adc_vbus_mv_full, &inv) == SSTEP_OK)
+                    (int64_t)m->cfg.stage.adc_full * (int64_t)m->cfg.stage.vbus_nominal_mv *
+                        (int64_t)m->bus_num,
+                    (int64_t)raw * (int64_t)m->cfg.stage.adc_vbus_mv_full * (int64_t)m->bus_den,
+                    &inv) == SSTEP_OK)
             {
                 m->inv_vbus = inv;
             }
@@ -842,7 +1061,8 @@ int sstep_slow_loop(struct sstep* drv)
 
         sp.angle = raw_angle(m, p0) + m->angle_offset;
         sp.dangle = (int32_t)((dp * pow2_i64((uint32_t)m->angle_shift)) / (int64_t)m->ratio);
-        sp.i_amp = m->hold_active ? m->i_hold : m->i_run;
+        m->i_amp = slew_current(m, m->hold_active ? m->i_hold : m->i_run);
+        sp.i_amp = m->i_amp;
         vel = (int32_t)div_round(dp * (int64_t)m->cfg.ctrl.slow_loop_hz, SSTEP_POS_ONE);
         sp.ff = gain_apply_i32(&m->ff_gain, vel);
         sp.inv_vbus = m->inv_vbus;
@@ -858,6 +1078,9 @@ int sstep_slow_loop(struct sstep* drv)
             m->state = SSTEP_STATE_FAULT;
         }
 
+#if (SSTEP_CFG_SELFTEST == 1)
+        report_selftest(m);
+#endif
         if (m->cfg.hal.on_event != NULL)
         {
             if ((flags & SSTEP_MOTION_DONE) != 0U)
@@ -883,6 +1106,9 @@ int sstep_slow_loop(struct sstep* drv)
     }
     else
     {
+#if (SSTEP_CFG_SELFTEST == 1)
+        report_selftest(m);
+#endif
         m->mo.mode = SSTEP_MODE_HOLD;
         m->mo.vel = 0;
         m->mo.target = m->mo.pos;
@@ -1138,6 +1364,66 @@ int sstep_get_status(const struct sstep* drv, struct sstep_status* status)
         status->vbus_mv = (uint32_t)(((uint64_t)m->vbus_raw * m->cfg.stage.adc_vbus_mv_full) /
                                      m->cfg.stage.adc_full);
         sstep_stall_status(m, status);
+#if (SSTEP_CFG_SELFTEST == 1)
+        status->selftest = m->st.result;
+        status->selftest_phase = m->st.coil;
+        status->selftest_i_ma =
+            (int32_t)(((int64_t)m->st.i_own * base) / ((m->cfg.stage.adc_i_span < 0) ?
+                                                           -(int64_t)m->cfg.stage.adc_i_span :
+                                                           (int64_t)m->cfg.stage.adc_i_span));
+        status->selftest_duty = (uint16_t)(m->st.duty_q8 / 256U);
+#else
+        status->selftest = SSTEP_SELFTEST_NONE;
+        status->selftest_phase = 0U;
+        status->selftest_i_ma = 0;
+        status->selftest_duty = 0U;
+#endif
     }
+    return result;
+}
+
+int sstep_selftest(struct sstep* drv, uint32_t i_test_ma)
+{
+    struct sstep_ctx* m = sstep_ctx_of(drv);
+    int result = SSTEP_OK;
+
+    if (m == NULL)
+    {
+        result = SSTEP_ERR_PARAM;
+    }
+    else if (m->ready != SSTEP_READY)
+    {
+        result = SSTEP_ERR_STATE;
+    }
+#if (SSTEP_CFG_SELFTEST == 0)
+    else
+    {
+        (void)i_test_ma;
+        result = SSTEP_ERR_UNSUPPORTED;
+    }
+#else
+    else if ((i_test_ma == 0U) || (i_test_ma > m->cfg.ctrl.i_run_ma))
+    {
+        result = SSTEP_ERR_PARAM;
+    }
+    else if ((m->state != SSTEP_STATE_DISABLED) || selftest_running(m))
+    {
+        result = SSTEP_ERR_STATE;
+    }
+    else if (vbus_out_of_range(m, true))
+    {
+        result = SSTEP_ERR_VBUS;
+    }
+    else
+    {
+        sstep_selftest_setup(&m->st, &m->cfg, m->vbus_raw, i_test_ma);
+        if (m->cfg.hal.output_enable(m->cfg.hal.context, true) < 0)
+        {
+            m->st.result = SSTEP_SELFTEST_ABORTED;
+            shutdown(m, SSTEP_FAULT_HAL);
+            result = SSTEP_ERR_STATE;
+        }
+    }
+#endif /* SSTEP_CFG_SELFTEST */
     return result;
 }

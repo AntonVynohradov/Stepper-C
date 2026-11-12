@@ -244,6 +244,7 @@ struct Sim
     double vbus = 24.0;
     double TL = 0.0;
     bool locked = false;
+    bool open_a = false;    /* phase A open (wire off): no current in it */
     bool kinematic = false; /* rotor turns at the imposed x.w (synthetic tests) */
     double v_dead = 0.0;    /* dead-time voltage error per leg [V] */
     int adc_span = kSpan;   /* ADC counts from 0 A to +4 A (ESC1: about 136) */
@@ -346,6 +347,10 @@ struct Sim
         for (int k = 0; k < nsub; k++)
         {
             x = rk4(mot, x, vA, vB, TL, rotor, Ts / nsub);
+            if (open_a)
+            {
+                x.iA = 0.0;
+            }
         }
         for (unsigned k = 0; k < SSTEP_LEGS_MAX; k++)
         {

@@ -47,9 +47,9 @@ Measured on Cortex-M4 (GCC 15.2, `-Os`):
 
 | | Fixed point | Float |
 | --- | --- | --- |
-| RAM per motor | 432 B | 456 B |
-| Flash | 9216 B | 9894 B |
-| Worst-case stack, fast loop / slow loop | 216 B / 152 B | 128 B / 140 B |
+| RAM per motor | 488 B | 520 B |
+| Flash | 10816 B | 11542 B |
+| Worst-case stack, fast loop / slow loop | 216 B / 152 B | 128 B / 156 B |
 
 Closed loop on the motor model (17HS19-2004S1, 24 V, 20 kHz, 1 kHz current bandwidth):
 a 2 A current step settles in 0.40 ms with 1.1 % overshoot; a 6400-microstep move ends on
@@ -66,16 +66,20 @@ numeric backends and both topologies.
 - [x] Sensorless stall detection (back-EMF observer), both backends
 - [x] Unit and closed-loop tests with 100 % coverage; MISRA C:2012 with 0 violations
 - [x] Documentation website and PDF manual
-- [ ] Software-in-the-loop against the Scilab/Xcos motor model (including the stall cases)
-- [ ] Port and measurements on STMicroelectronics B-G431B-ESC1 (fast-loop execution time)
-- [ ] Dead-time compensation (`dead_time_ns` is reserved in the configuration)
+- [x] Software-in-the-loop against the Scilab/Xcos motor model (including the stall cases)
+- [x] Port to STMicroelectronics B-G431B-ESC1 with a 17HS19-2004S1: current control, moves up
+  to 46 rpm at 1.5 A, the self-test; the sampling window and the current slew came from it
+- [x] Self-test of the power stage and the wiring, bus voltage check at the enable,
+  shared-leg overcurrent trip ([Protection](https://antonvynohradov.github.io/Stepper-C/protection/))
+- [ ] Dead-time compensation (`dead_time_ns` is used by the self-test only)
+- [ ] Stall detection tuned and measured on the hardware
 
 ## Quick start
 
 ```c
 #include "sstep.h"
 
-static struct sstep motor;               /* 432 B on Cortex-M4, owned by the application */
+static struct sstep motor;               /* 488 B on Cortex-M4, owned by the application */
 
 void ADC1_2_IRQHandler(void)             /* PWM/ADC interrupt, 20 kHz */
 {
@@ -113,6 +117,7 @@ Cppcheck for the MISRA check, Python 3 for the documentation.
 | `SSTEP[Release]` | Optimized static library |
 | `SSTEP[UnitTests]` | Unit and closed-loop tests, fixed point, coverage gate |
 | `SSTEP[UnitTestsFloat]` | The same tests with the float backend |
+| `SSTEP[UnitTestsNoSelftest]` | The same tests built with `SSTEP_CFG_SELFTEST = 0` |
 
 ```bash
 cmake --preset "SSTEP[Release]"

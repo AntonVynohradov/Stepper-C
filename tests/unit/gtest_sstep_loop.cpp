@@ -248,6 +248,120 @@ TEST(SstepLoop, VoltageLimitByTopology)
     EXPECT_GT(amp[0] - amp[1], 0.2);
 }
 
+/* Sampling window of 10 %: no leg compare above P - W, the voltage limit shrinks with it */
+TEST(SstepLoop, SampleWindowAtTheVoltageLimit)
+{
+    for (sstep_topology topo : {SSTEP_TOPOLOGY_FULL_BRIDGE, SSTEP_TOPOLOGY_SHARED_LEG})
+    {
+        Sim sim(topo);
+        sim.cfg.stage.sample_window_ticks = 425U;
+        ASSERT_EQ(sim.init(), SSTEP_OK);
+        ASSERT_EQ(sstep_set_motion_limits(&sim.drv, 25600, 320000, 0), SSTEP_OK);
+        ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
+        ASSERT_EQ(sstep_run(&sim.drv, 25600), SSTEP_OK);
+        uint16_t cmp_max = 0U;
+        double sum = 0.0;
+        int n = 0;
+        const size_t legs = (topo == SSTEP_TOPOLOGY_FULL_BRIDGE) ? 4U : 3U;
+        for (int k = 0; k < 3000; k++) /* 0.15 s */
+        {
+            sim.run_for(5e-5);
+            for (size_t j = 0; j < legs; j++)
+            {
+                cmp_max = std::max(cmp_max, sim.hal.compare[j]);
+            }
+            if (sim.rec.back().t >= 0.1)
+            {
+                sum += amplitude(sim.rec.back());
+                n++;
+            }
+        }
+        const double amp = sum / n;
+        std::printf("[ measured ] 8 rev/s %s, window 10 %%: current amplitude %.3f A, "
+                    "largest compare %u of 3825\n",
+                    topo == SSTEP_TOPOLOGY_FULL_BRIDGE ? "full" : "shared", amp, cmp_max);
+        EXPECT_LE(cmp_max, 4250U - 425U);
+        EXPECT_GT(cmp_max, 3700U); /* the limit is used */
+        /* without the window: 1.862 A (full bridge), 1.557 A (shared leg) */
+        EXPECT_LT(amp, (topo == SSTEP_TOPOLOGY_FULL_BRIDGE) ? 1.84 : 1.53);
+        EXPECT_LT(std::fabs(sim.load_angle_deg()), 90.0);
+    }
+}
+
+/* Open-loop voltage drive with a window: the bus scale includes it, I settles at the reference */
+TEST(SstepLoop, SampleWindowKeepsTheVoltageScale)
+{
+    Sim sim;
+    sim.locked = true;
+    sim.cfg.ctrl.drive_mode = SSTEP_DRIVE_VOLTAGE;
+    sim.cfg.stage.sample_window_ticks = 425U;
+    ASSERT_EQ(sim.init(), SSTEP_OK);
+    ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
+    sim.run_for(0.02);
+    std::printf("[ measured ] voltage drive, window 10 %%: %.3f A for 2 A\n", sim.x.iA);
+    EXPECT_NEAR(sim.x.iA, 2.0, 0.1);
+}
+
+/* Current slew 40 mA/ms: after the enable the amplitude rises from 0 to 2 A in 50 ms */
+TEST(SstepLoop, CurrentSlewAtEnable)
+{
+    Sim sim;
+    sim.locked = true;
+    sim.cfg.ctrl.i_slew_ma_per_ms = 40U;
+    ASSERT_EQ(sim.init(), SSTEP_OK);
+    ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
+    sim.run_for(0.08);
+    double peak = 0.0;
+    double at10 = 0.0;
+    double t_reach = -1.0;
+    for (const Record& r : sim.rec)
+    {
+        peak = std::max(peak, amplitude(r));
+        if ((at10 == 0.0) && (r.t >= 0.010))
+        {
+            at10 = amplitude(r);
+        }
+        if ((t_reach < 0.0) && (amplitude(r) >= 1.96))
+        {
+            t_reach = r.t;
+        }
+    }
+    std::printf("[ measured ] slew 40 mA/ms: %.3f A after 10 ms, 98 %% after %.1f ms, "
+                "peak %.3f A\n",
+                at10, t_reach * 1e3, peak);
+    EXPECT_NEAR(at10, 0.40, 0.04); /* 10 slow periods of 40 mA */
+    EXPECT_NEAR(t_reach, 0.050, 0.004);
+    EXPECT_LT(peak, 2.04);
+}
+
+/* The slew also limits sstep_set_current() and the run -> hold change, both directions */
+TEST(SstepLoop, CurrentSlewOnCurrentChanges)
+{
+    Sim sim;
+    sim.locked = true;
+    sim.cfg.ctrl.i_slew_ma_per_ms = 40U;
+    ASSERT_EQ(sim.init(), SSTEP_OK);
+    ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
+    sim.run_for(0.2); /* run 2 A, then hold 1 A after 100 ms */
+    EXPECT_NEAR(amplitude(sim.rec.back()), 1.0, 0.02);
+    ASSERT_EQ(sstep_set_current(&sim.drv, 2000, 2000), SSTEP_OK);
+    sim.run_for(0.010);
+    const double up = amplitude(sim.rec.back());
+    sim.run_for(0.030);
+    const double top = amplitude(sim.rec.back());
+    ASSERT_EQ(sstep_set_current(&sim.drv, 2000, 400), SSTEP_OK);
+    sim.run_for(0.010);
+    const double down = amplitude(sim.rec.back());
+    sim.run_for(0.040);
+    std::printf("[ measured ] slew 40 mA/ms: 1 -> 2 A %.3f A after 10 ms; 2 -> 0.4 A %.3f A "
+                "after 10 ms\n",
+                up, down);
+    EXPECT_NEAR(up, 1.4, 0.06);
+    EXPECT_NEAR(top, 2.0, 0.02);
+    EXPECT_NEAR(down, 1.6, 0.06);
+    EXPECT_NEAR(amplitude(sim.rec.back()), 0.4, 0.02);
+}
+
 /* half the bus voltage: the duty cycle doubles, the current is the same */
 TEST(SstepLoop, BusVoltageCompensation)
 {

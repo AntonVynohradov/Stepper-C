@@ -38,6 +38,16 @@
                 "UNIT_TESTS": "ON",
                 "SSTEP_MATH_BACKEND": "FLOAT"
             }
+        },
+        {
+            "name": "SSTEP[UnitTestsNoSelftest]",
+            "inherits": "default",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "UNIT_TESTS": "ON",
+                "SSTEP_MATH_BACKEND": "FIXED",
+                "SSTEP_CONFIG_DIR": "${sourceDir}/tests/config/no_selftest"
+            }
         }
     ]
 }

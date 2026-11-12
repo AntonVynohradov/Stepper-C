@@ -40,6 +40,7 @@ include path.
 | `SSTEP[Release]` | Optimized static library |
 | `SSTEP[UnitTests]` | GoogleTest suite, fixed-point backend, with coverage; target `coverage` |
 | `SSTEP[UnitTestsFloat]` | The same suite with the float backend |
+| `SSTEP[UnitTestsNoSelftest]` | The same suite built with `SSTEP_CFG_SELFTEST = 0` (`tests/config/no_selftest`) |
 
 ## Unit tests and coverage
 

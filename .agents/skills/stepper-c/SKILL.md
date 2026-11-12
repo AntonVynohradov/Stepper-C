@@ -10,13 +10,16 @@ description: "Use when working on Stepper-C (sstep), the C11 closed-loop microst
 A portable C11 static library that drives a two-phase hybrid stepper motor: PI
 current control per phase with back-EMF feed-forward and anti-windup, microstep
 angle generation, a trapezoidal motion planner, the voltage limit and duty cycles of
-two power stage topologies, protection trips and sensorless stall detection (back-EMF
-observer, since 1.1.0). The releases are listed in `CHANGELOG.md`: the
+two power stage topologies, protection (trips of both phases and the shared leg, bus
+voltage, a bus check at the enable and the self-test `sstep_selftest()`, since 1.3.0; see
+`docs/protection.md`), the sampling window and the current slew (1.3.0) and sensorless
+stall detection (back-EMF observer, since 1.1.0). The releases are listed in `CHANGELOG.md`: the
 public API (`sstep.h`, `inc/`) is stable within major version 1, so a removed or
 changed public symbol, struct member, enum value or return code needs 2.0.0.
 Verified on a motor model in both numeric backends and in software-in-the-loop with the
-Scilab/Xcos model (repository `sfs-stepper-sim`, next to this one); the next steps are the
-B-G431B-ESC1 port and dead-time compensation.
+Scilab/Xcos model (repository `sfs-stepper-sim`, next to this one), and running on the
+B-G431B-ESC1 with a 17HS19-2004S1 (firmware `sfs-stepper-driver`, next to this one); the
+next steps are dead-time compensation and stall detection measured on the hardware.
 
 Not in the library: timer/PWM/ADC drivers, interrupt setup, encoders, homing,
 communication, application logic. They belong to the firmware that uses it.
@@ -26,6 +29,7 @@ communication, application logic. They belong to the firmware that uses it.
 | Public API | `sstep.h` | Every public function declaration (15), version fallbacks; includes the public headers |
 | Public types | `inc/sstep_ctrl.h`, `inc/sstep_defs.h`, `inc/sstep_config.h` | Configuration, callbacks, sample, status, opaque `struct sstep`; status codes, faults, states; build-time options |
 | Control | `src/sstep_ctrl.c` | Config check, derived gains, state machine, fast loop, slow loop, commands |
+| Self-test | `src/sstep_selftest.c` | Pure state machine of `sstep_selftest()` (`struct sstep_selftest_ctx`, one step per fast period, integer): all legs low, then each phase ramped to the test current; leak, open, short, polarity, wrong phase. `sstep_ctrl.c` runs it in the fast loop while `st.result == SSTEP_SELFTEST_RUNNING` and reports `SSTEP_EVENT_SELFTEST_DONE` from the slow loop |
 | Stall detection | `src/sstep_stall.c` | Back-EMF observer (fast loop), decision in the slow loop in integer mV: in motion `e_q` with a window on `e_d` and a hold after a reversed back-EMF, at rest a learned offset, then an up/down counter; status estimates |
 | Motion | `src/sstep_motion.c` | Integer trajectory (Q16 microsteps, 64-bit), both backends |
 | Power stage | `src/sstep_bridge.c` | Voltage limit per topology, leg compare values |
@@ -77,8 +81,9 @@ communication, application logic. They belong to the firmware that uses it.
   `_hz`); `sstep_init()` derives every gain without floating point
   (`2π = 710 / 113`) and validates every field (`SSTEP_ERR_PARAM` per field,
   `SSTEP_ERR_CONFIG` for combinations).
-- `pwm_freq_hz` and `dead_time_ns` are reserved: present in the API, not used by
-  the code. Do not document them as active.
+- `pwm_freq_hz` and `dead_time_ns` are used only for the dead-time loss in the duty
+  levels of `sstep_selftest()`; the control does not compensate the dead time yet. Do not
+  document a compensation.
 - Public symbols use the `sstep_` / `SSTEP_` prefix; public headers keep the
   `extern "C"` guards and a Doxygen comment for every item; parameter names in
   declarations and definitions match (Rule 8.3).
@@ -87,6 +92,11 @@ communication, application logic. They belong to the firmware that uses it.
   `cppcheck-suppress` comment. Single `return` per function, parenthesized mixed
   operators, `(void)` on ignored results, `++`/`--` as separate statements, array
   indexing instead of pointer arithmetic, no `_Alignof`/`_Generic` (Rule 1.4).
+- Optional code is switched with `0`/`1` macros in `inc/sstep_config.h`, checked with
+  `#error` (`SSTEP_CFG_TOPOLOGY_*`, `SSTEP_CFG_SELFTEST`): the code under `#if`, never a
+  constant-false run-time branch (coverage of every preset stays 100 %); a function that is
+  compiled out returns `SSTEP_ERR_UNSUPPORTED`; state that is compiled out shrinks
+  `SSTEP_STATE_BYTES`.
 - Every public function validates its pointers (Dir 4.11);
   `SSTEP_CFG_ARG_CHECKS = 0` removes only the checks of `sstep_fast_loop()`.
 - No warnings with `-std=c11 -Wall -Wextra -Wpedantic -Wconversion`, for the host
@@ -106,6 +116,7 @@ communication, application logic. They belong to the firmware that uses it.
 cmake --preset "SSTEP[Debug]" && cmake --build "build/SSTEP[Debug]"
 cmake --preset "SSTEP[UnitTests]" && cmake --build "build/SSTEP[UnitTests]" --target coverage
 cmake --preset "SSTEP[UnitTestsFloat]" && cmake --build "build/SSTEP[UnitTestsFloat]" --target coverage
+cmake --preset "SSTEP[UnitTestsNoSelftest]" && cmake --build "build/SSTEP[UnitTestsNoSelftest]" --target coverage
 cmake --build "build/SSTEP[Debug]" --target misra-analyze
 python tools/docs/check_snippets.py
 python tools/sstep_gen_sin_table.py --check
@@ -123,7 +134,13 @@ python tools/sstep_gen_sin_table.py --check
 - Closed-loop results that must keep passing: 2 A current step with < 5 %
   overshoot and < 1 ms settling (measured 1.11 %, 0.40 ms), 6400-microstep move
   ending on target, load step below/above `Kt·I`, reversal, 8 rev/s topology limit
-  (1.862 A full bridge, 1.557 A shared leg), bus voltage compensation, voltage drive.
+  (1.862 A full bridge, 1.557 A shared leg), bus voltage compensation, voltage drive,
+  sampling window of 10 % (no compare above 3825 of 4250; 1.773 A / 1.300 A at 8 rev/s;
+  voltage drive still 2.00 A), current slew 40 mA/ms (98 % of 2 A after 48.3 ms, no
+  overshoot, both directions).
+- `sample_window_ticks` acts as a smaller bus voltage `Vbus (P - W) / P` on the compare
+  range `0 .. P - W` (`bus_num`, `bus_den`, `bus_frac`, `period_eff`); `sstep_bridge_map()`
+  does not know it. With `W = 0` every value is identical to 1.2.0: keep it that way.
 - Stall detection (`SstepLoop.Stall*`, `SstepStall.*`): the hold-current slip
   (0.12 N·m, 1.5 A / 0.5 A) trips 48 ms after the load angle passes 90° and a hard stop
   after 50 ms; a heavy axis (`J` ×20, ×100, 0.5 N·m) trips 43 to 60 ms after it; the bare
@@ -156,7 +173,7 @@ a change that can affect it.
 
 | Figure | How |
 | --- | --- |
-| RAM per instance | `sizeof(struct sstep)` on Cortex-M4: 432 B fixed, 456 B float (64-bit host: 464 B, 488 B) |
+| RAM per instance | `sizeof(struct sstep)` on Cortex-M4: 488 B fixed, 520 B float (64-bit host: 536 B, 568 B); 40 B less with `SSTEP_CFG_SELFTEST = 0` |
 | Flash | `arm-none-eabi-size` of `src/*.c` at `-Os`, Cortex-M4 (float with `-mfpu=fpv4-sp-d16 -mfloat-abi=hard`) |
 | Stack | `-fstack-usage -fcallgraph-info=su`, then `python tools/docs/stack_usage.py <dir> --markdown`; table in `docs/configuration.md` (Cortex-M4, `-Os`/`-O0`, both backends) |
 | Sine accuracy | Sweep `sstep_sin_cos()` over a full turn against `sin`/`cos` for table bits 6, 8, 10 |
@@ -204,7 +221,7 @@ English and written for embedded engineers integrating the library.
   ```
 
   The workflows run every preset with `[UnitTests` in its name (`SSTEP[UnitTests]`,
-  `SSTEP[UnitTestsFloat]`), read from `CMakePresets.json`.
+  `SSTEP[UnitTestsFloat]`, `SSTEP[UnitTestsNoSelftest]`), read from `CMakePresets.json`.
 - Brand: SystemFromScratch® exactly like that; do not name the trademark owner;
   STM32 is a trademark of STMicroelectronics.
 

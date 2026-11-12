@@ -204,7 +204,7 @@ of several axes may run in one interrupt one after the other, or in separate int
 | `SSTEP_ERR_PARAM` | −1 | `NULL` pointer, a value outside its range, `|velocity| > v_max`, a relative move that overflows |
 | `SSTEP_ERR_CONFIG` | −2 | Configuration fields that do not fit together, currents above the trip or rated current |
 | `SSTEP_ERR_STATE` | −3 | Any function but `sstep_init()` on an instance without a successful `sstep_init()`; a motion command while disabled or faulted; `sstep_set_position()` while moving; `sstep_enable()` while faulted |
-| `SSTEP_ERR_UNSUPPORTED` | −4 | A topology that is not compiled in |
+| `SSTEP_ERR_UNSUPPORTED` | −4 | A topology, or `sstep_selftest()`, that is not compiled in |
 
 `sstep_fast_loop()` returns `SSTEP_ERR_PARAM` only for `NULL` arguments and only with
 `SSTEP_CFG_ARG_CHECKS = 1`; its faults are reported through the state and `on_fault()`.

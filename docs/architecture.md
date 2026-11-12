@@ -69,8 +69,8 @@ detects them.
 
 | Object | Owner | Size | Lifetime |
 | --- | --- | --- | --- |
-| `struct sstep` (driver instance) | Application (static, stack or pool) | 432 B fixed point, 456 B float on Cortex-M4 | From `sstep_init()` as long as the motor runs |
-| `struct sstep_config` | Application; copied by `sstep_init()` | 152 B on Cortex-M4 | Only during `sstep_init()` |
+| `struct sstep` (driver instance) | Application (static, stack or pool) | 488 B fixed point, 520 B float on Cortex-M4 | From `sstep_init()` as long as the motor runs |
+| `struct sstep_config` | Application; copied by `sstep_init()` | 156 B on Cortex-M4 | Only during `sstep_init()` |
 | `struct sstep_sample` | Application | 6 B | Only during `sstep_fast_loop()` |
 | `struct sstep_status` | Application | 48 B on Cortex-M4 | Filled by `sstep_get_status()` |
 | Sine table | Library, `static const` (flash) | 514 B fixed point, 1028 B float (default 257 entries) | Program |
@@ -91,6 +91,7 @@ analysis can evaluate them) and checked against the private state by `_Static_as
 | A configuration field outside its range or a missing required callback | `sstep_init()` returns `SSTEP_ERR_PARAM` |
 | Fields that are valid alone but not together (trip above full scale, bandwidth above `fast_loop_hz / 4`, a gain that does not fit) | `sstep_init()` returns `SSTEP_ERR_CONFIG` |
 | A topology that is not compiled in | `sstep_init()` returns `SSTEP_ERR_UNSUPPORTED` |
+| `sstep_selftest()` built with `SSTEP_CFG_SELFTEST = 0` | Returns `SSTEP_ERR_UNSUPPORTED` |
 | Any call before a successful `sstep_init()` (zeroed instance, or the last `sstep_init()` failed in the derivation) | `SSTEP_ERR_STATE`; no callback is called |
 | A motion command while disabled or faulted | `SSTEP_ERR_STATE` |
 | A phase current above `i_trip_ma` (current drive) | `SSTEP_FAULT_OVERCURRENT`, outputs off in the same fast period |

@@ -102,6 +102,20 @@
 #endif
 
 /* ==============================================================================
+ * SELF-TEST
+ * =============================================================================*/
+
+#ifndef SSTEP_CFG_SELFTEST
+/** @brief 1: compile the power stage and wiring self-test, sstep_selftest(). 0 removes its
+ *         code and state; sstep_selftest() then returns ::SSTEP_ERR_UNSUPPORTED. */
+#define SSTEP_CFG_SELFTEST 1
+#endif
+
+#if (SSTEP_CFG_SELFTEST != 0) && (SSTEP_CFG_SELFTEST != 1)
+#error "SSTEP_CFG_SELFTEST must be 0 or 1"
+#endif
+
+/* ==============================================================================
  * MICROSTEPPING
  * =============================================================================*/
 

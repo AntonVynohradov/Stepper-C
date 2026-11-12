@@ -110,10 +110,34 @@ int sstep_init(struct sstep* drv, const struct sstep_config* cfg);
 
 /**
  * @brief  Enable the outputs and hold the current position with the hold current.
+ *         Refused without a fault when the last bus voltage sample is outside the trip
+ *         limits (no sample yet: not checked, the fast loop trips).
  * @param  drv  Driver instance.
- * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM, ::SSTEP_ERR_STATE (faulted).
+ * @retval ::SSTEP_OK, ::SSTEP_ERR_PARAM, ::SSTEP_ERR_STATE (faulted or self-test running),
+ *         ::SSTEP_ERR_VBUS.
  */
 int sstep_enable(struct sstep* drv);
+
+/**
+ * @brief  Test the power stage and the motor wiring before the first enable. The outputs
+ *         are switched on; for each phase in turn the fast loop raises the voltage slowly
+ *         until the phase current reaches i_test_ma, holds it for 2 ms and lets it decay.
+ *         It checks that no current flows with every leg low, that each phase reaches the
+ *         current with the expected sign at a plausible duty cycle, and that the other phase
+ *         stays below half of it. Takes about 15 to 60 ms of fast loop periods, then the
+ *         outputs go off, ::SSTEP_EVENT_SELFTEST_DONE is reported by sstep_slow_loop() and the
+ *         result is in the status. A failure raises ::SSTEP_FAULT_SELFTEST.
+ *         The rotor moves to the nearest full step of the tested phase (at most one full
+ *         step) and must be free to: an external torque that turns it fails the test.
+ * @param  drv        Driver instance.
+ * @param  i_test_ma  Test current [mA], 1 .. i_run_ma; typically 30 % of the rated current.
+ * @retval ::SSTEP_OK         The test runs.
+ * @retval ::SSTEP_ERR_PARAM  NULL pointer or i_test_ma out of range.
+ * @retval ::SSTEP_ERR_STATE  Not disabled, faulted, or a test is running.
+ * @retval ::SSTEP_ERR_VBUS   No bus voltage sample yet, or outside the trip limits.
+ * @retval ::SSTEP_ERR_UNSUPPORTED  Built with ::SSTEP_CFG_SELFTEST = 0.
+ */
+int sstep_selftest(struct sstep* drv, uint32_t i_test_ma);
 
 /**
  * @brief  Stop immediately and switch the outputs off (motor coasts, no holding torque).

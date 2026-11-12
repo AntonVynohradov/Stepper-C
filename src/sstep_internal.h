@@ -80,6 +80,34 @@ struct sstep_bridge_out
     bool limited;                     /**< The request was scaled down. */
 };
 
+#if (SSTEP_CFG_SELFTEST == 1)
+/**
+ * @brief Self-test of the power stage and the wiring (sstep_selftest.c). Currents in ADC
+ *        counts from adc_i_zero, signed so that positive is the expected direction.
+ */
+struct sstep_selftest_ctx
+{
+    /* parameters, sstep_selftest_setup() */
+    int32_t i_test;         /**< Test current [counts], > 0. */
+    uint32_t duty_max_q8;   /**< Duty without current means open [ticks * 256]. */
+    uint32_t duty_short_q8; /**< Current reached below it means short [ticks * 256]. */
+    uint32_t ramp_q8;       /**< Duty increase per fast period [ticks * 256], >= 1. */
+    uint16_t boot_periods;  /**< All legs low before the first phase (<= 50000: 5 ms at the
+                                 largest fast loop rate). */
+    uint16_t hold_periods;  /**< Current held before the checks. */
+    uint16_t decay_periods; /**< All legs low between and after the phases. */
+    uint8_t leg[2];         /**< Leg driven for phase A and phase B. */
+    /* state */
+    uint8_t phase;                     /**< ::sstep_selftest_phase_id. */
+    uint8_t coil;                      /**< 0 = A, 1 = B. */
+    uint16_t n;                        /**< Periods in the current step. */
+    uint32_t duty_q8;                  /**< Duty of the driven leg [ticks * 256]. */
+    int32_t i_own;                     /**< Current of the tested phase at the end [counts]. */
+    enum sstep_selftest_result result; /**< Result, ::SSTEP_SELFTEST_RUNNING while it runs. */
+    volatile uint8_t done;             /**< 1: finished, event not yet reported by the slow loop. */
+};
+#endif /* SSTEP_CFG_SELFTEST */
+
 /* ==============================================================================
  * DRIVER INSTANCE
  * =============================================================================*/
@@ -118,21 +146,26 @@ struct sstep_ctx
     struct sstep_config cfg; /**< Copy of the configuration. */
 
     /* Constants derived by sstep_init() */
-    struct sstep_gain kp;      /**< Proportional gain [pu V / pu A]. */
-    struct sstep_gain ki;      /**< Integral gain per fast loop period. */
-    struct sstep_gain kb;      /**< Anti-windup gain Ts / Tt. */
-    struct sstep_gain r_pu;    /**< Phase resistance [pu] (voltage drive). */
-    struct sstep_gain adc_i;   /**< Current per ADC count [pu]. */
-    struct sstep_gain adc_v;   /**< Bus voltage per ADC count [pu]. */
-    struct sstep_gain ff_gain; /**< Feed-forward per microstep/s [pu]. */
-    sstep_real_t i_run;        /**< Run current [pu]. */
-    sstep_real_t i_hold;       /**< Hold current [pu]. */
-    uint16_t i_trip_counts;    /**< Overcurrent trip [ADC counts from zero]. */
-    uint16_t vbus_min_raw;     /**< Undervoltage trip [ADC counts], 0 = off. */
-    uint16_t vbus_max_raw;     /**< Overvoltage trip [ADC counts], 0 = off. */
-    uint16_t ratio;            /**< Fast loop periods per slow loop period. */
-    uint32_t hold_ticks;       /**< Slow periods at standstill before hold. */
-    uint8_t angle_shift;       /**< 14 - log2(microsteps). */
+    struct sstep_gain kp;       /**< Proportional gain [pu V / pu A]. */
+    struct sstep_gain ki;       /**< Integral gain per fast loop period. */
+    struct sstep_gain kb;       /**< Anti-windup gain Ts / Tt. */
+    struct sstep_gain r_pu;     /**< Phase resistance [pu] (voltage drive). */
+    struct sstep_gain adc_i;    /**< Current per ADC count [pu]. */
+    struct sstep_gain adc_v;    /**< Bus voltage per ADC count [pu]. */
+    struct sstep_gain ff_gain;  /**< Feed-forward per microstep/s [pu]. */
+    sstep_real_t i_run;         /**< Run current [pu]. */
+    sstep_real_t i_hold;        /**< Hold current [pu]. */
+    uint16_t i_trip_counts;     /**< Overcurrent trip [ADC counts from zero]. */
+    uint16_t vbus_min_raw;      /**< Undervoltage trip [ADC counts], 0 = off. */
+    uint16_t vbus_max_raw;      /**< Overvoltage trip [ADC counts], 0 = off. */
+    uint16_t ratio;             /**< Fast loop periods per slow loop period. */
+    uint32_t hold_ticks;        /**< Slow periods at standstill before hold. */
+    uint8_t angle_shift;        /**< 14 - log2(microsteps). */
+    uint16_t period_eff;        /**< pwm_period_ticks - sample_window_ticks. */
+    uint16_t bus_num;           /**< pwm_period_ticks, 1 without a sampling window. */
+    uint16_t bus_den;           /**< period_eff, 1 without a sampling window. */
+    struct sstep_gain bus_frac; /**< period_eff / pwm_period_ticks. */
+    sstep_real_t i_slew;        /**< Current slew per slow period [pu]; 0 = off. */
 
     /* Stall detection constants, sstep_stall_*() */
     struct sstep_gain emf_a;     /**< L / Ts + R / 2 [pu V / pu A]. */
@@ -163,12 +196,17 @@ struct sstep_ctx
     sstep_angle_t angle_offset; /**< Electrical angle of position 0. */
     uint32_t still;             /**< Slow periods at standstill. */
     bool hold_active;           /**< Hold current applied. */
+    sstep_real_t i_amp;         /**< Current amplitude of the setpoint [pu] (slew). */
     struct sstep_gain inv_vbus; /**< Last V_base / bus voltage. */
     int32_t vel_cmd;            /**< Commanded velocity of the period in use [microsteps/s]. */
     sstep_real_t ff_cmd;        /**< Back-EMF of vel_cmd [pu V]. */
     int64_t emf_off[2];         /**< Mean back-EMF at rest, d and q [mV * 2^16]. */
     uint32_t stall_count;       /**< Stall detector up/down counter. */
     uint32_t stall_hold;        /**< Slow periods the condition stays true after a reversal. */
+
+#if (SSTEP_CFG_SELFTEST == 1)
+    struct sstep_selftest_ctx st; /**< Self-test (sstep_selftest()). */
+#endif
 
     volatile uint16_t faults;        /**< Active faults. */
     volatile enum sstep_state state; /**< Driver state. */
@@ -214,6 +252,33 @@ static inline const struct sstep_ctx* sstep_ctx_of_const(const struct sstep* drv
 void sstep_bridge_map(enum sstep_topology topology, sstep_acc_t va, sstep_acc_t vb,
                       const struct sstep_gain* inv_vbus, sstep_acc_t vbus, uint16_t period,
                       struct sstep_bridge_out* out);
+
+#if (SSTEP_CFG_SELFTEST == 1)
+/**
+ * @brief  Prepare a self-test: duty levels from the motor resistance, the bus voltage of the
+ *         sample vbus_raw, the dead time and the test current; state ::SSTEP_SELFTEST_RUNNING.
+ *         The dead-time loss 2 tdead fpwm of the bus is added to the duty levels: at 12 V and
+ *         1.2 us / 20 kHz it is as large as the voltage of a 0.6 A test current in 1.6 Ohm.
+ * @param  st         Self-test state.
+ * @param  cfg        Configuration (validated by sstep_init()).
+ * @param  vbus_raw   Bus voltage sample [ADC counts], > 0.
+ * @param  i_test_ma  Test current [mA], > 0.
+ */
+void sstep_selftest_setup(struct sstep_selftest_ctx* st, const struct sstep_config* cfg,
+                          uint16_t vbus_raw, uint32_t i_test_ma);
+
+/**
+ * @brief  One fast loop period of the self-test: the currents of this period in, the compare
+ *         values of the next period out (every leg low after the end).
+ * @param  st       Self-test state.
+ * @param  i_a      Phase A current [counts from zero], positive in the expected direction.
+ * @param  i_b      Phase B current, likewise.
+ * @param  compare  Compare values, SSTEP_LEGS_MAX legs.
+ * @return ::SSTEP_SELFTEST_RUNNING, or the final result.
+ */
+enum sstep_selftest_result sstep_selftest_step(struct sstep_selftest_ctx* st, int32_t i_a,
+                                               int32_t i_b, uint16_t compare[SSTEP_LEGS_MAX]);
+#endif /* SSTEP_CFG_SELFTEST */
 
 /**
  * @brief  One slow loop period of the motion generator: trapezoidal velocity profile with

@@ -31,6 +31,7 @@ Everything else (`src/`) is private and not installed with the library.
 | `SSTEP_CFG_MATH_BACKEND` | `SSTEP_MATH_BACKEND_FIXED` | Numeric backend |
 | `SSTEP_CFG_TOPOLOGY_FULL_BRIDGE` | `1` | Compile the full-bridge topology |
 | `SSTEP_CFG_TOPOLOGY_SHARED_LEG` | `1` | Compile the shared-leg topology |
+| `SSTEP_CFG_SELFTEST` | `1` | Compile `sstep_selftest()` |
 | `SSTEP_CFG_MICROSTEPS_MAX` | `256U` | Largest microstep division |
 | `SSTEP_CFG_SINE_TABLE_BITS` | `8U` | Size of the sine table |
 | `SSTEP_CFG_ARG_CHECKS` | `1` | `NULL` checks in `sstep_fast_loop()` |
@@ -47,7 +48,8 @@ Ranges and override rules: [Configuration](configuration.md#build-time-options).
 | `SSTEP_ERR_PARAM` | `-1` | `NULL` pointer or a value outside its documented range |
 | `SSTEP_ERR_CONFIG` | `-2` | Configuration consistent field by field but not as a whole |
 | `SSTEP_ERR_STATE` | `-3` | Call not allowed in the current state |
-| `SSTEP_ERR_UNSUPPORTED` | `-4` | Topology not compiled in |
+| `SSTEP_ERR_UNSUPPORTED` | `-4` | Topology or self-test not compiled in |
+| `SSTEP_ERR_VBUS` | `-5` | The last bus voltage sample is outside `vbus_min_mv` .. `vbus_max_mv`; nothing switched on, nothing latched (since 1.3.0) |
 
 ### Topologies
 
@@ -63,12 +65,19 @@ Ranges and override rules: [Configuration](configuration.md#build-time-options).
 | Macro | Value | Raised when |
 | --- | --- | --- |
 | `SSTEP_FAULT_NONE` | `0x0000U` | No fault |
-| `SSTEP_FAULT_OVERCURRENT` | `0x0001U` | A phase current above `i_trip_ma` (current drive) |
+| `SSTEP_FAULT_OVERCURRENT` | `0x0001U` | A phase current, or the shared-leg current $\lvert i_A + i_B \rvert$ (since 1.3.0), above `i_trip_ma`: current drive, voltage drive with `i_trip_voltage_drive`, self-test |
 | `SSTEP_FAULT_OVERVOLTAGE` | `0x0002U` | Bus voltage above `vbus_max_mv` |
 | `SSTEP_FAULT_UNDERVOLTAGE` | `0x0004U` | Bus voltage below `vbus_min_mv` |
 | `SSTEP_FAULT_HAL` | `0x0008U` | A callback returned an error |
 | `SSTEP_FAULT_EXTERNAL` | `0x0010U` | Reported by the application with `sstep_report_fault()` |
 | `SSTEP_FAULT_STALL` | `0x0020U` | The rotor does not follow the commanded angle (stall detection, `stall_time_ms` > 0); since 1.1.0. Also together with `SSTEP_FAULT_OVERCURRENT` when the trip comes while the detector is counting |
+| `SSTEP_FAULT_SELFTEST` | `0x0040U` | `sstep_selftest()` found the stage or the wiring faulty; since 1.3.0 |
+
+### Self-test results — `enum sstep_selftest_result`
+
+`SSTEP_SELFTEST_NONE` (0), `_RUNNING` (1), `_PASS` (2), `_LEAK` (3), `_OPEN` (4),
+`_SHORT` (5), `_POLARITY` (6), `_WRONG_PHASE` (7), `_ABORTED` (8); since 1.3.0. Meaning of
+each: [Protection](protection.md#self-test).
 
 ### Driver states — `enum sstep_state`
 
@@ -93,7 +102,7 @@ Ranges and override rules: [Configuration](configuration.md#build-time-options).
 `pwm_write` and `output_enable` return 0 on success and a negative value on error
 (`SSTEP_FAULT_HAL`). Events (`enum sstep_event`): `SSTEP_EVENT_MOVE_DONE` (0, target
 reached with zero velocity), `SSTEP_EVENT_HOLD_CURRENT` (1, current reduced at
-standstill).
+standstill), `SSTEP_EVENT_SELFTEST_DONE` (2, `sstep_selftest()` ended; since 1.3.0).
 
 ### Configuration
 
@@ -101,8 +110,8 @@ standstill).
 | --- | --- |
 | `struct sstep_config` | `motor`, `stage`, `ctrl`, `hal` |
 | `struct sstep_motor_cfg` | `r_mohm`, `l_uh`, `i_rated_ma`, `ke_uv_s_per_rad`, `full_steps_per_rev` |
-| `struct sstep_stage_cfg` | `topology`, `vbus_nominal_mv`, `vbus_min_mv`, `vbus_max_mv`, `i_full_scale_ma`, `i_trip_ma`, `pwm_period_ticks`, `pwm_freq_hz`, `dead_time_ns`, `adc_i_zero`, `adc_i_span`, `adc_vbus_mv_full`, `adc_full` |
-| `struct sstep_ctrl_cfg` | `drive_mode`, `fast_loop_hz`, `slow_loop_hz`, `microsteps`, `current_bw_hz`, `i_run_ma`, `i_hold_ma`, `hold_delay_ms`, `v_max`, `accel`, `decel`, `stall_time_ms`, `stall_filter_us`, `stall_speed`, `stall_sync_pct` (since 1.1.0) |
+| `struct sstep_stage_cfg` | `topology`, `vbus_nominal_mv`, `vbus_min_mv`, `vbus_max_mv`, `i_full_scale_ma`, `i_trip_ma`, `pwm_period_ticks`, `pwm_freq_hz`, `dead_time_ns`, `adc_i_zero`, `adc_i_span`, `adc_vbus_mv_full`, `adc_full`, `sample_window_ticks` (since 1.3.0) |
+| `struct sstep_ctrl_cfg` | `drive_mode`, `fast_loop_hz`, `slow_loop_hz`, `microsteps`, `current_bw_hz`, `i_run_ma`, `i_hold_ma`, `hold_delay_ms`, `v_max`, `accel`, `decel`, `stall_time_ms`, `stall_filter_us`, `stall_speed`, `stall_sync_pct` (since 1.1.0), `i_trip_voltage_drive`, `i_slew_ma_per_ms` (since 1.3.0) |
 | `struct sstep_callbacks` | `context`, `pwm_write`, `output_enable`, `on_fault`, `on_event` |
 | `enum sstep_drive_mode` | `SSTEP_DRIVE_CURRENT` (0), `SSTEP_DRIVE_VOLTAGE` (1) |
 
@@ -123,6 +132,8 @@ Units, ranges and examples of every member: [Run-time configuration](configurati
 | | `rotor_velocity` | microsteps/s, estimated from the back-EMF (since 1.1.0) |
 | | `load_angle_cdeg` | 0.01°, estimated load angle, commanded minus rotor electrical angle (since 1.1.0) |
 | | `stall_level_pct` | %, stall detector level, 100 = trip (since 1.1.0) |
+| | `selftest`, `selftest_phase` | `enum sstep_selftest_result`, phase it refers to (0 = A, 1 = B) (since 1.3.0) |
+| | `selftest_i_ma`, `selftest_duty` | mA in the expected direction, compare value, at the end of that phase's test (since 1.3.0) |
 
 The five estimates are 0 while stall detection is off; their equations are in
 [Stall detection](motor-control.md#stall-detection).
@@ -130,9 +141,10 @@ The five estimates are 0 while stall detection is off; their equations are in
 ### Driver instance
 
 `struct sstep` is an opaque array of `SSTEP_INSTANCE_WORDS` 64-bit words (on Cortex-M4
-432 B fixed point, 456 B float; on 64-bit hosts 456 B and 480 B). Allocate it, pass its
+488 B fixed point, 520 B float; on 64-bit hosts 536 B and 568 B; 40 B less each with
+`SSTEP_CFG_SELFTEST = 0`). Allocate it, pass its
 address, never read or write its content. `SSTEP_CONFIG_BYTES` is the size of the
-configuration copy (152 B with 32-bit pointers, 176 B with 64-bit pointers) and
+configuration copy (156 B with 32-bit pointers, 192 B with 64-bit pointers) and
 `SSTEP_STATE_BYTES` the size of the private state behind it.
 
 ## Functions — `sstep.h`
@@ -173,13 +185,34 @@ int sstep_enable(struct sstep* drv);
 ```
 
 Switch the outputs on and hold the current position with the run current; resets the
-current controllers. Does nothing when already enabled.
+current controllers. Does nothing when already enabled. Since 1.3.0 the last bus voltage
+sample is checked first (not before the first sample).
 
 | Return | Meaning |
 | --- | --- |
 | `SSTEP_OK` | Enabled (`SSTEP_STATE_HOLDING`) |
 | `SSTEP_ERR_PARAM` | `drv` is `NULL` |
-| `SSTEP_ERR_STATE` | Faulted, or `output_enable()` failed (then `SSTEP_FAULT_HAL`) |
+| `SSTEP_ERR_STATE` | Faulted, a self-test runs, or `output_enable()` failed (then `SSTEP_FAULT_HAL`) |
+| `SSTEP_ERR_VBUS` | Bus voltage outside the trip limits; nothing latched |
+
+### sstep_selftest
+
+```c
+int sstep_selftest(struct sstep* drv, uint32_t i_test_ma);
+```
+
+Test the power stage and the motor wiring (since 1.3.0): switch the outputs on and let the
+fast loop drive each phase in turn up to `i_test_ma`. The end is reported by
+`sstep_slow_loop()` with `SSTEP_EVENT_SELFTEST_DONE`; the result is in the status, a failure
+raises `SSTEP_FAULT_SELFTEST`. `sstep_disable()` stops it. Details:
+[Protection](protection.md#self-test).
+
+| Return | Meaning |
+| --- | --- |
+| `SSTEP_OK` | The test runs |
+| `SSTEP_ERR_PARAM` | `drv` is `NULL`, or `i_test_ma` is 0 or above `i_run_ma` |
+| `SSTEP_ERR_STATE` | Not disabled, faulted, a test runs, or `output_enable()` failed (then `SSTEP_FAULT_HAL`) |
+| `SSTEP_ERR_VBUS` | No bus voltage sample yet, or outside the trip limits |
 
 ### sstep_disable
 
@@ -383,18 +416,20 @@ Cortex-M4): call it from the slow-loop context, not from the fast loop.
 
 ## Return codes summary
 
-| Function | `OK` | `ERR_PARAM` | `ERR_CONFIG` | `ERR_STATE` | `ERR_UNSUPPORTED` |
-| --- | :---: | :---: | :---: | :---: | :---: |
-| `sstep_init()` | ✓ | ✓ | ✓ | | ✓ |
-| `sstep_enable()` | ✓ | ✓ | | ✓ | |
-| `sstep_disable()` | ✓ | ✓ | | ✓¹ | |
-| `sstep_fast_loop()` | ✓ | ✓ | | ✓¹ | |
-| `sstep_slow_loop()` | ✓ | ✓ | | ✓¹ | |
-| `sstep_move_to()`, `sstep_move_by()`, `sstep_run()` | ✓ | ✓ | | ✓ | |
-| `sstep_stop()` | ✓ | ✓ | | ✓¹ | |
-| `sstep_set_position()` | ✓ | ✓ | | ✓ | |
-| `sstep_set_current()` | ✓ | ✓ | ✓ | ✓¹ | |
-| `sstep_set_motion_limits()` | ✓ | ✓ | | ✓¹ | |
-| `sstep_report_fault()`, `sstep_clear_faults()`, `sstep_get_status()` | ✓ | ✓ | | ✓¹ | |
+| Function | `OK` | `ERR_PARAM` | `ERR_CONFIG` | `ERR_STATE` | `ERR_UNSUPPORTED` | `ERR_VBUS` |
+| --- | :---: | :---: | :---: | :---: | :---: | :---: |
+| `sstep_init()` | ✓ | ✓ | ✓ | | ✓ | |
+| `sstep_enable()` | ✓ | ✓ | | ✓ | | ✓ |
+| `sstep_selftest()` | ✓ | ✓ | | ✓ | ✓² | ✓ |
+| `sstep_disable()` | ✓ | ✓ | | ✓¹ | | |
+| `sstep_fast_loop()` | ✓ | ✓ | | ✓¹ | | |
+| `sstep_slow_loop()` | ✓ | ✓ | | ✓¹ | | |
+| `sstep_move_to()`, `sstep_move_by()`, `sstep_run()` | ✓ | ✓ | | ✓ | | |
+| `sstep_stop()` | ✓ | ✓ | | ✓¹ | | |
+| `sstep_set_position()` | ✓ | ✓ | | ✓ | | |
+| `sstep_set_current()` | ✓ | ✓ | ✓ | ✓¹ | | |
+| `sstep_set_motion_limits()` | ✓ | ✓ | | ✓¹ | | |
+| `sstep_report_fault()`, `sstep_clear_faults()`, `sstep_get_status()` | ✓ | ✓ | | ✓¹ | | |
 
 ¹ Only for an instance without a successful `sstep_init()`.
+² Only when built with `SSTEP_CFG_SELFTEST = 0`.

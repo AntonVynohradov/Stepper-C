@@ -188,6 +188,32 @@ amplitude is 1.862 A with a full bridge and 1.557 A with a shared leg: the three
 stage reaches its voltage limit first. Choose the supply voltage for the highest speed
 of the application.
 
+### Sampling window
+
+Low-side shunts carry the phase current only while the low-side switch of their leg
+conducts. With a duty cycle near 100 % that time shrinks to nothing: the edges and the dead
+time fall into the conversion, and a single wrong sample of the current or of the bus
+voltage (an undervoltage trip) follows. `sample_window_ticks` ($W$) keeps every compare
+value at or below $P - W$ ($P$ = `pwm_period_ticks`), so every leg spends at least $W$ ticks
+of each period on its low-side switch.
+
+The stage then behaves like one with the compare range $0 \ldots P - W$ and the bus voltage
+$V_\mathrm{bus} (P - W) / P$: the voltage limit of the table above shrinks by the factor
+$(P - W) / P$, the direction of the voltage vector is kept, and the anti-windup and the
+stall detector see the voltage that is really applied. With $W = 0$ nothing changes.
+
+Choose $W$ from the dead time, the settling time of the amplifier after the low-side switch
+turns on, and the conversion time of every sample taken at the centre of the period. On the
+B-G431B-ESC1 (1.2 µs dead time, four injected conversions) 400 ticks of 4250 work.
+
+| 8 rev/s, 2 A requested, 24 V | Without window | $W$ = 10 % |
+| --- | --- | --- |
+| Full bridge | 1.862 A | 1.773 A |
+| Shared leg | 1.557 A | 1.300 A |
+
+The largest compare value in the window case is 3825 of 4250 (both topologies, measured in
+`SstepLoop.SampleWindowAtTheVoltageLimit`).
+
 ## Motion profile
 
 ![Trapezoidal motion profile](assets/images/trajectory.svg)
@@ -234,6 +260,24 @@ After `hold_delay_ms` without motion the current amplitude drops from `i_run_ma`
 `i_hold_ma` and `on_event(SSTEP_EVENT_HOLD_CURRENT)` is reported. Any motion switches
 back to the run current in the same period. The hold current reduces heating at
 standstill; the holding torque is $K_t\, i_\mathrm{hold}$.
+
+## Current slew
+
+`i_slew_ma_per_ms` limits how fast the current amplitude changes: in each slow period it
+moves towards its target (run or hold current) by at most
+`i_slew_ma_per_ms` · 1000 / `slow_loop_hz` mA (at least 1 mA). After `sstep_enable()` the
+amplitude starts at 0; between run and hold current and after `sstep_set_current()` it moves
+at the same rate, in both directions. Without it (0) the amplitude steps, and the current
+controller pulls the whole change from the supply within a few hundred microseconds; with a
+current-limited bench supply or a small bus capacitance the bus voltage can then drop below
+`vbus_min_mv`.
+
+Measured on the motor model, locked rotor, 40 mA/ms at 1 kHz: 0.40 A 10 ms after
+`sstep_enable()`, 98 % of 2 A after 48.3 ms, no overshoot (peak 2.001 A); 1 → 2 A and
+2 → 0.4 A both 0.6 A further after 10 ms (`SstepLoop.CurrentSlew*`).
+
+While the amplitude ramps up after the enable, the rotor is held with less than the run
+current: do not command a move before it reached the run current when the load needs it.
 
 ## Stall detection
 

@@ -138,6 +138,11 @@ TEST(SstepApi, InitRejectsInvalidFields)
         {"ADC V gain above 32767", [](sstep_config& c) { c.stage.adc_vbus_mv_full = 9000000; c.stage.adc_full = 1; c.stage.adc_i_zero = 1; c.stage.vbus_nominal_mv = 1; c.stage.vbus_min_mv = 0; c.stage.vbus_max_mv = 0; }, SSTEP_ERR_CONFIG},
         {"FF above 32767", [](sstep_config& c) { c.motor.ke_uv_s_per_rad = 9000000; c.motor.full_steps_per_rev = 1; c.ctrl.microsteps = 1; c.stage.vbus_nominal_mv = 1; c.stage.vbus_min_mv = 0; c.stage.vbus_max_mv = 0; }, SSTEP_ERR_CONFIG},
         {"ADC I gain", [](sstep_config& c) { c.stage.adc_i_span = 1; c.stage.i_trip_ma = 4000; }, SSTEP_OK},
+        {"window > period/4", [](sstep_config& c) { c.stage.sample_window_ticks = 1063; }, SSTEP_ERR_CONFIG},
+        {"window = period/4", [](sstep_config& c) { c.stage.sample_window_ticks = 1062; }, SSTEP_OK},
+        {"slew huge", [](sstep_config& c) { c.ctrl.i_slew_ma_per_ms = 10000001; }, SSTEP_ERR_PARAM},
+        {"slew below 1 mA per period", [](sstep_config& c) { c.ctrl.i_slew_ma_per_ms = 1; c.ctrl.slow_loop_hz = 2000; }, SSTEP_OK},
+        {"slew above full scale", [](sstep_config& c) { c.ctrl.i_slew_ma_per_ms = 10000000; }, SSTEP_OK},
     };
     // clang-format on
     for (const Case& k : cases)

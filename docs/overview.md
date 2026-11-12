@@ -19,8 +19,10 @@ point (no FPU needed) or single-precision float.
 - **Fits the voltage to the power stage.** Two full H-bridges (4 legs) or three
   half-bridges with a shared leg (3 legs); the request is limited to what the topology and
   the measured bus voltage can deliver, keeping its direction.
-- **Protects the hardware.** Overcurrent, overvoltage and undervoltage trips in the fast
-  loop, hardware-callback errors, external faults; outputs off within the same period.
+- **Protects the hardware.** Overcurrent (both phases and the shared leg), overvoltage and
+  undervoltage trips in the fast loop, a bus voltage check before the outputs go on, a
+  self-test of the power stage and the motor wiring, hardware-callback errors and external
+  faults; outputs off within the same period ([Protection](protection.md)).
 - **Detects a stall without a sensor.** A back-EMF observer reports a rotor that stops,
   falls out of synchronism or slips at standstill (`SSTEP_FAULT_STALL`, optional).
 - **Reduces the current at standstill.** Hold current after a configurable delay.
@@ -52,8 +54,8 @@ point (no FPU needed) or single-precision float.
 | Dependencies | `<stddef.h>`, `<stdint.h>`, `<stdbool.h>` only |
 | Numeric backends | Fixed point Q15/Q31 (integer only) or single-precision float, chosen at build time |
 | Memory | No heap, no global or static mutable data (`.data` and `.bss` are empty) |
-| RAM per instance | 432 B fixed point, 456 B float on Cortex-M4 ([details](configuration.md#memory-footprint)) |
-| Flash | 9.0 KiB fixed point, 9.7 KiB float (Cortex-M4, `-Os`, both topologies) |
+| RAM per instance | 488 B fixed point, 520 B float on Cortex-M4 ([details](configuration.md#memory-footprint)) |
+| Flash | 10.6 KiB fixed point, 11.3 KiB float (Cortex-M4, `-Os`, both topologies) |
 | Stack | `sstep_fast_loop()` 216 B, `sstep_slow_loop()` 152 B worst case (Cortex-M4 `-Os`, [details](configuration.md#stack-usage)) |
 | Coding standard | MISRA C:2012, 0 Cppcheck addon violations, [1 deviation](misra.md) |
 | Tests | 100 % line and branch coverage of `src/` in both backends; closed-loop tests on a motor model |

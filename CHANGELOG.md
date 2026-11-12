@@ -4,6 +4,52 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-11-12
+
+### Added
+
+- **Sampling window** (`sample_window_ticks` in the stage configuration): every leg compare
+  value stays at or below `pwm_period_ticks − sample_window_ticks`, so low-side shunts can
+  be sampled in every period. The voltage limit shrinks by the same fraction, with the
+  direction of the voltage vector kept and the anti-windup and stall detector on the applied
+  voltage. Found on the B-G431B-ESC1: at the voltage limit of a 1.5 A current step the
+  duty cycle reached 100 %, the bus voltage sample was corrupted and the undervoltage trip
+  fired. 0 keeps the previous behaviour.
+- **Current slew** (`i_slew_ma_per_ms` in the control configuration): the current
+  amplitude rises from 0 after `sstep_enable()` and moves between run and hold current and
+  after `sstep_set_current()` at a limited rate. 0 keeps the previous step.
+- **Self-test** `sstep_selftest()`: before the first enable the fast loop drives each phase
+  in turn up to a test current at a slowly rising voltage and finds a conducting switch, an
+  open phase, a short, a current of the wrong sign and a phase on the wrong legs. Result in
+  `sstep_status` (`selftest`, `selftest_phase`, `selftest_i_ma`, `selftest_duty`), end
+  reported with `SSTEP_EVENT_SELFTEST_DONE`, failure latched as `SSTEP_FAULT_SELFTEST`. Both
+  topologies; uses `dead_time_ns` and `pwm_freq_hz` for the duty levels.
+- **Shared-leg overcurrent trip:** in `SSTEP_TOPOLOGY_SHARED_LEG` the current of the common
+  leg, $\lvert i_A + i_B \rvert$, trips at `i_trip_ma` like the phases.
+- `i_trip_voltage_drive` in the control configuration: overcurrent trips also in
+  `SSTEP_DRIVE_VOLTAGE` for boards that measure the currents there.
+- `SSTEP_ERR_VBUS`: `sstep_enable()` and `sstep_selftest()` refuse a bus voltage outside the
+  trip limits without latching a fault.
+- **Build-time option `SSTEP_CFG_SELFTEST`** (default 1), like the topology options:
+  0 removes the self-test code and its state; `sstep_selftest()` then returns
+  `SSTEP_ERR_UNSUPPORTED`. Saves 1144 B of flash (fixed point; 1140 B float) and 40 B per
+  instance on Cortex-M4. New unit test preset `SSTEP[UnitTestsNoSelftest]`, 100 % coverage.
+- Protection chapter in the documentation: every protection of the library and what
+  the application adds.
+
+### Changed
+
+- `sstep_enable()` with the last bus voltage sample outside the trip limits returns
+  `SSTEP_ERR_VBUS` and stays disabled; before, it enabled and the first fast loop period
+  latched the undervoltage or overvoltage fault.
+- In `SSTEP_TOPOLOGY_SHARED_LEG` a current of the common leg above `i_trip_ma` now trips
+  (see Added): with phase currents near the trip the combined current can trip first.
+- `struct sstep` on Cortex-M4: 488 B fixed point, 520 B float (was 432 B, 456 B), of which
+  40 B self-test (`SSTEP_SELFTEST_BYTES`); 448 B / 480 B with `SSTEP_CFG_SELFTEST = 0`.
+  `SSTEP_CONFIG_BYTES` 156 B (192 B on 64-bit hosts), `SSTEP_STATE_BYTES` 332 B / 364 B
+  (344 B / 376 B on 64-bit hosts). Flash 10816 B / 11542 B at `-Os`;
+  9672 B / 10402 B without the self-test.
+
 ## [1.2.0] - 2026-11-06
 
 ### Fixed
@@ -159,6 +205,7 @@ motors in portable C11.
   of `sstep_fast_loop()` 184 B / 128 B; `.data` and `.bss` empty.
 - Sine table error (default 8 bits): 1.0 LSB of Q15 (fixed point), 4.8·10^-6 (float).
 
+[1.3.0]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/AntonVynohradov/Stepper-C/releases/tag/v1.0.0

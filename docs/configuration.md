@@ -19,6 +19,7 @@ size of `struct sstep`.
 | `SSTEP_CFG_MATH_BACKEND` | `SSTEP_MATH_BACKEND_FIXED` | `…_FIXED`, `…_FLOAT` | Numeric backend (CMake: `SSTEP_MATH_BACKEND=FIXED` or `FLOAT`) |
 | `SSTEP_CFG_TOPOLOGY_FULL_BRIDGE` | `1` | 0, 1 | Compile the two-H-bridge topology |
 | `SSTEP_CFG_TOPOLOGY_SHARED_LEG` | `1` | 0, 1 | Compile the three-leg topology; at least one must be 1 |
+| `SSTEP_CFG_SELFTEST` | `1` | 0, 1 | Compile `sstep_selftest()`; 0 removes its code and state, the call then returns `SSTEP_ERR_UNSUPPORTED` |
 | `SSTEP_CFG_MICROSTEPS_MAX` | `256U` | power of two, 1 .. 256 | Largest `microsteps` accepted by `sstep_init()` |
 | `SSTEP_CFG_SINE_TABLE_BITS` | `8U` | 6 .. 10 | Quarter-wave table of $2^\mathrm{bits} + 1$ entries (see the [accuracy table](motor-control.md#microstepping)) |
 | `SSTEP_CFG_ARG_CHECKS` | `1` | 0, 1 | 0 removes the `NULL` checks from `sstep_fast_loop()` only |
@@ -51,12 +52,13 @@ that do not fit return `SSTEP_ERR_CONFIG`.
 | `i_full_scale_ma` | mA | 1 .. $10^7$ | 4000 | Phase current at the ADC reading `adc_i_zero + adc_i_span`; base of the per-unit current |
 | `i_trip_ma` | mA | 1 .. `i_full_scale_ma` | 3500 | Overcurrent trip (either polarity) |
 | `pwm_period_ticks` | timer ticks | ≥ 2 | 4250 | Compare value for 100 % duty cycle (timer auto-reload) |
-| `pwm_freq_hz` | Hz | – | 20000 | Reserved; not used by this version |
-| `dead_time_ns` | ns | – | 0 | Reserved for dead-time compensation; not used by this version |
+| `pwm_freq_hz` | Hz | – | 20000 | PWM frequency; with `dead_time_ns` the dead-time loss of the self-test levels |
+| `dead_time_ns` | ns | – | 1200 | Dead time; used for the duty levels of the self-test ([Protection](protection.md#self-test)), not compensated in the control; unused with `SSTEP_CFG_SELFTEST = 0` |
 | `adc_i_zero` | counts | ≤ `adc_full` | 2048 | Current ADC reading at 0 A (measure with the outputs off) |
 | `adc_i_span` | counts | ±1 .. ±65535 | 2047 | Counts from 0 A to +`i_full_scale_ma`; negative for an inverting amplifier |
 | `adc_vbus_mv_full` | mV | 1 .. $10^7$ | 34320 | Bus voltage that gives the reading `adc_full` (divider ratio × ADC reference) |
 | `adc_full` | counts | ≥ 1 | 4095 | Largest ADC reading |
+| `sample_window_ticks` | timer ticks | 0 .. `pwm_period_ticks / 4` | 400 | Least time of every period each leg spends on its low-side switch, so that low-side shunts can be sampled; 0 = none. Every compare value stays at or below `pwm_period_ticks − sample_window_ticks`, and the voltage limit shrinks by the same fraction ([Sampling window](motor-control.md#sampling-window)) |
 
 The B-G431B-ESC1 values above are placeholders derived from the schematic; measure
 `adc_i_zero`, `adc_i_span` and `adc_vbus_mv_full` on your board.
@@ -80,6 +82,8 @@ The B-G431B-ESC1 values above are placeholders derived from the schematic; measu
 | `stall_filter_us` | µs | ≥ one fast period, ≤ $10^7$ | 1000 | Time constant of the back-EMF low-pass filter |
 | `stall_speed` | microsteps/s | 1 .. $10^7$; its back-EMF 1 mV .. `vbus_nominal_mv` | 1600 | Slip threshold at rest and below this commanded speed; synchronism check above it |
 | `stall_sync_pct` | % | 1 .. 100 | 50 | Smallest back-EMF along the commanded motion, relative to $K_e\,\omega$ |
+| `i_trip_voltage_drive` | – | `false`, `true` | `false` | Overcurrent trips also in `SSTEP_DRIVE_VOLTAGE`, for boards that measure the currents there ([Protection](protection.md#overcurrent)) |
+| `i_slew_ma_per_ms` | mA/ms | 0 .. $10^7$ | 30 | Largest change of the current amplitude: from 0 after `sstep_enable()`, between run and hold current, after `sstep_set_current()`; 0 = at once ([Current slew](motor-control.md#current-slew)) |
 
 Stall detection requires `SSTEP_DRIVE_CURRENT` and `ke_uv_s_per_rad > 0`
 (`SSTEP_ERR_CONFIG` otherwise); the [Stall detection](motor-control.md#stall-detection)
@@ -107,16 +111,24 @@ Measured with `arm-none-eabi-gcc` 15.2.1 for Cortex-M4 (`-mthumb`, float backend
 
 | Object | Fixed point | Float |
 | --- | --- | --- |
-| `struct sstep` (RAM per motor) | 432 B | 456 B |
-| Code and constants, `-Os` (flash) | 9216 B | 9894 B |
+| `struct sstep` (RAM per motor) | 488 B | 520 B |
+| Code and constants, `-Os` (flash) | 10816 B | 11542 B |
 | of which the sine table | 514 B | 1028 B |
 | `.data` + `.bss` | 0 B | 0 B |
 
-`struct sstep` is the configuration copy (`SSTEP_CONFIG_BYTES`: 152 B on Cortex-M4,
-176 B on 64-bit hosts) plus the private state (`SSTEP_STATE_BYTES`: 280 B fixed point,
-304 B float on Cortex-M4; 288 B and 312 B on 64-bit hosts); on a 64-bit host the instance
-is 464 B and 488 B. Stall detection accounts for 96 B of it on Cortex-M4, and for 2236 B
+`struct sstep` is the configuration copy (`SSTEP_CONFIG_BYTES`: 156 B on Cortex-M4,
+192 B on 64-bit hosts) plus the private state (`SSTEP_STATE_BYTES`: 332 B fixed point,
+364 B float on Cortex-M4; 344 B and 376 B on 64-bit hosts); on a 64-bit host the instance
+is 536 B and 568 B. Stall detection accounts for 96 B of it on Cortex-M4, and for 2236 B
 (fixed point) or 2448 B (float) of the flash whether it is enabled or not.
+
+The self-test accounts for 40 B of the instance (`SSTEP_SELFTEST_BYTES`) and for 1144 B
+(fixed point) or 1140 B (float) of the flash. Built with `SSTEP_CFG_SELFTEST = 0`:
+
+| Object | Fixed point | Float |
+| --- | --- | --- |
+| `struct sstep` (RAM per motor) | 448 B | 480 B |
+| Code and constants, `-Os` (flash) | 9672 B | 10402 B |
 
 ## Stack usage
 
@@ -128,11 +140,12 @@ functions that call them.
 
 | Function | Fixed `-Os` | Fixed `-O0` | Float `-Os` | Float `-O0` |
 | --- | ---: | ---: | ---: | ---: |
-| `sstep_init()` | 224 | 1544 | 200 | 1432 |
-| `sstep_enable()` | 48 | 80 | 64 | 88 |
+| `sstep_init()` | 224 | 1600 | 200 | 1496 |
+| `sstep_enable()` | 56 | 80 | 64 | 88 |
+| `sstep_selftest()` | 80 | 384 | 80 | 384 |
 | `sstep_disable()` | 24 | 40 | 24 | 40 |
-| `sstep_fast_loop()` | 216 | 304 | 128 | 312 |
-| `sstep_slow_loop()` | 152 | 696 | 140 | 624 |
+| `sstep_fast_loop()` | 216 | 312 | 128 | 320 |
+| `sstep_slow_loop()` | 152 | 720 | 156 | 656 |
 | `sstep_move_to()` | 0 | 48 | 0 | 48 |
 | `sstep_move_by()` | 0 | 112 | 0 | 112 |
 | `sstep_run()` | 16 | 104 | 16 | 104 |
@@ -142,7 +155,7 @@ functions that call them.
 | `sstep_set_motion_limits()` | 72 | 224 | 72 | 224 |
 | `sstep_report_fault()` | 24 | 40 | 24 | 40 |
 | `sstep_clear_faults()` | 0 | 40 | 0 | 40 |
-| `sstep_get_status()` | 92 | 536 | 92 | 496 |
+| `sstep_get_status()` | 92 | 568 | 92 | 528 |
 
 The interrupt stack must hold the frame of `sstep_fast_loop()` plus `pwm_write()` (and
 `output_enable()` + `on_fault()` for the fault path) plus the interrupt entry. There is

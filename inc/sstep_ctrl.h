@@ -81,8 +81,9 @@ typedef void (*sstep_fault_fn)(void* context, uint16_t faults);
 /** @brief Events reported through ::sstep_event_fn. */
 enum sstep_event
 {
-    SSTEP_EVENT_MOVE_DONE = 0,   /**< Target position reached, velocity zero. */
-    SSTEP_EVENT_HOLD_CURRENT = 1 /**< Current reduced to the hold current after standstill. */
+    SSTEP_EVENT_MOVE_DONE = 0,    /**< Target position reached, velocity zero. */
+    SSTEP_EVENT_HOLD_CURRENT = 1, /**< Current reduced to the hold current after standstill. */
+    SSTEP_EVENT_SELFTEST_DONE = 2 /**< sstep_selftest() finished; result in the status. */
 };
 
 /**
@@ -130,13 +131,20 @@ struct sstep_stage_cfg
                                        per-unit current. */
     uint32_t i_trip_ma;           /**< Overcurrent trip [mA]; must not exceed i_full_scale_ma. */
     uint16_t pwm_period_ticks;    /**< Compare value for 100 % duty cycle. */
-    uint32_t pwm_freq_hz;         /**< PWM frequency [Hz]. */
-    uint32_t dead_time_ns;        /**< Dead time [ns], for compensation; 0 = none. */
+    uint32_t pwm_freq_hz;         /**< PWM frequency [Hz]; with dead_time_ns the dead-time loss
+                                       of the sstep_selftest() levels. */
+    uint32_t dead_time_ns;        /**< Dead time [ns]: duty levels of sstep_selftest(); not
+                                       compensated in the control. 0 = none. */
     uint16_t adc_i_zero;          /**< Current ADC reading at 0 A [counts]. */
     int32_t adc_i_span;           /**< Counts from 0 A to +i_full_scale_ma; negative for an
                                        inverting amplifier. */
     uint32_t adc_vbus_mv_full;    /**< Bus voltage at ADC reading adc_full [mV]. */
     uint16_t adc_full;            /**< Largest ADC reading (4095 for 12 bits). */
+    uint16_t sample_window_ticks; /**< Compare ticks of every period that each leg spends
+                                       on its low-side switch at least, for low-side
+                                       current sensing; 0 = none (compare up to
+                                       pwm_period_ticks). At most pwm_period_ticks / 4.
+                                       The voltage limit shrinks by the same fraction. */
 };
 
 /** @brief How the phase voltages are obtained. */
@@ -179,6 +187,11 @@ struct sstep_ctrl_cfg
                                            slower than this; above it, the synchronism check. */
     uint16_t stall_sync_pct;          /**< Synchronism threshold [%] (1 .. 100): smallest back-EMF
                                            along the commanded motion, relative to Ke * speed. */
+    bool i_trip_voltage_drive;        /**< Overcurrent trips also in ::SSTEP_DRIVE_VOLTAGE (the
+                                           board measures the phase currents there too). */
+    uint32_t i_slew_ma_per_ms;        /**< Largest change of the current amplitude [mA/ms]:
+                                           from 0 after sstep_enable(), between run and hold
+                                           current, after sstep_set_current(); 0 = at once. */
 };
 
 /** @brief Complete configuration given to sstep_init(). Copied by sstep_init(); the
@@ -223,6 +236,11 @@ struct sstep_status
     int32_t load_angle_cdeg; /**< Estimated load angle, commanded minus rotor electrical angle
                                   [0.01 deg], same sign as the motor torque. */
     uint8_t stall_level_pct; /**< Stall detector level, 0 .. 100 % of the trip. */
+    enum sstep_selftest_result selftest; /**< Result of the last sstep_selftest(). */
+    uint8_t selftest_phase;              /**< Phase the result refers to: 0 = A, 1 = B. */
+    int32_t selftest_i_ma;  /**< Current of that phase at the end of its test [mA], positive
+                                  in the expected direction. */
+    uint16_t selftest_duty; /**< Compare value of that phase at the end of its test. */
 };
 
 /* ==============================================================================
@@ -235,19 +253,25 @@ struct sstep_status
  *        constants, so that the instance size needs no sizeof (static analysis);
  *        sstep_ctrl.c checks both at compile time.
  */
-#if defined(UINTPTR_MAX) && (UINTPTR_MAX > 0xFFFFFFFFU)
-#define SSTEP_CONFIG_BYTES 176U
-#if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
-#define SSTEP_STATE_BYTES 288U
+#if (SSTEP_CFG_SELFTEST == 1)
+#define SSTEP_SELFTEST_BYTES 40U /**< State of sstep_selftest() (::SSTEP_CFG_SELFTEST). */
 #else
-#define SSTEP_STATE_BYTES 312U
+#define SSTEP_SELFTEST_BYTES 0U
+#endif
+
+#if defined(UINTPTR_MAX) && (UINTPTR_MAX > 0xFFFFFFFFU)
+#define SSTEP_CONFIG_BYTES 192U
+#if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
+#define SSTEP_STATE_BYTES (304U + SSTEP_SELFTEST_BYTES)
+#else
+#define SSTEP_STATE_BYTES (336U + SSTEP_SELFTEST_BYTES)
 #endif
 #else
-#define SSTEP_CONFIG_BYTES 152U
+#define SSTEP_CONFIG_BYTES 156U
 #if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
-#define SSTEP_STATE_BYTES 280U
+#define SSTEP_STATE_BYTES (292U + SSTEP_SELFTEST_BYTES)
 #else
-#define SSTEP_STATE_BYTES 304U
+#define SSTEP_STATE_BYTES (324U + SSTEP_SELFTEST_BYTES)
 #endif
 #endif
 

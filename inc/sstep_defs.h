@@ -64,8 +64,12 @@
 #define SSTEP_ERR_CONFIG (-2)
 /** @brief Call not allowed in the current state (for example a move while faulted). */
 #define SSTEP_ERR_STATE (-3)
-/** @brief Topology not compiled in (see ::SSTEP_CFG_TOPOLOGY_FULL_BRIDGE). */
+/** @brief Topology or self-test not compiled in (see ::SSTEP_CFG_TOPOLOGY_FULL_BRIDGE,
+ *         ::SSTEP_CFG_SELFTEST). */
 #define SSTEP_ERR_UNSUPPORTED (-4)
+/** @brief The last bus voltage sample is outside vbus_min_mv .. vbus_max_mv: the outputs
+ *         stay off, no fault is latched (sstep_enable(), sstep_selftest()). */
+#define SSTEP_ERR_VBUS (-5)
 
 /* ==============================================================================
  * POWER STAGE
@@ -108,6 +112,9 @@ enum sstep_topology
  *         motion, or rotor motion while the command is at rest (sensorless back-EMF
  *         observer, enabled with ::sstep_ctrl_cfg::stall_time_ms). */
 #define SSTEP_FAULT_STALL 0x0020U
+/** @brief sstep_selftest() found the power stage or the motor wiring faulty; the result is
+ *         in ::sstep_status::selftest. */
+#define SSTEP_FAULT_SELFTEST 0x0040U
 
 /* ==============================================================================
  * STATES
@@ -120,6 +127,27 @@ enum sstep_state
     SSTEP_STATE_HOLDING = 1,  /**< Outputs on, position held with the hold current. */
     SSTEP_STATE_MOVING = 2,   /**< A move or a velocity command is executing. */
     SSTEP_STATE_FAULT = 3     /**< Outputs off after a fault, see sstep_clear_faults(). */
+};
+
+/* ==============================================================================
+ * SELF-TEST
+ * =============================================================================*/
+
+/** @brief Result of sstep_selftest(), in ::sstep_status::selftest. */
+enum sstep_selftest_result
+{
+    SSTEP_SELFTEST_NONE = 0,     /**< Not run since sstep_init(), or stopped by sstep_disable(). */
+    SSTEP_SELFTEST_RUNNING = 1,  /**< The fast loop is running the test. */
+    SSTEP_SELFTEST_PASS = 2,     /**< Both phases carry the test current as expected. */
+    SSTEP_SELFTEST_LEAK = 3,     /**< Current with every leg low: a switch conducts. */
+    SSTEP_SELFTEST_OPEN = 4,     /**< No current at the largest test duty cycle: phase open,
+                                      motor not connected or a leg dead. */
+    SSTEP_SELFTEST_SHORT = 5,    /**< Current too high, or reached at a duty cycle below the
+                                      resistance of the phase: short circuit. */
+    SSTEP_SELFTEST_POLARITY = 6, /**< Current of the wrong sign: the sign of adc_i_span. */
+    SSTEP_SELFTEST_WRONG_PHASE = 7, /**< The other phase carries half the test current or more:
+                                         a phase connected to the wrong legs. */
+    SSTEP_SELFTEST_ABORTED = 8      /**< A trip of the fast loop (bus voltage) ended the test. */
 };
 
 /** @} */
