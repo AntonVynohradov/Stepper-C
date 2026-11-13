@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
   <compounddef id="structsstep__callbacks" kind="struct" language="C++" prot="public">
     <compoundname>sstep_callbacks</compoundname>
     <includes refid="sstep__ctrl_8h" local="no">sstep_ctrl.h</includes>
@@ -84,7 +84,7 @@
 <para>Hardware callbacks. </para>
     </briefdescription>
     <detaileddescription>
-<para><computeroutput><ref refid="structsstep__callbacks_1a4d1f3b9f2ef4569c97a3a514a29591b8" kindref="member">pwm_write</ref></computeroutput> and <computeroutput><ref refid="structsstep__callbacks_1aa1b9d6b57464225d02265dae98ca8095" kindref="member">output_enable</ref></computeroutput> are required. </para>
+<para><computeroutput>pwm_write</computeroutput> and <computeroutput>output_enable</computeroutput> are required. </para>
     </detaileddescription>
     <location file="inc/sstep_ctrl.h" line="102" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="103" bodyend="109"/>
     <listofallmembers>

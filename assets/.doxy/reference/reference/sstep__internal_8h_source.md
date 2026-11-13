@@ -137,7 +137,6 @@ struct sstep_motion
 struct sstep_ctx
 {
     struct sstep_config cfg; 
-
     /* Constants derived by sstep_init() */
     struct sstep_gain kp;       
     struct sstep_gain ki;       
@@ -159,7 +158,6 @@ struct sstep_ctx
     uint16_t bus_den;           
     struct sstep_gain bus_frac; 
     sstep_real_t i_slew;        
-
 #if (SSTEP_CFG_STALL == 1)
     /* Stall detection constants, sstep_stall_*() */
     struct sstep_gain emf_a;     
@@ -173,7 +171,6 @@ struct sstep_ctx
     struct sstep_setpoint sp[2]; 
     volatile uint8_t sp_active;  
     volatile uint8_t sp_pending; 
-
     /* Fast loop state */
     struct sstep_setpoint cur;        
     uint16_t adv;                     

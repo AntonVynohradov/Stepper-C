@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
   <compounddef id="sstep__ctrl_8h" kind="file" language="C++">
     <compoundname>sstep_ctrl.h</compoundname>
     <includes local="no">stdbool.h</includes>
@@ -163,7 +163,7 @@
           </detaileddescription>
         </enumvalue>
         <briefdescription>
-<para>Events reported through ::sstep_event_fn. </para>
+<para>Events reported through sstep_event_fn. </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
@@ -551,7 +551,7 @@
 <codeline lineno="248"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="249"><highlight class="normal"></highlight></codeline>
 <codeline lineno="256"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_SELFTEST<sp/>==<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="257"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_SELFTEST_BYTES<sp/>48U<sp/></highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="257"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_SELFTEST_BYTES<sp/>48U<sp/></highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="258"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="259"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_SELFTEST_BYTES<sp/>0U</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="260"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
@@ -559,9 +559,9 @@
 <codeline lineno="262"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(SSTEP_CFG_STALL<sp/>==<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="263"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(UINTPTR_MAX)<sp/>&amp;&amp;<sp/>(UINTPTR_MAX<sp/>&gt;<sp/>0xFFFFFFFFU)<sp/>&amp;&amp;<sp/>\</highlight></codeline>
 <codeline lineno="264"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>(SSTEP_CFG_MATH_BACKEND<sp/>==<sp/>SSTEP_MATH_BACKEND_FLOAT)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="265"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_STALL_BYTES<sp/>96U<sp/></highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="265"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_STALL_BYTES<sp/>96U<sp/></highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="266"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="267"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_STALL_BYTES<sp/>80U<sp/></highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="267"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_STALL_BYTES<sp/>80U<sp/></highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="268"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="269"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="270"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_STALL_BYTES<sp/>0U</highlight><highlight class="normal"></highlight></codeline>

@@ -165,12 +165,12 @@ Both backends therefore see values in about -1..+1, which makes Q15 exact enough
 
 
 
-|Type  |Fixed point backend  |Float backend  |
+|Type   |Fixed point backend   |Float backend    |
 |-----|-----|-----|
-|[**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t)  |`int16_t`, Q15 (1.0 = 32768, range -1 .. +0.99997)  |`float`, same range  |
-|[**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t)  |`int32_t`, Q15 with 16 integer bits (range +/-65536)  |`float`, same range  |
-|[**sstep\_angle\_t**](group__sstep__math.md#typedef-sstep_angle_t)  |`uint32_t`, one electrical turn = 2^32  |same  |
-|`struct  sstep_gain`  |Q15 mantissa and binary exponent  |`float`  |
+|[**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t)   |`int16_t`, Q15 (1.0 = 32768, range -1 .. +0.99997)   |`float`, same range    |
+|[**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t)   |`int32_t`, Q15 with 16 integer bits (range +/-65536)   |`float`, same range    |
+|[**sstep\_angle\_t**](group__sstep__math.md#typedef-sstep_angle_t)   |`uint32_t`, one electrical turn = 2^32   |same    |
+|`struct  sstep_gain`   |Q15 mantissa and binary exponent   |`float`   |
 
 
 

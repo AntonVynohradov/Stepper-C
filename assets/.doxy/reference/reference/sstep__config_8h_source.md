@@ -40,7 +40,6 @@
 #ifndef SSTEP_CONFIG_H
 #define SSTEP_CONFIG_H
 
-
 /* ==============================================================================
  * INCLUDES
  * =============================================================================*/
@@ -146,7 +145,6 @@
 #if (SSTEP_CFG_ARG_CHECKS != 0) && (SSTEP_CFG_ARG_CHECKS != 1)
 #error "SSTEP_CFG_ARG_CHECKS must be 0 or 1"
 #endif
-
 
 #endif /* SSTEP_CONFIG_H */
 ```

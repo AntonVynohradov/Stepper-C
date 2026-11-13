@@ -66,7 +66,7 @@ _Driver state behind the opaque_ [_**sstep**_](structsstep.md) _._[More...](#det
 |  uint16\_t | [**period\_eff**](#variable-period_eff)  <br>_pwm\_period\_ticks - sample\_window\_ticks._  |
 |  struct [**sstep\_gain**](structsstep__gain.md) | [**r\_pu**](#variable-r_pu)  <br>_Phase resistance [pu] (voltage drive)._  |
 |  uint16\_t | [**ratio**](#variable-ratio)  <br>_Fast loop periods per slow loop period._  |
-|  uint32\_t | [**ready**](#variable-ready)  <br>_::SSTEP\_READY after a successful_ [_**sstep\_init()**_](group__sstep__api.md#function-sstep_init) _._ |
+|  uint32\_t | [**ready**](#variable-ready)  <br>_SSTEP\_READY after a successful_ [_**sstep\_init()**_](group__sstep__api.md#function-sstep_init) _._ |
 |  struct [**sstep\_setpoint**](structsstep__setpoint.md) | [**sp**](#variable-sp)  <br>_Setpoints; the fast loop owns sp[sp\_active]._  |
 |  volatile uint8\_t | [**sp\_active**](#variable-sp_active)  <br>_Buffer in use by the fast loop._  |
 |  volatile uint8\_t | [**sp\_pending**](#variable-sp_pending)  <br>_1: sp[1 - sp\_active] is complete and new._  |
@@ -553,7 +553,7 @@ uint16_t sstep_ctx::ratio;
 
 ### variable ready 
 
-_::SSTEP\_READY after a successful_ [_**sstep\_init()**_](group__sstep__api.md#function-sstep_init) _._
+_SSTEP\_READY after a successful_ [_**sstep\_init()**_](group__sstep__api.md#function-sstep_init) _._
 ```C++
 uint32_t sstep_ctx::ready;
 ```

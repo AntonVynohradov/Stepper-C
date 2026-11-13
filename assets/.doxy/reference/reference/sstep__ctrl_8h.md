@@ -49,7 +49,7 @@
 | Type | Name |
 | ---: | :--- |
 | enum  | [**sstep\_drive\_mode**](#enum-sstep_drive_mode)  <br>_How the phase voltages are obtained._  |
-| enum  | [**sstep\_event**](#enum-sstep_event)  <br>_Events reported through ::sstep\_event\_fn._  |
+| enum  | [**sstep\_event**](#enum-sstep_event)  <br>_Events reported through sstep\_event\_fn._  |
 | typedef void(\* | [**sstep\_event\_fn**](#typedef-sstep_event_fn)  <br>_Notify the application of a motion event (optional)._  |
 | typedef void(\* | [**sstep\_fault\_fn**](#typedef-sstep_fault_fn)  <br>_Notify the application of new faults (optional)._  |
 | typedef int(\* | [**sstep\_output\_enable\_fn**](#typedef-sstep_output_enable_fn)  <br>_Enable or disable the power stage outputs (disabled = all legs high impedance)._  |
@@ -135,7 +135,7 @@ enum sstep_drive_mode {
 
 ### enum sstep\_event 
 
-_Events reported through ::sstep\_event\_fn._ 
+_Events reported through sstep\_event\_fn._ 
 ```C++
 enum sstep_event {
     SSTEP_EVENT_MOVE_DONE = 0,

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
   <compounddef id="structsstep__ctx" kind="struct" language="C++" prot="public">
     <compoundname>sstep_ctx</compoundname>
     <includes refid="sstep__internal_8h" local="no">sstep_internal.h</includes>
@@ -581,7 +581,7 @@
         <name>ready</name>
         <qualifiedname>sstep_ctx::ready</qualifiedname>
         <briefdescription>
-<para>::SSTEP_READY after a successful <ref refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kindref="member">sstep_init()</ref>. </para>
+<para>SSTEP_READY after a successful <ref refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kindref="member">sstep_init()</ref>. </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>

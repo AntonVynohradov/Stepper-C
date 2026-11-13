@@ -93,7 +93,7 @@ _Macros that select the code compiled into the library._ [More...](#detailed-des
 
 
 Every macro has a default and may be overridden in one of two ways:
-* on the compiler command line (`-DSSTEP_CFG_MATH_BACKEND= SSTEP_MATH_BACKEND_FLOAT`), or
+* on the compiler command line (`-DSSTEP_CFG_MATH_BACKEND=SSTEP_MATH_BACKEND_FLOAT`), or
 * in a user header `sstep_user_config.h`, included when the macro `SSTEP_USER_CONFIG` is defined (CMake: set `SSTEP_CONFIG_DIR` to its folder).
 
 
