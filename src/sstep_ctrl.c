@@ -98,7 +98,9 @@ static sstep_real_t gain_apply_i32(const struct sstep_gain* g, int32_t v);
 static sstep_angle_t raw_angle(const struct sstep_ctx* m, int64_t pos);
 static int check_config(const struct sstep_config* cfg);
 static int check_stall(const struct sstep_config* cfg);
+#if (SSTEP_CFG_STALL == 1)
 static int derive_stall(struct sstep_ctx* m);
+#endif
 static int set_currents(struct sstep_ctx* m, uint32_t run_ma, uint32_t hold_ma);
 static int set_limits(struct sstep_ctx* m, uint32_t v_max, uint32_t accel, uint32_t decel);
 static int derive(struct sstep_ctx* m);
@@ -282,6 +284,12 @@ static int check_stall(const struct sstep_config* cfg)
     {
         /* stall detection off */
     }
+#if (SSTEP_CFG_STALL == 0)
+    else
+    {
+        result = SSTEP_ERR_UNSUPPORTED;
+    }
+#else
     else if ((c->stall_time_ms > VALUE_MAX) || (c->stall_filter_us == 0U) ||
              (c->stall_filter_us > VALUE_MAX) || (c->stall_speed == 0U) ||
              (c->stall_speed > VALUE_MAX) || (c->stall_sync_pct == 0U) ||
@@ -299,9 +307,11 @@ static int check_stall(const struct sstep_config* cfg)
     {
         /* consistent */
     }
+#endif /* SSTEP_CFG_STALL */
     return result;
 }
 
+#if (SSTEP_CFG_STALL == 1)
 /** @brief Derive the stall detection constants (after the other gains). */
 static int derive_stall(struct sstep_ctx* m)
 {
@@ -357,6 +367,7 @@ static int derive_stall(struct sstep_ctx* m)
     }
     return result;
 }
+#endif /* SSTEP_CFG_STALL */
 
 /** @brief Validate and store the run and hold currents. */
 static int set_currents(struct sstep_ctx* m, uint32_t run_ma, uint32_t hold_ma)
@@ -482,10 +493,12 @@ static int derive(struct sstep_ctx* m)
     {
         result = set_limits(m, c->v_max, c->accel, c->decel);
     }
+#if (SSTEP_CFG_STALL == 1)
     if (result == SSTEP_OK)
     {
         result = derive_stall(m);
     }
+#endif
     if (result == SSTEP_OK)
     {
         m->i_trip_counts = (uint16_t)trip;
@@ -750,10 +763,12 @@ static void control(struct sstep_ctx* m)
                     sstep_integ_add_acc(m->integ[k], &m->kb, sstep_acc_add(out.v[k], -vu[k]));
             }
         }
+#if (SSTEP_CFG_STALL == 1)
         if (m->stall_ticks != 0U)
         {
             sstep_stall_observe(m, &sc, out.v);
         }
+#endif
     }
 
     for (uint32_t k = 0U; k < SSTEP_LEGS_MAX; k++)
@@ -853,7 +868,9 @@ int sstep_enable(struct sstep* drv)
         m->cur = sp;
         m->adv = 0U;
         m->sp_pending = 0U;
+#if (SSTEP_CFG_STALL == 1)
         sstep_stall_reset(m);
+#endif
         if (m->cfg.hal.output_enable(m->cfg.hal.context, true) < 0)
         {
             shutdown(m, SSTEP_FAULT_HAL);
@@ -952,11 +969,13 @@ int sstep_fast_loop(struct sstep* drv, const struct sstep_sample* sample)
             if (checked && over)
             {
                 faults |= SSTEP_FAULT_OVERCURRENT;
+#if (SSTEP_CFG_STALL == 1)
                 if (m->stall_count != 0U)
                 {
                     /* the slip can reach the trip before stall_time_ms: the position is lost */
                     faults |= SSTEP_FAULT_STALL;
                 }
+#endif
             }
             if ((m->vbus_max_raw != 0U) && (sample->vbus > m->vbus_max_raw))
             {
@@ -1093,6 +1112,7 @@ int sstep_slow_loop(struct sstep* drv)
             }
         }
 
+#if (SSTEP_CFG_STALL == 1)
         /* stall decision on the period that just ended, then the command of the next one */
         if (m->stall_ticks != 0U)
         {
@@ -1103,6 +1123,7 @@ int sstep_slow_loop(struct sstep* drv)
             m->vel_cmd = vel;
             m->ff_cmd = sp.ff;
         }
+#endif
     }
     else
     {
@@ -1363,7 +1384,15 @@ int sstep_get_status(const struct sstep* drv, struct sstep_status* status)
         status->i_b_ma = sstep_real_to_units(sstep_acc_from_real(m->i_meas[1]), base);
         status->vbus_mv = (uint32_t)(((uint64_t)m->vbus_raw * m->cfg.stage.adc_vbus_mv_full) /
                                      m->cfg.stage.adc_full);
+#if (SSTEP_CFG_STALL == 1)
         sstep_stall_status(m, status);
+#else
+        status->emf_d_mv = 0;
+        status->emf_q_mv = 0;
+        status->rotor_velocity = 0;
+        status->load_angle_cdeg = 0;
+        status->stall_level_pct = 0U;
+#endif
 #if (SSTEP_CFG_SELFTEST == 1)
         status->selftest = m->st.result;
         status->selftest_phase = m->st.coil;

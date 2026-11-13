@@ -333,7 +333,9 @@ struct Sim
         (void)sstep_fast_loop(&drv, &s);
         /* angle used in this period: the fast loop advances it after use */
         const uint32_t used = ctx().cur.angle - static_cast<uint32_t>(ctx().cur.dangle);
+#if (SSTEP_CFG_STALL == 1)
         stall_peak = std::max(stall_peak, ctx().stall_count);
+#endif
         phi_turns += static_cast<int32_t>(used - phi_last);
         phi_last = used;
         double vA = 0.0;

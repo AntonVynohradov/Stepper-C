@@ -32,6 +32,7 @@ Everything else (`src/`) is private and not installed with the library.
 | `SSTEP_CFG_TOPOLOGY_FULL_BRIDGE` | `1` | Compile the full-bridge topology |
 | `SSTEP_CFG_TOPOLOGY_SHARED_LEG` | `1` | Compile the shared-leg topology |
 | `SSTEP_CFG_SELFTEST` | `1` | Compile `sstep_selftest()` |
+| `SSTEP_CFG_STALL` | `1` | Compile the stall detection; since 1.4.0 |
 | `SSTEP_CFG_MICROSTEPS_MAX` | `256U` | Largest microstep division |
 | `SSTEP_CFG_SINE_TABLE_BITS` | `8U` | Size of the sine table |
 | `SSTEP_CFG_ARG_CHECKS` | `1` | `NULL` checks in `sstep_fast_loop()` |
@@ -48,7 +49,7 @@ Ranges and override rules: [Configuration](configuration.md#build-time-options).
 | `SSTEP_ERR_PARAM` | `-1` | `NULL` pointer or a value outside its documented range |
 | `SSTEP_ERR_CONFIG` | `-2` | Configuration consistent field by field but not as a whole |
 | `SSTEP_ERR_STATE` | `-3` | Call not allowed in the current state |
-| `SSTEP_ERR_UNSUPPORTED` | `-4` | Topology or self-test not compiled in |
+| `SSTEP_ERR_UNSUPPORTED` | `-4` | Topology, self-test or stall detection not compiled in |
 | `SSTEP_ERR_VBUS` | `-5` | The last bus voltage sample is outside `vbus_min_mv` .. `vbus_max_mv`; nothing switched on, nothing latched (since 1.3.0) |
 
 ### Topologies
@@ -135,14 +136,16 @@ Units, ranges and examples of every member: [Run-time configuration](configurati
 | | `selftest`, `selftest_phase` | `enum sstep_selftest_result`, phase it refers to (0 = A, 1 = B) (since 1.3.0) |
 | | `selftest_i_ma`, `selftest_duty` | mA in the expected direction, compare value, at the end of that phase's test (since 1.3.0) |
 
-The five estimates are 0 while stall detection is off; their equations are in
+The five estimates are 0 while stall detection is off or not compiled in
+(`SSTEP_CFG_STALL = 0`); their equations are in
 [Stall detection](motor-control.md#stall-detection).
 
 ### Driver instance
 
 `struct sstep` is an opaque array of `SSTEP_INSTANCE_WORDS` 64-bit words (on Cortex-M4
-488 B fixed point, 520 B float; on 64-bit hosts 536 B and 568 B; 40 B less each with
-`SSTEP_CFG_SELFTEST = 0`). Allocate it, pass its
+496 B fixed point, 528 B float; on 64-bit hosts 544 B and 576 B; 48 B less each with
+`SSTEP_CFG_SELFTEST = 0`, 80 B less with `SSTEP_CFG_STALL = 0`, 96 B for the float backend
+on 64-bit hosts). Allocate it, pass its
 address, never read or write its content. `SSTEP_CONFIG_BYTES` is the size of the
 configuration copy (156 B with 32-bit pointers, 192 B with 64-bit pointers) and
 `SSTEP_STATE_BYTES` the size of the private state behind it.
@@ -176,7 +179,7 @@ callback.
 | `SSTEP_OK` | Success, state `SSTEP_STATE_DISABLED` |
 | `SSTEP_ERR_PARAM` | `NULL` pointer, missing required callback or a field out of range |
 | `SSTEP_ERR_CONFIG` | Inconsistent fields (for example `i_run_ma > i_trip_ma`, stall detection with voltage drive or without `ke_uv_s_per_rad`) or a gain that does not fit |
-| `SSTEP_ERR_UNSUPPORTED` | Topology not compiled in |
+| `SSTEP_ERR_UNSUPPORTED` | Topology not compiled in, or `stall_time_ms > 0` built with `SSTEP_CFG_STALL = 0` |
 
 ### sstep_enable
 

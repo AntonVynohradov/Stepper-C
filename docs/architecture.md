@@ -14,7 +14,7 @@ microstepping, trajectory, voltage limits) are described in [Motor Control](moto
 | Public API | `sstep.h`, `inc/sstep_ctrl.h`, `inc/sstep_defs.h`, `inc/sstep_config.h` | Functions, configuration and status types, status codes, fault flags, build-time options |
 | Control | `src/sstep_ctrl.c` | Configuration check, derived constants, fast loop (current control, protection, PWM), slow loop (setpoints, hold current, events), commands, state machine |
 | Self-test | `src/sstep_selftest.c` | Power stage and wiring test before the first enable, one step per fast loop period (`SSTEP_CFG_SELFTEST`) |
-| Stall detection | `src/sstep_stall.c` | Back-EMF observer (fast loop), stall decision (slow loop), estimates of the status |
+| Stall detection | `src/sstep_stall.c` | Back-EMF observer (fast loop), stall decision (slow loop), estimates of the status (`SSTEP_CFG_STALL`) |
 | Motion | `src/sstep_motion.c` | Trapezoidal trajectory in integer arithmetic (both backends) |
 | Power stage | `src/sstep_bridge.c` | Voltage limit of the topology, phase voltages to leg compare values |
 | Numeric backend | `src/sstep_math.h`, `src/sstep_math.c`, `src/sstep_sin_table.c` | Saturating Q15/Q31 or float operations, gains, sine/cosine table |
@@ -70,7 +70,7 @@ detects them.
 
 | Object | Owner | Size | Lifetime |
 | --- | --- | --- | --- |
-| `struct sstep` (driver instance) | Application (static, stack or pool) | 488 B fixed point, 520 B float on Cortex-M4 | From `sstep_init()` as long as the motor runs |
+| `struct sstep` (driver instance) | Application (static, stack or pool) | 496 B fixed point, 528 B float on Cortex-M4 | From `sstep_init()` as long as the motor runs |
 | `struct sstep_config` | Application; copied by `sstep_init()` | 156 B on Cortex-M4 | Only during `sstep_init()` |
 | `struct sstep_sample` | Application | 6 B | Only during `sstep_fast_loop()` |
 | `struct sstep_status` | Application | 48 B on Cortex-M4 | Filled by `sstep_get_status()` |
@@ -93,6 +93,7 @@ analysis can evaluate them) and checked against the private state by `_Static_as
 | Fields that are valid alone but not together (trip above full scale, bandwidth above `fast_loop_hz / 4`, a gain that does not fit) | `sstep_init()` returns `SSTEP_ERR_CONFIG` |
 | A topology that is not compiled in | `sstep_init()` returns `SSTEP_ERR_UNSUPPORTED` |
 | `sstep_selftest()` built with `SSTEP_CFG_SELFTEST = 0` | Returns `SSTEP_ERR_UNSUPPORTED` |
+| `stall_time_ms > 0` built with `SSTEP_CFG_STALL = 0` | `sstep_init()` returns `SSTEP_ERR_UNSUPPORTED` |
 | Any call before a successful `sstep_init()` (zeroed instance, or the last `sstep_init()` failed in the derivation) | `SSTEP_ERR_STATE`; no callback is called |
 | A motion command while disabled or faulted | `SSTEP_ERR_STATE` |
 | A phase current above `i_trip_ma` (current drive) | `SSTEP_FAULT_OVERCURRENT`, outputs off in the same fast period |

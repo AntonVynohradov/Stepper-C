@@ -30,7 +30,7 @@ communication, application logic. They belong to the firmware that uses it.
 | Public types | `inc/sstep_ctrl.h`, `inc/sstep_defs.h`, `inc/sstep_config.h` | Configuration, callbacks, sample, status, opaque `struct sstep`; status codes, faults, states; build-time options |
 | Control | `src/sstep_ctrl.c` | Config check, derived gains, state machine, fast loop, slow loop, commands |
 | Self-test | `src/sstep_selftest.c` | Pure state machine of `sstep_selftest()` (`struct sstep_selftest_ctx`, one step per fast period, integer): all legs low, then each phase ramped to the test current; leak, open, short, polarity, wrong phase. `sstep_ctrl.c` runs it in the fast loop while `st.result == SSTEP_SELFTEST_RUNNING` and reports `SSTEP_EVENT_SELFTEST_DONE` from the slow loop |
-| Stall detection | `src/sstep_stall.c` | Back-EMF observer (fast loop), decision in the slow loop in integer mV: in motion `e_q` with a window on `e_d` and a hold after a reversed back-EMF, at rest a learned offset, then an up/down counter; status estimates |
+| Stall detection | `src/sstep_stall.c` | Back-EMF observer (fast loop), decision in the slow loop in integer mV: in motion `e_q` with a window on `e_d` and a hold after a reversed back-EMF, at rest a learned offset, then an up/down counter; status estimates. Compiled out with `SSTEP_CFG_STALL = 0` (since 1.4.0): its fields of `struct sstep_ctx` are under `#if`, `sstep_init()` returns `SSTEP_ERR_UNSUPPORTED` for `stall_time_ms > 0` |
 | Motion | `src/sstep_motion.c` | Integer trajectory (Q16 microsteps, 64-bit), both backends |
 | Power stage | `src/sstep_bridge.c` | Voltage limit per topology, leg compare values |
 | Numeric backend | `src/sstep_math.h`, `src/sstep_math.c`, `src/sstep_sin_table.[ch]` | Saturating Q15/Q31 or float operations, gains, sine table |
@@ -93,10 +93,16 @@ communication, application logic. They belong to the firmware that uses it.
   operators, `(void)` on ignored results, `++`/`--` as separate statements, array
   indexing instead of pointer arithmetic, no `_Alignof`/`_Generic` (Rule 1.4).
 - Optional code is switched with `0`/`1` macros in `inc/sstep_config.h`, checked with
-  `#error` (`SSTEP_CFG_TOPOLOGY_*`, `SSTEP_CFG_SELFTEST`): the code under `#if`, never a
+  `#error` (`SSTEP_CFG_TOPOLOGY_*`, `SSTEP_CFG_SELFTEST`, `SSTEP_CFG_STALL`): the code under `#if`, never a
   constant-false run-time branch (coverage of every preset stays 100 %); a function that is
   compiled out returns `SSTEP_ERR_UNSUPPORTED`; state that is compiled out shrinks
-  `SSTEP_STATE_BYTES`.
+  `SSTEP_STATE_BYTES` (`SSTEP_SELFTEST_BYTES`, `SSTEP_STALL_BYTES`: measure `sizeof` on
+  Cortex-M4 and on the 64-bit host for both backends, padding differs). Each option has
+  its own unit test preset with `tests/config/<name>/sstep_user_config.h`.
+- No `int64_t` to `float` conversion in the float backend: the FPU converts only 32-bit
+  integers and libgcc's `__aeabi_l2f` brings the software float addition (about 0.5 KiB
+  in the image); use `float_of_i64()` of `sstep_math.c`. Check a linked image with
+  `arm-none-eabi-nm` for `__aeabi_*` after changing the float backend.
 - Every public function validates its pointers (Dir 4.11);
   `SSTEP_CFG_ARG_CHECKS = 0` removes only the checks of `sstep_fast_loop()`.
 - No warnings with `-std=c11 -Wall -Wextra -Wpedantic -Wconversion`, for the host
@@ -117,6 +123,7 @@ cmake --preset "SSTEP[Debug]" && cmake --build "build/SSTEP[Debug]"
 cmake --preset "SSTEP[UnitTests]" && cmake --build "build/SSTEP[UnitTests]" --target coverage
 cmake --preset "SSTEP[UnitTestsFloat]" && cmake --build "build/SSTEP[UnitTestsFloat]" --target coverage
 cmake --preset "SSTEP[UnitTestsNoSelftest]" && cmake --build "build/SSTEP[UnitTestsNoSelftest]" --target coverage
+cmake --preset "SSTEP[UnitTestsNoStall]" && cmake --build "build/SSTEP[UnitTestsNoStall]" --target coverage
 cmake --build "build/SSTEP[Debug]" --target misra-analyze
 python tools/docs/check_snippets.py
 python tools/sstep_gen_sin_table.py --check
@@ -173,8 +180,8 @@ a change that can affect it.
 
 | Figure | How |
 | --- | --- |
-| RAM per instance | `sizeof(struct sstep)` on Cortex-M4: 488 B fixed, 520 B float (64-bit host: 536 B, 568 B); 40 B less with `SSTEP_CFG_SELFTEST = 0` |
-| Flash | `arm-none-eabi-size` of `src/*.c` at `-Os`, Cortex-M4 (float with `-mfpu=fpv4-sp-d16 -mfloat-abi=hard`) |
+| RAM per instance | `sizeof(struct sstep)` on Cortex-M4: 496 B fixed, 528 B float (64-bit host: 544 B, 576 B); 48 B less with `SSTEP_CFG_SELFTEST = 0`, 80 B less with `SSTEP_CFG_STALL = 0` |
+| Flash | `arm-none-eabi-size` of `src/*.c` at `-Os`, Cortex-M4 (float with `-mfpu=fpv4-sp-d16 -mfloat-abi=hard`), for each combination of `SSTEP_CFG_SELFTEST` / `SSTEP_CFG_STALL`; linked images (`--gc-sections`, `-flto`, libgcc included) in the "Reducing the footprint" table of `docs/configuration.md` |
 | Stack | `-fstack-usage -fcallgraph-info=su`, then `python tools/docs/stack_usage.py <dir> --markdown`; table in `docs/configuration.md` (Cortex-M4, `-Os`/`-O0`, both backends) |
 | Sine accuracy | Sweep `sstep_sin_cos()` over a full turn against `sin`/`cos` for table bits 6, 8, 10 |
 | Closed loop | `[ measured ]` lines of the `SstepLoop` tests |
@@ -221,7 +228,8 @@ English and written for embedded engineers integrating the library.
   ```
 
   The workflows run every preset with `[UnitTests` in its name (`SSTEP[UnitTests]`,
-  `SSTEP[UnitTestsFloat]`, `SSTEP[UnitTestsNoSelftest]`), read from `CMakePresets.json`.
+  `SSTEP[UnitTestsFloat]`, `SSTEP[UnitTestsNoSelftest]`, `SSTEP[UnitTestsNoStall]`), read from
+  `CMakePresets.json`.
 - Brand: SystemFromScratch® exactly like that; do not name the trademark owner;
   STM32 is a trademark of STMicroelectronics.
 

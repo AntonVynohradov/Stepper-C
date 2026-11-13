@@ -4,6 +4,55 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-11-13
+
+### Added
+
+- **Build-time option `SSTEP_CFG_STALL`** (default 1), like `SSTEP_CFG_SELFTEST`: 0 removes
+  the stall detection (`sstep_stall.c`, the observer in the fast loop, the decision in the
+  slow loop and their state) under `#if`, without constant run-time branches.
+  `sstep_init()` returns `SSTEP_ERR_UNSUPPORTED` for `stall_time_ms > 0`, the estimates of
+  the status (`emf_d_mv`, `emf_q_mv`, `rotor_velocity`, `load_angle_cdeg`,
+  `stall_level_pct`) are 0 and an overcurrent no longer carries `SSTEP_FAULT_STALL`.
+  Saves 2160 B of flash (2400 B float) and 80 B per instance on Cortex-M4
+  (`SSTEP_STALL_BYTES`). Without self-test and stall detection the library takes 7504 B of
+  flash (8054 B float) and 368 B (400 B) per motor.
+- New unit test preset `SSTEP[UnitTestsNoStall]` (`tests/config/no_stall`), run by CI and
+  the release workflow like the other `[UnitTests` presets; `SstepStall.CompiledOut`.
+- `docs/configuration.md`: footprint of every combination of the two options and of the
+  topologies, and the linked size with `--gc-sections` and `-flto`.
+
+### Fixed
+
+- **Self-test: false results with a moving rotor.** The energised phase pulls the rotor by
+  up to a full step, and a rotor swinging into it induces currents in both phases. The
+  checks judged one sample, so a rotor still moving failed a healthy motor: on a
+  B-G431B-ESC1 with the phases swapped and the rotor a full step away at 24 V,
+  `SSTEP_SELFTEST_WRONG_PHASE`; on the motor model with a loaded rotor (7 to 20 times the
+  inertia), `SSTEP_SELFTEST_SHORT` and `SSTEP_SELFTEST_WRONG_PHASE` in phase B. Now the hold
+  ends when the other phase has stayed below half the own current for 2 ms in a row, the
+  decay when both currents have stayed below a quarter of the test current for 5 ms in a
+  row, and twice the test current is a short only without a break for 100 ms; each fails
+  after 100 ms (`WRONG_PHASE`, `LEAK`, `SHORT`). The overcurrent trip still acts at once.
+
+### Changed
+
+- The self-test takes 42 ms on the motor model with a free rotor (was 39 ms), 39 to 55 ms
+  with a loaded rotor a full step away, at most about 440 ms with a rotor that keeps moving.
+- `SSTEP_SELFTEST_BYTES` 48 B (was 40 B): `struct sstep` on Cortex-M4 496 B fixed point,
+  528 B float (64-bit hosts 544 B, 576 B). Flash +216 B for the self-test.
+- Float backend: `sstep_gain_from_ratio64()` converts its `int64_t` operands to `float`
+  from two 32-bit halves (`float_of_i64()`), which the FPU converts in hardware. The
+  conversion of an `int64_t` (`__aeabi_l2f`) linked the software float addition of libgcc:
+  an image with the whole API is 484 B smaller on Cortex-M4. The results of the
+  closed-loop tests are unchanged.
+- `SSTEP_STATE_BYTES` is the sum of a base and `SSTEP_STALL_BYTES` and
+  `SSTEP_SELFTEST_BYTES`.
+- The stall detection takes 80 B per instance on Cortex-M4; the documentation said 96 B.
+- Flash on Cortex-M4 at `-Os`: 11032 B fixed point, 11814 B float (library objects, without
+  the 64-bit division of libgcc). Stack of `sstep_init()` re-measured: 188 B float `-Os`,
+  1608 B / 1552 B at `-O0`.
+
 ## [1.3.0] - 2026-11-12
 
 ### Added
@@ -205,6 +254,7 @@ motors in portable C11.
   of `sstep_fast_loop()` 184 B / 128 B; `.data` and `.bss` empty.
 - Sine table error (default 8 bits): 1.0 LSB of Q15 (fixed point), 4.8·10^-6 (float).
 
+[1.4.0]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.0.0...v1.1.0

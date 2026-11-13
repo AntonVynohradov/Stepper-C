@@ -116,6 +116,21 @@
 #endif
 
 /* ==============================================================================
+ * STALL DETECTION
+ * =============================================================================*/
+
+#ifndef SSTEP_CFG_STALL
+/** @brief 1: compile the sensorless stall detection (back-EMF observer, enabled at run time
+ *         with sstep_ctrl_cfg::stall_time_ms). 0 removes its code and state; sstep_init()
+ *         then returns ::SSTEP_ERR_UNSUPPORTED for stall_time_ms > 0. */
+#define SSTEP_CFG_STALL 1
+#endif
+
+#if (SSTEP_CFG_STALL != 0) && (SSTEP_CFG_STALL != 1)
+#error "SSTEP_CFG_STALL must be 0 or 1"
+#endif
+
+/* ==============================================================================
  * MICROSTEPPING
  * =============================================================================*/
 

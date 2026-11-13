@@ -143,8 +143,8 @@ extra:
         - icon: memory
           title: Tight embedded budgets
           text: >-
-            Fits next to your application on a small MCU: 488 B of RAM per motor, 216 B
-            worst-case stack in the PWM interrupt, 10.6 KiB of flash on Cortex-M4. A
+            Fits next to your application on a small MCU: 496 B of RAM per motor, 216 B
+            worst-case stack in the PWM interrupt, 10.8 KiB of flash on Cortex-M4. A
             fixed-point backend for cores without FPU; no allocation, no globals, no OS.
           tags: [Q15 or float, Static memory, Bare metal & RTOS]
         - icon: shield
@@ -171,7 +171,7 @@ extra:
         - {icon: check, title: Evidence you can inspect, text: "Every release ships its MISRA C:2012 report and the PDF manual; unit and closed-loop tests with a 100 % coverage gate, MISRA, Cppcheck and CodeQL run in CI on every change.", tags: [MISRA report, Coverage, CI], link: misra/}
     stats:                                   # measured values only
       - {value: "16", label: public functions}
-      - {value: "488 B", label: RAM per motor}
+      - {value: "496 B", label: RAM per motor}
       - {value: "216 B", label: stack in the PWM interrupt}
       - {value: "0", label: MISRA C:2012 violations}
     portfolio:

@@ -78,7 +78,7 @@ Without any sample yet `sstep_enable()` does not check (the first fast loop peri
 
 `sstep_selftest(drv, i_test_ma)` tests the power stage and the wiring before the first
 enable, with the outputs on and the current controller off. It is compiled in by default;
-`SSTEP_CFG_SELFTEST = 0` removes it (1.1 KiB of flash and 40 B per instance on Cortex-M4)
+`SSTEP_CFG_SELFTEST = 0` removes it (1.3 KiB of flash and 48 B per instance on Cortex-M4)
 and the call returns `SSTEP_ERR_UNSUPPORTED`. The fast loop runs it, one step
 per period:
 
@@ -86,8 +86,23 @@ per period:
    otherwise a switch conducts with its gate off (`SSTEP_SELFTEST_LEAK`).
 2. **Phase A.** The legs of phase B and the return leg of phase A stay low; the duty cycle of
    the driving leg of phase A rises over 20 ms from 0 to $D_\mathrm{max}$ until the current
-   reaches `i_test_ma`, is held for 2 ms, then all legs go low for 5 ms.
+   reaches `i_test_ma` and is held; then all legs go low until the currents have died out.
 3. **Phase B**, the same.
+
+The energised phase pulls the rotor to its nearest full step, at most one full step, and
+the rotor swings into it. While it moves, it induces currents in both phases: in the idle
+phase, which both its legs short, and on top of the test current. A wrong wiring or a short
+gives a current that stays; a rotor comes to rest. So each check waits for a rotor at rest:
+
+| Check | Passes when | Fails after |
+| --- | --- | --- |
+| Hold (wiring) | The other phase stayed below half the own current for 2 ms in a row | 100 ms without that: `SSTEP_SELFTEST_WRONG_PHASE` |
+| Decay (between and after the phases) | Both currents stayed below a quarter of the test current for 5 ms in a row | 100 ms without that: `SSTEP_SELFTEST_LEAK` |
+| Twice the test current | A swinging rotor crosses zero every half swing | Above it without a break for 100 ms: `SSTEP_SELFTEST_SHORT` |
+
+With a rotor at rest the conditions hold from the start, and the hold takes 2 ms and the
+decay 5 ms. The overcurrent trip (`i_trip_ma`) acts throughout the test, so a hard short
+switches the outputs off at once, whatever the checks wait for.
 
 The voltage is ramped and not set from the resistance, because the dead time takes a bus
 fraction of $2\, t_\mathrm{dead} f_\mathrm{PWM}$ from a driving leg (0.58 V at 12 V,
@@ -106,11 +121,11 @@ $$
 | Result | Condition | Likely cause |
 | --- | --- | --- |
 | `SSTEP_SELFTEST_PASS` | Both phases reached the test current with the expected sign, the other phase stayed below half of it | — |
-| `SSTEP_SELFTEST_LEAK` | Current above a quarter of the test current with every leg low | A high-side switch conducts |
+| `SSTEP_SELFTEST_LEAK` | Current above a quarter of the test current with every leg low, before the first phase or for 100 ms between the phases | A high-side switch conducts |
 | `SSTEP_SELFTEST_OPEN` | $D_\mathrm{max}$ reached without the current | Phase wire loose, motor not connected, a leg or its gate driver dead |
-| `SSTEP_SELFTEST_SHORT` | Current above twice the test current, reached below $D_\mathrm{short}$ (resistance below a quarter of `r_mohm`), or an overcurrent trip | Phases shorted together or to a supply rail |
+| `SSTEP_SELFTEST_SHORT` | Current above twice the test current for 100 ms, reached below $D_\mathrm{short}$ (resistance below a quarter of `r_mohm`), or an overcurrent trip | Phases shorted together or to a supply rail |
 | `SSTEP_SELFTEST_POLARITY` | The test current with the wrong sign | Sign of `adc_i_span` |
-| `SSTEP_SELFTEST_WRONG_PHASE` | The other phase carried half the test current or more | A phase connected to the wrong legs |
+| `SSTEP_SELFTEST_WRONG_PHASE` | The other phase carried half the own current or more for 100 ms | A phase connected to the wrong legs |
 | `SSTEP_SELFTEST_ABORTED` | A bus voltage trip or a callback error ended the test | Supply, see the fault flags |
 | `SSTEP_SELFTEST_NONE` | Not run, or stopped by `sstep_disable()` | — |
 
@@ -118,16 +133,17 @@ $$
 (`selftest_i_ma`) and the compare value (`selftest_duty`). A failure raises
 `SSTEP_FAULT_SELFTEST`; the result stays readable after `sstep_clear_faults()`.
 
-The test takes 15 to 60 ms: 39 ms on the motor model of the tests (17HS19-2004S1, 12 V,
-free rotor, both topologies); the same algorithm took 44 ms on a B-G431B-ESC1 with that
-motor at 12 V. The end is reported
-by `sstep_slow_loop()` with `SSTEP_EVENT_SELFTEST_DONE`.
+The test takes 42 ms on the motor model of the tests (17HS19-2004S1, 12 V, free rotor,
+both topologies), and 39 to 55 ms with the rotor a full step away from phase A at 12 V and
+24 V and up to 50 times the rotor inertia. A rotor that keeps moving can stretch it to about
+440 ms (2 + 2 × (20 + 100 + 100) ms) before it fails. The end is reported by
+`sstep_slow_loop()` with `SSTEP_EVENT_SELFTEST_DONE`.
 
 !!! warning "The rotor must be free to settle"
     The energised phase pulls the rotor to its nearest full step (at most one full step)
-    and back when the motor is enabled. That motion induces a current in the idle phase,
-    which the half-current limit of the wiring check allows. A rotor turned by an external torque, such as a joint that falls, induces
-    much more and fails the test: support such a load for the first enable.
+    and back when the motor is enabled; the checks wait until it is at rest. A rotor turned
+    by an external torque for longer, such as a joint that falls, keeps inducing currents
+    and fails the test: support such a load for the first enable.
 
 A typical start, in the slow loop context of a bare-metal main loop:
 

@@ -33,6 +33,8 @@
 
 #include "sstep_internal.h"
 
+#if (SSTEP_CFG_STALL == 1) /* the whole file */
+
 /* ==============================================================================
  * DEFINES & MACROS
  * =============================================================================*/
@@ -302,3 +304,5 @@ void sstep_stall_status(const struct sstep_ctx* m, struct sstep_status* status)
         status->stall_level_pct = (uint8_t)(((uint64_t)m->stall_count * 100U) / m->stall_ticks);
     }
 }
+
+#endif /* SSTEP_CFG_STALL */

@@ -287,7 +287,8 @@ falls behind at speed, or slips under a load that the hold current cannot hold, 
 the commanded position keeps its value. The stall detector estimates the back-EMF from
 the quantities the fast loop already has and raises `SSTEP_FAULT_STALL` when the rotor
 does not move as commanded. It is off by default (`stall_time_ms = 0`) and needs
-`SSTEP_DRIVE_CURRENT` and `ke_uv_s_per_rad > 0`.
+`SSTEP_DRIVE_CURRENT` and `ke_uv_s_per_rad > 0`. An application that never uses it can
+compile it out with `SSTEP_CFG_STALL = 0` (since 1.4.0, see [Cost](#cost)).
 
 **Reference case.** A 17HS19-2004S1 on a three-leg stage at 24 V, 1.5 A run current and
 0.5 A hold current after 500 ms, holds a constant 0.12 N·m load at the run current
@@ -465,13 +466,16 @@ and is reported.
 | Same with `-O2` | 664 / 909 | 683 / 923 |
 | Slow loop, added | 367 instructions (`-Os`) | 318 instructions |
 | `sstep_get_status()` | 1202 instructions (`-Os`; integer CORDIC and square root) | 1148 |
-| RAM per instance, added | 96 B (Cortex-M4) | 96 B |
+| RAM per instance, added | 80 B (Cortex-M4) | 80 B |
+| Flash, added (`-Os`) | 2160 B | 2400 B |
 
 Instructions counted on a Cortex-M4 image (GCC 15.2) in an instruction-set emulator,
 mean over 600 fast-loop periods while accelerating to 3 rev/s; on Cortex-M4 most of them take one cycle. At
 170 MHz and 20 kHz the observer takes about 1.5 µs (`-O2`) to 2.8 µs (fixed point,
 `-Os`) of the 50 µs period. With `stall_time_ms = 0` the fast loop skips the observer
-(one comparison).
+(one comparison), but the code and the state stay in the build; `SSTEP_CFG_STALL = 0`
+removes both (the RAM and flash rows above) and `sstep_init()` then refuses
+`stall_time_ms > 0` with `SSTEP_ERR_UNSUPPORTED`.
 
 ### Limits
 

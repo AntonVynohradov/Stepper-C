@@ -47,8 +47,9 @@ Measured on Cortex-M4 (GCC 15.2, `-Os`):
 
 | | Fixed point | Float |
 | --- | --- | --- |
-| RAM per motor | 488 B | 520 B |
-| Flash | 10816 B | 11542 B |
+| RAM per motor | 496 B | 528 B |
+| Flash | 11032 B | 11814 B |
+| Flash without self-test and stall detection | 7504 B | 8054 B |
 | Worst-case stack, fast loop / slow loop | 216 B / 152 B | 128 B / 156 B |
 
 Closed loop on the motor model (17HS19-2004S1, 24 V, 20 kHz, 1 kHz current bandwidth):
@@ -79,7 +80,7 @@ numeric backends and both topologies.
 ```c
 #include "sstep.h"
 
-static struct sstep motor;               /* 488 B on Cortex-M4, owned by the application */
+static struct sstep motor;               /* 496 B on Cortex-M4, owned by the application */
 
 void ADC1_2_IRQHandler(void)             /* PWM/ADC interrupt, 20 kHz */
 {
@@ -118,6 +119,7 @@ Cppcheck for the MISRA check, Python 3 for the documentation.
 | `SSTEP[UnitTests]` | Unit and closed-loop tests, fixed point, coverage gate |
 | `SSTEP[UnitTestsFloat]` | The same tests with the float backend |
 | `SSTEP[UnitTestsNoSelftest]` | The same tests built with `SSTEP_CFG_SELFTEST = 0` |
+| `SSTEP[UnitTestsNoStall]` | The same tests built with `SSTEP_CFG_STALL = 0` |
 
 ```bash
 cmake --preset "SSTEP[Release]"

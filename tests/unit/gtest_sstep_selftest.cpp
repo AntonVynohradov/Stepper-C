@@ -137,7 +137,7 @@ sstep_config esc1(Hal* hal, sstep_topology topo = SSTEP_TOPOLOGY_SHARED_LEG)
     return c;
 }
 
-sstep_selftest_result run(sstep_selftest_ctx* st, Plant* pl, uint32_t max_periods = 4000U)
+sstep_selftest_result run(sstep_selftest_ctx* st, Plant* pl, uint32_t max_periods = 8000U)
 {
     uint16_t cmp[SSTEP_LEGS_MAX] = {0, 0, 0, 0};
     sstep_selftest_result r = SSTEP_SELFTEST_RUNNING;
@@ -163,6 +163,34 @@ sstep_selftest_result run_case(Plant pl, sstep_topology topo = SSTEP_TOPOLOGY_SH
     if (out != nullptr)
     {
         *out = st;
+    }
+    return r;
+}
+
+/* Periods of a step that ends after SETTLE_MS (100 ms) of a condition, at 20 kHz */
+constexpr uint32_t kSettlePeriods = 2000U;
+
+/* Through the boot and the ramp of phase A into its hold, with no current until the duty
+   has passed the short level and the test current then */
+void to_hold(sstep_selftest_ctx* st)
+{
+    uint16_t cmp[SSTEP_LEGS_MAX];
+    for (uint32_t n = 0; (n < 4000U) && (st->phase != 2U); n++)
+    {
+        const int32_t own = (st->duty_q8 > st->duty_short_q8) ? st->i_test : 0;
+        ASSERT_EQ(sstep_selftest_step(st, own, 0, cmp), SSTEP_SELFTEST_RUNNING);
+    }
+    ASSERT_EQ(st->phase, 2U); /* PH_HOLD */
+}
+
+/* n periods with the currents i_a, i_b; the last result */
+sstep_selftest_result feed(sstep_selftest_ctx* st, uint32_t n, int32_t i_a, int32_t i_b)
+{
+    uint16_t cmp[SSTEP_LEGS_MAX];
+    sstep_selftest_result r = SSTEP_SELFTEST_RUNNING;
+    for (uint32_t k = 0; (k < n) && (r == SSTEP_SELFTEST_RUNNING); k++)
+    {
+        r = sstep_selftest_step(st, i_a, i_b, cmp);
     }
     return r;
 }
@@ -322,8 +350,87 @@ TEST(SstepSelftest, CurrentAboveTwiceTheTestCurrentIsAShort)
     sstep_selftest_ctx st{};
     uint16_t cmp[SSTEP_LEGS_MAX];
     sstep_selftest_setup(&st, &c, kVbus12, 600U);
+    to_hold(&st);
+    /* without a break for 100 ms (it comes before the other phase check of the hold) */
+    EXPECT_EQ(feed(&st, kSettlePeriods - 1U, 0, 2 * st.i_test + 1), SSTEP_SELFTEST_RUNNING);
     EXPECT_EQ(sstep_selftest_step(&st, 0, 2 * st.i_test + 1, cmp), SSTEP_SELFTEST_SHORT);
     EXPECT_EQ(st.i_own, 0);
+}
+
+/* A rotor swinging into the step: currents above twice the test current that cross zero */
+TEST(SstepSelftest, SwingingCurrentAboveTwiceTheTestCurrentIsNotAShort)
+{
+    Hal hal;
+    const sstep_config c = esc1(&hal);
+    sstep_selftest_ctx st{};
+    sstep_selftest_setup(&st, &c, kVbus12, 600U);
+    to_hold(&st);
+    EXPECT_EQ(feed(&st, st.hold_periods, st.i_test, 0), SSTEP_SELFTEST_RUNNING);
+    ASSERT_EQ(st.phase, 3U);     /* between the phases, every leg low */
+    for (int k = 0; k < 10; k++) /* 10 half swings of 7.5 ms */
+    {
+        EXPECT_EQ(feed(&st, 150U, 3 * st.i_test, 0), SSTEP_SELFTEST_RUNNING);
+        EXPECT_GT(st.over_windows, 0U);
+        EXPECT_EQ(feed(&st, 1U, 0, 0), SSTEP_SELFTEST_RUNNING); /* zero crossing */
+        EXPECT_EQ(st.over_windows, 0U);
+    }
+}
+
+/* The other phase carries more than half of the own current while the rotor moves into
+   the step, and less once it is at rest: the hold ends 2 ms after that */
+TEST(SstepSelftest, InducedCurrentThatDiesOutPasses)
+{
+    Hal hal;
+    const sstep_config c = esc1(&hal);
+    sstep_selftest_ctx st{};
+    sstep_selftest_setup(&st, &c, kVbus12, 600U);
+    to_hold(&st);
+    EXPECT_EQ(feed(&st, 600U, st.i_test, st.i_test), SSTEP_SELFTEST_RUNNING); /* 30 ms */
+    EXPECT_EQ(st.phase, 2U);
+    EXPECT_EQ(feed(&st, st.hold_periods, st.i_test, 0), SSTEP_SELFTEST_RUNNING);
+    EXPECT_EQ(st.phase, 3U); /* PH_DECAY */
+    EXPECT_EQ(st.i_own, st.i_test);
+}
+
+TEST(SstepSelftest, CurrentInTheOtherPhaseFor100msIsAWrongPhase)
+{
+    Hal hal;
+    const sstep_config c = esc1(&hal);
+    sstep_selftest_ctx st{};
+    sstep_selftest_setup(&st, &c, kVbus12, 600U);
+    to_hold(&st);
+    EXPECT_EQ(feed(&st, kSettlePeriods - 1U, st.i_test, -st.i_test), SSTEP_SELFTEST_RUNNING);
+    EXPECT_EQ(feed(&st, 1U, st.i_test, -st.i_test), SSTEP_SELFTEST_WRONG_PHASE);
+}
+
+/* Between the phases: a current that dies out is the rotor, one that stays is a switch */
+TEST(SstepSelftest, DecayWaitsForTheCurrentsToDieOut)
+{
+    Hal hal;
+    const sstep_config c = esc1(&hal);
+    sstep_selftest_ctx st{};
+    sstep_selftest_setup(&st, &c, kVbus12, 600U);
+    to_hold(&st);
+    EXPECT_EQ(feed(&st, st.hold_periods, st.i_test, 0), SSTEP_SELFTEST_RUNNING);
+    ASSERT_EQ(st.phase, 3U);
+    EXPECT_EQ(feed(&st, 400U, st.i_test / 2, st.i_test / 2), SSTEP_SELFTEST_RUNNING); /* 20 ms */
+    EXPECT_EQ(st.phase, 3U);
+    EXPECT_EQ(feed(&st, st.decay_periods, 0, 0), SSTEP_SELFTEST_RUNNING);
+    EXPECT_EQ(st.phase, 1U); /* PH_RAMP of phase B */
+    EXPECT_EQ(st.coil, 1U);
+}
+
+TEST(SstepSelftest, CurrentThatDoesNotDieOutBetweenThePhasesIsALeak)
+{
+    Hal hal;
+    const sstep_config c = esc1(&hal);
+    sstep_selftest_ctx st{};
+    sstep_selftest_setup(&st, &c, kVbus12, 600U);
+    to_hold(&st);
+    EXPECT_EQ(feed(&st, st.hold_periods, st.i_test, 0), SSTEP_SELFTEST_RUNNING);
+    ASSERT_EQ(st.phase, 3U);
+    EXPECT_EQ(feed(&st, kSettlePeriods - 1U, st.i_test / 2, 0), SSTEP_SELFTEST_RUNNING);
+    EXPECT_EQ(feed(&st, 1U, st.i_test / 2, 0), SSTEP_SELFTEST_LEAK);
 }
 
 TEST(SstepSelftest, SmallTestCurrent)
@@ -384,6 +491,48 @@ TEST(SstepSelftest, PassesOnTheMotorModel)
             std::find(sim.hal.events.begin(), sim.hal.events.end(), SSTEP_EVENT_SELFTEST_DONE),
             sim.hal.events.end());
         EXPECT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
+    }
+}
+
+/* The rotor at rest one full step away from phase A (aligned with phase B): the test of
+   phase A pulls it a full step, and the rotor swings into it while it is tested and into
+   phase B while that is tested, inducing currents in both phases. On a B-G431B-ESC1 at 24 V
+   (phases swapped, so the rotor stood on the other phase) v1.3.0 reported WRONG_PHASE; on
+   the model with 7 to 20 times the rotor inertia (a load) SHORT and WRONG_PHASE in phase B. */
+TEST(SstepSelftest, RotorAFullStepAwayPassesOnTheMotorModel)
+{
+    for (sstep_topology topo : {SSTEP_TOPOLOGY_SHARED_LEG, SSTEP_TOPOLOGY_FULL_BRIDGE})
+    {
+        for (double vbus : {12.0, 24.0})
+        {
+            double t_min = 1e9;
+            double t_max = 0.0;
+            for (double jx : {1.0, 2.0, 3.0, 5.0, 7.0, 10.0, 15.0, 20.0, 30.0, 50.0})
+            {
+                Sim sim(topo);
+                sim.mot.J *= jx;
+                sim.vbus = vbus;
+                sim.cfg.stage.dead_time_ns = 1200U;
+                sim.v_dead = 0.29 * vbus / 12.0;
+                sim.x.th = (M_PI / 2.0) / (sim.mot.Ns / 4.0); /* 90 deg electrical */
+                ASSERT_EQ(sim.init(), SSTEP_OK);
+                sim.run_for(0.001);
+                ASSERT_EQ(sstep_selftest(&sim.drv, 600U), SSTEP_OK);
+                int k = 0;
+                for (; (k < 10000) && (sim.ctx().st.result == SSTEP_SELFTEST_RUNNING); k++)
+                {
+                    sim.step();
+                }
+                const sstep_status st = status_of(sim);
+                EXPECT_EQ(st.selftest, SSTEP_SELFTEST_PASS) << "J x" << jx << ", " << vbus << " V";
+                EXPECT_EQ(st.faults, SSTEP_FAULT_NONE);
+                t_min = std::min(t_min, k * 0.05);
+                t_max = std::max(t_max, k * 0.05);
+            }
+            std::printf("[ measured ] self-test %s %.0f V, rotor a full step from phase A, "
+                        "1 to 50 times its inertia: pass in %.1f to %.1f ms\n",
+                        topo == SSTEP_TOPOLOGY_FULL_BRIDGE ? "full" : "shared", vbus, t_min, t_max);
+        }
     }
 }
 
@@ -559,6 +708,8 @@ TEST(SstepSelftest, PhaseAAboveTwiceTheTestCurrentIsAShort)
     sstep_selftest_ctx st{};
     uint16_t cmp[SSTEP_LEGS_MAX];
     sstep_selftest_setup(&st, &c, kVbus12, 600U);
+    to_hold(&st);
+    EXPECT_EQ(feed(&st, kSettlePeriods - 1U, -2 * st.i_test - 1, 0), SSTEP_SELFTEST_RUNNING);
     EXPECT_EQ(sstep_selftest_step(&st, -2 * st.i_test - 1, 0, cmp), SSTEP_SELFTEST_SHORT);
 }
 

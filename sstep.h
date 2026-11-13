@@ -104,7 +104,8 @@ extern "C" {
  * @retval ::SSTEP_OK              Success, state ::SSTEP_STATE_DISABLED.
  * @retval ::SSTEP_ERR_PARAM       NULL pointer, missing required callback or a field out of range.
  * @retval ::SSTEP_ERR_CONFIG      Inconsistent fields (for example i_run_ma > i_trip_ma).
- * @retval ::SSTEP_ERR_UNSUPPORTED Topology not compiled in.
+ * @retval ::SSTEP_ERR_UNSUPPORTED Topology not compiled in, or stall_time_ms > 0 built with
+ *         ::SSTEP_CFG_STALL = 0.
  */
 int sstep_init(struct sstep* drv, const struct sstep_config* cfg);
 
@@ -121,10 +122,13 @@ int sstep_enable(struct sstep* drv);
 /**
  * @brief  Test the power stage and the motor wiring before the first enable. The outputs
  *         are switched on; for each phase in turn the fast loop raises the voltage slowly
- *         until the phase current reaches i_test_ma, holds it for 2 ms and lets it decay.
+ *         until the phase current reaches i_test_ma, holds it and lets it decay.
  *         It checks that no current flows with every leg low, that each phase reaches the
  *         current with the expected sign at a plausible duty cycle, and that the other phase
- *         stays below half of it. Takes about 15 to 60 ms of fast loop periods, then the
+ *         stays below half of it. A rotor still moving into a step induces currents that
+ *         break these conditions for a while: the hold and the decay go on until they have
+ *         held for 2 ms and 5 ms in a row, for at most 100 ms each. Takes about 40 to 55 ms
+ *         of fast loop periods (at most about 440 ms), then the
  *         outputs go off, ::SSTEP_EVENT_SELFTEST_DONE is reported by sstep_slow_loop() and the
  *         result is in the status. A failure raises ::SSTEP_FAULT_SELFTEST.
  *         The rotor moves to the nearest full step of the tested phase (at most one full

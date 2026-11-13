@@ -20,6 +20,7 @@ size of `struct sstep`.
 | `SSTEP_CFG_TOPOLOGY_FULL_BRIDGE` | `1` | 0, 1 | Compile the two-H-bridge topology |
 | `SSTEP_CFG_TOPOLOGY_SHARED_LEG` | `1` | 0, 1 | Compile the three-leg topology; at least one must be 1 |
 | `SSTEP_CFG_SELFTEST` | `1` | 0, 1 | Compile `sstep_selftest()`; 0 removes its code and state, the call then returns `SSTEP_ERR_UNSUPPORTED` |
+| `SSTEP_CFG_STALL` | `1` | 0, 1 | Compile the stall detection; 0 removes its code and state, `sstep_init()` then returns `SSTEP_ERR_UNSUPPORTED` for `stall_time_ms > 0` and the estimates of the status are 0; since 1.4.0 |
 | `SSTEP_CFG_MICROSTEPS_MAX` | `256U` | power of two, 1 .. 256 | Largest `microsteps` accepted by `sstep_init()` |
 | `SSTEP_CFG_SINE_TABLE_BITS` | `8U` | 6 .. 10 | Quarter-wave table of $2^\mathrm{bits} + 1$ entries (see the [accuracy table](motor-control.md#microstepping)) |
 | `SSTEP_CFG_ARG_CHECKS` | `1` | 0, 1 | 0 removes the `NULL` checks from `sstep_fast_loop()` only |
@@ -107,28 +108,61 @@ $1.638 \cdot 10^{10}$ microsteps/s².
 ## Memory footprint
 
 Measured with `arm-none-eabi-gcc` 15.2.1 for Cortex-M4 (`-mthumb`, float backend with
-`-mfpu=fpv4-sp-d16 -mfloat-abi=hard`), default build-time options, both topologies.
+`-mfpu=fpv4-sp-d16 -mfloat-abi=hard`), both topologies.
 
 | Object | Fixed point | Float |
 | --- | --- | --- |
-| `struct sstep` (RAM per motor) | 488 B | 520 B |
-| Code and constants, `-Os` (flash) | 10816 B | 11542 B |
+| `struct sstep` (RAM per motor) | 496 B | 528 B |
+| Code and constants, `-Os` (flash) | 11032 B | 11814 B |
 | of which the sine table | 514 B | 1028 B |
 | `.data` + `.bss` | 0 B | 0 B |
 
 `struct sstep` is the configuration copy (`SSTEP_CONFIG_BYTES`: 156 B on Cortex-M4,
-192 B on 64-bit hosts) plus the private state (`SSTEP_STATE_BYTES`: 332 B fixed point,
-364 B float on Cortex-M4; 344 B and 376 B on 64-bit hosts); on a 64-bit host the instance
-is 536 B and 568 B. Stall detection accounts for 96 B of it on Cortex-M4, and for 2236 B
-(fixed point) or 2448 B (float) of the flash whether it is enabled or not.
+192 B on 64-bit hosts) plus the private state (`SSTEP_STATE_BYTES`: 340 B fixed point,
+372 B float on Cortex-M4; 352 B and 384 B on 64-bit hosts); on a 64-bit host the instance
+is 544 B and 576 B. The self-test accounts for 48 B of the state
+(`SSTEP_SELFTEST_BYTES`), the stall detection for 80 B (`SSTEP_STALL_BYTES`; 96 B for
+the float backend on 64-bit hosts).
 
-The self-test accounts for 40 B of the instance (`SSTEP_SELFTEST_BYTES`) and for 1144 B
-(fixed point) or 1140 B (float) of the flash. Built with `SSTEP_CFG_SELFTEST = 0`:
+The flash figure is the sum of the library objects (`arm-none-eabi-size` of `src/*.c`).
+A linked application also takes the 64-bit division of libgcc (`__aeabi_ldivmod`,
+`__aeabi_uldivmod`, `__udivmoddi4`) and `memcpy` / `memset`: 1040 B (fixed point), 1056 B (float),
+shared with the application if it uses them too. Since 1.4.0 the float backend no longer
+links the software float routines of libgcc: an image with the whole API is 484 B
+smaller than with 1.3.
 
-| Object | Fixed point | Float |
-| --- | --- | --- |
-| `struct sstep` (RAM per motor) | 448 B | 480 B |
-| Code and constants, `-Os` (flash) | 9672 B | 10402 B |
+### Build-time options
+
+The self-test and the stall detection can be compiled out
+([`SSTEP_CFG_SELFTEST`, `SSTEP_CFG_STALL`](#build-time-options)):
+
+| `SSTEP_CFG_SELFTEST` | `SSTEP_CFG_STALL` | RAM, fixed point | RAM, float | Flash, fixed point | Flash, float |
+| :---: | :---: | ---: | ---: | ---: | ---: |
+| 1 | 1 | 496 B | 528 B | 11032 B | 11814 B |
+| 0 | 1 | 448 B | 480 B | 9672 B | 10458 B |
+| 1 | 0 | 416 B | 448 B | 8872 B | 9414 B |
+| 0 | 0 | 368 B | 400 B | 7504 B | 8054 B |
+
+One topology instead of both saves 216 B (`SSTEP_CFG_TOPOLOGY_SHARED_LEG = 0`) or 176 B
+(`SSTEP_CFG_TOPOLOGY_FULL_BRIDGE = 0`) of the fixed-point flash, 288 B or 184 B of the
+float flash. `SSTEP_CFG_SINE_TABLE_BITS = 6` saves 384 B (fixed point) or 768 B (float)
+at the cost of the sine accuracy ([accuracy table](motor-control.md#microstepping)).
+
+### Reducing the footprint
+
+The library is written for the linker to drop what the application does not call:
+
+| Measure | Fixed point | Float | How |
+| --- | ---: | ---: | --- |
+| Whole API, linked with `--gc-sections` | 12164 B | 12952 B | `-ffunction-sections -fdata-sections`, `-Wl,--gc-sections` |
+| Only `init`, `enable`, `disable`, both loops, `move_to`, `get_status` | 11000 B | 11792 B | as above: unused functions are not linked |
+| The same with link-time optimisation | 10620 B | 10944 B | `-flto` for the library and the application |
+| The same without self-test, stall detection and the shared-leg topology | 7714 B | 7876 B | `SSTEP_CFG_SELFTEST = 0`, `SSTEP_CFG_STALL = 0`, `SSTEP_CFG_TOPOLOGY_SHARED_LEG = 0` |
+
+Linked images for Cortex-M4 at `-Os`, library and the libgcc / libc functions it needs,
+without the application. Link-time optimisation merges the small `static inline` helpers
+of the numeric backend that each source file otherwise keeps as its own copy; at `-O2` it
+inlines more and makes the image larger, so use it together with `-Os`.
 
 ## Stack usage
 
@@ -140,7 +174,7 @@ functions that call them.
 
 | Function | Fixed `-Os` | Fixed `-O0` | Float `-Os` | Float `-O0` |
 | --- | ---: | ---: | ---: | ---: |
-| `sstep_init()` | 224 | 1600 | 200 | 1496 |
+| `sstep_init()` | 224 | 1608 | 188 | 1552 |
 | `sstep_enable()` | 56 | 80 | 64 | 88 |
 | `sstep_selftest()` | 80 | 384 | 80 | 384 |
 | `sstep_disable()` | 24 | 40 | 24 | 40 |

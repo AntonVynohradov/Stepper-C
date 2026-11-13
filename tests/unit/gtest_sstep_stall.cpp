@@ -45,6 +45,8 @@ using sstep_test::Hal;
 using sstep_test::make_config;
 using sstep_test::Sim;
 
+#if (SSTEP_CFG_STALL == 1)
+
 namespace
 {
 
@@ -603,3 +605,42 @@ TEST(SstepStall, RotorVelocitySaturates)
         EXPECT_EQ(status_of(&sim).rotor_velocity, mv > 0.0 ? INT32_MAX : -INT32_MAX);
     }
 }
+
+#else /* SSTEP_CFG_STALL == 0 */
+
+/* ==============================================================================
+ * STALL DETECTION COMPILED OUT
+ * =============================================================================*/
+
+TEST(SstepStall, CompiledOut)
+{
+    /* stall_time_ms > 0 asks for a detector that is not there */
+    Sim sim;
+    sim.record = false;
+    sstep_test::set_stall(&sim.cfg);
+    EXPECT_EQ(sim.init(), SSTEP_ERR_UNSUPPORTED);
+
+    /* 0 builds, and the rest of the driver works without it */
+    sim.cfg.ctrl.stall_time_ms = 0U;
+    ASSERT_EQ(sim.init(), SSTEP_OK);
+    ASSERT_EQ(sstep_enable(&sim.drv), SSTEP_OK);
+    ASSERT_EQ(sstep_move_by(&sim.drv, 64), SSTEP_OK);
+    sim.run_for(0.05);
+    sstep_status st{};
+    ASSERT_EQ(sstep_get_status(&sim.drv, &st), SSTEP_OK);
+    EXPECT_EQ(st.position, 64);
+    EXPECT_EQ(st.faults, SSTEP_FAULT_NONE);
+    EXPECT_EQ(st.emf_d_mv, 0);
+    EXPECT_EQ(st.emf_q_mv, 0);
+    EXPECT_EQ(st.rotor_velocity, 0);
+    EXPECT_EQ(st.load_angle_cdeg, 0);
+    EXPECT_EQ(st.stall_level_pct, 0U);
+
+    /* an overcurrent is only an overcurrent */
+    sstep_sample s = sim.sample();
+    s.i_a = sim.adc_current(3.9);
+    ASSERT_EQ(sstep_fast_loop(&sim.drv, &s), SSTEP_OK);
+    EXPECT_EQ(sim.ctx().faults, SSTEP_FAULT_OVERCURRENT);
+}
+
+#endif /* SSTEP_CFG_STALL */

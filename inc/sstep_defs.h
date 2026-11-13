@@ -64,8 +64,8 @@
 #define SSTEP_ERR_CONFIG (-2)
 /** @brief Call not allowed in the current state (for example a move while faulted). */
 #define SSTEP_ERR_STATE (-3)
-/** @brief Topology or self-test not compiled in (see ::SSTEP_CFG_TOPOLOGY_FULL_BRIDGE,
- *         ::SSTEP_CFG_SELFTEST). */
+/** @brief Topology, self-test or stall detection not compiled in (see
+ *         ::SSTEP_CFG_TOPOLOGY_FULL_BRIDGE, ::SSTEP_CFG_SELFTEST, ::SSTEP_CFG_STALL). */
 #define SSTEP_ERR_UNSUPPORTED (-4)
 /** @brief The last bus voltage sample is outside vbus_min_mv .. vbus_max_mv: the outputs
  *         stay off, no fault is latched (sstep_enable(), sstep_selftest()). */

@@ -100,11 +100,16 @@ struct sstep_selftest_ctx
     /* state */
     uint8_t phase;                     /**< ::sstep_selftest_phase_id. */
     uint8_t coil;                      /**< 0 = A, 1 = B. */
-    uint16_t n;                        /**< Periods in the current step. */
+    uint16_t n;                        /**< Periods in the current step (or window). */
     uint32_t duty_q8;                  /**< Duty of the driven leg [ticks * 256]. */
     int32_t i_own;                     /**< Current of the tested phase at the end [counts]. */
     enum sstep_selftest_result result; /**< Result, ::SSTEP_SELFTEST_RUNNING while it runs. */
     volatile uint8_t done;             /**< 1: finished, event not yet reported by the slow loop. */
+    uint8_t windows;                   /**< Windows of the step elapsed while settling. */
+    uint16_t clean;                    /**< Periods in a row with the condition of the step. */
+    uint16_t over;                     /**< Periods in a row above twice the test current, in
+                                            the current window of hold_periods. */
+    uint8_t over_windows;              /**< Windows in a row above twice the test current. */
 };
 #endif /* SSTEP_CFG_SELFTEST */
 
@@ -167,12 +172,14 @@ struct sstep_ctx
     struct sstep_gain bus_frac; /**< period_eff / pwm_period_ticks. */
     sstep_real_t i_slew;        /**< Current slew per slow period [pu]; 0 = off. */
 
+#if (SSTEP_CFG_STALL == 1)
     /* Stall detection constants, sstep_stall_*() */
     struct sstep_gain emf_a;     /**< L / Ts + R / 2 [pu V / pu A]. */
     struct sstep_gain emf_b;     /**< L / Ts - R / 2 [pu V / pu A]. */
     struct sstep_gain emf_alpha; /**< Ts / tau of the back-EMF filter. */
     uint32_t stall_ticks;        /**< Slow periods of stall to trip; 0 = detection off. */
     int32_t stall_emf_mv;        /**< Back-EMF of stall_speed [mV]. */
+#endif
 
     /* Slow loop -> fast loop hand-off (double buffer) */
     struct sstep_setpoint sp[2]; /**< Setpoints; the fast loop owns sp[sp_active]. */
@@ -186,10 +193,12 @@ struct sstep_ctx
     sstep_real_t i_meas[2];           /**< Last measured phase currents [pu]. */
     volatile uint16_t vbus_raw;       /**< Last bus voltage [ADC counts]. */
     uint16_t compare[SSTEP_LEGS_MAX]; /**< Last compare values. */
-    sstep_real_t i_prev[2];           /**< Phase currents of the previous period [pu]. */
-    sstep_acc_t v_hist[2][2];         /**< Applied phase voltages computed 1 and 2 periods
-                                           ago [pu V]. */
-    sstep_integ_t emf[2];             /**< Filtered back-EMF, d and q axis [pu V]. */
+#if (SSTEP_CFG_STALL == 1)
+    sstep_real_t i_prev[2];   /**< Phase currents of the previous period [pu]. */
+    sstep_acc_t v_hist[2][2]; /**< Applied phase voltages computed 1 and 2 periods
+                                   ago [pu V]. */
+    sstep_integ_t emf[2];     /**< Filtered back-EMF, d and q axis [pu V]. */
+#endif
 
     /* Slow loop state */
     struct sstep_motion mo;     /**< Motion generator. */
@@ -198,11 +207,13 @@ struct sstep_ctx
     bool hold_active;           /**< Hold current applied. */
     sstep_real_t i_amp;         /**< Current amplitude of the setpoint [pu] (slew). */
     struct sstep_gain inv_vbus; /**< Last V_base / bus voltage. */
-    int32_t vel_cmd;            /**< Commanded velocity of the period in use [microsteps/s]. */
-    sstep_real_t ff_cmd;        /**< Back-EMF of vel_cmd [pu V]. */
-    int64_t emf_off[2];         /**< Mean back-EMF at rest, d and q [mV * 2^16]. */
-    uint32_t stall_count;       /**< Stall detector up/down counter. */
-    uint32_t stall_hold;        /**< Slow periods the condition stays true after a reversal. */
+#if (SSTEP_CFG_STALL == 1)
+    int32_t vel_cmd;      /**< Commanded velocity of the period in use [microsteps/s]. */
+    sstep_real_t ff_cmd;  /**< Back-EMF of vel_cmd [pu V]. */
+    int64_t emf_off[2];   /**< Mean back-EMF at rest, d and q [mV * 2^16]. */
+    uint32_t stall_count; /**< Stall detector up/down counter. */
+    uint32_t stall_hold;  /**< Slow periods the condition stays true after a reversal. */
+#endif
 
 #if (SSTEP_CFG_SELFTEST == 1)
     struct sstep_selftest_ctx st; /**< Self-test (sstep_selftest()). */
@@ -295,6 +306,7 @@ uint8_t sstep_motion_step(struct sstep_motion* mo);
  */
 uint32_t sstep_isqrt64(uint64_t x);
 
+#if (SSTEP_CFG_STALL == 1)
 /**
  * @brief  Reset the stall detector when the outputs are enabled: empty voltage history,
  *         filters at zero, current history from the last measurement.
@@ -327,6 +339,7 @@ bool sstep_stall_check(struct sstep_ctx* m);
  * @param  status  Status to complete.
  */
 void sstep_stall_status(const struct sstep_ctx* m, struct sstep_status* status);
+#endif /* SSTEP_CFG_STALL */
 
 #ifdef __cplusplus
 }

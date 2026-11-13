@@ -198,6 +198,24 @@
       "dependsOn": ["Tests: Configure unit tests (no self-test)"],
       "problemMatcher": []
     },
+    {
+      "label": "Tests: Configure unit tests (no stall detection)",
+      "hide": true,
+      "type": "process",
+      "command": "cmake",
+      "args": ["--preset", "SSTEP[UnitTestsNoStall]"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Tests: Coverage report (no stall detection)",
+      "group": "build",
+      "detail": "Unit tests + gcovr report built with SSTEP_CFG_STALL = 0 (target 'coverage')",
+      "type": "process",
+      "command": "cmake",
+      "args": ["--build", "build/SSTEP[UnitTestsNoStall]", "--target", "coverage"],
+      "dependsOn": ["Tests: Configure unit tests (no stall detection)"],
+      "problemMatcher": []
+    },
 
     // ======================================================================
     // Static analysis (targets exist when the tools are installed)

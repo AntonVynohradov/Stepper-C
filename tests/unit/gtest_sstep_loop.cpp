@@ -409,6 +409,8 @@ TEST(SstepLoop, OtherMicrostepSettings)
     }
 }
 
+#if (SSTEP_CFG_STALL == 1)
+
 /* ==============================================================================
  * STALL DETECTION ON THE MOTOR MODEL
  * =============================================================================*/
@@ -774,3 +776,5 @@ TEST(SstepLoop, StallNoFalseAlarm)
         }
     }
 }
+
+#endif /* SSTEP_CFG_STALL */
