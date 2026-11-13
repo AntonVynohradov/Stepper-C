@@ -83,6 +83,7 @@ _Macros that select the code compiled into the library._ [More...](#detailed-des
 | define  | [**SSTEP\_CFG\_MICROSTEPS\_MAX**](group__sstep__config.md#define-sstep_cfg_microsteps_max)  `256U`<br>_Largest microstep division accepted by_ [_**sstep\_init()**_](group__sstep__api.md#function-sstep_init) _(power of two, 1..256)._ |
 | define  | [**SSTEP\_CFG\_SELFTEST**](group__sstep__config.md#define-sstep_cfg_selftest)  `1`<br>_1: compile the power stage and wiring self-test,_ [_**sstep\_selftest()**_](group__sstep__api.md#function-sstep_selftest) _._ |
 | define  | [**SSTEP\_CFG\_SINE\_TABLE\_BITS**](group__sstep__config.md#define-sstep_cfg_sine_table_bits)  `8U`<br>_log2 of the number of entries of the quarter-wave sine table (6..10)._  |
+| define  | [**SSTEP\_CFG\_STALL**](group__sstep__config.md#define-sstep_cfg_stall)  `1`<br>_1: compile the sensorless stall detection (back-EMF observer, enabled at run time with_ [_**sstep\_ctrl\_cfg::stall\_time\_ms**_](structsstep__ctrl__cfg.md#variable-stall_time_ms) _)._ |
 | define  | [**SSTEP\_CFG\_TOPOLOGY\_FULL\_BRIDGE**](group__sstep__config.md#define-sstep_cfg_topology_full_bridge)  `1`<br>_1: compile support for two full H-bridges (4 half-bridge legs)._  |
 | define  | [**SSTEP\_CFG\_TOPOLOGY\_SHARED\_LEG**](group__sstep__config.md#define-sstep_cfg_topology_shared_leg)  `1`<br>_1: compile support for three half-bridges with a common leg (3 legs), for example STMicroelectronics B-G431B-ESC1._  |
 | define  | [**SSTEP\_MATH\_BACKEND\_FIXED**](group__sstep__config.md#define-sstep_math_backend_fixed)  `0`<br>_Fixed point backend: Q15 signals, Q31 accumulators, integer-only arithmetic._  |
@@ -92,7 +93,7 @@ _Macros that select the code compiled into the library._ [More...](#detailed-des
 
 
 Every macro has a default and may be overridden in one of two ways:
-* on the compiler command line (`-DSSTEP_CFG_MATH_BACKEND=SSTEP_MATH_BACKEND_FLOAT`), or
+* on the compiler command line (`-DSSTEP_CFG_MATH_BACKEND= SSTEP_MATH_BACKEND_FLOAT`), or
 * in a user header `sstep_user_config.h`, included when the macro `SSTEP_USER_CONFIG` is defined (CMake: set `SSTEP_CONFIG_DIR` to its folder).
 
 
@@ -182,6 +183,24 @@ _log2 of the number of entries of the quarter-wave sine table (6..10)._
 
 
 The table is `static const` (flash): 2^bits + 1 entries of 2 bytes (fixed) or 4 bytes (float). Values between entries are linearly interpolated. 
+
+
+        
+
+<hr>
+
+
+
+### define SSTEP\_CFG\_STALL 
+
+_1: compile the sensorless stall detection (back-EMF observer, enabled at run time with_ [_**sstep\_ctrl\_cfg::stall\_time\_ms**_](structsstep__ctrl__cfg.md#variable-stall_time_ms) _)._
+```
+#define SSTEP_CFG_STALL `1`
+```
+
+
+
+0 removes its code and state; [**sstep\_init()**](group__sstep__api.md#function-sstep_init) then returns [**SSTEP\_ERR\_UNSUPPORTED**](group__sstep__defs.md#define-sstep_err_unsupported) for stall\_time\_ms &gt; 0. 
 
 
         

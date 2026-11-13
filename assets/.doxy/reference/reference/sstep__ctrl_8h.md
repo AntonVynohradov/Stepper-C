@@ -49,7 +49,7 @@
 | Type | Name |
 | ---: | :--- |
 | enum  | [**sstep\_drive\_mode**](#enum-sstep_drive_mode)  <br>_How the phase voltages are obtained._  |
-| enum  | [**sstep\_event**](#enum-sstep_event)  <br>_Events reported through sstep\_event\_fn._  |
+| enum  | [**sstep\_event**](#enum-sstep_event)  <br>_Events reported through ::sstep\_event\_fn._  |
 | typedef void(\* | [**sstep\_event\_fn**](#typedef-sstep_event_fn)  <br>_Notify the application of a motion event (optional)._  |
 | typedef void(\* | [**sstep\_fault\_fn**](#typedef-sstep_fault_fn)  <br>_Notify the application of new faults (optional)._  |
 | typedef int(\* | [**sstep\_output\_enable\_fn**](#typedef-sstep_output_enable_fn)  <br>_Enable or disable the power stage outputs (disabled = all legs high impedance)._  |
@@ -107,8 +107,9 @@
 | ---: | :--- |
 | define  | [**SSTEP\_CONFIG\_BYTES**](sstep__ctrl_8h.md#define-sstep_config_bytes)  `156U`<br> |
 | define  | [**SSTEP\_INSTANCE\_WORDS**](sstep__ctrl_8h.md#define-sstep_instance_words)  `((SSTEP\_CONFIG\_BYTES + SSTEP\_STATE\_BYTES + 7U) / 8U)`<br>_Size of_ [_**sstep**_](structsstep.md) _in 64-bit words._ |
-| define  | [**SSTEP\_SELFTEST\_BYTES**](sstep__ctrl_8h.md#define-sstep_selftest_bytes)  `40U`<br>_Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers._  |
-| define  | [**SSTEP\_STATE\_BYTES**](sstep__ctrl_8h.md#define-sstep_state_bytes)  `(292U + SSTEP\_SELFTEST\_BYTES)`<br> |
+| define  | [**SSTEP\_SELFTEST\_BYTES**](sstep__ctrl_8h.md#define-sstep_selftest_bytes)  `48U`<br>_Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers._  |
+| define  | [**SSTEP\_STALL\_BYTES**](sstep__ctrl_8h.md#define-sstep_stall_bytes)  `80U`<br>_State of the stall detection (_ [_**SSTEP\_CFG\_STALL**_](group__sstep__config.md#define-sstep_cfg_stall) _)._ |
+| define  | [**SSTEP\_STATE\_BYTES**](sstep__ctrl_8h.md#define-sstep_state_bytes)  `(212U + SSTEP\_STALL\_BYTES + SSTEP\_SELFTEST\_BYTES)`<br> |
 
 ## Public Types Documentation
 
@@ -134,7 +135,7 @@ enum sstep_drive_mode {
 
 ### enum sstep\_event 
 
-_Events reported through sstep\_event\_fn._ 
+_Events reported through ::sstep\_event\_fn._ 
 ```C++
 enum sstep_event {
     SSTEP_EVENT_MOVE_DONE = 0,
@@ -304,7 +305,7 @@ _Size of_ [_**sstep**_](structsstep.md) _in 64-bit words._
 
 _Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers._ 
 ```C++
-#define SSTEP_SELFTEST_BYTES `40U`
+#define SSTEP_SELFTEST_BYTES `48U`
 ```
 
 
@@ -318,10 +319,24 @@ Plain constants, so that the instance size needs no sizeof (static analysis); ss
 
 
 
+### define SSTEP\_STALL\_BYTES 
+
+_State of the stall detection (_ [_**SSTEP\_CFG\_STALL**_](group__sstep__config.md#define-sstep_cfg_stall) _)._
+```C++
+#define SSTEP_STALL_BYTES `80U`
+```
+
+
+
+
+<hr>
+
+
+
 ### define SSTEP\_STATE\_BYTES 
 
 ```C++
-#define SSTEP_STATE_BYTES `(292U + SSTEP_SELFTEST_BYTES)`
+#define SSTEP_STATE_BYTES `(212U + SSTEP_STALL_BYTES + SSTEP_SELFTEST_BYTES)`
 ```
 
 

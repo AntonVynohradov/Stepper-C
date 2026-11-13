@@ -2110,6 +2110,11 @@ header; it declares every function and includes the public type headers:</p>
 <td>Compile <code>sstep_selftest()</code></td>
 </tr>
 <tr>
+<td><code>SSTEP_CFG_STALL</code></td>
+<td><code>1</code></td>
+<td>Compile the stall detection; since 1.4.0</td>
+</tr>
+<tr>
 <td><code>SSTEP_CFG_MICROSTEPS_MAX</code></td>
 <td><code>256U</code></td>
 <td>Largest microstep division</td>
@@ -2161,7 +2166,7 @@ header; it declares every function and includes the public type headers:</p>
 <tr>
 <td><code>SSTEP_ERR_UNSUPPORTED</code></td>
 <td><code>-4</code></td>
-<td>Topology or self-test not compiled in</td>
+<td>Topology, self-test or stall detection not compiled in</td>
 </tr>
 <tr>
 <td><code>SSTEP_ERR_VBUS</code></td>
@@ -2426,12 +2431,14 @@ standstill), <code>SSTEP_EVENT_SELFTEST_DONE</code> (2, <code>sstep_selftest()</
 </tr>
 </tbody>
 </table>
-<p>The five estimates are 0 while stall detection is off; their equations are in
+<p>The five estimates are 0 while stall detection is off or not compiled in
+(<code>SSTEP_CFG_STALL = 0</code>); their equations are in
 <a href="../motor-control/#stall-detection">Stall detection</a>.</p>
 <h3 id="driver-instance">Driver instance<a class="headerlink" href="#driver-instance" title="Permanent link">&para;</a></h3>
 <p><code>struct sstep</code> is an opaque array of <code>SSTEP_INSTANCE_WORDS</code> 64-bit words (on Cortex-M4
-488 B fixed point, 520 B float; on 64-bit hosts 536 B and 568 B; 40 B less each with
-<code>SSTEP_CFG_SELFTEST = 0</code>). Allocate it, pass its
+496 B fixed point, 528 B float; on 64-bit hosts 544 B and 576 B; 48 B less each with
+<code>SSTEP_CFG_SELFTEST = 0</code>, 80 B less with <code>SSTEP_CFG_STALL = 0</code>, 96 B for the float backend
+on 64-bit hosts). Allocate it, pass its
 address, never read or write its content. <code>SSTEP_CONFIG_BYTES</code> is the size of the
 configuration copy (156 B with 32-bit pointers, 192 B with 64-bit pointers) and
 <code>SSTEP_STATE_BYTES</code> the size of the private state behind it.</p>
@@ -2488,7 +2495,7 @@ callback.</p>
 </tr>
 <tr>
 <td><code>SSTEP_ERR_UNSUPPORTED</code></td>
-<td>Topology not compiled in</td>
+<td>Topology not compiled in, or <code>stall_time_ms &gt; 0</code> built with <code>SSTEP_CFG_STALL = 0</code></td>
 </tr>
 </tbody>
 </table>

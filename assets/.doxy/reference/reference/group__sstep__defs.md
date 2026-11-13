@@ -88,7 +88,7 @@ _Constants shared by the public API._ [More...](#detailed-description)
 | define  | [**SSTEP\_ERR\_CONFIG**](group__sstep__defs.md#define-sstep_err_config)  `(-2)`<br>_Configuration is consistent field by field but not as a whole (for example rated current above the power stage limit)._  |
 | define  | [**SSTEP\_ERR\_PARAM**](group__sstep__defs.md#define-sstep_err_param)  `(-1)`<br>_NULL pointer or a value outside its documented range._  |
 | define  | [**SSTEP\_ERR\_STATE**](group__sstep__defs.md#define-sstep_err_state)  `(-3)`<br>_Call not allowed in the current state (for example a move while faulted)._  |
-| define  | [**SSTEP\_ERR\_UNSUPPORTED**](group__sstep__defs.md#define-sstep_err_unsupported)  `(-4)`<br>_Topology or self-test not compiled in (see_ [_**SSTEP\_CFG\_TOPOLOGY\_FULL\_BRIDGE**_](group__sstep__config.md#define-sstep_cfg_topology_full_bridge) _,_[_**SSTEP\_CFG\_SELFTEST**_](group__sstep__config.md#define-sstep_cfg_selftest) _)._ |
+| define  | [**SSTEP\_ERR\_UNSUPPORTED**](group__sstep__defs.md#define-sstep_err_unsupported)  `(-4)`<br>_Topology, self-test or stall detection not compiled in (see_ [_**SSTEP\_CFG\_TOPOLOGY\_FULL\_BRIDGE**_](group__sstep__config.md#define-sstep_cfg_topology_full_bridge) _,_[_**SSTEP\_CFG\_SELFTEST**_](group__sstep__config.md#define-sstep_cfg_selftest) _,_[_**SSTEP\_CFG\_STALL**_](group__sstep__config.md#define-sstep_cfg_stall) _)._ |
 | define  | [**SSTEP\_ERR\_VBUS**](group__sstep__defs.md#define-sstep_err_vbus)  `(-5)`<br>_The last bus voltage sample is outside vbus\_min\_mv ._  |
 | define  | [**SSTEP\_FAULT\_EXTERNAL**](group__sstep__defs.md#define-sstep_fault_external)  `0x0010U`<br>_Reported by the application through_ [_**sstep\_report\_fault()**_](group__sstep__api.md#function-sstep_report_fault) _(driver fault pin, over-temperature...)._ |
 | define  | [**SSTEP\_FAULT\_HAL**](group__sstep__defs.md#define-sstep_fault_hal)  `0x0008U`<br>_A hardware callback returned an error._  |
@@ -223,7 +223,7 @@ _Call not allowed in the current state (for example a move while faulted)._
 
 ### define SSTEP\_ERR\_UNSUPPORTED 
 
-_Topology or self-test not compiled in (see_ [_**SSTEP\_CFG\_TOPOLOGY\_FULL\_BRIDGE**_](group__sstep__config.md#define-sstep_cfg_topology_full_bridge) _,_[_**SSTEP\_CFG\_SELFTEST**_](group__sstep__config.md#define-sstep_cfg_selftest) _)._
+_Topology, self-test or stall detection not compiled in (see_ [_**SSTEP\_CFG\_TOPOLOGY\_FULL\_BRIDGE**_](group__sstep__config.md#define-sstep_cfg_topology_full_bridge) _,_[_**SSTEP\_CFG\_SELFTEST**_](group__sstep__config.md#define-sstep_cfg_selftest) _,_[_**SSTEP\_CFG\_STALL**_](group__sstep__config.md#define-sstep_cfg_stall) _)._
 ```
 #define SSTEP_ERR_UNSUPPORTED `(-4)`
 ```

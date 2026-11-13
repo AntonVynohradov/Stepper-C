@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
   <compounddef id="group__sstep__math" kind="group">
     <compoundname>sstep_math</compoundname>
     <title>Numeric backend</title>
@@ -720,7 +720,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_math.h" line="773" column="19" bodyfile="src/sstep_math.c" bodystart="134" bodyend="164" declfile="src/sstep_math.h" declline="773" declcolumn="19"/>
+        <location file="src/sstep_math.h" line="773" column="19" bodyfile="src/sstep_math.c" bodystart="152" bodyend="182" declfile="src/sstep_math.h" declline="773" declcolumn="19"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gafe58f850f3ec0ea7b1d369e4a8d692fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -791,7 +791,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_math.h" line="785" column="5" bodyfile="src/sstep_math.c" bodystart="255" bodyend="258" declfile="src/sstep_math.h" declline="785" declcolumn="5"/>
+        <location file="src/sstep_math.h" line="785" column="5" bodyfile="src/sstep_math.c" bodystart="273" bodyend="276" declfile="src/sstep_math.h" declline="785" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gadc561c4232ca81e9f509d23da7b48fa4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -853,7 +853,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_math.h" line="797" column="5" bodyfile="src/sstep_math.c" bodystart="168" bodyend="253" declfile="src/sstep_math.h" declline="797" declcolumn="5"/>
+        <location file="src/sstep_math.h" line="797" column="5" bodyfile="src/sstep_math.c" bodystart="186" bodyend="271" declfile="src/sstep_math.h" declline="797" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gac4d9af6078161c3a89d38aae434af758" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -915,7 +915,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_math.h" line="807" column="5" bodyfile="src/sstep_math.c" bodystart="260" bodyend="283" declfile="src/sstep_math.h" declline="807" declcolumn="5"/>
+        <location file="src/sstep_math.h" line="807" column="5" bodyfile="src/sstep_math.c" bodystart="278" bodyend="301" declfile="src/sstep_math.h" declline="807" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__math_1gafb1fd7f556a7ff09ab6bccb8fe887c26" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int32_t</type>
@@ -957,7 +957,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/sstep_math.h" line="816" column="9" bodyfile="src/sstep_math.c" bodystart="285" bodyend="306" declfile="src/sstep_math.h" declline="816" declcolumn="9"/>
+        <location file="src/sstep_math.h" line="816" column="9" bodyfile="src/sstep_math.c" bodystart="303" bodyend="324" declfile="src/sstep_math.h" declline="816" declcolumn="9"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="define">
@@ -1171,29 +1171,29 @@
 </para>
 <para>Both backends therefore see values in about -1..+1, which makes Q15 exact enough and lets the two backends be compared sample by sample in the tests.</para>
 <para><table rows="5" cols="3"><row>
-<entry thead="yes"><para>Type   </para>
-</entry><entry thead="yes"><para>Fixed point backend   </para>
-</entry><entry thead="yes"><para>Float backend    </para>
+<entry thead="yes"><para>Type  </para>
+</entry><entry thead="yes"><para>Fixed point backend  </para>
+</entry><entry thead="yes"><para>Float backend  </para>
 </entry></row>
 <row>
-<entry thead="no"><para><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref>   </para>
-</entry><entry thead="no"><para><computeroutput>int16_t</computeroutput>, Q15 (1.0 = 32768, range -1 .. +0.99997)   </para>
-</entry><entry thead="no"><para><computeroutput>float</computeroutput>, same range    </para>
+<entry thead="no"><para><ref refid="group__sstep__math_1gae07875f3f8d6f9be025bed82b2b8f423" kindref="member">sstep_real_t</ref>  </para>
+</entry><entry thead="no"><para><computeroutput>int16_t</computeroutput>, Q15 (1.0 = 32768, range -1 .. +0.99997)  </para>
+</entry><entry thead="no"><para><computeroutput>float</computeroutput>, same range  </para>
 </entry></row>
 <row>
-<entry thead="no"><para><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref>   </para>
-</entry><entry thead="no"><para><computeroutput>int32_t</computeroutput>, Q15 with 16 integer bits (range +/-65536)   </para>
-</entry><entry thead="no"><para><computeroutput>float</computeroutput>, same range    </para>
+<entry thead="no"><para><ref refid="group__sstep__math_1ga75d37f51e5f8e6e8c1eceef551d472bc" kindref="member">sstep_acc_t</ref>  </para>
+</entry><entry thead="no"><para><computeroutput>int32_t</computeroutput>, Q15 with 16 integer bits (range +/-65536)  </para>
+</entry><entry thead="no"><para><computeroutput>float</computeroutput>, same range  </para>
 </entry></row>
 <row>
-<entry thead="no"><para><ref refid="group__sstep__math_1ga2d9b6ce2135a467c6d227cde4dd9c12b" kindref="member">sstep_angle_t</ref>   </para>
-</entry><entry thead="no"><para><computeroutput>uint32_t</computeroutput>, one electrical turn = 2^32   </para>
-</entry><entry thead="no"><para>same    </para>
+<entry thead="no"><para><ref refid="group__sstep__math_1ga2d9b6ce2135a467c6d227cde4dd9c12b" kindref="member">sstep_angle_t</ref>  </para>
+</entry><entry thead="no"><para><computeroutput>uint32_t</computeroutput>, one electrical turn = 2^32  </para>
+</entry><entry thead="no"><para>same  </para>
 </entry></row>
 <row>
-<entry thead="no"><para><computeroutput>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></computeroutput>   </para>
-</entry><entry thead="no"><para>Q15 mantissa and binary exponent   </para>
-</entry><entry thead="no"><para><computeroutput>float</computeroutput>   </para>
+<entry thead="no"><para><computeroutput>struct <ref refid="structsstep__gain" kindref="compound">sstep_gain</ref></computeroutput>  </para>
+</entry><entry thead="no"><para>Q15 mantissa and binary exponent  </para>
+</entry><entry thead="no"><para><computeroutput>float</computeroutput>  </para>
 </entry></row>
 </table>
 </para>

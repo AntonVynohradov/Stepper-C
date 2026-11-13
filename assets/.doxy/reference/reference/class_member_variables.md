@@ -50,11 +50,6 @@
 
 ## e
 
-* **emf** ([**sstep\_ctx**](structsstep__ctx.md))
-* **emf\_a** ([**sstep\_ctx**](structsstep__ctx.md))
-* **emf\_alpha** ([**sstep\_ctx**](structsstep__ctx.md))
-* **emf\_b** ([**sstep\_ctx**](structsstep__ctx.md))
-* **emf\_off** ([**sstep\_ctx**](structsstep__ctx.md))
 * **exp** ([**sstep\_gain**](structsstep__gain.md))
 * **emf\_d\_mv** ([**sstep\_status**](structsstep__status.md))
 * **emf\_q\_mv** ([**sstep\_status**](structsstep__status.md))
@@ -64,7 +59,6 @@
 
 * **fast\_loop\_hz** ([**sstep\_ctrl\_cfg**](structsstep__ctrl__cfg.md))
 * **faults** ([**sstep\_ctx**](structsstep__ctx.md), [**sstep\_status**](structsstep__status.md))
-* **ff\_cmd** ([**sstep\_ctx**](structsstep__ctx.md))
 * **ff\_gain** ([**sstep\_ctx**](structsstep__ctx.md))
 * **full\_steps\_per\_rev** ([**sstep\_motor\_cfg**](structsstep__motor__cfg.md))
 * **ff** ([**sstep\_setpoint**](structsstep__setpoint.md))
@@ -87,7 +81,6 @@
 * **i\_amp** ([**sstep\_ctx**](structsstep__ctx.md), [**sstep\_setpoint**](structsstep__setpoint.md))
 * **i\_hold** ([**sstep\_ctx**](structsstep__ctx.md))
 * **i\_meas** ([**sstep\_ctx**](structsstep__ctx.md))
-* **i\_prev** ([**sstep\_ctx**](structsstep__ctx.md))
 * **i\_run** ([**sstep\_ctx**](structsstep__ctx.md))
 * **i\_slew** ([**sstep\_ctx**](structsstep__ctx.md))
 * **i\_trip\_counts** ([**sstep\_ctx**](structsstep__ctx.md))
@@ -164,10 +157,6 @@
 * **sp** ([**sstep\_ctx**](structsstep__ctx.md))
 * **sp\_active** ([**sstep\_ctx**](structsstep__ctx.md))
 * **sp\_pending** ([**sstep\_ctx**](structsstep__ctx.md))
-* **stall\_count** ([**sstep\_ctx**](structsstep__ctx.md))
-* **stall\_emf\_mv** ([**sstep\_ctx**](structsstep__ctx.md))
-* **stall\_hold** ([**sstep\_ctx**](structsstep__ctx.md))
-* **stall\_ticks** ([**sstep\_ctx**](structsstep__ctx.md))
 * **state** ([**sstep\_ctx**](structsstep__ctx.md), [**sstep\_status**](structsstep__status.md))
 * **still** ([**sstep\_ctx**](structsstep__ctx.md))
 * **sin** ([**sstep\_sincos**](structsstep__sincos.md))
@@ -189,11 +178,9 @@
 
 * **v** ([**sstep\_bridge\_out**](structsstep__bridge__out.md))
 * **v\_max** ([**sstep\_ctrl\_cfg**](structsstep__ctrl__cfg.md), [**sstep\_motion**](structsstep__motion.md))
-* **v\_hist** ([**sstep\_ctx**](structsstep__ctx.md))
 * **vbus\_max\_raw** ([**sstep\_ctx**](structsstep__ctx.md))
 * **vbus\_min\_raw** ([**sstep\_ctx**](structsstep__ctx.md))
 * **vbus\_raw** ([**sstep\_ctx**](structsstep__ctx.md))
-* **vel\_cmd** ([**sstep\_ctx**](structsstep__ctx.md))
 * **v\_run** ([**sstep\_motion**](structsstep__motion.md))
 * **vel** ([**sstep\_motion**](structsstep__motion.md))
 * **vbus** ([**sstep\_sample**](structsstep__sample.md))

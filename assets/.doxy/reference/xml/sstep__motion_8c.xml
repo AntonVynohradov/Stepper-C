@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
   <compounddef id="sstep__motion_8c" kind="file" language="C++">
     <compoundname>sstep_motion.c</compoundname>
     <includes refid="sstep__internal_8h" local="yes">sstep_internal.h</includes>
@@ -217,7 +217,7 @@
 </parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>SSTEP_MOTION_DONE when a move reached its target in this period, else 0. </para>
+<simplesect kind="return"><para>::SSTEP_MOTION_DONE when a move reached its target in this period, else 0. </para>
 </simplesect>
 </para>
         </detaileddescription>

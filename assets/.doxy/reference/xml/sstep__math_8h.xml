@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
   <compounddef id="sstep__math_8h" kind="file" language="C++">
     <compoundname>sstep_math.h</compoundname>
     <includes local="no">stdint.h</includes>
@@ -137,6 +137,7 @@
 <codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SSTEP_MATH_H</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SSTEP_MATH_H</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
 <codeline lineno="69"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
 <codeline lineno="70"><highlight class="comment"><sp/>*<sp/>INCLUDES</highlight></codeline>
 <codeline lineno="71"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
@@ -714,6 +715,7 @@
 <codeline lineno="819"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="820"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="821"><highlight class="normal"></highlight></codeline>
+<codeline lineno="823"><highlight class="normal"></highlight></codeline>
 <codeline lineno="824"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SSTEP_MATH_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
     <location file="src/sstep_math.h"/>

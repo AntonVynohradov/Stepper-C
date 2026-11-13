@@ -2094,7 +2094,8 @@ falls behind at speed, or slips under a load that the hold current cannot hold, 
 the commanded position keeps its value. The stall detector estimates the back-EMF from
 the quantities the fast loop already has and raises <code>SSTEP_FAULT_STALL</code> when the rotor
 does not move as commanded. It is off by default (<code>stall_time_ms = 0</code>) and needs
-<code>SSTEP_DRIVE_CURRENT</code> and <code>ke_uv_s_per_rad &gt; 0</code>.</p>
+<code>SSTEP_DRIVE_CURRENT</code> and <code>ke_uv_s_per_rad &gt; 0</code>. An application that never uses it can
+compile it out with <code>SSTEP_CFG_STALL = 0</code> (since 1.4.0, see <a href="#cost">Cost</a>).</p>
 <p><strong>Reference case.</strong> A 17HS19-2004S1 on a three-leg stage at 24 V, 1.5 A run current and
 0.5 A hold current after 500 ms, holds a constant 0.12 N·m load at the run current
 (<span class="arithmatex">\(K_t \cdot 1.5 = 0.31\)</span> N·m) but not at the hold current (0.10 N·m). At the run → hold change
@@ -2370,8 +2371,13 @@ and is reported.</p>
 </tr>
 <tr>
 <td>RAM per instance, added</td>
-<td>96 B (Cortex-M4)</td>
-<td>96 B</td>
+<td>80 B (Cortex-M4)</td>
+<td>80 B</td>
+</tr>
+<tr>
+<td>Flash, added (<code>-Os</code>)</td>
+<td>2160 B</td>
+<td>2400 B</td>
 </tr>
 </tbody>
 </table>
@@ -2379,7 +2385,9 @@ and is reported.</p>
 mean over 600 fast-loop periods while accelerating to 3 rev/s; on Cortex-M4 most of them take one cycle. At
 170 MHz and 20 kHz the observer takes about 1.5 µs (<code>-O2</code>) to 2.8 µs (fixed point,
 <code>-Os</code>) of the 50 µs period. With <code>stall_time_ms = 0</code> the fast loop skips the observer
-(one comparison).</p>
+(one comparison), but the code and the state stay in the build; <code>SSTEP_CFG_STALL = 0</code>
+removes both (the RAM and flash rows above) and <code>sstep_init()</code> then refuses
+<code>stall_time_ms &gt; 0</code> with <code>SSTEP_ERR_UNSUPPORTED</code>.</p>
 <h3 id="limits">Limits<a class="headerlink" href="#limits" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Below <code>stall_speed</code>, a rotor that stops while the command creeps slowly is not seen:

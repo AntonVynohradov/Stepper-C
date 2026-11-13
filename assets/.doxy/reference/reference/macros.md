@@ -8,26 +8,9 @@
 * **ACC\_HALF** ([**sstep\_bridge.c**](sstep__bridge_8c.md))
 
 
-## c
-
-* **CDEG\_PER\_TURN** ([**sstep\_stall.c**](sstep__stall_8c.md))
-* **CORDIC\_NORM** ([**sstep\_stall.c**](sstep__stall_8c.md))
-* **CORDIC\_STEPS** ([**sstep\_stall.c**](sstep__stall_8c.md))
-
-
 ## f
 
 * **FRAC\_BITS** ([**sstep\_math.c**](sstep__math_8c.md))
-
-
-## h
-
-* **HALF\_TURN** ([**sstep\_stall.c**](sstep__stall_8c.md))
-
-
-## o
-
-* **OFF\_ONE** ([**sstep\_stall.c**](sstep__stall_8c.md))
 
 
 ## q
@@ -48,6 +31,7 @@
 * **SSTEP\_CONFIG\_BYTES** ([**sstep\_ctrl.h**](sstep__ctrl_8h.md))
 * **SSTEP\_INSTANCE\_WORDS** ([**sstep\_ctrl.h**](sstep__ctrl_8h.md))
 * **SSTEP\_SELFTEST\_BYTES** ([**sstep\_ctrl.h**](sstep__ctrl_8h.md))
+* **SSTEP\_STALL\_BYTES** ([**sstep\_ctrl.h**](sstep__ctrl_8h.md))
 * **SSTEP\_STATE\_BYTES** ([**sstep\_ctrl.h**](sstep__ctrl_8h.md))
 * **SSTEP\_MODE\_HOLD** ([**sstep\_internal.h**](sstep__internal_8h.md))
 * **SSTEP\_MODE\_MOVE** ([**sstep\_internal.h**](sstep__internal_8h.md))
@@ -66,9 +50,8 @@
 
 ## t
 
-* **TWO\_PI\_DEN** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md), [**sstep\_stall.c**](sstep__stall_8c.md))
-* **TWO\_PI\_NUM** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md), [**sstep\_stall.c**](sstep__stall_8c.md))
-* **TURN** ([**sstep\_stall.c**](sstep__stall_8c.md))
+* **TWO\_PI\_DEN** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
+* **TWO\_PI\_NUM** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 
 
 ## v

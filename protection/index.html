@@ -1572,7 +1572,7 @@ Without any sample yet <code>sstep_enable()</code> does not check (the first fas
 <h2 id="self-test">Self-test<a class="headerlink" href="#self-test" title="Permanent link">&para;</a></h2>
 <p><code>sstep_selftest(drv, i_test_ma)</code> tests the power stage and the wiring before the first
 enable, with the outputs on and the current controller off. It is compiled in by default;
-<code>SSTEP_CFG_SELFTEST = 0</code> removes it (1.1 KiB of flash and 40 B per instance on Cortex-M4)
+<code>SSTEP_CFG_SELFTEST = 0</code> removes it (1.3 KiB of flash and 48 B per instance on Cortex-M4)
 and the call returns <code>SSTEP_ERR_UNSUPPORTED</code>. The fast loop runs it, one step
 per period:</p>
 <ol>
@@ -1580,9 +1580,42 @@ per period:</p>
    otherwise a switch conducts with its gate off (<code>SSTEP_SELFTEST_LEAK</code>).</li>
 <li><strong>Phase A.</strong> The legs of phase B and the return leg of phase A stay low; the duty cycle of
    the driving leg of phase A rises over 20 ms from 0 to <span class="arithmatex">\(D_\mathrm{max}\)</span> until the current
-   reaches <code>i_test_ma</code>, is held for 2 ms, then all legs go low for 5 ms.</li>
+   reaches <code>i_test_ma</code> and is held; then all legs go low until the currents have died out.</li>
 <li><strong>Phase B</strong>, the same.</li>
 </ol>
+<p>The energised phase pulls the rotor to its nearest full step, at most one full step, and
+the rotor swings into it. While it moves, it induces currents in both phases: in the idle
+phase, which both its legs short, and on top of the test current. A wrong wiring or a short
+gives a current that stays; a rotor comes to rest. So each check waits for a rotor at rest:</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Passes when</th>
+<th>Fails after</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hold (wiring)</td>
+<td>The other phase stayed below half the own current for 2 ms in a row</td>
+<td>100 ms without that: <code>SSTEP_SELFTEST_WRONG_PHASE</code></td>
+</tr>
+<tr>
+<td>Decay (between and after the phases)</td>
+<td>Both currents stayed below a quarter of the test current for 5 ms in a row</td>
+<td>100 ms without that: <code>SSTEP_SELFTEST_LEAK</code></td>
+</tr>
+<tr>
+<td>Twice the test current</td>
+<td>A swinging rotor crosses zero every half swing</td>
+<td>Above it without a break for 100 ms: <code>SSTEP_SELFTEST_SHORT</code></td>
+</tr>
+</tbody>
+</table>
+<p>With a rotor at rest the conditions hold from the start, and the hold takes 2 ms and the
+decay 5 ms. The overcurrent trip (<code>i_trip_ma</code>) acts throughout the test, so a hard short
+switches the outputs off at once, whatever the checks wait for.</p>
 <p>The voltage is ramped and not set from the resistance, because the dead time takes a bus
 fraction of <span class="arithmatex">\(2\, t_\mathrm{dead} f_\mathrm{PWM}\)</span> from a driving leg (0.58 V at 12 V,
 1.2 µs and 20 kHz) — as much as the 0.96 V that 0.6 A needs through 1.6 Ω. With
@@ -1610,7 +1643,7 @@ D_\mathrm{short} = \frac{V_t}{4 V_\mathrm{bus}} P + 2\, t_\mathrm{dead} f_\mathr
 </tr>
 <tr>
 <td><code>SSTEP_SELFTEST_LEAK</code></td>
-<td>Current above a quarter of the test current with every leg low</td>
+<td>Current above a quarter of the test current with every leg low, before the first phase or for 100 ms between the phases</td>
 <td>A high-side switch conducts</td>
 </tr>
 <tr>
@@ -1620,7 +1653,7 @@ D_\mathrm{short} = \frac{V_t}{4 V_\mathrm{bus}} P + 2\, t_\mathrm{dead} f_\mathr
 </tr>
 <tr>
 <td><code>SSTEP_SELFTEST_SHORT</code></td>
-<td>Current above twice the test current, reached below <span class="arithmatex">\(D_\mathrm{short}\)</span> (resistance below a quarter of <code>r_mohm</code>), or an overcurrent trip</td>
+<td>Current above twice the test current for 100 ms, reached below <span class="arithmatex">\(D_\mathrm{short}\)</span> (resistance below a quarter of <code>r_mohm</code>), or an overcurrent trip</td>
 <td>Phases shorted together or to a supply rail</td>
 </tr>
 <tr>
@@ -1630,7 +1663,7 @@ D_\mathrm{short} = \frac{V_t}{4 V_\mathrm{bus}} P + 2\, t_\mathrm{dead} f_\mathr
 </tr>
 <tr>
 <td><code>SSTEP_SELFTEST_WRONG_PHASE</code></td>
-<td>The other phase carried half the test current or more</td>
+<td>The other phase carried half the own current or more for 100 ms</td>
 <td>A phase connected to the wrong legs</td>
 </tr>
 <tr>
@@ -1648,16 +1681,17 @@ D_\mathrm{short} = \frac{V_t}{4 V_\mathrm{bus}} P + 2\, t_\mathrm{dead} f_\mathr
 <p><code>sstep_status</code> also reports the tested phase (<code>selftest_phase</code>), its current at the end
 (<code>selftest_i_ma</code>) and the compare value (<code>selftest_duty</code>). A failure raises
 <code>SSTEP_FAULT_SELFTEST</code>; the result stays readable after <code>sstep_clear_faults()</code>.</p>
-<p>The test takes 15 to 60 ms: 39 ms on the motor model of the tests (17HS19-2004S1, 12 V,
-free rotor, both topologies); the same algorithm took 44 ms on a B-G431B-ESC1 with that
-motor at 12 V. The end is reported
-by <code>sstep_slow_loop()</code> with <code>SSTEP_EVENT_SELFTEST_DONE</code>.</p>
+<p>The test takes 42 ms on the motor model of the tests (17HS19-2004S1, 12 V, free rotor,
+both topologies), and 39 to 55 ms with the rotor a full step away from phase A at 12 V and
+24 V and up to 50 times the rotor inertia. A rotor that keeps moving can stretch it to about
+440 ms (2 + 2 × (20 + 100 + 100) ms) before it fails. The end is reported by
+<code>sstep_slow_loop()</code> with <code>SSTEP_EVENT_SELFTEST_DONE</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">The rotor must be free to settle</p>
 <p>The energised phase pulls the rotor to its nearest full step (at most one full step)
-and back when the motor is enabled. That motion induces a current in the idle phase,
-which the half-current limit of the wiring check allows. A rotor turned by an external torque, such as a joint that falls, induces
-much more and fails the test: support such a load for the first enable.</p>
+and back when the motor is enabled; the checks wait until it is at rest. A rotor turned
+by an external torque for longer, such as a joint that falls, keeps inducing currents
+and fails the test: support such a load for the first enable.</p>
 </div>
 <p>A typical start, in the slow loop context of a bare-metal main loop:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">sstep_status</span><span class="w"> </span><span class="n">st</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>

@@ -75,6 +75,7 @@
 extern "C" {
 #endif
 
+
 /* ==============================================================================
  * PUBLIC FUNCTION DECLARATIONS
  * =============================================================================*/
@@ -110,6 +111,7 @@ int sstep_report_fault(struct sstep* drv, uint16_t faults);
 int sstep_clear_faults(struct sstep* drv);
 
 int sstep_get_status(const struct sstep* drv, struct sstep_status* status);
+
 
 #ifdef __cplusplus
 }

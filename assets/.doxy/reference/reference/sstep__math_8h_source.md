@@ -40,6 +40,7 @@
 #ifndef SSTEP_MATH_H
 #define SSTEP_MATH_H
 
+
 /* ==============================================================================
  * INCLUDES
  * =============================================================================*/
@@ -616,6 +617,7 @@ int32_t sstep_real_to_units(sstep_acc_t x, int32_t base);
 #ifdef __cplusplus
 }
 #endif
+
 
 #endif /* SSTEP_MATH_H */
 ```

@@ -101,6 +101,10 @@ struct sstep_selftest_ctx
     int32_t i_own;                     
     enum sstep_selftest_result result; 
     volatile uint8_t done;             
+    uint8_t windows;                   
+    uint16_t clean;                    
+    uint16_t over;                     
+    uint8_t over_windows;              
 };
 #endif /* SSTEP_CFG_SELFTEST */
 
@@ -133,6 +137,7 @@ struct sstep_motion
 struct sstep_ctx
 {
     struct sstep_config cfg; 
+
     /* Constants derived by sstep_init() */
     struct sstep_gain kp;       
     struct sstep_gain ki;       
@@ -154,16 +159,21 @@ struct sstep_ctx
     uint16_t bus_den;           
     struct sstep_gain bus_frac; 
     sstep_real_t i_slew;        
+
+#if (SSTEP_CFG_STALL == 1)
     /* Stall detection constants, sstep_stall_*() */
     struct sstep_gain emf_a;     
     struct sstep_gain emf_b;     
     struct sstep_gain emf_alpha; 
     uint32_t stall_ticks;        
     int32_t stall_emf_mv;        
+#endif
+
     /* Slow loop -> fast loop hand-off (double buffer) */
     struct sstep_setpoint sp[2]; 
     volatile uint8_t sp_active;  
     volatile uint8_t sp_pending; 
+
     /* Fast loop state */
     struct sstep_setpoint cur;        
     uint16_t adv;                     
@@ -171,9 +181,12 @@ struct sstep_ctx
     sstep_real_t i_meas[2];           
     volatile uint16_t vbus_raw;       
     uint16_t compare[SSTEP_LEGS_MAX]; 
-    sstep_real_t i_prev[2];           
-    sstep_acc_t v_hist[2][2];         
-    sstep_integ_t emf[2];             
+#if (SSTEP_CFG_STALL == 1)
+    sstep_real_t i_prev[2];   
+    sstep_acc_t v_hist[2][2]; 
+    sstep_integ_t emf[2];     
+#endif
+
     /* Slow loop state */
     struct sstep_motion mo;     
     sstep_angle_t angle_offset; 
@@ -181,11 +194,14 @@ struct sstep_ctx
     bool hold_active;           
     sstep_real_t i_amp;         
     struct sstep_gain inv_vbus; 
-    int32_t vel_cmd;            
-    sstep_real_t ff_cmd;        
-    int64_t emf_off[2];         
-    uint32_t stall_count;       
-    uint32_t stall_hold;        
+#if (SSTEP_CFG_STALL == 1)
+    int32_t vel_cmd;      
+    sstep_real_t ff_cmd;  
+    int64_t emf_off[2];   
+    uint32_t stall_count; 
+    uint32_t stall_hold;  
+#endif
+
 #if (SSTEP_CFG_SELFTEST == 1)
     struct sstep_selftest_ctx st; 
 #endif
@@ -227,6 +243,7 @@ uint8_t sstep_motion_step(struct sstep_motion* mo);
 
 uint32_t sstep_isqrt64(uint64_t x);
 
+#if (SSTEP_CFG_STALL == 1)
 void sstep_stall_reset(struct sstep_ctx* m);
 
 void sstep_stall_observe(struct sstep_ctx* m, const struct sstep_sincos* sc,
@@ -235,6 +252,7 @@ void sstep_stall_observe(struct sstep_ctx* m, const struct sstep_sincos* sc,
 bool sstep_stall_check(struct sstep_ctx* m);
 
 void sstep_stall_status(const struct sstep_ctx* m, struct sstep_status* status);
+#endif /* SSTEP_CFG_STALL */
 
 #ifdef __cplusplus
 }

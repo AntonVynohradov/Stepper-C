@@ -782,6 +782,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Memory footprint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-time-options_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build-time options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reducing-the-footprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reducing the footprint
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1468,6 +1496,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Memory footprint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-time-options_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build-time options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reducing-the-footprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reducing the footprint
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1554,6 +1610,12 @@ size of <code>struct sstep</code>.</p>
 <td><code>1</code></td>
 <td>0, 1</td>
 <td>Compile <code>sstep_selftest()</code>; 0 removes its code and state, the call then returns <code>SSTEP_ERR_UNSUPPORTED</code></td>
+</tr>
+<tr>
+<td><code>SSTEP_CFG_STALL</code></td>
+<td><code>1</code></td>
+<td>0, 1</td>
+<td>Compile the stall detection; 0 removes its code and state, <code>sstep_init()</code> then returns <code>SSTEP_ERR_UNSUPPORTED</code> for <code>stall_time_ms &gt; 0</code> and the estimates of the status are 0; since 1.4.0</td>
 </tr>
 <tr>
 <td><code>SSTEP_CFG_MICROSTEPS_MAX</code></td>
@@ -1928,7 +1990,7 @@ below 16 384 000 microsteps/s, <code>accel</code> and <code>decel</code> from 8 
 </table>
 <h2 id="memory-footprint">Memory footprint<a class="headerlink" href="#memory-footprint" title="Permanent link">&para;</a></h2>
 <p>Measured with <code>arm-none-eabi-gcc</code> 15.2.1 for Cortex-M4 (<code>-mthumb</code>, float backend with
-<code>-mfpu=fpv4-sp-d16 -mfloat-abi=hard</code>), default build-time options, both topologies.</p>
+<code>-mfpu=fpv4-sp-d16 -mfloat-abi=hard</code>), both topologies.</p>
 <table>
 <thead>
 <tr>
@@ -1940,13 +2002,13 @@ below 16 384 000 microsteps/s, <code>accel</code> and <code>decel</code> from 8 
 <tbody>
 <tr>
 <td><code>struct sstep</code> (RAM per motor)</td>
-<td>488 B</td>
-<td>520 B</td>
+<td>496 B</td>
+<td>528 B</td>
 </tr>
 <tr>
 <td>Code and constants, <code>-Os</code> (flash)</td>
-<td>10816 B</td>
-<td>11542 B</td>
+<td>11032 B</td>
+<td>11814 B</td>
 </tr>
 <tr>
 <td>of which the sine table</td>
@@ -1961,33 +2023,112 @@ below 16 384 000 microsteps/s, <code>accel</code> and <code>decel</code> from 8 
 </tbody>
 </table>
 <p><code>struct sstep</code> is the configuration copy (<code>SSTEP_CONFIG_BYTES</code>: 156 B on Cortex-M4,
-192 B on 64-bit hosts) plus the private state (<code>SSTEP_STATE_BYTES</code>: 332 B fixed point,
-364 B float on Cortex-M4; 344 B and 376 B on 64-bit hosts); on a 64-bit host the instance
-is 536 B and 568 B. Stall detection accounts for 96 B of it on Cortex-M4, and for 2236 B
-(fixed point) or 2448 B (float) of the flash whether it is enabled or not.</p>
-<p>The self-test accounts for 40 B of the instance (<code>SSTEP_SELFTEST_BYTES</code>) and for 1144 B
-(fixed point) or 1140 B (float) of the flash. Built with <code>SSTEP_CFG_SELFTEST = 0</code>:</p>
+192 B on 64-bit hosts) plus the private state (<code>SSTEP_STATE_BYTES</code>: 340 B fixed point,
+372 B float on Cortex-M4; 352 B and 384 B on 64-bit hosts); on a 64-bit host the instance
+is 544 B and 576 B. The self-test accounts for 48 B of the state
+(<code>SSTEP_SELFTEST_BYTES</code>), the stall detection for 80 B (<code>SSTEP_STALL_BYTES</code>; 96 B for
+the float backend on 64-bit hosts).</p>
+<p>The flash figure is the sum of the library objects (<code>arm-none-eabi-size</code> of <code>src/*.c</code>).
+A linked application also takes the 64-bit division of libgcc (<code>__aeabi_ldivmod</code>,
+<code>__aeabi_uldivmod</code>, <code>__udivmoddi4</code>) and <code>memcpy</code> / <code>memset</code>: 1040 B (fixed point), 1056 B (float),
+shared with the application if it uses them too. Since 1.4.0 the float backend no longer
+links the software float routines of libgcc: an image with the whole API is 484 B
+smaller than with 1.3.</p>
+<h3 id="build-time-options_1">Build-time options<a class="headerlink" href="#build-time-options_1" title="Permanent link">&para;</a></h3>
+<p>The self-test and the stall detection can be compiled out
+(<a href="#build-time-options"><code>SSTEP_CFG_SELFTEST</code>, <code>SSTEP_CFG_STALL</code></a>):</p>
 <table>
 <thead>
 <tr>
-<th>Object</th>
-<th>Fixed point</th>
-<th>Float</th>
+<th style="text-align: center;"><code>SSTEP_CFG_SELFTEST</code></th>
+<th style="text-align: center;"><code>SSTEP_CFG_STALL</code></th>
+<th style="text-align: right;">RAM, fixed point</th>
+<th style="text-align: right;">RAM, float</th>
+<th style="text-align: right;">Flash, fixed point</th>
+<th style="text-align: right;">Flash, float</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>struct sstep</code> (RAM per motor)</td>
-<td>448 B</td>
-<td>480 B</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: right;">496 B</td>
+<td style="text-align: right;">528 B</td>
+<td style="text-align: right;">11032 B</td>
+<td style="text-align: right;">11814 B</td>
 </tr>
 <tr>
-<td>Code and constants, <code>-Os</code> (flash)</td>
-<td>9672 B</td>
-<td>10402 B</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: right;">448 B</td>
+<td style="text-align: right;">480 B</td>
+<td style="text-align: right;">9672 B</td>
+<td style="text-align: right;">10458 B</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: right;">416 B</td>
+<td style="text-align: right;">448 B</td>
+<td style="text-align: right;">8872 B</td>
+<td style="text-align: right;">9414 B</td>
+</tr>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: right;">368 B</td>
+<td style="text-align: right;">400 B</td>
+<td style="text-align: right;">7504 B</td>
+<td style="text-align: right;">8054 B</td>
 </tr>
 </tbody>
 </table>
+<p>One topology instead of both saves 216 B (<code>SSTEP_CFG_TOPOLOGY_SHARED_LEG = 0</code>) or 176 B
+(<code>SSTEP_CFG_TOPOLOGY_FULL_BRIDGE = 0</code>) of the fixed-point flash, 288 B or 184 B of the
+float flash. <code>SSTEP_CFG_SINE_TABLE_BITS = 6</code> saves 384 B (fixed point) or 768 B (float)
+at the cost of the sine accuracy (<a href="../motor-control/#microstepping">accuracy table</a>).</p>
+<h3 id="reducing-the-footprint">Reducing the footprint<a class="headerlink" href="#reducing-the-footprint" title="Permanent link">&para;</a></h3>
+<p>The library is written for the linker to drop what the application does not call:</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th style="text-align: right;">Fixed point</th>
+<th style="text-align: right;">Float</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Whole API, linked with <code>--gc-sections</code></td>
+<td style="text-align: right;">12164 B</td>
+<td style="text-align: right;">12952 B</td>
+<td><code>-ffunction-sections -fdata-sections</code>, <code>-Wl,--gc-sections</code></td>
+</tr>
+<tr>
+<td>Only <code>init</code>, <code>enable</code>, <code>disable</code>, both loops, <code>move_to</code>, <code>get_status</code></td>
+<td style="text-align: right;">11000 B</td>
+<td style="text-align: right;">11792 B</td>
+<td>as above: unused functions are not linked</td>
+</tr>
+<tr>
+<td>The same with link-time optimisation</td>
+<td style="text-align: right;">10620 B</td>
+<td style="text-align: right;">10944 B</td>
+<td><code>-flto</code> for the library and the application</td>
+</tr>
+<tr>
+<td>The same without self-test, stall detection and the shared-leg topology</td>
+<td style="text-align: right;">7714 B</td>
+<td style="text-align: right;">7876 B</td>
+<td><code>SSTEP_CFG_SELFTEST = 0</code>, <code>SSTEP_CFG_STALL = 0</code>, <code>SSTEP_CFG_TOPOLOGY_SHARED_LEG = 0</code></td>
+</tr>
+</tbody>
+</table>
+<p>Linked images for Cortex-M4 at <code>-Os</code>, library and the libgcc / libc functions it needs,
+without the application. Link-time optimisation merges the small <code>static inline</code> helpers
+of the numeric backend that each source file otherwise keeps as its own copy; at <code>-O2</code> it
+inlines more and makes the image larger, so use it together with <code>-Os</code>.</p>
 <h2 id="stack-usage">Stack usage<a class="headerlink" href="#stack-usage" title="Permanent link">&para;</a></h2>
 <p>Worst-case stack of each public function including the library functions it calls,
 measured with <code>-fstack-usage -fcallgraph-info=su</code> and <code>tools/docs/stack_usage.py</code>
@@ -2008,9 +2149,9 @@ functions that call them.</p>
 <tr>
 <td><code>sstep_init()</code></td>
 <td style="text-align: right;">224</td>
-<td style="text-align: right;">1600</td>
-<td style="text-align: right;">200</td>
-<td style="text-align: right;">1496</td>
+<td style="text-align: right;">1608</td>
+<td style="text-align: right;">188</td>
+<td style="text-align: right;">1552</td>
 </tr>
 <tr>
 <td><code>sstep_enable()</code></td>

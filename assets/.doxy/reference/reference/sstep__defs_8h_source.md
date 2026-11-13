@@ -40,6 +40,7 @@
 #ifndef SSTEP_DEFS_H
 #define SSTEP_DEFS_H
 
+
 /* ==============================================================================
  * INCLUDES
  * =============================================================================*/
@@ -110,6 +111,7 @@ enum sstep_selftest_result
     SSTEP_SELFTEST_WRONG_PHASE = 7, 
     SSTEP_SELFTEST_ABORTED = 8      
 };
+
 
 #endif /* SSTEP_DEFS_H */
 ```

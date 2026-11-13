@@ -67,7 +67,6 @@
 |  void | [**control**](#function-control) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Current control, power stage and PWM write of one fast loop period._  |
 |  int | [**derive**](#function-derive) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Derive gains, scaling and limits from the (validated) configuration._  |
 |  void | [**derive\_slew**](#function-derive_slew) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Current slew per slow period [pu], at least one mA; 0 = off._  |
-|  int | [**derive\_stall**](#function-derive_stall) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Derive the stall detection constants (after the other gains)._  |
 |  void | [**derive\_window**](#function-derive_window) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Sampling window: the legs may use the compare range 0 ._  |
 |  int64\_t | [**div\_round**](#function-div_round) (int64\_t num, int64\_t den) <br>_round(num / den) for den &gt; 0, half away from zero._  |
 |  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**gain\_apply\_i32**](#function-gain_apply_i32) (const struct [**sstep\_gain**](structsstep__gain.md) \* g, int32\_t v) <br>_g \* v for a 32-bit integer v (slow loop, 64-bit product), as a saturated signal._  |
@@ -195,22 +194,6 @@ static int derive (
 _Current slew per slow period [pu], at least one mA; 0 = off._ 
 ```C++
 static void derive_slew (
-    struct sstep_ctx * m
-) 
-```
-
-
-
-
-<hr>
-
-
-
-### function derive\_stall 
-
-_Derive the stall detection constants (after the other gains)._ 
-```C++
-static int derive_stall (
     struct sstep_ctx * m
 ) 
 ```

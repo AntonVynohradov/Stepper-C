@@ -1487,7 +1487,7 @@ microstepping, trajectory, voltage limits) are described in <a href="../motor-co
 <tr>
 <td>Stall detection</td>
 <td><code>src/sstep_stall.c</code></td>
-<td>Back-EMF observer (fast loop), stall decision (slow loop), estimates of the status</td>
+<td>Back-EMF observer (fast loop), stall decision (slow loop), estimates of the status (<code>SSTEP_CFG_STALL</code>)</td>
 </tr>
 <tr>
 <td>Motion</td>
@@ -1619,7 +1619,7 @@ detects them.</p>
 <tr>
 <td><code>struct sstep</code> (driver instance)</td>
 <td>Application (static, stack or pool)</td>
-<td>488 B fixed point, 520 B float on Cortex-M4</td>
+<td>496 B fixed point, 528 B float on Cortex-M4</td>
 <td>From <code>sstep_init()</code> as long as the motor runs</td>
 </tr>
 <tr>
@@ -1682,6 +1682,10 @@ analysis can evaluate them) and checked against the private state by <code>_Stat
 <tr>
 <td><code>sstep_selftest()</code> built with <code>SSTEP_CFG_SELFTEST = 0</code></td>
 <td>Returns <code>SSTEP_ERR_UNSUPPORTED</code></td>
+</tr>
+<tr>
+<td><code>stall_time_ms &gt; 0</code> built with <code>SSTEP_CFG_STALL = 0</code></td>
+<td><code>sstep_init()</code> returns <code>SSTEP_ERR_UNSUPPORTED</code></td>
 </tr>
 <tr>
 <td>Any call before a successful <code>sstep_init()</code> (zeroed instance, or the last <code>sstep_init()</code> failed in the derivation)</td>

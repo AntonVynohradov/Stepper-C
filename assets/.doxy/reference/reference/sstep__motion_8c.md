@@ -152,7 +152,7 @@ uint8_t sstep_motion_step (
 
 **Returns:**
 
-SSTEP\_MOTION\_DONE when a move reached its target in this period, else 0. 
+::SSTEP\_MOTION\_DONE when a move reached its target in this period, else 0. 
 
 
 

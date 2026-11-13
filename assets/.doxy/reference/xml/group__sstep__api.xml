@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
   <compounddef id="group__sstep__api" kind="group">
     <compoundname>sstep_api</compoundname>
     <title>Stepper-C API</title>
@@ -67,7 +67,7 @@
 <parametername><ref refid="group__sstep__defs_1ga80beeffdc48a72869fd2e6aa6bb84d32" kindref="member">SSTEP_ERR_UNSUPPORTED</ref></parametername>
 </parameternamelist>
 <parameterdescription>
-<para>Topology not compiled in. </para>
+<para>Topology not compiled in, or stall_time_ms &gt; 0 built with <ref refid="group__sstep__config_1gaab3789ca7de7915fa34a8bf048624ecc" kindref="member">SSTEP_CFG_STALL</ref> = 0. </para>
 </parameterdescription>
 </parameteritem>
 </parameterlist>
@@ -75,7 +75,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="109" column="5" bodyfile="src/sstep_ctrl.c" bodystart="782" bodyend="807" declfile="sstep.h" declline="109" declcolumn="5"/>
+        <location file="sstep.h" line="110" column="5" bodyfile="src/sstep_ctrl.c" bodystart="797" bodyend="822" declfile="sstep.h" declline="110" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1ga3f592ef6f7e95b2c4b0792f113eae5ac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -114,7 +114,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="119" column="5" bodyfile="src/sstep_ctrl.c" bodystart="809" bodyend="872" declfile="sstep.h" declline="119" declcolumn="5"/>
+        <location file="sstep.h" line="120" column="5" bodyfile="src/sstep_ctrl.c" bodystart="824" bodyend="889" declfile="sstep.h" declline="120" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gabf6e86e82e3fec2d39be668525125a89" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -133,7 +133,7 @@
 <para>Test the power stage and the motor wiring before the first enable. </para>
         </briefdescription>
         <detaileddescription>
-<para>The outputs are switched on; for each phase in turn the fast loop raises the voltage slowly until the phase current reaches i_test_ma, holds it for 2 ms and lets it decay. It checks that no current flows with every leg low, that each phase reaches the current with the expected sign at a plausible duty cycle, and that the other phase stays below half of it. Takes about 15 to 60 ms of fast loop periods, then the outputs go off, SSTEP_EVENT_SELFTEST_DONE is reported by <ref refid="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" kindref="member">sstep_slow_loop()</ref> and the result is in the status. A failure raises <ref refid="group__sstep__defs_1ga8f3bba3b4b2262a9d1bfc6df2b0ba2f1" kindref="member">SSTEP_FAULT_SELFTEST</ref>. The rotor moves to the nearest full step of the tested phase (at most one full step) and must be free to: an external torque that turns it fails the test. <parameterlist kind="param"><parameteritem>
+<para>The outputs are switched on; for each phase in turn the fast loop raises the voltage slowly until the phase current reaches i_test_ma, holds it and lets it decay. It checks that no current flows with every leg low, that each phase reaches the current with the expected sign at a plausible duty cycle, and that the other phase stays below half of it. A rotor still moving into a step induces currents that break these conditions for a while: the hold and the decay go on until they have held for 2 ms and 5 ms in a row, for at most 100 ms each. Takes about 40 to 55 ms of fast loop periods (at most about 440 ms), then the outputs go off, ::SSTEP_EVENT_SELFTEST_DONE is reported by <ref refid="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" kindref="member">sstep_slow_loop()</ref> and the result is in the status. A failure raises <ref refid="group__sstep__defs_1ga8f3bba3b4b2262a9d1bfc6df2b0ba2f1" kindref="member">SSTEP_FAULT_SELFTEST</ref>. The rotor moves to the nearest full step of the tested phase (at most one full step) and must be free to: an external torque that turns it fails the test. <parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>drv</parametername>
 </parameternamelist>
@@ -195,7 +195,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="140" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1385" bodyend="1429" declfile="sstep.h" declline="140" declcolumn="5"/>
+        <location file="sstep.h" line="144" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1414" bodyend="1458" declfile="sstep.h" declline="144" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1ga296ffb294291431f36e14fc306c20027" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -233,7 +233,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="147" column="5" bodyfile="src/sstep_ctrl.c" bodystart="874" bodyend="908" declfile="sstep.h" declline="147" declcolumn="5"/>
+        <location file="sstep.h" line="151" column="5" bodyfile="src/sstep_ctrl.c" bodystart="891" bodyend="925" declfile="sstep.h" declline="151" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1ga8c3b6798f83c32337a21d4ccdd61239b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -283,7 +283,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="158" column="5" bodyfile="src/sstep_ctrl.c" bodystart="910" bodyend="1001" declfile="sstep.h" declline="158" declcolumn="5"/>
+        <location file="sstep.h" line="162" column="5" bodyfile="src/sstep_ctrl.c" bodystart="927" bodyend="1020" declfile="sstep.h" declline="162" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -321,7 +321,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="166" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1003" bodyend="1117" declfile="sstep.h" declline="166" declcolumn="5"/>
+        <location file="sstep.h" line="170" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1022" bodyend="1138" declfile="sstep.h" declline="170" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gab5ac3f4056af2b982b8131016df0541e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -372,7 +372,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="175" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1119" bodyend="1142" declfile="sstep.h" declline="175" declcolumn="5"/>
+        <location file="sstep.h" line="179" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1140" bodyend="1163" declfile="sstep.h" declline="179" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gacc99b6a8006f7c7f950133873a5a8fce" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -422,7 +422,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="183" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1144" bodyend="1170" declfile="sstep.h" declline="183" declcolumn="5"/>
+        <location file="sstep.h" line="187" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1165" bodyend="1191" declfile="sstep.h" declline="187" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gaa21dff174e881ddaddd22b9bf334f3f8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -473,7 +473,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="192" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1172" bodyend="1200" declfile="sstep.h" declline="192" declcolumn="5"/>
+        <location file="sstep.h" line="196" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1193" bodyend="1221" declfile="sstep.h" declline="196" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1ga41ae3f6b6cc322b50c3e3884d48dd7a1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -511,7 +511,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="199" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1202" bodyend="1225" declfile="sstep.h" declline="199" declcolumn="5"/>
+        <location file="sstep.h" line="203" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1223" bodyend="1246" declfile="sstep.h" declline="203" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1ga17aff99dbb74c27b0eb1995024c28e71" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -562,7 +562,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="207" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1227" bodyend="1253" declfile="sstep.h" declline="207" declcolumn="5"/>
+        <location file="sstep.h" line="211" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1248" bodyend="1274" declfile="sstep.h" declline="211" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1ga75cb79da6deda7b271d7a01d70f5d718" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -625,7 +625,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="216" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1255" bodyend="1273" declfile="sstep.h" declline="216" declcolumn="5"/>
+        <location file="sstep.h" line="220" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1276" bodyend="1294" declfile="sstep.h" declline="220" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gae9224e0f9e8f1822529ef015bb88f382" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -699,7 +699,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="227" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1275" bodyend="1293" declfile="sstep.h" declline="227" declcolumn="5"/>
+        <location file="sstep.h" line="231" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1296" bodyend="1314" declfile="sstep.h" declline="231" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gaafe3bb709aaa93b20884f9e7f6e31498" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -749,7 +749,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="236" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1295" bodyend="1317" declfile="sstep.h" declline="236" declcolumn="5"/>
+        <location file="sstep.h" line="240" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1316" bodyend="1338" declfile="sstep.h" declline="240" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gafff498925b2f3c0de622702a2f181b9b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -787,7 +787,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="243" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1319" bodyend="1338" declfile="sstep.h" declline="243" declcolumn="5"/>
+        <location file="sstep.h" line="247" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1340" bodyend="1359" declfile="sstep.h" declline="247" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1ga1568aad455503ed6e062cf7048bf01ba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -837,31 +837,31 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="251" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1340" bodyend="1383" declfile="sstep.h" declline="251" declcolumn="5"/>
+        <location file="sstep.h" line="255" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1361" bodyend="1412" declfile="sstep.h" declline="255" declcolumn="5"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
 <para>Initialise a driver, run its loops and command motion. </para>
     </briefdescription>
     <detaileddescription>
-<para><bold>Execution model.</bold> One driver instance (<computeroutput>struct sstep</computeroutput>) controls one motor. The application calls two functions periodically:</para>
+<para><bold>Execution model.</bold> One driver instance (<computeroutput>struct <ref refid="structsstep" kindref="compound">sstep</ref></computeroutput>) controls one motor. The application calls two functions periodically:</para>
 <para><table rows="3" cols="4"><row>
-<entry thead="yes"><para>Function   </para>
-</entry><entry thead="yes"><para>Rate   </para>
-</entry><entry thead="yes"><para>Context   </para>
-</entry><entry thead="yes"><para>Work    </para>
+<entry thead="yes"><para>Function  </para>
+</entry><entry thead="yes"><para>Rate  </para>
+</entry><entry thead="yes"><para>Context  </para>
+</entry><entry thead="yes"><para>Work  </para>
 </entry></row>
 <row>
-<entry thead="no"><para><ref refid="group__sstep__api_1ga8c3b6798f83c32337a21d4ccdd61239b" kindref="member">sstep_fast_loop()</ref>   </para>
-</entry><entry thead="no"><para><computeroutput>fast_loop_hz</computeroutput> (PWM rate or an integer fraction of it)   </para>
-</entry><entry thead="no"><para>PWM / ADC interrupt   </para>
-</entry><entry thead="no"><para>current control, voltage limit, topology mapping, PWM write    </para>
+<entry thead="no"><para><ref refid="group__sstep__api_1ga8c3b6798f83c32337a21d4ccdd61239b" kindref="member">sstep_fast_loop()</ref>  </para>
+</entry><entry thead="no"><para><computeroutput>fast_loop_hz</computeroutput> (PWM rate or an integer fraction of it)  </para>
+</entry><entry thead="no"><para>PWM / ADC interrupt  </para>
+</entry><entry thead="no"><para>current control, voltage limit, topology mapping, PWM write  </para>
 </entry></row>
 <row>
-<entry thead="no"><para><ref refid="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" kindref="member">sstep_slow_loop()</ref>   </para>
-</entry><entry thead="no"><para><computeroutput>slow_loop_hz</computeroutput> (typically 1 kHz)   </para>
-</entry><entry thead="no"><para>main loop or a timer task   </para>
-</entry><entry thead="no"><para>trajectory, microstep angle, hold current, fault handling   </para>
+<entry thead="no"><para><ref refid="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" kindref="member">sstep_slow_loop()</ref>  </para>
+</entry><entry thead="no"><para><computeroutput>slow_loop_hz</computeroutput> (typically 1 kHz)  </para>
+</entry><entry thead="no"><para>main loop or a timer task  </para>
+</entry><entry thead="no"><para>trajectory, microstep angle, hold current, fault handling  </para>
 </entry></row>
 </table>
 </para>

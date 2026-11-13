@@ -98,14 +98,14 @@ _Initialise a driver, run its loops and command motion._ [More...](#detailed-des
 ## Detailed Description
 
 
-**Execution model.** One driver instance (`struct sstep`) controls one motor. The application calls two functions periodically:
+**Execution model.** One driver instance (`struct  sstep`) controls one motor. The application calls two functions periodically:
 
 
 
-|Function   |Rate   |Context   |Work    |
+|Function  |Rate  |Context  |Work  |
 |-----|-----|-----|-----|
-|[**sstep\_fast\_loop()**](group__sstep__api.md#function-sstep_fast_loop)   |`fast_loop_hz` (PWM rate or an integer fraction of it)   |PWM / ADC interrupt   |current control, voltage limit, topology mapping, PWM write    |
-|[**sstep\_slow\_loop()**](group__sstep__api.md#function-sstep_slow_loop)   |`slow_loop_hz` (typically 1 kHz)   |main loop or a timer task   |trajectory, microstep angle, hold current, fault handling   |
+|[**sstep\_fast\_loop()**](group__sstep__api.md#function-sstep_fast_loop)  |`fast_loop_hz` (PWM rate or an integer fraction of it)  |PWM / ADC interrupt  |current control, voltage limit, topology mapping, PWM write  |
+|[**sstep\_slow\_loop()**](group__sstep__api.md#function-sstep_slow_loop)  |`slow_loop_hz` (typically 1 kHz)  |main loop or a timer task  |trajectory, microstep angle, hold current, fault handling  |
 
 
 
@@ -329,7 +329,7 @@ Outputs stay disabled. Derives the per-unit bases, the PI gains (Kp = L \* wc, K
 * [**SSTEP\_OK**](group__sstep__defs.md#define-sstep_ok) Success, state SSTEP\_STATE\_DISABLED. 
 * [**SSTEP\_ERR\_PARAM**](group__sstep__defs.md#define-sstep_err_param) NULL pointer, missing required callback or a field out of range. 
 * [**SSTEP\_ERR\_CONFIG**](group__sstep__defs.md#define-sstep_err_config) Inconsistent fields (for example i\_run\_ma &gt; i\_trip\_ma). 
-* [**SSTEP\_ERR\_UNSUPPORTED**](group__sstep__defs.md#define-sstep_err_unsupported) Topology not compiled in. 
+* [**SSTEP\_ERR\_UNSUPPORTED**](group__sstep__defs.md#define-sstep_err_unsupported) Topology not compiled in, or stall\_time\_ms &gt; 0 built with [**SSTEP\_CFG\_STALL**](group__sstep__config.md#define-sstep_cfg_stall) = 0. 
 
 
 
@@ -496,7 +496,7 @@ int sstep_selftest (
 
 
 
-The outputs are switched on; for each phase in turn the fast loop raises the voltage slowly until the phase current reaches i\_test\_ma, holds it for 2 ms and lets it decay. It checks that no current flows with every leg low, that each phase reaches the current with the expected sign at a plausible duty cycle, and that the other phase stays below half of it. Takes about 15 to 60 ms of fast loop periods, then the outputs go off, SSTEP\_EVENT\_SELFTEST\_DONE is reported by [**sstep\_slow\_loop()**](group__sstep__api.md#function-sstep_slow_loop) and the result is in the status. A failure raises [**SSTEP\_FAULT\_SELFTEST**](group__sstep__defs.md#define-sstep_fault_selftest). The rotor moves to the nearest full step of the tested phase (at most one full step) and must be free to: an external torque that turns it fails the test. 
+The outputs are switched on; for each phase in turn the fast loop raises the voltage slowly until the phase current reaches i\_test\_ma, holds it and lets it decay. It checks that no current flows with every leg low, that each phase reaches the current with the expected sign at a plausible duty cycle, and that the other phase stays below half of it. A rotor still moving into a step induces currents that break these conditions for a while: the hold and the decay go on until they have held for 2 ms and 5 ms in a row, for at most 100 ms each. Takes about 40 to 55 ms of fast loop periods (at most about 440 ms), then the outputs go off, ::SSTEP\_EVENT\_SELFTEST\_DONE is reported by [**sstep\_slow\_loop()**](group__sstep__api.md#function-sstep_slow_loop) and the result is in the status. A failure raises [**SSTEP\_FAULT\_SELFTEST**](group__sstep__defs.md#define-sstep_fault_selftest). The rotor moves to the nearest full step of the tested phase (at most one full step) and must be free to: an external torque that turns it fails the test. 
 
 **Parameters:**
 

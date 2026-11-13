@@ -70,6 +70,8 @@ static sstep_real_t quarter_sin(uint32_t pos);
 #if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
 static uint32_t bit_length(uint64_t v);
 static uint64_t ratio_round(uint64_t n, uint64_t d, uint32_t s);
+#else
+static float float_of_i64(int64_t v);
 #endif
 
 /* ==============================================================================
@@ -121,6 +123,15 @@ static sstep_real_t quarter_sin(uint32_t pos)
     float frac = (float)(pos & (((uint32_t)1U << FRAC_BITS) - 1U)) * FRAC_SCALE;
     float y0 = sstep_sin_table[idx];
     return y0 + ((sstep_sin_table[idx + 1U] - y0) * frac);
+}
+
+static float float_of_i64(int64_t v)
+{
+    uint64_t u = (v < 0) ? (uint64_t)(-v) : (uint64_t)v;
+    float hi = (float)(uint32_t)(u >> 32U);
+    float lo = (float)(uint32_t)(u & 0xFFFFFFFFU);
+    float f = (hi * 4294967296.0f) + lo;
+    return (v < 0) ? -f : f;
 }
 
 #endif /* SSTEP_CFG_MATH_BACKEND */
@@ -316,7 +327,7 @@ int sstep_gain_from_ratio64(int64_t num, int64_t den, struct sstep_gain* gain)
     }
     else
     {
-        float v = (float)num / (float)den;
+        float v = float_of_i64(num) / float_of_i64(den);
         float a = (v < 0.0f) ? -v : v;
         /* same limit as the fixed point backend (round(|v|) <= 32767) */
         if (a >= 32767.5f)

@@ -1535,7 +1535,7 @@
 </tbody>
 </table>
 <h2 id="detailed-description">Detailed Description<a class="headerlink" href="#detailed-description" title="Permanent link">&para;</a></h2>
-<p><strong>Execution model.</strong> One driver instance (<code>struct sstep</code>) controls one motor. The application calls two functions periodically:</p>
+<p><strong>Execution model.</strong> One driver instance (<code>struct  sstep</code>) controls one motor. The application calls two functions periodically:</p>
 <table>
 <thead>
 <tr>
@@ -1668,7 +1668,7 @@
 <li><a href="../group__sstep__defs/#define-sstep_ok"><strong>SSTEP_OK</strong></a> Success, state SSTEP_STATE_DISABLED. </li>
 <li><a href="../group__sstep__defs/#define-sstep_err_param"><strong>SSTEP_ERR_PARAM</strong></a> NULL pointer, missing required callback or a field out of range. </li>
 <li><a href="../group__sstep__defs/#define-sstep_err_config"><strong>SSTEP_ERR_CONFIG</strong></a> Inconsistent fields (for example i_run_ma &gt; i_trip_ma). </li>
-<li><a href="../group__sstep__defs/#define-sstep_err_unsupported"><strong>SSTEP_ERR_UNSUPPORTED</strong></a> Topology not compiled in. </li>
+<li><a href="../group__sstep__defs/#define-sstep_err_unsupported"><strong>SSTEP_ERR_UNSUPPORTED</strong></a> Topology not compiled in, or stall_time_ms &gt; 0 built with <a href="../group__sstep__config/#define-sstep_cfg_stall"><strong>SSTEP_CFG_STALL</strong></a> = 0. </li>
 </ul>
 <hr>
 
@@ -1753,7 +1753,7 @@
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    uint32_t i_test_ma
 <a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>) 
 </code></pre></div></p>
-<p>The outputs are switched on; for each phase in turn the fast loop raises the voltage slowly until the phase current reaches i_test_ma, holds it for 2 ms and lets it decay. It checks that no current flows with every leg low, that each phase reaches the current with the expected sign at a plausible duty cycle, and that the other phase stays below half of it. Takes about 15 to 60 ms of fast loop periods, then the outputs go off, SSTEP_EVENT_SELFTEST_DONE is reported by <a href="./#function-sstep_slow_loop"><strong>sstep_slow_loop()</strong></a> and the result is in the status. A failure raises <a href="../group__sstep__defs/#define-sstep_fault_selftest"><strong>SSTEP_FAULT_SELFTEST</strong></a>. The rotor moves to the nearest full step of the tested phase (at most one full step) and must be free to: an external torque that turns it fails the test. </p>
+<p>The outputs are switched on; for each phase in turn the fast loop raises the voltage slowly until the phase current reaches i_test_ma, holds it and lets it decay. It checks that no current flows with every leg low, that each phase reaches the current with the expected sign at a plausible duty cycle, and that the other phase stays below half of it. A rotor still moving into a step induces currents that break these conditions for a while: the hold and the decay go on until they have held for 2 ms and 5 ms in a row, for at most 100 ms each. Takes about 40 to 55 ms of fast loop periods (at most about 440 ms), then the outputs go off, ::SSTEP_EVENT_SELFTEST_DONE is reported by <a href="./#function-sstep_slow_loop"><strong>sstep_slow_loop()</strong></a> and the result is in the status. A failure raises <a href="../group__sstep__defs/#define-sstep_fault_selftest"><strong>SSTEP_FAULT_SELFTEST</strong></a>. The rotor moves to the nearest full step of the tested phase (at most one full step) and must be free to: an external torque that turns it fails the test. </p>
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>drv</code> Driver instance. </li>

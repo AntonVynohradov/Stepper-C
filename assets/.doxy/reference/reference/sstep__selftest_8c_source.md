@@ -54,6 +54,8 @@
 #define HOLD_MS 2U
 #define DECAY_MS 5U
 
+#define SETTLE_MS 100U
+
 #define PH_BOOT 0U
 #define PH_RAMP 1U
 #define PH_HOLD 2U
@@ -66,8 +68,12 @@
 
 static int32_t iabs(int32_t x);
 static uint32_t periods(uint32_t ms, uint32_t hz);
+static void next_step(struct sstep_selftest_ctx* st, uint8_t phase);
+static int32_t settle(struct sstep_selftest_ctx* st, bool ok, uint16_t window, uint32_t ms);
 static enum sstep_selftest_result drive_step(struct sstep_selftest_ctx* st, int32_t own,
                                              int32_t other);
+static enum sstep_selftest_result decay_step(struct sstep_selftest_ctx* st, int32_t i_a,
+                                             int32_t i_b, int32_t quarter);
 
 /* ==============================================================================
  * PRIVATE FUNCTION IMPLEMENTATIONS
@@ -82,6 +88,68 @@ static uint32_t periods(uint32_t ms, uint32_t hz)
 {
     uint32_t n = (uint32_t)(((uint64_t)ms * hz) / 1000U);
     return (n == 0U) ? 1U : n;
+}
+
+static void next_step(struct sstep_selftest_ctx* st, uint8_t phase)
+{
+    st->phase = phase;
+    st->n = 0U;
+    st->clean = 0U;
+    st->windows = 0U;
+}
+
+static int32_t settle(struct sstep_selftest_ctx* st, bool ok, uint16_t window, uint32_t ms)
+{
+    int32_t r = 0;
+
+    st->clean = ok ? (uint16_t)(st->clean + 1U) : 0U; /* < window <= 50000 */
+    st->n++;
+    if (st->clean >= window)
+    {
+        r = 1;
+    }
+    else if (st->n >= window)
+    {
+        st->n = 0U;
+        st->windows++; /* <= SETTLE_MS / HOLD_MS = 50 */
+        if (((uint32_t)st->windows * ms) >= SETTLE_MS)
+        {
+            r = -1;
+        }
+    }
+    else
+    {
+        /* go on */
+    }
+    return r;
+}
+
+static enum sstep_selftest_result decay_step(struct sstep_selftest_ctx* st, int32_t i_a,
+                                             int32_t i_b, int32_t quarter)
+{
+    enum sstep_selftest_result r = SSTEP_SELFTEST_RUNNING;
+    bool quiet = (iabs(i_a) <= quarter) && (iabs(i_b) <= quarter);
+    int32_t s = settle(st, quiet, st->decay_periods, DECAY_MS);
+
+    if (s < 0)
+    {
+        r = SSTEP_SELFTEST_LEAK; /* current with every leg low that does not die out */
+    }
+    else if (s == 0)
+    {
+        /* decaying */
+    }
+    else if (st->coil != 0U)
+    {
+        r = SSTEP_SELFTEST_PASS;
+    }
+    else
+    {
+        st->coil = 1U;
+        st->duty_q8 = 0U;
+        next_step(st, PH_RAMP);
+    }
+    return r;
 }
 
 static enum sstep_selftest_result drive_step(struct sstep_selftest_ctx* st, int32_t own,
@@ -99,8 +167,7 @@ static enum sstep_selftest_result drive_step(struct sstep_selftest_ctx* st, int3
             }
             else
             {
-                st->phase = PH_HOLD;
-                st->n = 0U;
+                next_step(st, PH_HOLD);
             }
         }
         else if (-own >= st->i_test)
@@ -118,21 +185,22 @@ static enum sstep_selftest_result drive_step(struct sstep_selftest_ctx* st, int3
     }
     else
     {
-        st->n++;
-        if (st->n >= st->hold_periods)
+        /* Wrong wiring returns the whole test current through the other phase, for good; a
+           rotor moving into the step induces a current there only until it is at rest. */
+        int32_t s = settle(st, (2 * iabs(other)) <= iabs(own), st->hold_periods, HOLD_MS);
+
+        if (s > 0)
         {
-            /* Wrong wiring returns the whole test current through the other phase; a rotor
-               moving into the step induces a smaller current there. */
-            if ((2 * iabs(other)) > iabs(own))
-            {
-                r = SSTEP_SELFTEST_WRONG_PHASE;
-            }
-            else
-            {
-                st->i_own = own;
-                st->phase = PH_DECAY;
-                st->n = 0U;
-            }
+            st->i_own = own;
+            next_step(st, PH_DECAY);
+        }
+        else if (s < 0)
+        {
+            r = SSTEP_SELFTEST_WRONG_PHASE;
+        }
+        else
+        {
+            /* holding */
         }
     }
     return r;
@@ -191,10 +259,11 @@ void sstep_selftest_setup(struct sstep_selftest_ctx* st, const struct sstep_conf
     st->decay_periods = (uint16_t)periods(DECAY_MS, cfg->ctrl.fast_loop_hz);
     st->leg[0] = 0U;
     st->leg[1] = (s->topology == SSTEP_TOPOLOGY_FULL_BRIDGE) ? 2U : 1U;
-    st->phase = PH_BOOT;
     st->coil = 0U;
-    st->n = 0U;
+    st->over = 0U;
+    st->over_windows = 0U;
     st->duty_q8 = 0U;
+    next_step(st, PH_BOOT);
     st->i_own = 0;
     st->result = SSTEP_SELFTEST_RUNNING;
     st->done = 0U;
@@ -216,7 +285,27 @@ enum sstep_selftest_result sstep_selftest_step(struct sstep_selftest_ctx* st, in
         int32_t other = (st->coil == 0U) ? i_b : i_a;
         int32_t quarter = (st->i_test < 4) ? 1 : (st->i_test / 4);
 
-        if ((iabs(i_a) > (2 * st->i_test)) || (iabs(i_b) > (2 * st->i_test)))
+        /* Above twice the test current without a break for SETTLE_MS: a short. A rotor
+           swinging into the step induces currents that cross zero every half swing; a hard
+           short trips the overcurrent protection of the fast loop at once. */
+        bool over = (iabs(i_a) > (2 * st->i_test)) || (iabs(i_b) > (2 * st->i_test));
+
+        st->over = over ? (uint16_t)(st->over + 1U) : 0U;
+        if (!over)
+        {
+            st->over_windows = 0U;
+        }
+        else if (st->over >= st->hold_periods)
+        {
+            st->over = 0U;
+            st->over_windows++; /* <= SETTLE_MS / HOLD_MS = 50 */
+        }
+        else
+        {
+            /* above, within a window */
+        }
+
+        if (((uint32_t)st->over_windows * HOLD_MS) >= SETTLE_MS)
         {
             r = SSTEP_SELFTEST_SHORT;
         }
@@ -231,28 +320,13 @@ enum sstep_selftest_result sstep_selftest_step(struct sstep_selftest_ctx* st, in
                 }
                 else
                 {
-                    st->phase = PH_RAMP;
-                    st->n = 0U;
+                    next_step(st, PH_RAMP);
                 }
             }
         }
         else if (st->phase == PH_DECAY)
         {
-            st->n++;
-            if (st->n >= st->decay_periods)
-            {
-                if (st->coil != 0U)
-                {
-                    r = SSTEP_SELFTEST_PASS;
-                }
-                else
-                {
-                    st->coil = 1U;
-                    st->phase = PH_RAMP;
-                    st->n = 0U;
-                    st->duty_q8 = 0U;
-                }
-            }
+            r = decay_step(st, i_a, i_b, quarter);
         }
         else
         {

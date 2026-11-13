@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
   <compounddef id="group__sstep__defs" kind="group">
     <compoundname>sstep_defs</compoundname>
     <title>Definitions</title>
@@ -231,7 +231,7 @@
         <name>SSTEP_ERR_UNSUPPORTED</name>
         <initializer>(-4)</initializer>
         <briefdescription>
-<para>Topology or self-test not compiled in (see <ref refid="group__sstep__config_1ga31fbdc1c85873c64564a26b02b8f9f70" kindref="member">SSTEP_CFG_TOPOLOGY_FULL_BRIDGE</ref>, <ref refid="group__sstep__config_1ga80128e9a8782edd49b5020c2ddba6e94" kindref="member">SSTEP_CFG_SELFTEST</ref>). </para>
+<para>Topology, self-test or stall detection not compiled in (see <ref refid="group__sstep__config_1ga31fbdc1c85873c64564a26b02b8f9f70" kindref="member">SSTEP_CFG_TOPOLOGY_FULL_BRIDGE</ref>, <ref refid="group__sstep__config_1ga80128e9a8782edd49b5020c2ddba6e94" kindref="member">SSTEP_CFG_SELFTEST</ref>, <ref refid="group__sstep__config_1gaab3789ca7de7915fa34a8bf048624ecc" kindref="member">SSTEP_CFG_STALL</ref>). </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>

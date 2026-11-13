@@ -1314,6 +1314,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#define-sstep_cfg_stall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define SSTEP_CFG_STALL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#define-sstep_cfg_topology_full_bridge" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1413,6 +1424,10 @@
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-sstep_cfg_stall"><strong>SSTEP_CFG_STALL</strong></a>  <code>1</code><br><em>1: compile the sensorless stall detection (back-EMF observer, enabled at run time with</em> <a href="../structsstep__ctrl__cfg/#variable-stall_time_ms"><em><strong>sstep_ctrl_cfg::stall_time_ms</strong></em></a> <em>).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
 <td style="text-align: left;"><a href="./#define-sstep_cfg_topology_full_bridge"><strong>SSTEP_CFG_TOPOLOGY_FULL_BRIDGE</strong></a>  <code>1</code><br><em>1: compile support for two full H-bridges (4 half-bridge legs).</em></td>
 </tr>
 <tr>
@@ -1431,7 +1446,7 @@
 </table>
 <h2 id="detailed-description">Detailed Description<a class="headerlink" href="#detailed-description" title="Permanent link">&para;</a></h2>
 <p>Every macro has a default and may be overridden in one of two ways:
-* on the compiler command line (<code>-DSSTEP_CFG_MATH_BACKEND=SSTEP_MATH_BACKEND_FLOAT</code>), or
+* on the compiler command line (<code>-DSSTEP_CFG_MATH_BACKEND= SSTEP_MATH_BACKEND_FLOAT</code>), or
 * in a user header <code>sstep_user_config.h</code>, included when the macro <code>SSTEP_USER_CONFIG</code> is defined (CMake: set <code>SSTEP_CONFIG_DIR</code> to its folder).</p>
 <p>Values that cannot change at run time (code size, table sizes, which code paths exist) live here. Motor and board parameters are run-time values passed to <a href="../group__sstep__api/#function-sstep_init"><strong>sstep_init()</strong></a>. </p>
 <h2 id="macro-definition-documentation">Macro Definition Documentation<a class="headerlink" href="#macro-definition-documentation" title="Permanent link">&para;</a></h2>
@@ -1468,28 +1483,35 @@
 <p>The table is <code>static const</code> (flash): 2^bits + 1 entries of 2 bytes (fixed) or 4 bytes (float). Values between entries are linearly interpolated. </p>
 <hr>
 
+<h3 id="define-sstep_cfg_stall">define SSTEP_CFG_STALL<a class="headerlink" href="#define-sstep_cfg_stall" title="Permanent link">&para;</a></h3>
+<p><em>1: compile the sensorless stall detection (back-EMF observer, enabled at run time with</em> <a href="../structsstep__ctrl__cfg/#variable-stall_time_ms"><em><strong>sstep_ctrl_cfg::stall_time_ms</strong></em></a> <em>).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>#define SSTEP_CFG_STALL `1`
+</code></pre></div></p>
+<p>0 removes its code and state; <a href="../group__sstep__api/#function-sstep_init"><strong>sstep_init()</strong></a> then returns <a href="../group__sstep__defs/#define-sstep_err_unsupported"><strong>SSTEP_ERR_UNSUPPORTED</strong></a> for stall_time_ms &gt; 0. </p>
+<hr>
+
 <h3 id="define-sstep_cfg_topology_full_bridge">define SSTEP_CFG_TOPOLOGY_FULL_BRIDGE<a class="headerlink" href="#define-sstep_cfg_topology_full_bridge" title="Permanent link">&para;</a></h3>
 <p><em>1: compile support for two full H-bridges (4 half-bridge legs).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>#define SSTEP_CFG_TOPOLOGY_FULL_BRIDGE `1`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>#define SSTEP_CFG_TOPOLOGY_FULL_BRIDGE `1`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_cfg_topology_shared_leg">define SSTEP_CFG_TOPOLOGY_SHARED_LEG<a class="headerlink" href="#define-sstep_cfg_topology_shared_leg" title="Permanent link">&para;</a></h3>
 <p><em>1: compile support for three half-bridges with a common leg (3 legs), for example STMicroelectronics B-G431B-ESC1.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>#define SSTEP_CFG_TOPOLOGY_SHARED_LEG `1`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>#define SSTEP_CFG_TOPOLOGY_SHARED_LEG `1`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-sstep_math_backend_fixed">define SSTEP_MATH_BACKEND_FIXED<a class="headerlink" href="#define-sstep_math_backend_fixed" title="Permanent link">&para;</a></h3>
 <p><em>Fixed point backend: Q15 signals, Q31 accumulators, integer-only arithmetic.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>#define SSTEP_MATH_BACKEND_FIXED `0`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>#define SSTEP_MATH_BACKEND_FIXED `0`
 </code></pre></div></p>
 <p>For MCUs without an FPU (Cortex-M0/M0+/M3, RISC-V RV32IMC, 8/16-bit cores). </p>
 <hr>
 
 <h3 id="define-sstep_math_backend_float">define SSTEP_MATH_BACKEND_FLOAT<a class="headerlink" href="#define-sstep_math_backend_float" title="Permanent link">&para;</a></h3>
 <p><em>Single-precision float backend.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>#define SSTEP_MATH_BACKEND_FLOAT `1`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>#define SSTEP_MATH_BACKEND_FLOAT `1`
 </code></pre></div></p>
 <p>For MCUs with a hardware FPU (Cortex-M4F/M7/M33 with FPU, STM32G4, ESP32-S3...). </p>
 <hr>

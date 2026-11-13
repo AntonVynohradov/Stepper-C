@@ -18,6 +18,6 @@ Here is a list of all files with brief descriptions:
     * **file** [**sstep\_selftest.c**](sstep__selftest_8c.md) 
     * **file** [**sstep\_sin\_table.c**](sstep__sin__table_8c.md) 
     * **file** [**sstep\_sin\_table.h**](sstep__sin__table_8h.md)     
-    * **file** [**sstep\_stall.c**](sstep__stall_8c.md)     
+    * **file** [**sstep\_stall.c**](sstep__stall_8c.md) 
 * **file** [**sstep.h**](sstep_8h.md)     
 
