@@ -13,7 +13,7 @@ on:
 jobs:
   presets:
     name: Unit test presets
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER || 'ubuntu-24.04' }}
     outputs:
       list: ${{ steps.list.outputs.list }}
     steps:
@@ -30,7 +30,7 @@ jobs:
   unit-tests:
     name: Unit tests (${{ matrix.preset }})
     needs: presets
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER || 'ubuntu-24.04' }}
 
     strategy:
       fail-fast: false

@@ -229,7 +229,9 @@ English and written for embedded engineers integrating the library.
 
   The workflows run every preset with `[UnitTests` in its name (`SSTEP[UnitTests]`,
   `SSTEP[UnitTestsFloat]`, `SSTEP[UnitTestsNoSelftest]`, `SSTEP[UnitTestsNoStall]`), read from
-  `CMakePresets.json`.
+  `CMakePresets.json`. Runner: `${{ vars.CI_RUNNER || 'ubuntu-24.04' }}` (repository variable
+  `CI_RUNNER`; not `ubuntu-latest`: 26.04 brings Cppcheck 2.19, whose Rule 7.3 check
+  reports `accel` and `decel`).
 - Brand: SystemFromScratch® exactly like that; do not name the trademark owner;
   STM32 is a trademark of STMicroelectronics.
 

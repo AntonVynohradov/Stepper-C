@@ -9,7 +9,7 @@ on:
 jobs:
   format-check:
     name: Verify Code Formatting
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER || 'ubuntu-24.04' }}
     permissions:
       pull-requests: read
       contents: read

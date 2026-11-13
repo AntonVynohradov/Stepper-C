@@ -46,6 +46,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   conversion of an `int64_t` (`__aeabi_l2f`) linked the software float addition of libgcc:
   an image with the whole API is 484 B smaller on Cortex-M4. The results of the
   closed-loop tests are unchanged.
+- CI and release run on `${{ vars.CI_RUNNER || 'ubuntu-24.04' }}` instead of
+  `ubuntu-latest`, changed in one place with the repository variable `CI_RUNNER`.
+  `ubuntu-latest` moved to Ubuntu 26.04 with Cppcheck 2.19, whose MISRA addon reports
+  Rule 7.3 (lowercase `l` suffix) on the identifiers `accel` and `decel` and failed the
+  release gate; the MISRA gate stays on Cppcheck 2.13.
 - `SSTEP_STATE_BYTES` is the sum of a base and `SSTEP_STALL_BYTES` and
   `SSTEP_SELFTEST_BYTES`.
 - The stall detection takes 80 B per instance on Cortex-M4; the documentation said 96 B.
