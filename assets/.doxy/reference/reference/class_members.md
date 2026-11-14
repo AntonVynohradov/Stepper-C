@@ -43,8 +43,12 @@
 
 * **decel** ([**sstep\_ctrl\_cfg**](structsstep__ctrl__cfg.md))
 * **drive\_mode** ([**sstep\_ctrl\_cfg**](structsstep__ctrl__cfg.md))
+* **dtc\_inv\_band** ([**sstep\_ctx**](structsstep__ctx.md))
+* **dtc\_k** ([**sstep\_ctx**](structsstep__ctx.md))
 * **dec** ([**sstep\_motion**](structsstep__motion.md))
 * **dangle** ([**sstep\_setpoint**](structsstep__setpoint.md))
+* **dead\_time\_comp\_band\_ma** ([**sstep\_stage\_cfg**](structsstep__stage__cfg.md))
+* **dead\_time\_comp\_ns** ([**sstep\_stage\_cfg**](structsstep__stage__cfg.md))
 * **dead\_time\_ns** ([**sstep\_stage\_cfg**](structsstep__stage__cfg.md))
 
 

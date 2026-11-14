@@ -793,6 +793,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#dead-time-compensation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dead-time compensation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#bus-voltage-compensation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1577,6 +1588,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#dead-time-compensation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dead-time compensation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#bus-voltage-compensation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1950,6 +1972,80 @@ by <span class="arithmatex">\(v = R\, i_\mathrm{ref} + v_\mathrm{ff}\)</span>. T
 2.0 A within 10 mA) but the torque drops at speed, where the inductance and the
 error of the back-EMF estimate are not corrected. The overcurrent trip is not active in
 this mode (there is no current measurement).</p>
+<h2 id="dead-time-compensation">Dead-time compensation<a class="headerlink" href="#dead-time-compensation" title="Permanent link">&para;</a></h2>
+<p>During the dead time both switches of a leg are off. The current flows through a body
+diode, so the leg voltage follows the direction of the current instead of the PWM. Every
+leg loses on average</p>
+<div class="arithmatex">\[
+V_d = V_\mathrm{bus}\, f_\mathrm{PWM}\, t_d
+\]</div>
+<p>against the direction of its current. With <code>dead_time_comp_ns</code> set, the fast loop adds
+this loss to the voltage request, as a feed-forward next to the back-EMF term and in both
+drive modes. <span class="arithmatex">\(V_\mathrm{bus}\)</span> is the bus sample of the period. The direction comes from the
+current reference, which carries no ADC noise, through a linear band <span class="arithmatex">\(I_b\)</span>
+(<code>dead_time_comp_band_ma</code>):</p>
+<div class="arithmatex">\[
+s(i) = \mathrm{clamp}\!\left(\frac{i_\mathrm{ref}}{I_b}, -1, 1\right)
+\]</div>
+<table>
+<thead>
+<tr>
+<th>Topology</th>
+<th>Term of phase A (B likewise)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full bridge</td>
+<td><span class="arithmatex">\(2 V_d\, s(i_A)\)</span>: both legs of the phase carry its current</td>
+</tr>
+<tr>
+<td>Shared leg</td>
+<td><span class="arithmatex">\(V_d\,\big(s(i_A) + s(i_A + i_B)\big)\)</span>: phase A is leg U − W, and W carries <span class="arithmatex">\(-(i_A + i_B)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>In current drive the PI controller would remove the loss by itself, but only after a
+current error at every zero crossing of a leg current. The back-EMF observer gets the
+voltage at the coil, the request minus the term, so the dead time no longer looks like
+back-EMF along the current.</p>
+<p>Measured on the motor model with a loss of 0.48 V per leg (1 µs at 24 V and 20 kHz):</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Without</th>
+<th>With compensation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Voltage drive, 2 A reference, locked rotor</td>
+<td>1.40 A</td>
+<td>2.00 A</td>
+</tr>
+<tr>
+<td>Current drive, 1 Hz electrical, largest current error</td>
+<td>16 mA</td>
+<td>3 mA</td>
+</tr>
+<tr>
+<td>Back-EMF observer at rest, 2 A, error along the current</td>
+<td>962 mV</td>
+<td>2 mV</td>
+</tr>
+</tbody>
+</table>
+<p>The second line uses a band equal to the 50 mA transition of the model. A band wider than
+the real transition under-compensates there: 250 mA against this model only reduces the
+error to 13 mA. Set <span class="arithmatex">\(t_d\)</span> and <span class="arithmatex">\(I_b\)</span> from a measurement on the board, not from the timer
+setting: on the B-G431B-ESC1, 1200 ns set gives 1050 ns effective at 24 V.</p>
+<p>On that board (17HS19-2004S1, 1050 ns, 250 mA) in voltage drive at 12 V and a 0.5 A
+hold, the commanded voltage of phase A rises by 505 mV (<span class="arithmatex">\(2 V_d\)</span>) and that of the idle
+phase B by 253 mV (<span class="arithmatex">\(V_d\)</span> of the shared leg); the current of phase A rises from 174 to
+256 mA. The real loss at such small currents is below its full value, and the effective
+dead time is longer at 12 V (about 1.4 µs) than at 24 V: set <span class="arithmatex">\(t_d\)</span> for the operating
+voltage and the current range that matters.</p>
 <h2 id="bus-voltage-compensation">Bus voltage compensation<a class="headerlink" href="#bus-voltage-compensation" title="Permanent link">&para;</a></h2>
 <p>The controllers compute voltages in per unit of the <em>nominal</em> bus voltage. The fast loop
 converts them to duty cycles with the <em>measured</em> bus voltage (<span class="arithmatex">\(V_\mathrm{base} / V_\mathrm{bus}\)</span>, updated
@@ -2376,8 +2472,8 @@ and is reported.</p>
 </tr>
 <tr>
 <td>Flash, added (<code>-Os</code>)</td>
-<td>2160 B</td>
-<td>2400 B</td>
+<td>2128 B</td>
+<td>2084 B</td>
 </tr>
 </tbody>
 </table>

@@ -122,6 +122,9 @@ static sstep_real_t slew_current(const struct sstep_ctx* m, sstep_real_t target)
 static void publish(struct sstep_ctx* m, const struct sstep_setpoint* sp);
 static bool is_active(enum sstep_state s);
 static bool is_moving(const struct sstep_ctx* m);
+static sstep_real_t band_sign(const struct sstep_ctx* m, sstep_real_t iref);
+static void dead_time_terms(const struct sstep_ctx* m, const sstep_real_t iref[2], sstep_acc_t vbus,
+                            sstep_acc_t comp[2]);
 static void control(struct sstep_ctx* m);
 
 /* ==============================================================================
@@ -237,7 +240,8 @@ static int check_config(const struct sstep_config* cfg)
         (c->fast_loop_hz == 0U) || (c->slow_loop_hz == 0U) || (c->fast_loop_hz > VALUE_MAX) ||
         (!is_pow2(c->microsteps)) || (c->microsteps > SSTEP_CFG_MICROSTEPS_MAX) ||
         (c->current_bw_hz == 0U) || (c->i_run_ma == 0U) || (c->v_max == 0U) || (c->accel == 0U) ||
-        (c->i_slew_ma_per_ms > VALUE_MAX))
+        (c->i_slew_ma_per_ms > VALUE_MAX) || (st->dead_time_comp_ns > VALUE_MAX) ||
+        (st->dead_time_comp_band_ma > VALUE_MAX))
     {
         result = SSTEP_ERR_PARAM;
     }
@@ -257,6 +261,9 @@ static int check_config(const struct sstep_config* cfg)
              ((c->fast_loop_hz / c->slow_loop_hz) > 65535U) ||
              (c->current_bw_hz > (c->fast_loop_hz / 4U)) ||
              (st->sample_window_ticks > (st->pwm_period_ticks / 4U)) ||
+             ((st->dead_time_comp_ns != 0U) &&
+              ((st->dead_time_comp_band_ma == 0U) ||
+               (((uint64_t)st->dead_time_comp_ns * st->pwm_freq_hz) >= 250000000U))) ||
              ((st->vbus_min_mv != 0U) && (st->vbus_min_mv >= st->vbus_nominal_mv)) ||
              ((st->vbus_max_mv != 0U) && (st->vbus_max_mv <= st->vbus_nominal_mv)))
     {
@@ -475,6 +482,12 @@ static int derive(struct sstep_ctx* m)
     {
         result = SSTEP_ERR_CONFIG;
     }
+    if ((result == SSTEP_OK) && (st->dead_time_comp_ns != 0U))
+    {
+        /* t f < 1/4 (check_config): always representable */
+        (void)ratio(st->dead_time_comp_ns, st->pwm_freq_hz, 1000000000U, 1U, &m->dtc_k);
+        result = ratio(st->i_full_scale_ma, 1U, st->dead_time_comp_band_ma, 1U, &m->dtc_inv_band);
+    }
     if (result == SSTEP_OK)
     {
         result = set_currents(m, c->i_run_ma, c->i_hold_ma);
@@ -667,11 +680,41 @@ static bool is_moving(const struct sstep_ctx* m)
     return (m->mo.mode != SSTEP_MODE_HOLD);
 }
 
+static sstep_real_t band_sign(const struct sstep_ctx* m, sstep_real_t iref)
+{
+    return sstep_acc_to_real(
+        sstep_acc_clamp(sstep_gain_mul(&m->dtc_inv_band, iref), -SSTEP_ACC_ONE, SSTEP_ACC_ONE));
+}
+
+static void dead_time_terms(const struct sstep_ctx* m, const sstep_real_t iref[2], sstep_acc_t vbus,
+                            sstep_acc_t comp[2])
+{
+    sstep_acc_t vd = sstep_gain_mul_acc(&m->dtc_k, vbus);
+
+    if (m->cfg.stage.topology == SSTEP_TOPOLOGY_SHARED_LEG)
+    {
+        sstep_acc_t w = sstep_acc_scale(vd, band_sign(m, sstep_add(iref[0], iref[1])));
+        for (uint32_t k = 0U; k < 2U; k++)
+        {
+            comp[k] = sstep_acc_add(sstep_acc_scale(vd, band_sign(m, iref[k])), w);
+        }
+    }
+    else
+    {
+        for (uint32_t k = 0U; k < 2U; k++)
+        {
+            sstep_acc_t t = sstep_acc_scale(vd, band_sign(m, iref[k]));
+            comp[k] = sstep_acc_add(t, t);
+        }
+    }
+}
+
 static void control(struct sstep_ctx* m)
 {
     struct sstep_sincos sc;
     sstep_real_t iref[2];
     sstep_acc_t ff[2];
+    sstep_acc_t comp[2] = {SSTEP_ACC_ZERO, SSTEP_ACC_ZERO};
     sstep_acc_t vu[2];
     sstep_real_t e[2];
     struct sstep_bridge_out out;
@@ -691,6 +734,16 @@ static void control(struct sstep_ctx* m)
     ff[0] = sstep_acc_from_real(sstep_neg(sstep_mul(m->cur.ff, sc.sin)));
     ff[1] = sstep_acc_from_real(sstep_mul(m->cur.ff, sc.cos));
 
+    vbus = sstep_acc_clamp(sstep_gain_mul_int(&m->adc_v, (int32_t)m->vbus_raw), SSTEP_ACC_ZERO,
+                           VBUS_PU_MAX);
+    if (m->cfg.stage.dead_time_comp_ns != 0U)
+    {
+        /* the loss is part of the feed-forward, in both drive modes */
+        dead_time_terms(m, iref, vbus, comp);
+        ff[0] = sstep_acc_add(ff[0], comp[0]);
+        ff[1] = sstep_acc_add(ff[1], comp[1]);
+    }
+
     if (m->cfg.ctrl.drive_mode == SSTEP_DRIVE_CURRENT)
     {
         for (uint32_t k = 0U; k < 2U; k++)
@@ -709,8 +762,6 @@ static void control(struct sstep_ctx* m)
         }
     }
 
-    vbus = sstep_acc_clamp(sstep_gain_mul_int(&m->adc_v, (int32_t)m->vbus_raw), SSTEP_ACC_ZERO,
-                           VBUS_PU_MAX);
     if (m->bus_num != m->bus_den)
     {
         /* sampling window: the stage acts like Vbus (P - W) / P on 0 .. P - W */
@@ -734,7 +785,11 @@ static void control(struct sstep_ctx* m)
 #if (SSTEP_CFG_STALL == 1)
         if (m->stall_ticks != 0U)
         {
-            sstep_stall_observe(m, &sc, out.v);
+            /* the voltage at the coil: the compensation only makes up for the dead time */
+            sstep_acc_t v_coil[2];
+            v_coil[0] = sstep_acc_add(out.v[0], -comp[0]);
+            v_coil[1] = sstep_acc_add(out.v[1], -comp[1]);
+            sstep_stall_observe(m, &sc, v_coil);
         }
 #endif
     }

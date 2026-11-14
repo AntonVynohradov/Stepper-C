@@ -132,10 +132,10 @@
         <name>dead_time_ns</name>
         <qualifiedname>sstep_stage_cfg::dead_time_ns</qualifiedname>
         <briefdescription>
-<para>Dead time [ns]: duty levels of <ref refid="group__sstep__api_1gabf6e86e82e3fec2d39be668525125a89" kindref="member">sstep_selftest()</ref>; not compensated in the control. </para>
+<para>Dead time [ns]: duty levels of <ref refid="group__sstep__api_1gabf6e86e82e3fec2d39be668525125a89" kindref="member">sstep_selftest()</ref>. </para>
         </briefdescription>
         <detaileddescription>
-<para>0 = none. </para>
+<para>0 = none. The control uses dead_time_comp_ns instead. </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
@@ -217,6 +217,39 @@
         </inbodydescription>
         <location file="inc/sstep_ctrl.h" line="143" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="143" bodyend="-1"/>
       </memberdef>
+      <memberdef kind="variable" id="structsstep__stage__cfg_1aa0cde507c22ae8372a8ec34d37e69557" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_stage_cfg::dead_time_comp_ns</definition>
+        <argsstring></argsstring>
+        <name>dead_time_comp_ns</name>
+        <qualifiedname>sstep_stage_cfg::dead_time_comp_ns</qualifiedname>
+        <briefdescription>
+<para>Dead-time compensation [ns]: effective dead time whose loss Vbus * f * t per leg is added to the voltage request, against the current reference; 0 = off. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Below a quarter of the PWM period. ESC1: 1050. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="149" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="149" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsstep__stage__cfg_1aee4e9a0ded23e01294a416c65f179436" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t sstep_stage_cfg::dead_time_comp_band_ma</definition>
+        <argsstring></argsstring>
+        <name>dead_time_comp_band_ma</name>
+        <qualifiedname>sstep_stage_cfg::dead_time_comp_band_ma</qualifiedname>
+        <briefdescription>
+<para>Current band of the compensation [mA]: the term rises linearly from 0 to full over 0 . </para>
+        </briefdescription>
+        <detaileddescription>
+<para>dead_time_comp_band_ma of the current reference; <blockquote><para><zwj/>0 when the compensation is on. ESC1: 250. </para>
+</blockquote></para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/sstep_ctrl.h" line="154" column="14" bodyfile="inc/sstep_ctrl.h" bodystart="154" bodyend="-1"/>
+      </memberdef>
     </sectiondef>
     <briefdescription>
 <para>Power stage and measurement parameters. </para>
@@ -224,12 +257,14 @@
     <detaileddescription>
 <para>Example: B-G431B-ESC1. </para>
     </detaileddescription>
-    <location file="inc/sstep_ctrl.h" line="124" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="125" bodyend="148"/>
+    <location file="inc/sstep_ctrl.h" line="124" column="1" bodyfile="inc/sstep_ctrl.h" bodystart="125" bodyend="158"/>
     <listofallmembers>
       <member refid="structsstep__stage__cfg_1a3ac66eeaef5cebcdce32974f645343c8" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>adc_full</name></member>
       <member refid="structsstep__stage__cfg_1a106fe2517131c402938eb6e6ddda78c3" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>adc_i_span</name></member>
       <member refid="structsstep__stage__cfg_1a0b4f4977476ac4ab0f90c54f57f4d9b0" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>adc_i_zero</name></member>
       <member refid="structsstep__stage__cfg_1aa48357c810835eea50baa3b5c8b81b73" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>adc_vbus_mv_full</name></member>
+      <member refid="structsstep__stage__cfg_1aee4e9a0ded23e01294a416c65f179436" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>dead_time_comp_band_ma</name></member>
+      <member refid="structsstep__stage__cfg_1aa0cde507c22ae8372a8ec34d37e69557" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>dead_time_comp_ns</name></member>
       <member refid="structsstep__stage__cfg_1a38ddcd9a31304b7ed2267a5d859b8d0f" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>dead_time_ns</name></member>
       <member refid="structsstep__stage__cfg_1a8d04fa83604ebb5c1afb9883a5b16d3b" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>i_full_scale_ma</name></member>
       <member refid="structsstep__stage__cfg_1a743981d8853efa99cbe0a1f875bfc1a8" prot="public" virt="non-virtual"><scope>sstep_stage_cfg</scope><name>i_trip_ma</name></member>

@@ -62,9 +62,11 @@
 
 | Type | Name |
 | ---: | :--- |
+|  [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) | [**band\_sign**](#function-band_sign) (const struct [**sstep\_ctx**](structsstep__ctx.md) \* m, [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) iref) <br>_Direction of a leg current for the dead-time compensation, from the reference: clamp(iref / I\_band, -1, 1)._  |
 |  int | [**check\_config**](#function-check_config) (const struct [**sstep\_config**](structsstep__config.md) \* cfg) <br>_Validate a configuration field by field and as a whole._  |
 |  int | [**check\_stall**](#function-check_stall) (const struct [**sstep\_config**](structsstep__config.md) \* cfg) <br>_Validate the stall detection fields (ignored when stall\_time\_ms is 0)._  |
 |  void | [**control**](#function-control) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Current control, power stage and PWM write of one fast loop period._  |
+|  void | [**dead\_time\_terms**](#function-dead_time_terms) (const struct [**sstep\_ctx**](structsstep__ctx.md) \* m, const [**sstep\_real\_t**](group__sstep__math.md#typedef-sstep_real_t) iref, [**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t) vbus, [**sstep\_acc\_t**](group__sstep__math.md#typedef-sstep_acc_t) comp) <br>_Dead-time loss of the legs, as phase voltages to add to the request._  |
 |  int | [**derive**](#function-derive) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Derive gains, scaling and limits from the (validated) configuration._  |
 |  void | [**derive\_slew**](#function-derive_slew) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Current slew per slow period [pu], at least one mA; 0 = off._  |
 |  void | [**derive\_window**](#function-derive_window) (struct [**sstep\_ctx**](structsstep__ctx.md) \* m) <br>_Sampling window: the legs may use the compare range 0 ._  |
@@ -125,6 +127,27 @@
 
 
 
+### function band\_sign 
+
+_Direction of a leg current for the dead-time compensation, from the reference: clamp(iref / I\_band, -1, 1)._ 
+```C++
+static sstep_real_t band_sign (
+    const struct sstep_ctx * m,
+    sstep_real_t iref
+) 
+```
+
+
+
+The reference, not the measurement: no ADC noise. 
+
+
+        
+
+<hr>
+
+
+
 ### function check\_config 
 
 _Validate a configuration field by field and as a whole._ 
@@ -168,6 +191,39 @@ static void control (
 
 
 
+
+<hr>
+
+
+
+### function dead\_time\_terms 
+
+_Dead-time loss of the legs, as phase voltages to add to the request._ 
+```C++
+static void dead_time_terms (
+    const struct sstep_ctx * m,
+    const sstep_real_t iref,
+    sstep_acc_t vbus,
+    sstep_acc_t comp
+) 
+```
+
+
+
+Every leg loses Vd = Vbus t f against the direction of its current. Shared leg: phase A is leg A - leg W and W carries -(iA + iB), so A gets Vd (s(iA) + s(iA + iB)); full bridge: both legs of a phase carry its current, 2 Vd s(i). 
+
+**Parameters:**
+
+
+* `m` Driver state; dead\_time\_comp\_ns != 0. 
+* `iref` Current references [pu]. 
+* `vbus` Measured bus voltage [pu of V\_base], without the sampling-window scaling. 
+* `comp` Result [pu of V\_base]. 
+
+
+
+
+        
 
 <hr>
 

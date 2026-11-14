@@ -2337,7 +2337,7 @@ standstill), <code>SSTEP_EVENT_SELFTEST_DONE</code> (2, <code>sstep_selftest()</
 </tr>
 <tr>
 <td><code>struct sstep_stage_cfg</code></td>
-<td><code>topology</code>, <code>vbus_nominal_mv</code>, <code>vbus_min_mv</code>, <code>vbus_max_mv</code>, <code>i_full_scale_ma</code>, <code>i_trip_ma</code>, <code>pwm_period_ticks</code>, <code>pwm_freq_hz</code>, <code>dead_time_ns</code>, <code>adc_i_zero</code>, <code>adc_i_span</code>, <code>adc_vbus_mv_full</code>, <code>adc_full</code>, <code>sample_window_ticks</code> (since 1.3.0)</td>
+<td><code>topology</code>, <code>vbus_nominal_mv</code>, <code>vbus_min_mv</code>, <code>vbus_max_mv</code>, <code>i_full_scale_ma</code>, <code>i_trip_ma</code>, <code>pwm_period_ticks</code>, <code>pwm_freq_hz</code>, <code>dead_time_ns</code>, <code>adc_i_zero</code>, <code>adc_i_span</code>, <code>adc_vbus_mv_full</code>, <code>adc_full</code>, <code>sample_window_ticks</code> (since 1.3.0), <code>dead_time_comp_ns</code>, <code>dead_time_comp_band_ma</code> (since 1.5.0)</td>
 </tr>
 <tr>
 <td><code>struct sstep_ctrl_cfg</code></td>
@@ -2436,11 +2436,11 @@ standstill), <code>SSTEP_EVENT_SELFTEST_DONE</code> (2, <code>sstep_selftest()</
 <a href="../motor-control/#stall-detection">Stall detection</a>.</p>
 <h3 id="driver-instance">Driver instance<a class="headerlink" href="#driver-instance" title="Permanent link">&para;</a></h3>
 <p><code>struct sstep</code> is an opaque array of <code>SSTEP_INSTANCE_WORDS</code> 64-bit words (on Cortex-M4
-496 B fixed point, 528 B float; on 64-bit hosts 544 B and 576 B; 48 B less each with
+512 B fixed point, 544 B float; on 64-bit hosts 544 B and 576 B; 48 B less each with
 <code>SSTEP_CFG_SELFTEST = 0</code>, 80 B less with <code>SSTEP_CFG_STALL = 0</code>, 96 B for the float backend
 on 64-bit hosts). Allocate it, pass its
 address, never read or write its content. <code>SSTEP_CONFIG_BYTES</code> is the size of the
-configuration copy (156 B with 32-bit pointers, 192 B with 64-bit pointers) and
+configuration copy (164 B with 32-bit pointers, 192 B with 64-bit pointers) and
 <code>SSTEP_STATE_BYTES</code> the size of the private state behind it.</p>
 <h2 id="functions-ssteph">Functions — <code>sstep.h</code><a class="headerlink" href="#functions-ssteph" title="Permanent link">&para;</a></h2>
 <p>All functions return a status code. Positions are in microsteps, velocities in

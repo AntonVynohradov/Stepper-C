@@ -138,26 +138,28 @@ struct sstep_ctx
 {
     struct sstep_config cfg; 
     /* Constants derived by sstep_init() */
-    struct sstep_gain kp;       
-    struct sstep_gain ki;       
-    struct sstep_gain kb;       
-    struct sstep_gain r_pu;     
-    struct sstep_gain adc_i;    
-    struct sstep_gain adc_v;    
-    struct sstep_gain ff_gain;  
-    sstep_real_t i_run;         
-    sstep_real_t i_hold;        
-    uint16_t i_trip_counts;     
-    uint16_t vbus_min_raw;      
-    uint16_t vbus_max_raw;      
-    uint16_t ratio;             
-    uint32_t hold_ticks;        
-    uint8_t angle_shift;        
-    uint16_t period_eff;        
-    uint16_t bus_num;           
-    uint16_t bus_den;           
-    struct sstep_gain bus_frac; 
-    sstep_real_t i_slew;        
+    struct sstep_gain kp;           
+    struct sstep_gain ki;           
+    struct sstep_gain kb;           
+    struct sstep_gain r_pu;         
+    struct sstep_gain adc_i;        
+    struct sstep_gain adc_v;        
+    struct sstep_gain ff_gain;      
+    sstep_real_t i_run;             
+    sstep_real_t i_hold;            
+    uint16_t i_trip_counts;         
+    uint16_t vbus_min_raw;          
+    uint16_t vbus_max_raw;          
+    uint16_t ratio;                 
+    uint32_t hold_ticks;            
+    uint8_t angle_shift;            
+    uint16_t period_eff;            
+    uint16_t bus_num;               
+    uint16_t bus_den;               
+    struct sstep_gain bus_frac;     
+    sstep_real_t i_slew;            
+    struct sstep_gain dtc_k;        
+    struct sstep_gain dtc_inv_band; 
 #if (SSTEP_CFG_STALL == 1)
     /* Stall detection constants, sstep_stall_*() */
     struct sstep_gain emf_a;     

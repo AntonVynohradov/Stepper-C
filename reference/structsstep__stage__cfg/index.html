@@ -1303,6 +1303,28 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#variable-dead_time_comp_band_ma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable dead_time_comp_band_ma
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-dead_time_comp_ns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable dead_time_comp_ns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#variable-dead_time_ns" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1467,7 +1489,15 @@
 </tr>
 <tr>
 <td style="text-align: right;">uint32_t</td>
-<td style="text-align: left;"><a href="#variable-dead_time_ns"><strong>dead_time_ns</strong></a>  <br><em>Dead time [ns]: duty levels of</em> <a href="../group__sstep__api/#function-sstep_selftest"><em><strong>sstep_selftest()</strong></em></a> <em>; not compensated in the control.</em></td>
+<td style="text-align: left;"><a href="#variable-dead_time_comp_band_ma"><strong>dead_time_comp_band_ma</strong></a>  <br><em>Current band of the compensation [mA]: the term rises linearly from 0 to full over 0 .</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint32_t</td>
+<td style="text-align: left;"><a href="#variable-dead_time_comp_ns"><strong>dead_time_comp_ns</strong></a>  <br><em>Dead-time compensation [ns]: effective dead time whose loss Vbus * f * t per leg is added to the voltage request, against the current reference; 0 = off.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint32_t</td>
+<td style="text-align: left;"><a href="#variable-dead_time_ns"><strong>dead_time_ns</strong></a>  <br><em>Dead time [ns]: duty levels of</em> <a href="../group__sstep__api/#function-sstep_selftest"><em><strong>sstep_selftest()</strong></em></a> <em>.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">uint32_t</td>
@@ -1534,66 +1564,83 @@
 </code></pre></div></p>
 <hr>
 
-<h3 id="variable-dead_time_ns">variable dead_time_ns<a class="headerlink" href="#variable-dead_time_ns" title="Permanent link">&para;</a></h3>
-<p><em>Dead time [ns]: duty levels of</em> <a href="../group__sstep__api/#function-sstep_selftest"><em><strong>sstep_selftest()</strong></em></a> <em>; not compensated in the control.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">dead_time_ns</span><span class="p">;</span>
+<h3 id="variable-dead_time_comp_band_ma">variable dead_time_comp_band_ma<a class="headerlink" href="#variable-dead_time_comp_band_ma" title="Permanent link">&para;</a></h3>
+<p><em>Current band of the compensation [mA]: the term rises linearly from 0 to full over 0 .</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">dead_time_comp_band_ma</span><span class="p">;</span>
 </code></pre></div></p>
-<p>0 = none. </p>
+<p>dead_time_comp_band_ma of the current reference; </p>
+<blockquote>
+<p>0 when the compensation is on. ESC1: 250. </p>
+</blockquote>
+<hr>
+
+<h3 id="variable-dead_time_comp_ns">variable dead_time_comp_ns<a class="headerlink" href="#variable-dead_time_comp_ns" title="Permanent link">&para;</a></h3>
+<p><em>Dead-time compensation [ns]: effective dead time whose loss Vbus * f * t per leg is added to the voltage request, against the current reference; 0 = off.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">dead_time_comp_ns</span><span class="p">;</span>
+</code></pre></div></p>
+<p>Below a quarter of the PWM period. ESC1: 1050. </p>
+<hr>
+
+<h3 id="variable-dead_time_ns">variable dead_time_ns<a class="headerlink" href="#variable-dead_time_ns" title="Permanent link">&para;</a></h3>
+<p><em>Dead time [ns]: duty levels of</em> <a href="../group__sstep__api/#function-sstep_selftest"><em><strong>sstep_selftest()</strong></em></a> <em>.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">dead_time_ns</span><span class="p">;</span>
+</code></pre></div></p>
+<p>0 = none. The control uses dead_time_comp_ns instead. </p>
 <hr>
 
 <h3 id="variable-i_full_scale_ma">variable i_full_scale_ma<a class="headerlink" href="#variable-i_full_scale_ma" title="Permanent link">&para;</a></h3>
 <p><em>Phase current at ADC full scale [mA]; base of the per-unit current.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">i_full_scale_ma</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">i_full_scale_ma</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-i_trip_ma">variable i_trip_ma<a class="headerlink" href="#variable-i_trip_ma" title="Permanent link">&para;</a></h3>
 <p><em>Overcurrent trip [mA]; must not exceed i_full_scale_ma.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">i_trip_ma</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">i_trip_ma</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-pwm_freq_hz">variable pwm_freq_hz<a class="headerlink" href="#variable-pwm_freq_hz" title="Permanent link">&para;</a></h3>
 <p><em>PWM frequency [Hz]; with dead_time_ns the dead-time loss of the</em> <a href="../group__sstep__api/#function-sstep_selftest"><em><strong>sstep_selftest()</strong></em></a> <em>levels.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">pwm_freq_hz</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">pwm_freq_hz</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-pwm_period_ticks">variable pwm_period_ticks<a class="headerlink" href="#variable-pwm_period_ticks" title="Permanent link">&para;</a></h3>
 <p><em>Compare value for 100 % duty cycle.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">pwm_period_ticks</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">pwm_period_ticks</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-sample_window_ticks">variable sample_window_ticks<a class="headerlink" href="#variable-sample_window_ticks" title="Permanent link">&para;</a></h3>
 <p><em>Compare ticks of every period that each leg spends on its low-side switch at least, for low-side current sensing; 0 = none (compare up to pwm_period_ticks).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">sample_window_ticks</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">sample_window_ticks</span><span class="p">;</span>
 </code></pre></div></p>
 <p>At most pwm_period_ticks / 4. The voltage limit shrinks by the same fraction. </p>
 <hr>
 
 <h3 id="variable-topology">variable topology<a class="headerlink" href="#variable-topology" title="Permanent link">&para;</a></h3>
 <p><em>Power stage topology.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">sstep_topology</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">topology</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">sstep_topology</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">topology</span><span class="p">;</span>
 </code></pre></div></p>
 <p>ESC1: SSTEP_TOPOLOGY_SHARED_LEG. </p>
 <hr>
 
 <h3 id="variable-vbus_max_mv">variable vbus_max_mv<a class="headerlink" href="#variable-vbus_max_mv" title="Permanent link">&para;</a></h3>
 <p><em>Overvoltage trip [mV]; 0 = disabled.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">vbus_max_mv</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">vbus_max_mv</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-vbus_min_mv">variable vbus_min_mv<a class="headerlink" href="#variable-vbus_min_mv" title="Permanent link">&para;</a></h3>
 <p><em>Undervoltage trip [mV]; 0 = disabled.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">vbus_min_mv</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">vbus_min_mv</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-vbus_nominal_mv">variable vbus_nominal_mv<a class="headerlink" href="#variable-vbus_nominal_mv" title="Permanent link">&para;</a></h3>
 <p><em>Nominal bus voltage [mV]; base of the per-unit voltage.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">vbus_nominal_mv</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sstep_stage_cfg</span><span class="o">::</span><span class="n">vbus_nominal_mv</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 

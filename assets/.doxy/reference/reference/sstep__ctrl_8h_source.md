@@ -112,6 +112,9 @@ struct sstep_stage_cfg
     uint32_t adc_vbus_mv_full;    
     uint16_t adc_full;            
     uint16_t sample_window_ticks; 
+    /* since 1.5.0: appended, so that positional initialisers of 1.4 stay valid */
+    uint32_t dead_time_comp_ns;      
+    uint32_t dead_time_comp_band_ma; 
 };
 
 enum sstep_drive_mode
@@ -210,11 +213,11 @@ struct sstep_status
 #define SSTEP_STATE_BYTES (240U + SSTEP_STALL_BYTES + SSTEP_SELFTEST_BYTES)
 #endif
 #else
-#define SSTEP_CONFIG_BYTES 156U
+#define SSTEP_CONFIG_BYTES 164U
 #if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
-#define SSTEP_STATE_BYTES (212U + SSTEP_STALL_BYTES + SSTEP_SELFTEST_BYTES)
+#define SSTEP_STATE_BYTES (220U + SSTEP_STALL_BYTES + SSTEP_SELFTEST_BYTES)
 #else
-#define SSTEP_STATE_BYTES (244U + SSTEP_STALL_BYTES + SSTEP_SELFTEST_BYTES)
+#define SSTEP_STATE_BYTES (252U + SSTEP_STALL_BYTES + SSTEP_SELFTEST_BYTES)
 #endif
 #endif
 

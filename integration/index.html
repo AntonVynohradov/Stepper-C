@@ -1468,8 +1468,9 @@
   period.</li>
 <li>Load the compare values with <strong>preload</strong> (shadow registers) so that <code>pwm_write()</code>
   takes effect at the next period boundary, not in the middle of a period.</li>
-<li>Dead time is inserted by the timer or the gate driver; the library does not
-  compensate it in this version.</li>
+<li>Dead time is inserted by the timer or the gate driver. The library compensates the
+  voltage it costs when <code>dead_time_comp_ns</code> is set: measure the effective dead time on the
+  board (<a href="../motor-control/#dead-time-compensation">Dead-time compensation</a>).</li>
 <li><code>output_enable(false)</code> must put <strong>every</strong> leg in high impedance (for example the
   timer's main output enable bit and the gate drivers' enable pins), not only set
   50 % duty.</li>

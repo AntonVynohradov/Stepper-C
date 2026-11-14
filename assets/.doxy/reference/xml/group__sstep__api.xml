@@ -75,7 +75,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="110" column="5" bodyfile="src/sstep_ctrl.c" bodystart="797" bodyend="822" declfile="sstep.h" declline="110" declcolumn="5"/>
+        <location file="sstep.h" line="110" column="5" bodyfile="src/sstep_ctrl.c" bodystart="864" bodyend="889" declfile="sstep.h" declline="110" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1ga3f592ef6f7e95b2c4b0792f113eae5ac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -114,7 +114,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="120" column="5" bodyfile="src/sstep_ctrl.c" bodystart="824" bodyend="889" declfile="sstep.h" declline="120" declcolumn="5"/>
+        <location file="sstep.h" line="120" column="5" bodyfile="src/sstep_ctrl.c" bodystart="891" bodyend="956" declfile="sstep.h" declline="120" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gabf6e86e82e3fec2d39be668525125a89" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -195,7 +195,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="144" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1414" bodyend="1458" declfile="sstep.h" declline="144" declcolumn="5"/>
+        <location file="sstep.h" line="144" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1481" bodyend="1525" declfile="sstep.h" declline="144" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1ga296ffb294291431f36e14fc306c20027" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -233,7 +233,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="151" column="5" bodyfile="src/sstep_ctrl.c" bodystart="891" bodyend="925" declfile="sstep.h" declline="151" declcolumn="5"/>
+        <location file="sstep.h" line="151" column="5" bodyfile="src/sstep_ctrl.c" bodystart="958" bodyend="992" declfile="sstep.h" declline="151" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1ga8c3b6798f83c32337a21d4ccdd61239b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -283,7 +283,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="162" column="5" bodyfile="src/sstep_ctrl.c" bodystart="927" bodyend="1020" declfile="sstep.h" declline="162" declcolumn="5"/>
+        <location file="sstep.h" line="162" column="5" bodyfile="src/sstep_ctrl.c" bodystart="994" bodyend="1087" declfile="sstep.h" declline="162" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gab80d582d293872a78abc1a1a35e8e8ef" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -321,7 +321,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="170" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1022" bodyend="1138" declfile="sstep.h" declline="170" declcolumn="5"/>
+        <location file="sstep.h" line="170" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1089" bodyend="1205" declfile="sstep.h" declline="170" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gab5ac3f4056af2b982b8131016df0541e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -372,7 +372,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="179" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1140" bodyend="1163" declfile="sstep.h" declline="179" declcolumn="5"/>
+        <location file="sstep.h" line="179" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1207" bodyend="1230" declfile="sstep.h" declline="179" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gacc99b6a8006f7c7f950133873a5a8fce" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -422,7 +422,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="187" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1165" bodyend="1191" declfile="sstep.h" declline="187" declcolumn="5"/>
+        <location file="sstep.h" line="187" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1232" bodyend="1258" declfile="sstep.h" declline="187" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gaa21dff174e881ddaddd22b9bf334f3f8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -473,7 +473,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="196" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1193" bodyend="1221" declfile="sstep.h" declline="196" declcolumn="5"/>
+        <location file="sstep.h" line="196" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1260" bodyend="1288" declfile="sstep.h" declline="196" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1ga41ae3f6b6cc322b50c3e3884d48dd7a1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -511,7 +511,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="203" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1223" bodyend="1246" declfile="sstep.h" declline="203" declcolumn="5"/>
+        <location file="sstep.h" line="203" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1290" bodyend="1313" declfile="sstep.h" declline="203" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1ga17aff99dbb74c27b0eb1995024c28e71" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -562,7 +562,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="211" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1248" bodyend="1274" declfile="sstep.h" declline="211" declcolumn="5"/>
+        <location file="sstep.h" line="211" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1315" bodyend="1341" declfile="sstep.h" declline="211" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1ga75cb79da6deda7b271d7a01d70f5d718" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -625,7 +625,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="220" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1276" bodyend="1294" declfile="sstep.h" declline="220" declcolumn="5"/>
+        <location file="sstep.h" line="220" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1343" bodyend="1361" declfile="sstep.h" declline="220" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gae9224e0f9e8f1822529ef015bb88f382" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -699,7 +699,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="231" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1296" bodyend="1314" declfile="sstep.h" declline="231" declcolumn="5"/>
+        <location file="sstep.h" line="231" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1363" bodyend="1381" declfile="sstep.h" declline="231" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gaafe3bb709aaa93b20884f9e7f6e31498" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -749,7 +749,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="240" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1316" bodyend="1338" declfile="sstep.h" declline="240" declcolumn="5"/>
+        <location file="sstep.h" line="240" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1383" bodyend="1405" declfile="sstep.h" declline="240" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1gafff498925b2f3c0de622702a2f181b9b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -787,7 +787,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="247" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1340" bodyend="1359" declfile="sstep.h" declline="247" declcolumn="5"/>
+        <location file="sstep.h" line="247" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1407" bodyend="1426" declfile="sstep.h" declline="247" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__sstep__api_1ga1568aad455503ed6e062cf7048bf01ba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -837,7 +837,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="sstep.h" line="255" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1361" bodyend="1412" declfile="sstep.h" declline="255" declcolumn="5"/>
+        <location file="sstep.h" line="255" column="5" bodyfile="src/sstep_ctrl.c" bodystart="1428" bodyend="1479" declfile="sstep.h" declline="255" declcolumn="5"/>
       </memberdef>
     </sectiondef>
     <briefdescription>

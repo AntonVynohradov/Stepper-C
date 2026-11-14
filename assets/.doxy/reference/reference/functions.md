@@ -12,6 +12,7 @@
 
 ## b
 
+* **band\_sign** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 * **bit\_length** ([**sstep\_math.c**](sstep__math_8c.md))
 
 
@@ -25,6 +26,7 @@
 
 ## d
 
+* **dead\_time\_terms** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 * **derive** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 * **derive\_slew** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))
 * **derive\_window** ([**sstep\_ctrl.c**](sstep__ctrl_8c.md))

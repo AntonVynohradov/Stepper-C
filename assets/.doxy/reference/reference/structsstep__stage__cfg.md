@@ -40,7 +40,9 @@ _Power stage and measurement parameters._ [More...](#detailed-description)
 |  int32\_t | [**adc\_i\_span**](#variable-adc_i_span)  <br>_Counts from 0 A to +i\_full\_scale\_ma; negative for an inverting amplifier._  |
 |  uint16\_t | [**adc\_i\_zero**](#variable-adc_i_zero)  <br>_Current ADC reading at 0 A [counts]._  |
 |  uint32\_t | [**adc\_vbus\_mv\_full**](#variable-adc_vbus_mv_full)  <br>_Bus voltage at ADC reading adc\_full [mV]._  |
-|  uint32\_t | [**dead\_time\_ns**](#variable-dead_time_ns)  <br>_Dead time [ns]: duty levels of_ [_**sstep\_selftest()**_](group__sstep__api.md#function-sstep_selftest) _; not compensated in the control._ |
+|  uint32\_t | [**dead\_time\_comp\_band\_ma**](#variable-dead_time_comp_band_ma)  <br>_Current band of the compensation [mA]: the term rises linearly from 0 to full over 0 ._  |
+|  uint32\_t | [**dead\_time\_comp\_ns**](#variable-dead_time_comp_ns)  <br>_Dead-time compensation [ns]: effective dead time whose loss Vbus \* f \* t per leg is added to the voltage request, against the current reference; 0 = off._  |
+|  uint32\_t | [**dead\_time\_ns**](#variable-dead_time_ns)  <br>_Dead time [ns]: duty levels of_ [_**sstep\_selftest()**_](group__sstep__api.md#function-sstep_selftest) _._ |
 |  uint32\_t | [**i\_full\_scale\_ma**](#variable-i_full_scale_ma)  <br>_Phase current at ADC full scale [mA]; base of the per-unit current._  |
 |  uint32\_t | [**i\_trip\_ma**](#variable-i_trip_ma)  <br>_Overcurrent trip [mA]; must not exceed i\_full\_scale\_ma._  |
 |  uint32\_t | [**pwm\_freq\_hz**](#variable-pwm_freq_hz)  <br>_PWM frequency [Hz]; with dead\_time\_ns the dead-time loss of the_ [_**sstep\_selftest()**_](group__sstep__api.md#function-sstep_selftest) _levels._ |
@@ -162,16 +164,54 @@ uint32_t sstep_stage_cfg::adc_vbus_mv_full;
 
 
 
+### variable dead\_time\_comp\_band\_ma 
+
+_Current band of the compensation [mA]: the term rises linearly from 0 to full over 0 ._ 
+```C++
+uint32_t sstep_stage_cfg::dead_time_comp_band_ma;
+```
+
+
+
+dead\_time\_comp\_band\_ma of the current reference; 
+> 0 when the compensation is on. ESC1: 250. 
+
+
+
+        
+
+<hr>
+
+
+
+### variable dead\_time\_comp\_ns 
+
+_Dead-time compensation [ns]: effective dead time whose loss Vbus \* f \* t per leg is added to the voltage request, against the current reference; 0 = off._ 
+```C++
+uint32_t sstep_stage_cfg::dead_time_comp_ns;
+```
+
+
+
+Below a quarter of the PWM period. ESC1: 1050. 
+
+
+        
+
+<hr>
+
+
+
 ### variable dead\_time\_ns 
 
-_Dead time [ns]: duty levels of_ [_**sstep\_selftest()**_](group__sstep__api.md#function-sstep_selftest) _; not compensated in the control._
+_Dead time [ns]: duty levels of_ [_**sstep\_selftest()**_](group__sstep__api.md#function-sstep_selftest) _._
 ```C++
 uint32_t sstep_stage_cfg::dead_time_ns;
 ```
 
 
 
-0 = none. 
+0 = none. The control uses dead\_time\_comp\_ns instead. 
 
 
         

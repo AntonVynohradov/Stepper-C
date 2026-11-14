@@ -47,6 +47,8 @@ _Driver state behind the opaque_ [_**sstep**_](structsstep.md) _._[More...](#det
 |  struct [**sstep\_config**](structsstep__config.md) | [**cfg**](#variable-cfg)  <br>_Copy of the configuration._  |
 |  uint16\_t | [**compare**](#variable-compare)  <br>_Last compare values._  |
 |  struct [**sstep\_setpoint**](structsstep__setpoint.md) | [**cur**](#variable-cur)  <br>_Setpoint in use._  |
+|  struct [**sstep\_gain**](structsstep__gain.md) | [**dtc\_inv\_band**](#variable-dtc_inv_band)  <br>_I\_base / I\_band of the compensation._  |
+|  struct [**sstep\_gain**](structsstep__gain.md) | [**dtc\_k**](#variable-dtc_k)  <br>_Dead-time compensation: t\_comp \* f\_pwm (loss per leg relative to the bus); used when dead\_time\_comp\_ns != 0._  |
 |  volatile uint16\_t | [**faults**](#variable-faults)  <br>_Active faults._  |
 |  struct [**sstep\_gain**](structsstep__gain.md) | [**ff\_gain**](#variable-ff_gain)  <br>_Feed-forward per microstep/s [pu]._  |
 |  bool | [**hold\_active**](#variable-hold_active)  <br>_Hold current applied._  |
@@ -276,6 +278,34 @@ uint16_t sstep_ctx::compare[SSTEP_LEGS_MAX];
 _Setpoint in use._ 
 ```C++
 struct sstep_setpoint sstep_ctx::cur;
+```
+
+
+
+
+<hr>
+
+
+
+### variable dtc\_inv\_band 
+
+_I\_base / I\_band of the compensation._ 
+```C++
+struct sstep_gain sstep_ctx::dtc_inv_band;
+```
+
+
+
+
+<hr>
+
+
+
+### variable dtc\_k 
+
+_Dead-time compensation: t\_comp \* f\_pwm (loss per leg relative to the bus); used when dead\_time\_comp\_ns != 0._ 
+```C++
+struct sstep_gain sstep_ctx::dtc_k;
 ```
 
 

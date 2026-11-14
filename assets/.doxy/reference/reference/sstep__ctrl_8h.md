@@ -105,11 +105,11 @@
 
 | Type | Name |
 | ---: | :--- |
-| define  | [**SSTEP\_CONFIG\_BYTES**](sstep__ctrl_8h.md#define-sstep_config_bytes)  `156U`<br> |
+| define  | [**SSTEP\_CONFIG\_BYTES**](sstep__ctrl_8h.md#define-sstep_config_bytes)  `164U`<br> |
 | define  | [**SSTEP\_INSTANCE\_WORDS**](sstep__ctrl_8h.md#define-sstep_instance_words)  `((SSTEP\_CONFIG\_BYTES + SSTEP\_STATE\_BYTES + 7U) / 8U)`<br>_Size of_ [_**sstep**_](structsstep.md) _in 64-bit words._ |
 | define  | [**SSTEP\_SELFTEST\_BYTES**](sstep__ctrl_8h.md#define-sstep_selftest_bytes)  `48U`<br>_Bytes of the configuration copy at the start of the instance and of the private driver state that follows it, for 32-bit (Cortex-M) and 64-bit pointers._  |
 | define  | [**SSTEP\_STALL\_BYTES**](sstep__ctrl_8h.md#define-sstep_stall_bytes)  `80U`<br>_State of the stall detection (_ [_**SSTEP\_CFG\_STALL**_](group__sstep__config.md#define-sstep_cfg_stall) _)._ |
-| define  | [**SSTEP\_STATE\_BYTES**](sstep__ctrl_8h.md#define-sstep_state_bytes)  `(212U + SSTEP\_STALL\_BYTES + SSTEP\_SELFTEST\_BYTES)`<br> |
+| define  | [**SSTEP\_STATE\_BYTES**](sstep__ctrl_8h.md#define-sstep_state_bytes)  `(220U + SSTEP\_STALL\_BYTES + SSTEP\_SELFTEST\_BYTES)`<br> |
 
 ## Public Types Documentation
 
@@ -277,7 +277,7 @@ Called from [**sstep\_fast\_loop()**](group__sstep__api.md#function-sstep_fast_l
 ### define SSTEP\_CONFIG\_BYTES 
 
 ```C++
-#define SSTEP_CONFIG_BYTES `156U`
+#define SSTEP_CONFIG_BYTES `164U`
 ```
 
 
@@ -336,7 +336,7 @@ _State of the stall detection (_ [_**SSTEP\_CFG\_STALL**_](group__sstep__config.
 ### define SSTEP\_STATE\_BYTES 
 
 ```C++
-#define SSTEP_STATE_BYTES `(212U + SSTEP_STALL_BYTES + SSTEP_SELFTEST_BYTES)`
+#define SSTEP_STATE_BYTES `(220U + SSTEP_STALL_BYTES + SSTEP_SELFTEST_BYTES)`
 ```
 
 

@@ -70,6 +70,8 @@
     <member refid="structsstep__ctx_1a6282012ddc779b32dad2fff09aea02d6" kind="variable"><name>bus_den</name></member>
     <member refid="structsstep__ctx_1a465c18cd9c41e6117840fa12685bd090" kind="variable"><name>bus_frac</name></member>
     <member refid="structsstep__ctx_1a58fa1f698790c1170af71ebf6a75d672" kind="variable"><name>i_slew</name></member>
+    <member refid="structsstep__ctx_1a5f2d2b853b65fa2e15f7b55119b95929" kind="variable"><name>dtc_k</name></member>
+    <member refid="structsstep__ctx_1aaaf9ff16c05f97e94bad3a7680e99814" kind="variable"><name>dtc_inv_band</name></member>
     <member refid="structsstep__ctx_1a9b6ace7a3294a768d244e4a00d428b15" kind="variable"><name>sp</name></member>
     <member refid="structsstep__ctx_1aac285fd52795b36c9e83f80427f82eab" kind="variable"><name>sp_active</name></member>
     <member refid="structsstep__ctx_1ab258c071b68ef99090b0b7255f42e3cb" kind="variable"><name>sp_pending</name></member>
@@ -142,6 +144,8 @@
     <member refid="structsstep__stage__cfg_1aa48357c810835eea50baa3b5c8b81b73" kind="variable"><name>adc_vbus_mv_full</name></member>
     <member refid="structsstep__stage__cfg_1a3ac66eeaef5cebcdce32974f645343c8" kind="variable"><name>adc_full</name></member>
     <member refid="structsstep__stage__cfg_1af4c27e889d5d3db2edaf8042135b95ce" kind="variable"><name>sample_window_ticks</name></member>
+    <member refid="structsstep__stage__cfg_1aa0cde507c22ae8372a8ec34d37e69557" kind="variable"><name>dead_time_comp_ns</name></member>
+    <member refid="structsstep__stage__cfg_1aee4e9a0ded23e01294a416c65f179436" kind="variable"><name>dead_time_comp_band_ma</name></member>
   </compound>
   <compound refid="structsstep__status" kind="struct"><name>sstep_status</name>
     <member refid="structsstep__status_1a85458678f815241c72025e8f66e88c2d" kind="variable"><name>state</name></member>
@@ -246,6 +250,8 @@
     <member refid="sstep__ctrl_8c_1ac22829c55eff88b7e656930b20a46767" kind="function"><name>publish</name></member>
     <member refid="sstep__ctrl_8c_1a9c7f37837400705fc6063c4f68de10dc" kind="function"><name>is_active</name></member>
     <member refid="sstep__ctrl_8c_1a1dfa2289eaca533ff5997ae8d8bbee1f" kind="function"><name>is_moving</name></member>
+    <member refid="sstep__ctrl_8c_1a230f22863c82a55cfd43097440e14c1f" kind="function"><name>band_sign</name></member>
+    <member refid="sstep__ctrl_8c_1a032fc64ad7367890d4ae54ad16ca070d" kind="function"><name>dead_time_terms</name></member>
     <member refid="sstep__ctrl_8c_1a020f38072151e100c3223632862a602a" kind="function"><name>control</name></member>
     <member refid="group__sstep__api_1ga860a37e9ab847bb02f4102e98ea92e1c" kind="function"><name>sstep_init</name></member>
     <member refid="group__sstep__api_1ga3f592ef6f7e95b2c4b0792f113eae5ac" kind="function"><name>sstep_enable</name></member>
