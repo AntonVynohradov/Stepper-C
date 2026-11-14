@@ -47,10 +47,10 @@ Measured on Cortex-M4 (GCC 15.2, `-Os`):
 
 | | Fixed point | Float |
 | --- | --- | --- |
-| RAM per motor | 496 B | 528 B |
-| Flash | 11032 B | 11814 B |
-| Flash without self-test and stall detection | 7504 B | 8054 B |
-| Worst-case stack, fast loop / slow loop | 216 B / 152 B | 128 B / 156 B |
+| RAM per motor | 512 B | 544 B |
+| Flash | 11440 B | 12258 B |
+| Flash without self-test and stall detection | 7964 B | 8822 B |
+| Worst-case stack, fast loop / slow loop | 240 B / 152 B | 144 B / 156 B |
 
 Closed loop on the motor model (17HS19-2004S1, 24 V, 20 kHz, 1 kHz current bandwidth):
 a 2 A current step settles in 0.40 ms with 1.1 % overshoot; a 6400-microstep move ends on
@@ -72,7 +72,7 @@ numeric backends and both topologies.
   to 46 rpm at 1.5 A, the self-test; the sampling window and the current slew came from it
 - [x] Self-test of the power stage and the wiring, bus voltage check at the enable,
   shared-leg overcurrent trip ([Protection](https://antonvynohradov.github.io/Stepper-C/protection/))
-- [ ] Dead-time compensation (`dead_time_ns` is used by the self-test only)
+- [x] Dead-time compensation (`dead_time_comp_ns`, `dead_time_comp_band_ma`)
 - [ ] Stall detection tuned and measured on the hardware
 
 ## Quick start
@@ -80,7 +80,7 @@ numeric backends and both topologies.
 ```c
 #include "sstep.h"
 
-static struct sstep motor;               /* 496 B on Cortex-M4, owned by the application */
+static struct sstep motor;               /* 512 B on Cortex-M4, owned by the application */
 
 void ADC1_2_IRQHandler(void)             /* PWM/ADC interrupt, 20 kHz */
 {

@@ -70,8 +70,8 @@ detects them.
 
 | Object | Owner | Size | Lifetime |
 | --- | --- | --- | --- |
-| `struct sstep` (driver instance) | Application (static, stack or pool) | 496 B fixed point, 528 B float on Cortex-M4 | From `sstep_init()` as long as the motor runs |
-| `struct sstep_config` | Application; copied by `sstep_init()` | 156 B on Cortex-M4 | Only during `sstep_init()` |
+| `struct sstep` (driver instance) | Application (static, stack or pool) | 512 B fixed point, 544 B float on Cortex-M4 | From `sstep_init()` as long as the motor runs |
+| `struct sstep_config` | Application; copied by `sstep_init()` | 164 B on Cortex-M4 | Only during `sstep_init()` |
 | `struct sstep_sample` | Application | 6 B | Only during `sstep_fast_loop()` |
 | `struct sstep_status` | Application | 48 B on Cortex-M4 | Filled by `sstep_get_status()` |
 | Sine table | Library, `static const` (flash) | 514 B fixed point, 1028 B float (default 257 entries) | Program |

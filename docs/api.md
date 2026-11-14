@@ -111,7 +111,7 @@ standstill), `SSTEP_EVENT_SELFTEST_DONE` (2, `sstep_selftest()` ended; since 1.3
 | --- | --- |
 | `struct sstep_config` | `motor`, `stage`, `ctrl`, `hal` |
 | `struct sstep_motor_cfg` | `r_mohm`, `l_uh`, `i_rated_ma`, `ke_uv_s_per_rad`, `full_steps_per_rev` |
-| `struct sstep_stage_cfg` | `topology`, `vbus_nominal_mv`, `vbus_min_mv`, `vbus_max_mv`, `i_full_scale_ma`, `i_trip_ma`, `pwm_period_ticks`, `pwm_freq_hz`, `dead_time_ns`, `adc_i_zero`, `adc_i_span`, `adc_vbus_mv_full`, `adc_full`, `sample_window_ticks` (since 1.3.0) |
+| `struct sstep_stage_cfg` | `topology`, `vbus_nominal_mv`, `vbus_min_mv`, `vbus_max_mv`, `i_full_scale_ma`, `i_trip_ma`, `pwm_period_ticks`, `pwm_freq_hz`, `dead_time_ns`, `adc_i_zero`, `adc_i_span`, `adc_vbus_mv_full`, `adc_full`, `sample_window_ticks` (since 1.3.0), `dead_time_comp_ns`, `dead_time_comp_band_ma` (since 1.5.0) |
 | `struct sstep_ctrl_cfg` | `drive_mode`, `fast_loop_hz`, `slow_loop_hz`, `microsteps`, `current_bw_hz`, `i_run_ma`, `i_hold_ma`, `hold_delay_ms`, `v_max`, `accel`, `decel`, `stall_time_ms`, `stall_filter_us`, `stall_speed`, `stall_sync_pct` (since 1.1.0), `i_trip_voltage_drive`, `i_slew_ma_per_ms` (since 1.3.0) |
 | `struct sstep_callbacks` | `context`, `pwm_write`, `output_enable`, `on_fault`, `on_event` |
 | `enum sstep_drive_mode` | `SSTEP_DRIVE_CURRENT` (0), `SSTEP_DRIVE_VOLTAGE` (1) |
@@ -143,11 +143,11 @@ The five estimates are 0 while stall detection is off or not compiled in
 ### Driver instance
 
 `struct sstep` is an opaque array of `SSTEP_INSTANCE_WORDS` 64-bit words (on Cortex-M4
-496 B fixed point, 528 B float; on 64-bit hosts 544 B and 576 B; 48 B less each with
+512 B fixed point, 544 B float; on 64-bit hosts 544 B and 576 B; 48 B less each with
 `SSTEP_CFG_SELFTEST = 0`, 80 B less with `SSTEP_CFG_STALL = 0`, 96 B for the float backend
 on 64-bit hosts). Allocate it, pass its
 address, never read or write its content. `SSTEP_CONFIG_BYTES` is the size of the
-configuration copy (156 B with 32-bit pointers, 192 B with 64-bit pointers) and
+configuration copy (164 B with 32-bit pointers, 192 B with 64-bit pointers) and
 `SSTEP_STATE_BYTES` the size of the private state behind it.
 
 ## Functions — `sstep.h`

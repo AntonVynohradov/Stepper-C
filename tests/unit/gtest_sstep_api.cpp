@@ -590,3 +590,64 @@ TEST(SstepApi, FeedForwardSaturates)
     ASSERT_EQ(sstep_fast_loop(&sim.drv, &s), SSTEP_OK);
     EXPECT_EQ(sim.ctx().cur.ff, SSTEP_REAL_MIN);
 }
+
+/* ==============================================================================
+ * DEAD-TIME COMPENSATION: configuration
+ * =============================================================================*/
+
+static double acc_pu(sstep_acc_t x)
+{
+#if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
+    return static_cast<double>(x) / 32768.0;
+#else
+    return static_cast<double>(x);
+#endif
+}
+
+TEST(SstepApi, CompensationConfigChecks)
+{
+    struct Case
+    {
+        uint32_t ns;
+        uint32_t band;
+        int expected;
+    };
+    /* 20 kHz: 12500 ns is a quarter of the period */
+    const Case cases[] = {
+        {1050U, 250U, SSTEP_OK},
+        {1050U, 0U, SSTEP_ERR_CONFIG},
+        {12500U, 250U, SSTEP_ERR_CONFIG},
+        {12499U, 250U, SSTEP_OK},
+        {0U, 0U, SSTEP_OK},
+        {10000001U, 250U, SSTEP_ERR_PARAM},
+        {1050U, 10000001U, SSTEP_ERR_PARAM},
+    };
+    for (const Case& k : cases)
+    {
+        Sim sim;
+        sim.cfg.stage.dead_time_comp_ns = k.ns;
+        sim.cfg.stage.dead_time_comp_band_ma = k.band;
+        EXPECT_EQ(sim.init(), k.expected) << k.ns << " ns, " << k.band << " mA";
+    }
+    /* I_full / I_band must fit a gain (32767): 60 A over 1 mA does not, over 2 mA it does */
+    for (uint32_t band : {1U, 2U})
+    {
+        Sim sim;
+        sim.cfg.stage.i_full_scale_ma = 60000U;
+        sim.cfg.stage.dead_time_comp_ns = 1050U;
+        sim.cfg.stage.dead_time_comp_band_ma = band;
+        EXPECT_EQ(sim.init(), (band == 1U) ? SSTEP_ERR_CONFIG : SSTEP_OK) << band << " mA";
+    }
+}
+
+TEST(SstepApi, CompensationGains)
+{
+    Sim sim; /* 4 A full scale */
+    sim.cfg.stage.dead_time_comp_ns = 1000U;
+    sim.cfg.stage.dead_time_comp_band_ma = 250U;
+    ASSERT_EQ(sim.init(), SSTEP_OK);
+    /* t f = 1 us * 20 kHz = 0.02 */
+    EXPECT_NEAR(acc_pu(sstep_gain_mul_acc(&sim.ctx().dtc_k, SSTEP_ACC_ONE)), 0.02, 1.0 / 32768.0);
+    /* I_full / I_band = 16: half full scale is 8 bands */
+    EXPECT_NEAR(acc_pu(sstep_gain_mul(&sim.ctx().dtc_inv_band, SSTEP_REAL_MAX / 2)), 8.0, 0.001);
+}

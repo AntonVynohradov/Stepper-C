@@ -113,6 +113,7 @@ if(UNIT_TESTS)
         ${CMAKE_CURRENT_LIST_DIR}/tests/unit/gtest_sstep_loop.cpp
         ${CMAKE_CURRENT_LIST_DIR}/tests/unit/gtest_sstep_stall.cpp
         ${CMAKE_CURRENT_LIST_DIR}/tests/unit/gtest_sstep_selftest.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tests/unit/gtest_sstep_dtc.cpp
         # C compile check: sstep.h alone, no private header (#error otherwise)
         ${CMAKE_CURRENT_LIST_DIR}/tests/compile/sstep_api_check.c
     )

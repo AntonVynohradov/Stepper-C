@@ -148,6 +148,56 @@ by $v = R\, i_\mathrm{ref} + v_\mathrm{ff}$. The current settles at the referenc
 error of the back-EMF estimate are not corrected. The overcurrent trip is not active in
 this mode (there is no current measurement).
 
+## Dead-time compensation
+
+During the dead time both switches of a leg are off. The current flows through a body
+diode, so the leg voltage follows the direction of the current instead of the PWM. Every
+leg loses on average
+
+$$
+V_d = V_\mathrm{bus}\, f_\mathrm{PWM}\, t_d
+$$
+
+against the direction of its current. With `dead_time_comp_ns` set, the fast loop adds
+this loss to the voltage request, as a feed-forward next to the back-EMF term and in both
+drive modes. $V_\mathrm{bus}$ is the bus sample of the period. The direction comes from the
+current reference, which carries no ADC noise, through a linear band $I_b$
+(`dead_time_comp_band_ma`):
+
+$$
+s(i) = \mathrm{clamp}\!\left(\frac{i_\mathrm{ref}}{I_b}, -1, 1\right)
+$$
+
+| Topology | Term of phase A (B likewise) |
+|---|---|
+| Full bridge | $2 V_d\, s(i_A)$: both legs of the phase carry its current |
+| Shared leg | $V_d\,\big(s(i_A) + s(i_A + i_B)\big)$: phase A is leg U − W, and W carries $-(i_A + i_B)$ |
+
+In current drive the PI controller would remove the loss by itself, but only after a
+current error at every zero crossing of a leg current. The back-EMF observer gets the
+voltage at the coil, the request minus the term, so the dead time no longer looks like
+back-EMF along the current.
+
+Measured on the motor model with a loss of 0.48 V per leg (1 µs at 24 V and 20 kHz):
+
+| Case | Without | With compensation |
+|---|---|---|
+| Voltage drive, 2 A reference, locked rotor | 1.40 A | 2.00 A |
+| Current drive, 1 Hz electrical, largest current error | 16 mA | 3 mA |
+| Back-EMF observer at rest, 2 A, error along the current | 962 mV | 2 mV |
+
+The second line uses a band equal to the 50 mA transition of the model. A band wider than
+the real transition under-compensates there: 250 mA against this model only reduces the
+error to 13 mA. Set $t_d$ and $I_b$ from a measurement on the board, not from the timer
+setting: on the B-G431B-ESC1, 1200 ns set gives 1050 ns effective at 24 V.
+
+On that board (17HS19-2004S1, 1050 ns, 250 mA) in voltage drive at 12 V and a 0.5 A
+hold, the commanded voltage of phase A rises by 505 mV ($2 V_d$) and that of the idle
+phase B by 253 mV ($V_d$ of the shared leg); the current of phase A rises from 174 to
+256 mA. The real loss at such small currents is below its full value, and the effective
+dead time is longer at 12 V (about 1.4 µs) than at 24 V: set $t_d$ for the operating
+voltage and the current range that matters.
+
 ## Bus voltage compensation
 
 The controllers compute voltages in per unit of the *nominal* bus voltage. The fast loop
@@ -467,7 +517,7 @@ and is reported.
 | Slow loop, added | 367 instructions (`-Os`) | 318 instructions |
 | `sstep_get_status()` | 1202 instructions (`-Os`; integer CORDIC and square root) | 1148 |
 | RAM per instance, added | 80 B (Cortex-M4) | 80 B |
-| Flash, added (`-Os`) | 2160 B | 2400 B |
+| Flash, added (`-Os`) | 2128 B | 2084 B |
 
 Instructions counted on a Cortex-M4 image (GCC 15.2) in an instruction-set emulator,
 mean over 600 fast-loop periods while accelerating to 3 rev/s; on Cortex-M4 most of them take one cycle. At

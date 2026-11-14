@@ -54,7 +54,9 @@ that do not fit return `SSTEP_ERR_CONFIG`.
 | `i_trip_ma` | mA | 1 .. `i_full_scale_ma` | 3500 | Overcurrent trip (either polarity) |
 | `pwm_period_ticks` | timer ticks | ≥ 2 | 4250 | Compare value for 100 % duty cycle (timer auto-reload) |
 | `pwm_freq_hz` | Hz | – | 20000 | PWM frequency; with `dead_time_ns` the dead-time loss of the self-test levels |
-| `dead_time_ns` | ns | – | 1200 | Dead time; used for the duty levels of the self-test ([Protection](protection.md#self-test)), not compensated in the control; unused with `SSTEP_CFG_SELFTEST = 0` |
+| `dead_time_ns` | ns | – | 1200 | Dead time; used for the duty levels of the self-test ([Protection](protection.md#self-test)); unused with `SSTEP_CFG_SELFTEST = 0`. The control uses `dead_time_comp_ns` |
+| `dead_time_comp_ns` | ns | 0 .. below a quarter of the PWM period | 1050 | Effective dead time whose loss $V_\mathrm{bus} f_\mathrm{PWM} t$ per leg is added to the voltage request ([Dead-time compensation](motor-control.md#dead-time-compensation)); 0 = off. Measured, not the timer setting: 1050 ns for 1200 ns set at 24 V on the B-G431B-ESC1 |
+| `dead_time_comp_band_ma` | mA | > 0 when the compensation is on; `i_full_scale_ma / band` ≤ 32767 | 250 | Current band over which the term rises linearly from 0 to its full value |
 | `adc_i_zero` | counts | ≤ `adc_full` | 2048 | Current ADC reading at 0 A (measure with the outputs off) |
 | `adc_i_span` | counts | ±1 .. ±65535 | 2047 | Counts from 0 A to +`i_full_scale_ma`; negative for an inverting amplifier |
 | `adc_vbus_mv_full` | mV | 1 .. $10^7$ | 34320 | Bus voltage that gives the reading `adc_full` (divider ratio × ADC reference) |
@@ -112,14 +114,14 @@ Measured with `arm-none-eabi-gcc` 15.2.1 for Cortex-M4 (`-mthumb`, float backend
 
 | Object | Fixed point | Float |
 | --- | --- | --- |
-| `struct sstep` (RAM per motor) | 496 B | 528 B |
-| Code and constants, `-Os` (flash) | 11032 B | 11814 B |
+| `struct sstep` (RAM per motor) | 512 B | 544 B |
+| Code and constants, `-Os` (flash) | 11440 B | 12258 B |
 | of which the sine table | 514 B | 1028 B |
 | `.data` + `.bss` | 0 B | 0 B |
 
-`struct sstep` is the configuration copy (`SSTEP_CONFIG_BYTES`: 156 B on Cortex-M4,
-192 B on 64-bit hosts) plus the private state (`SSTEP_STATE_BYTES`: 340 B fixed point,
-372 B float on Cortex-M4; 352 B and 384 B on 64-bit hosts); on a 64-bit host the instance
+`struct sstep` is the configuration copy (`SSTEP_CONFIG_BYTES`: 164 B on Cortex-M4,
+192 B on 64-bit hosts) plus the private state (`SSTEP_STATE_BYTES`: 348 B fixed point,
+380 B float on Cortex-M4; 352 B and 384 B on 64-bit hosts); on a 64-bit host the instance
 is 544 B and 576 B. The self-test accounts for 48 B of the state
 (`SSTEP_SELFTEST_BYTES`), the stall detection for 80 B (`SSTEP_STALL_BYTES`; 96 B for
 the float backend on 64-bit hosts).
@@ -138,13 +140,13 @@ The self-test and the stall detection can be compiled out
 
 | `SSTEP_CFG_SELFTEST` | `SSTEP_CFG_STALL` | RAM, fixed point | RAM, float | Flash, fixed point | Flash, float |
 | :---: | :---: | ---: | ---: | ---: | ---: |
-| 1 | 1 | 496 B | 528 B | 11032 B | 11814 B |
-| 0 | 1 | 448 B | 480 B | 9672 B | 10458 B |
-| 1 | 0 | 416 B | 448 B | 8872 B | 9414 B |
-| 0 | 0 | 368 B | 400 B | 7504 B | 8054 B |
+| 1 | 1 | 512 B | 544 B | 11440 B | 12258 B |
+| 0 | 1 | 464 B | 496 B | 10092 B | 10906 B |
+| 1 | 0 | 432 B | 464 B | 9312 B | 10174 B |
+| 0 | 0 | 384 B | 416 B | 7964 B | 8822 B |
 
-One topology instead of both saves 216 B (`SSTEP_CFG_TOPOLOGY_SHARED_LEG = 0`) or 176 B
-(`SSTEP_CFG_TOPOLOGY_FULL_BRIDGE = 0`) of the fixed-point flash, 288 B or 184 B of the
+One topology instead of both saves 140 B (`SSTEP_CFG_TOPOLOGY_SHARED_LEG = 0`) or 100 B
+(`SSTEP_CFG_TOPOLOGY_FULL_BRIDGE = 0`) of the fixed-point flash, 208 B or 104 B of the
 float flash. `SSTEP_CFG_SINE_TABLE_BITS = 6` saves 384 B (fixed point) or 768 B (float)
 at the cost of the sine accuracy ([accuracy table](motor-control.md#microstepping)).
 
@@ -154,10 +156,10 @@ The library is written for the linker to drop what the application does not call
 
 | Measure | Fixed point | Float | How |
 | --- | ---: | ---: | --- |
-| Whole API, linked with `--gc-sections` | 12164 B | 12952 B | `-ffunction-sections -fdata-sections`, `-Wl,--gc-sections` |
-| Only `init`, `enable`, `disable`, both loops, `move_to`, `get_status` | 11000 B | 11792 B | as above: unused functions are not linked |
-| The same with link-time optimisation | 10620 B | 10944 B | `-flto` for the library and the application |
-| The same without self-test, stall detection and the shared-leg topology | 7714 B | 7876 B | `SSTEP_CFG_SELFTEST = 0`, `SSTEP_CFG_STALL = 0`, `SSTEP_CFG_TOPOLOGY_SHARED_LEG = 0` |
+| Whole API, linked with `--gc-sections` | 12568 B | 13400 B | `-ffunction-sections -fdata-sections`, `-Wl,--gc-sections` |
+| Only `init`, `enable`, `disable`, both loops, `move_to`, `get_status` | 11408 B | 12244 B | as above: unused functions are not linked |
+| The same with link-time optimisation | 11024 B | 11120 B | `-flto` for the library and the application |
+| The same without self-test, stall detection and the shared-leg topology | 8138 B | 8536 B | `SSTEP_CFG_SELFTEST = 0`, `SSTEP_CFG_STALL = 0`, `SSTEP_CFG_TOPOLOGY_SHARED_LEG = 0` |
 
 Linked images for Cortex-M4 at `-Os`, library and the libgcc / libc functions it needs,
 without the application. Link-time optimisation merges the small `static inline` helpers
@@ -174,11 +176,11 @@ functions that call them.
 
 | Function | Fixed `-Os` | Fixed `-O0` | Float `-Os` | Float `-O0` |
 | --- | ---: | ---: | ---: | ---: |
-| `sstep_init()` | 224 | 1608 | 188 | 1552 |
+| `sstep_init()` | 224 | 1656 | 188 | 1600 |
 | `sstep_enable()` | 56 | 80 | 64 | 88 |
 | `sstep_selftest()` | 80 | 384 | 80 | 384 |
 | `sstep_disable()` | 24 | 40 | 24 | 40 |
-| `sstep_fast_loop()` | 216 | 312 | 128 | 320 |
+| `sstep_fast_loop()` | 240 | 328 | 144 | 336 |
 | `sstep_slow_loop()` | 152 | 720 | 156 | 656 |
 | `sstep_move_to()` | 0 | 48 | 0 | 48 |
 | `sstep_move_by()` | 0 | 112 | 0 | 112 |

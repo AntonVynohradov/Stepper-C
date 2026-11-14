@@ -180,7 +180,7 @@ a change that can affect it.
 
 | Figure | How |
 | --- | --- |
-| RAM per instance | `sizeof(struct sstep)` on Cortex-M4: 496 B fixed, 528 B float (64-bit host: 544 B, 576 B); 48 B less with `SSTEP_CFG_SELFTEST = 0`, 80 B less with `SSTEP_CFG_STALL = 0` |
+| RAM per instance | `sizeof(struct sstep)` on Cortex-M4: 512 B fixed, 544 B float (64-bit host: 544 B, 576 B); 48 B less with `SSTEP_CFG_SELFTEST = 0`, 80 B less with `SSTEP_CFG_STALL = 0` |
 | Flash | `arm-none-eabi-size` of `src/*.c` at `-Os`, Cortex-M4 (float with `-mfpu=fpv4-sp-d16 -mfloat-abi=hard`), for each combination of `SSTEP_CFG_SELFTEST` / `SSTEP_CFG_STALL`; linked images (`--gc-sections`, `-flto`, libgcc included) in the "Reducing the footprint" table of `docs/configuration.md` |
 | Stack | `-fstack-usage -fcallgraph-info=su`, then `python tools/docs/stack_usage.py <dir> --markdown`; table in `docs/configuration.md` (Cortex-M4, `-Os`/`-O0`, both backends) |
 | Sine accuracy | Sweep `sstep_sin_cos()` over a full turn against `sin`/`cos` for table bits 6, 8, 10 |

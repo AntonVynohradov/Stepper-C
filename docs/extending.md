@@ -20,7 +20,7 @@ changes to the library itself.
 | Use another numeric format or table size | Build-time options in `sstep_user_config.h` | No |
 | Support a new power stage topology | `src/sstep_bridge.c` (limit and duty cycles), `enum sstep_topology`, a build-time option | Yes |
 | A different motion profile (S-curve) | `src/sstep_motion.c` | Yes |
-| Dead-time compensation | Fast loop; the configuration already has `dead_time_ns` | Yes |
+| A dead-time model with a current-dependent loss | `dead_time_terms()` in `src/sstep_ctrl.c` (today a constant time and a linear band) | Yes |
 
 ## Homing example
 

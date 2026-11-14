@@ -151,26 +151,29 @@ struct sstep_ctx
     struct sstep_config cfg; /**< Copy of the configuration. */
 
     /* Constants derived by sstep_init() */
-    struct sstep_gain kp;       /**< Proportional gain [pu V / pu A]. */
-    struct sstep_gain ki;       /**< Integral gain per fast loop period. */
-    struct sstep_gain kb;       /**< Anti-windup gain Ts / Tt. */
-    struct sstep_gain r_pu;     /**< Phase resistance [pu] (voltage drive). */
-    struct sstep_gain adc_i;    /**< Current per ADC count [pu]. */
-    struct sstep_gain adc_v;    /**< Bus voltage per ADC count [pu]. */
-    struct sstep_gain ff_gain;  /**< Feed-forward per microstep/s [pu]. */
-    sstep_real_t i_run;         /**< Run current [pu]. */
-    sstep_real_t i_hold;        /**< Hold current [pu]. */
-    uint16_t i_trip_counts;     /**< Overcurrent trip [ADC counts from zero]. */
-    uint16_t vbus_min_raw;      /**< Undervoltage trip [ADC counts], 0 = off. */
-    uint16_t vbus_max_raw;      /**< Overvoltage trip [ADC counts], 0 = off. */
-    uint16_t ratio;             /**< Fast loop periods per slow loop period. */
-    uint32_t hold_ticks;        /**< Slow periods at standstill before hold. */
-    uint8_t angle_shift;        /**< 14 - log2(microsteps). */
-    uint16_t period_eff;        /**< pwm_period_ticks - sample_window_ticks. */
-    uint16_t bus_num;           /**< pwm_period_ticks, 1 without a sampling window. */
-    uint16_t bus_den;           /**< period_eff, 1 without a sampling window. */
-    struct sstep_gain bus_frac; /**< period_eff / pwm_period_ticks. */
-    sstep_real_t i_slew;        /**< Current slew per slow period [pu]; 0 = off. */
+    struct sstep_gain kp;           /**< Proportional gain [pu V / pu A]. */
+    struct sstep_gain ki;           /**< Integral gain per fast loop period. */
+    struct sstep_gain kb;           /**< Anti-windup gain Ts / Tt. */
+    struct sstep_gain r_pu;         /**< Phase resistance [pu] (voltage drive). */
+    struct sstep_gain adc_i;        /**< Current per ADC count [pu]. */
+    struct sstep_gain adc_v;        /**< Bus voltage per ADC count [pu]. */
+    struct sstep_gain ff_gain;      /**< Feed-forward per microstep/s [pu]. */
+    sstep_real_t i_run;             /**< Run current [pu]. */
+    sstep_real_t i_hold;            /**< Hold current [pu]. */
+    uint16_t i_trip_counts;         /**< Overcurrent trip [ADC counts from zero]. */
+    uint16_t vbus_min_raw;          /**< Undervoltage trip [ADC counts], 0 = off. */
+    uint16_t vbus_max_raw;          /**< Overvoltage trip [ADC counts], 0 = off. */
+    uint16_t ratio;                 /**< Fast loop periods per slow loop period. */
+    uint32_t hold_ticks;            /**< Slow periods at standstill before hold. */
+    uint8_t angle_shift;            /**< 14 - log2(microsteps). */
+    uint16_t period_eff;            /**< pwm_period_ticks - sample_window_ticks. */
+    uint16_t bus_num;               /**< pwm_period_ticks, 1 without a sampling window. */
+    uint16_t bus_den;               /**< period_eff, 1 without a sampling window. */
+    struct sstep_gain bus_frac;     /**< period_eff / pwm_period_ticks. */
+    sstep_real_t i_slew;            /**< Current slew per slow period [pu]; 0 = off. */
+    struct sstep_gain dtc_k;        /**< Dead-time compensation: t_comp * f_pwm (loss per leg
+                                         relative to the bus); used when dead_time_comp_ns != 0. */
+    struct sstep_gain dtc_inv_band; /**< I_base / I_band of the compensation. */
 
 #if (SSTEP_CFG_STALL == 1)
     /* Stall detection constants, sstep_stall_*() */

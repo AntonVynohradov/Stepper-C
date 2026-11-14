@@ -133,8 +133,8 @@ struct sstep_stage_cfg
     uint16_t pwm_period_ticks;    /**< Compare value for 100 % duty cycle. */
     uint32_t pwm_freq_hz;         /**< PWM frequency [Hz]; with dead_time_ns the dead-time loss
                                        of the sstep_selftest() levels. */
-    uint32_t dead_time_ns;        /**< Dead time [ns]: duty levels of sstep_selftest(); not
-                                       compensated in the control. 0 = none. */
+    uint32_t dead_time_ns;        /**< Dead time [ns]: duty levels of sstep_selftest(). 0 = none.
+                                       The control uses dead_time_comp_ns instead. */
     uint16_t adc_i_zero;          /**< Current ADC reading at 0 A [counts]. */
     int32_t adc_i_span;           /**< Counts from 0 A to +i_full_scale_ma; negative for an
                                        inverting amplifier. */
@@ -145,6 +145,16 @@ struct sstep_stage_cfg
                                        current sensing; 0 = none (compare up to
                                        pwm_period_ticks). At most pwm_period_ticks / 4.
                                        The voltage limit shrinks by the same fraction. */
+    /* since 1.5.0: appended, so that positional initialisers of 1.4 stay valid */
+    uint32_t dead_time_comp_ns;      /**< Dead-time compensation [ns]: effective dead time
+                                          whose loss Vbus * f * t per leg is added to the
+                                          voltage request, against the current reference;
+                                          0 = off. Below a quarter of the PWM period.
+                                          ESC1: 1050. */
+    uint32_t dead_time_comp_band_ma; /**< Current band of the compensation [mA]: the term
+                                          rises linearly from 0 to full over 0 ..
+                                          dead_time_comp_band_ma of the current reference;
+                                          > 0 when the compensation is on. ESC1: 250. */
 };
 
 /** @brief How the phase voltages are obtained. */
@@ -278,11 +288,11 @@ struct sstep_status
 #define SSTEP_STATE_BYTES (240U + SSTEP_STALL_BYTES + SSTEP_SELFTEST_BYTES)
 #endif
 #else
-#define SSTEP_CONFIG_BYTES 156U
+#define SSTEP_CONFIG_BYTES 164U
 #if (SSTEP_CFG_MATH_BACKEND == SSTEP_MATH_BACKEND_FIXED)
-#define SSTEP_STATE_BYTES (212U + SSTEP_STALL_BYTES + SSTEP_SELFTEST_BYTES)
+#define SSTEP_STATE_BYTES (220U + SSTEP_STALL_BYTES + SSTEP_SELFTEST_BYTES)
 #else
-#define SSTEP_STATE_BYTES (244U + SSTEP_STALL_BYTES + SSTEP_SELFTEST_BYTES)
+#define SSTEP_STATE_BYTES (252U + SSTEP_STALL_BYTES + SSTEP_SELFTEST_BYTES)
 #endif
 #endif
 

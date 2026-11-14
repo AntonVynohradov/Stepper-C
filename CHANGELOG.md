@@ -4,6 +4,40 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-11-14
+
+### Added
+
+- **Dead-time compensation** (`struct sstep_stage_cfg`: `dead_time_comp_ns`,
+  `dead_time_comp_band_ma`; 0 = off, the control is then unchanged bit for bit). Every leg
+  loses $V_\mathrm{bus} f_\mathrm{PWM} t$ against its current; the fast loop adds that loss
+  to the voltage request in both drive modes, from the measured bus and the current
+  reference (not the measurement, so no ADC noise enters), with a linear band around zero
+  current. Shared leg: phase A gets $V_d (s(i_A) + s(i_A + i_B))$; full bridge $2 V_d s(i)$.
+  The back-EMF observer gets the voltage at the coil (request minus the compensation).
+  `sstep_init()` returns `SSTEP_ERR_CONFIG` for a band of 0 with the compensation on, a
+  time of a quarter of the PWM period or more, or `i_full_scale_ma / band` above 32767.
+  Measured on the motor model with 0.48 V per leg: voltage drive reaches 2.0 A instead of
+  1.4 A, the largest current error of a 1 Hz move drops from 16 mA to 3 mA with a band
+  equal to the model's 50 mA transition (13 mA with a 250 mA band), the back-EMF
+  observer's error at rest from 962 mV to 2 mV. On a B-G431B-ESC1 in voltage drive at
+  12 V the current of a 0.5 A hold rises from 174 to 256 mA. The new fields are appended
+  to `struct sstep_stage_cfg`: positional initialisers of 1.4 stay valid.
+- Unit tests `SstepDtc.*` (`tests/unit/gtest_sstep_dtc.cpp`) and
+  `SstepApi.CompensationConfigChecks`, `SstepApi.CompensationGains`.
+
+### Changed
+
+- `struct sstep_stage_cfg` 8 B larger: `SSTEP_CONFIG_BYTES` 164 B on Cortex-M4 (was 156 B),
+  `SSTEP_STATE_BYTES` 8 B larger (two gains of the compensation); `struct sstep` on
+  Cortex-M4 512 B fixed point, 544 B float (64-bit hosts unchanged, 544 B and 576 B).
+- Flash on Cortex-M4 (`-Os`, both topologies) 11440 B fixed point, 12258 B float (+408 B,
+  +444 B); without self-test and stall detection 7964 B, 8822 B. Worst-case stack of
+  `sstep_fast_loop()` 240 B fixed point, 144 B float (was 216 B, 128 B).
+- `docs/configuration.md`: footprint, linked sizes and stack re-measured;
+  `docs/motor-control.md`: new section "Dead-time compensation"; `dead_time_ns` stays the
+  dead time of the self-test only.
+
 ## [1.4.0] - 2026-11-13
 
 ### Added
@@ -259,6 +293,7 @@ motors in portable C11.
   of `sstep_fast_loop()` 184 B / 128 B; `.data` and `.bss` empty.
 - Sine table error (default 8 bits): 1.0 LSB of Q15 (fixed point), 4.8·10^-6 (float).
 
+[1.5.0]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/AntonVynohradov/Stepper-C/compare/v1.1.0...v1.2.0

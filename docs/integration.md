@@ -20,8 +20,9 @@ Stepper-C does not touch hardware. An integration has four parts:
   period.
 - Load the compare values with **preload** (shadow registers) so that `pwm_write()`
   takes effect at the next period boundary, not in the middle of a period.
-- Dead time is inserted by the timer or the gate driver; the library does not
-  compensate it in this version.
+- Dead time is inserted by the timer or the gate driver. The library compensates the
+  voltage it costs when `dead_time_comp_ns` is set: measure the effective dead time on the
+  board ([Dead-time compensation](motor-control.md#dead-time-compensation)).
 - `output_enable(false)` must put **every** leg in high impedance (for example the
   timer's main output enable bit and the gate drivers' enable pins), not only set
   50 % duty.
