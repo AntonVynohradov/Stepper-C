@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/SystemFromScratch/SystemFromScratch.github.io/main/tools/site.schema.json
+#
+# Card of this repository on https://systemfromscratch.com/projects.html
+# The website reads this file from the tag of the latest release, so a change
+# made here appears on the website with the next release.
+# Version, Stable/Pre-release and the release link come from GitHub Releases;
+# featured, home page section and card order are set by the website.
+# Format: docs/library-integration.md in SystemFromScratch/SystemFromScratch.github.io
+
+title: "Stepper-C"
+
+summary: >-
+  Hardware-agnostic closed-loop microstepping current control for two-phase stepper
+  motors in C11, with sensorless stall detection: from a position command to phase
+  voltages, with the hardware reached only through callbacks.
+
+# Shown on the Projects page only (max. 8).
+features:
+  - "Per-phase PI current control tuned from R, L and one bandwidth; back-EMF feed-forward, anti-windup, bus voltage compensation"
+  - "Dead-time compensation from the measured bus voltage and the current reference: on the motor model the largest current error of a 1 Hz move drops from 16 mA to 3 mA"
+  - "Sensorless stall detection: a back-EMF observer reports a stalled rotor or lost synchronism, 48 ms after the rotor passes the pull-out angle on the motor model"
+  - "1–256 microsteps, trapezoidal motion planning, homing and exact integer positions; fixed-point or float backend"
+  - "Two H-bridges or three half-bridges; self-test of the power stage and the wiring before the first enable; overcurrent, over/undervoltage and fault protection"
+  - "Ported to the B-G431B-ESC1 with a 17HS19-2004S1 motor; 100 % line and branch coverage in both backends, 0 MISRA C:2012 violations"
+
+# Up to three measured numbers.
+highlights:
+  - { value: "512 B", label: "RAM per motor" }
+  - { value: "240 B", label: "worst-case stack" }
+  - { value: "0", label: "MISRA violations" }
+
+# Filters on the Projects page.
+categories: ["Libraries", "Robotics"]
+
+tags: ["C11", "Stepper motor", "Motor control", "STM32G4", "MISRA C:2012", "Apache-2.0"]
+
+# Built-in illustration: robot, container, can, chip, bus, stepper, scope,
+# halfbridge, servo, planner. Or a photo from this repository instead:
+# image: docs/assets/card.webp
+art: stepper
+
+links:
+  docs: https://antonvynohradov.github.io/Stepper-C/
+  manual: https://antonvynohradov.github.io/Stepper-C/downloads/Stepper-C_User_Manual.pdf
+  article: https://systemfromscratch-articles.github.io/Stepper-C-Motor-Control-Library/
